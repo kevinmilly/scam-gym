@@ -16,10 +16,29 @@ const CONTEXT_ICONS: Record<UserContext, string> = {
   family_safety:  "👨‍👩‍👧",
 };
 
+const VALUE_PROPS = [
+  {
+    icon: "🎯",
+    title: "Real-world drills",
+    desc: "Practice on actual scam messages — phishing emails, fake invoices, job scams, and more.",
+  },
+  {
+    icon: "🧠",
+    title: "Confidence calibration",
+    desc: "We track how sure you are, not just whether you're right. Overconfidence is the real risk.",
+  },
+  {
+    icon: "📊",
+    title: "Know your weak spots",
+    desc: "Stats show exactly which scam types fool you most so you can focus your training.",
+  },
+];
+
 export default function HomePage() {
   const router = useRouter();
   const { selectedContext, setSelectedContext } = useDrillContext();
   const [checked, setChecked] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [showContextPicker, setShowContextPicker] = useState(false);
 
   useEffect(() => {
@@ -29,7 +48,10 @@ export default function HomePage() {
         router.replace("/drill");
       } else {
         setChecked(true);
-        if (!selectedContext) setShowContextPicker(true);
+        if (!selectedContext) {
+          // Show welcome onboarding before context picker for brand-new users
+          setShowOnboarding(true);
+        }
       }
     }
   }, [router, selectedContext]);
@@ -60,7 +82,62 @@ export default function HomePage() {
         </span>
       </div>
 
-      {showContextPicker ? (
+      {showOnboarding ? (
+        /* ── Welcome / Onboarding Screen ── */
+        <>
+          <div className="flex-1 flex flex-col">
+            {/* Hero */}
+            <div className="mb-10">
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
+                Free · No account needed
+              </p>
+              <h1 className="text-3xl font-bold leading-tight mb-4" style={{ color: "var(--text)" }}>
+                Train your brain to spot scams before they fool you.
+              </h1>
+              <p className="text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                Scammers are getting better every day. Scam Gym gives you a safe place to practice — so real attacks don&apos;t catch you off guard.
+              </p>
+            </div>
+
+            {/* Value props */}
+            <div className="space-y-3 mb-10">
+              {VALUE_PROPS.map((v) => (
+                <div
+                  key={v.title}
+                  className="flex items-start gap-4 rounded-2xl px-4 py-4 border"
+                  style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+                >
+                  <span className="text-2xl mt-0.5">{v.icon}</span>
+                  <div>
+                    <p className="font-semibold text-sm mb-0.5" style={{ color: "var(--text)" }}>{v.title}</p>
+                    <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>{v.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Social proof strip */}
+            <div
+              className="rounded-2xl px-4 py-3 mb-8 flex items-center gap-3"
+              style={{ background: "var(--surface-2)" }}
+            >
+              <span className="text-lg">📬</span>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                <strong style={{ color: "var(--text)" }}>140+ real-style drills</strong> across phishing, fake invoices, job scams, romance fraud, and more.
+              </p>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <button
+            onClick={() => { setShowOnboarding(false); setShowContextPicker(true); }}
+            className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
+            style={{ background: "var(--accent)", color: "#fff" }}
+          >
+            Get Started — It&apos;s Free
+          </button>
+        </>
+      ) : showContextPicker ? (
         /* ── Context Selection Screen ── */
         <>
           <h1 className="text-2xl font-bold leading-tight mb-2" style={{ color: "var(--text)" }}>
