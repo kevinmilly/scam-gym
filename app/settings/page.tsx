@@ -3,9 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { exportData, importData, resetAllData } from "@/lib/db";
+import { useDrillContext } from "@/lib/DrillContext";
+import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
+import type { UserContext } from "@/lib/types";
 
 export default function SettingsPage() {
   const router = useRouter();
+  const { selectedContext, setSelectedContext } = useDrillContext();
   const [status, setStatus] = useState<string | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
 
@@ -45,6 +49,7 @@ export default function SettingsPage() {
     }
     await resetAllData();
     localStorage.removeItem("scamgym_onboarded");
+    localStorage.removeItem("scamgym_context");
     setConfirmReset(false);
     setStatus("All data reset.");
   }
@@ -66,6 +71,47 @@ export default function SettingsPage() {
       </div>
 
       <div className="px-4 py-5 space-y-4">
+        {/* Context mode */}
+        <div
+          className="rounded-2xl border px-4 py-4"
+          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+        >
+          <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
+            Training Mode
+          </p>
+          <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
+            Sets the mental frame for every drill. All drills are available in every mode.
+          </p>
+          <div className="space-y-2">
+            {(Object.keys(CONTEXT_LABELS) as UserContext[]).map((ctx) => {
+              const selected = selectedContext === ctx;
+              return (
+                <button
+                  key={ctx}
+                  onClick={() => setSelectedContext(ctx)}
+                  className="w-full text-left rounded-xl border px-3 py-3 transition-all"
+                  style={{
+                    borderColor: selected ? "var(--accent)" : "var(--border)",
+                    background: selected ? "rgba(124,106,247,0.08)" : "var(--surface-2)",
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>
+                        {CONTEXT_LABELS[ctx]}
+                      </span>
+                      <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                        {CONTEXT_DESCRIPTIONS[ctx]}
+                      </p>
+                    </div>
+                    {selected && <span className="text-xs font-bold ml-2" style={{ color: "var(--accent)" }}>✓</span>}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Data export */}
         <div
           className="rounded-2xl border divide-y"

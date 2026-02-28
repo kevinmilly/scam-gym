@@ -154,6 +154,21 @@ export default function ResultPage() {
           </div>
         </div>
 
+        {/* Underconfidence intervention */}
+        {calVerdict === "underconfident" && attempt.isCorrect && (
+          <div
+            className="rounded-2xl p-4 border"
+            style={{ background: "rgba(59,130,246,0.08)", borderColor: "rgba(59,130,246,0.3)" }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#3b82f6" }}>
+              You hesitated — but were right
+            </p>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+              In real life, hesitation often leads to replying, clicking, or calling back anyway. Your instinct was correct — trust it faster. The right move was: <em>{drill.explanation.safe_move}</em>
+            </p>
+          </div>
+        )}
+
         {/* Consequence */}
         <div
           className="rounded-2xl p-4 border"
@@ -201,6 +216,21 @@ export default function ResultPage() {
             {drill.explanation.short}
           </p>
         </div>
+
+        {/* AI-Amplified banner */}
+        {(drill.ai_amplified ?? false) && (
+          <div
+            className="rounded-2xl p-4 border"
+            style={{ background: "rgba(239,68,68,0.08)", borderColor: "rgba(239,68,68,0.3)" }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#ef4444" }}>
+              AI-Polished Message
+            </p>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+              Polished language is no longer a safety signal. AI generates grammatically perfect, emotionally convincing scams at scale. Fluency means nothing.
+            </p>
+          </div>
+        )}
 
         {/* Tells */}
         <div>
@@ -272,6 +302,19 @@ export default function ResultPage() {
           </p>
           <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
             {drill.explanation.safe_move}
+          </p>
+        </div>
+
+        {/* Behavioral reinforcement — The Rule */}
+        <div
+          className="rounded-2xl p-4 border"
+          style={{ background: "var(--surface)", borderColor: "var(--accent)" + "33" }}
+        >
+          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--accent)" }}>
+            The Rule
+          </p>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+            {drill.explanation.behavioral_reinforcement ?? drill.explanation.safe_move}
           </p>
         </div>
 

@@ -9,16 +9,33 @@ import * as path from "path";
 
 const REQUIRED_FIELDS = [
   "id", "channel", "pattern_family", "difficulty",
-  "ground_truth", "message", "red_flags",
-  "correct_red_flag_ids", "explanation", "tags",
+  "ground_truth", "context", "ai_amplified",
+  "message", "red_flags", "correct_red_flag_ids", "explanation", "tags",
 ];
 const REQUIRED_MESSAGE_FIELDS = ["from_name", "from_handle", "body"];
-const REQUIRED_EXPLANATION_FIELDS = ["short", "tells", "safe_move", "consequence"];
+const REQUIRED_EXPLANATION_FIELDS = ["short", "tells", "safe_move", "consequence", "behavioral_reinforcement"];
 const VALID_CHANNELS = ["sms", "email", "dm"];
 const VALID_VERDICTS = ["scam", "legit"];
 const VALID_DIFFICULTIES = [1, 2, 3, 4, 5];
+const VALID_CONTEXTS = ["personal", "small_business", "job_seeker", "family_safety"];
 const MAX_BODY_LENGTH = 1000;
 const MIN_BODY_LENGTH = 20;
+const MIN_BR_LENGTH = 10;
+const MAX_BR_LENGTH = 300;
+const MIN_AI_AMPLIFIED_COUNT = 10;
+
+// Real brand names that should not appear in new drills
+const REAL_BRANDS = [
+  "Chase", "Wells Fargo", "Bank of America", "BofA",
+  "FedEx", "UPS", "USPS", "DHL",
+  "Apple", "Google", "Microsoft", "Amazon", "Netflix",
+  "PayPal", "Venmo", "LinkedIn", "Coinbase", "DocuSign",
+  "SunPass", "E-ZPass",
+  "Instagram", "Facebook", "Steam", "Zoom",
+  "Delta Air Lines", "Marriott", "Ticketmaster", "Dropbox",
+  "Norton", "McAfee", "Geek Squad", "Best Buy", "QuickBooks",
+  "Stripe", "Notion", "Figma",
+];
 
 type AnyDrill = Record<string, unknown>;
 
@@ -58,6 +75,16 @@ function validateDrill(drill: AnyDrill, index: number) {
   // Difficulty
   if (!VALID_DIFFICULTIES.includes(drill.difficulty as number)) {
     error(id, `Invalid difficulty: ${drill.difficulty}. Must be 1–5.`);
+  }
+
+  // Context
+  if (!VALID_CONTEXTS.includes(drill.context as string)) {
+    error(id, `Invalid context: "${drill.context}". Must be: ${VALID_CONTEXTS.join(", ")}`);
+  }
+
+  // ai_amplified
+  if (typeof drill.ai_amplified !== "boolean") {
+    error(id, `ai_amplified must be a boolean (got: ${typeof drill.ai_amplified})`);
   }
 
   // Message fields
@@ -109,12 +136,26 @@ function validateDrill(drill: AnyDrill, index: number) {
     if (!Array.isArray(tells) || tells.length < 2) {
       warn(id, `explanation.tells should have at least 2 items`);
     }
+    const br = exp.behavioral_reinforcement as string;
+    if (br) {
+      if (br.length < MIN_BR_LENGTH) warn(id, `explanation.behavioral_reinforcement is very short (${br.length} chars)`);
+      if (br.length > MAX_BR_LENGTH) error(id, `explanation.behavioral_reinforcement too long (${br.length} chars, max ${MAX_BR_LENGTH})`);
+    }
   }
 
   // Tags
   const tags = drill.tags as string[];
   if (!Array.isArray(tags) || tags.length === 0) {
     warn(id, `No tags defined`);
+  }
+
+  // Brand name warning (warn only — not error)
+  const drillStr = JSON.stringify(drill);
+  for (const brand of REAL_BRANDS) {
+    if (drillStr.includes(`"${brand}`) || drillStr.includes(` ${brand} `) || drillStr.includes(` ${brand}.`)) {
+      warn(id, `Possible real brand name detected: "${brand}" — use fictional equivalent`);
+      break; // one warning per drill
+    }
   }
 }
 
@@ -178,10 +219,30 @@ function main() {
   // Family coverage
   const families = new Set(drills.map((d) => d.pattern_family as string));
   console.log(`\n── Pattern families (${families.size}) ─────────────────`);
-  for (const f of families) {
+  for (const f of [...families].sort()) {
     const count = drills.filter((d) => d.pattern_family === f).length;
     const hasLegit = drills.some((d) => d.pattern_family === f && d.ground_truth === "legit");
     console.log(`  ${f}: ${count} drills ${hasLegit ? "" : "⚠️  NO LEGIT TWIN"}`);
+  }
+
+  // Context distribution
+  const contextCounts: Record<string, number> = {};
+  for (const d of drills) {
+    const ctx = (d.context as string) ?? "unset";
+    contextCounts[ctx] = (contextCounts[ctx] ?? 0) + 1;
+  }
+  console.log("\n── Context distribution ────────────────────");
+  for (const [ctx, count] of Object.entries(contextCounts)) {
+    console.log(`  ${ctx}: ${count}`);
+  }
+
+  // AI-amplified coverage
+  const aiCount = drills.filter((d) => d.ai_amplified === true).length;
+  console.log("\n── AI-amplified coverage ───────────────────");
+  console.log(`  ai_amplified: true  → ${aiCount} drills (${Math.round((aiCount / drills.length) * 100)}%)`);
+  console.log(`  ai_amplified: false → ${drills.length - aiCount} drills`);
+  if (aiCount < MIN_AI_AMPLIFIED_COUNT) {
+    warn("content", `Only ${aiCount} drills are ai_amplified — target ≥${MIN_AI_AMPLIFIED_COUNT} for meaningful AI comparison stats`);
   }
 
   // Summary

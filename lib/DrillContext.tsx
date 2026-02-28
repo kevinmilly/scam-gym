@@ -8,18 +8,22 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import type { Drill, Attempt } from "./types";
+import type { Drill, Attempt, UserContext } from "./types";
 import { selectNextDrill, isPoolExhausted } from "./drillEngine";
 import { getAllAttempts } from "./db";
 import drillsData from "@/data/drills.json";
 
 const drills = drillsData as Drill[];
 
+const CONTEXT_KEY = "scamgym_context";
+
 type DrillContextValue = {
   currentDrill: Drill | null;
   nextDrill: Drill | null;
   attempts: Attempt[];
   poolExhausted: boolean;
+  selectedContext: UserContext | null;
+  setSelectedContext: (ctx: UserContext) => void;
   advance: () => void;          // move next → current, prefetch new next
   recordAttempt: (a: Attempt) => void;
   refreshAttempts: () => Promise<void>;
@@ -31,7 +35,19 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [currentDrill, setCurrentDrill] = useState<Drill | null>(null);
   const [nextDrill, setNextDrill] = useState<Drill | null>(null);
+  const [selectedContext, setSelectedContextState] = useState<UserContext | null>(null);
   const attemptsRef = useRef<Attempt[]>([]);
+
+  // Load persisted context on mount
+  useEffect(() => {
+    const stored = localStorage.getItem(CONTEXT_KEY) as UserContext | null;
+    if (stored) setSelectedContextState(stored);
+  }, []);
+
+  const setSelectedContext = useCallback((ctx: UserContext) => {
+    localStorage.setItem(CONTEXT_KEY, ctx);
+    setSelectedContextState(ctx);
+  }, []);
 
   const refreshAttempts = useCallback(async () => {
     const all = await getAllAttempts();
@@ -75,6 +91,8 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
         nextDrill,
         attempts,
         poolExhausted,
+        selectedContext,
+        setSelectedContext,
         advance,
         recordAttempt,
         refreshAttempts,

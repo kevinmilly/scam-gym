@@ -7,13 +7,14 @@ import { useDrillContext } from "@/lib/DrillContext";
 import MessageCard from "@/components/MessageCard";
 import { brierScore, redFlagRecall, calibrationVerdict } from "@/lib/scoring";
 import { saveAttempt } from "@/lib/db";
+import { getFramingCue, CONTEXT_LABELS } from "@/lib/contextFraming";
 import type { Verdict } from "@/lib/types";
 
 const CONFIDENCE_OPTIONS = [50, 60, 70, 85, 95];
 
 export default function DrillPage() {
   const router = useRouter();
-  const { currentDrill, advance, recordAttempt, poolExhausted } = useDrillContext();
+  const { currentDrill, advance, recordAttempt, poolExhausted, selectedContext } = useDrillContext();
 
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
@@ -89,6 +90,10 @@ export default function DrillPage() {
   }
 
   const channelLabel = currentDrill.channel.toUpperCase();
+  const isAiAmplified = currentDrill.ai_amplified ?? false;
+  const framingCue = selectedContext
+    ? getFramingCue(selectedContext, currentDrill.pattern_family)
+    : null;
   const channelColors: Record<string, string> = {
     SMS: "#22c55e",
     EMAIL: "#f59e0b",
@@ -115,6 +120,11 @@ export default function DrillPage() {
               Retention mode
             </span>
           )}
+          {isAiAmplified && (
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }}>
+              AI-Polished
+            </span>
+          )}
           <span
             className="text-xs font-bold px-2 py-0.5 rounded-full"
             style={{ background: "var(--surface-2)", color: channelColors[channelLabel] ?? "var(--text-muted)" }}
@@ -133,6 +143,19 @@ export default function DrillPage() {
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-36 space-y-6">
+        {/* Framing cue */}
+        {framingCue && (
+          <div
+            className="flex items-start gap-2 px-3 py-2 rounded-xl text-xs"
+            style={{ background: "var(--surface-2)", color: "var(--text-muted)" }}
+          >
+            <span className="shrink-0 font-semibold uppercase tracking-widest" style={{ color: "var(--accent)" }}>
+              {CONTEXT_LABELS[selectedContext!]}
+            </span>
+            <span>{framingCue}</span>
+          </div>
+        )}
+
         {/* Message */}
         <MessageCard drill={currentDrill} />
 

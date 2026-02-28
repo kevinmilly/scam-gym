@@ -16,6 +16,13 @@ export type ConfidenceBin = {
   count: number;
 };
 
+export type AiSplit = {
+  aiAccuracy: number;
+  nonAiAccuracy: number;
+  aiCount: number;
+  nonAiCount: number;
+};
+
 export type StatsResult = {
   totalAttempts: number;
   totalCorrect: number;
@@ -23,6 +30,8 @@ export type StatsResult = {
   topVulnerabilities: FamilyStat[]; // lowest accuracy
   overconfidenceHotspots: FamilyStat[]; // highest avgBrierOnWrong
   confidenceBins: ConfidenceBin[];
+  aiSplit: AiSplit | null; // null if < 3 attempts in either bucket
+  insightSummary: string[]; // max 3 natural-language vulnerability sentences
 };
 
 const BINS: Omit<ConfidenceBin, "accuracy" | "count">[] = [
@@ -91,6 +100,38 @@ export function computeStats(
     return { ...bin, accuracy, count };
   });
 
+  // ── AI-amplified split ────────────────────────────────────────
+  const aiAttempts = attempts.filter((a) => drillMap.get(a.drillId)?.ai_amplified === true);
+  const nonAiAttempts = attempts.filter((a) => drillMap.get(a.drillId)?.ai_amplified === false);
+  const MIN_BUCKET = 3;
+  let aiSplit: AiSplit | null = null;
+  if (aiAttempts.length >= MIN_BUCKET && nonAiAttempts.length >= MIN_BUCKET) {
+    aiSplit = {
+      aiCount: aiAttempts.length,
+      nonAiCount: nonAiAttempts.length,
+      aiAccuracy: aiAttempts.filter((a) => a.isCorrect).length / aiAttempts.length,
+      nonAiAccuracy: nonAiAttempts.filter((a) => a.isCorrect).length / nonAiAttempts.length,
+    };
+  }
+
+  // ── Insight summary (natural language, max 3) ─────────────────
+  const insightSummary: string[] = [];
+  for (const f of topVulnerabilities.slice(0, 2)) {
+    const label = familyLabel(f.family);
+    const pct = Math.round(f.accuracy * 100);
+    if (pct < 50) {
+      insightSummary.push(`You miss ${label} scams more than half the time.`);
+    } else if (pct < 70) {
+      insightSummary.push(`${label} is your weakest category (${pct}% accuracy).`);
+    }
+  }
+  if (overconfidenceHotspots.length > 0) {
+    const top = overconfidenceHotspots[0];
+    insightSummary.push(
+      `When wrong on ${familyLabel(top.family)} messages, you tend to be highly confident about it.`
+    );
+  }
+
   // ── Overall ────────────────────────────────────────────────────
   const totalCorrect = attempts.filter((a) => a.isCorrect).length;
 
@@ -102,6 +143,8 @@ export function computeStats(
     topVulnerabilities,
     overconfidenceHotspots,
     confidenceBins,
+    aiSplit,
+    insightSummary,
   };
 }
 

@@ -5,6 +5,13 @@ export type CalibrationVerdict =
   | "underconfident"
   | "well-calibrated";
 
+export type UserContext = "personal" | "small_business" | "job_seeker" | "family_safety";
+
+// Pattern families (string on Drill for future-proofing):
+// existing: "delivery_toll" | "bank_fraud_alert" | "account_verification" | "tech_support"
+//           | "job_seeker" | "invoice_vendor" | "romance_social" | "qr_code"
+// new:      "marketplace" | "oauth_consent" | "crypto_wallet"
+
 export type RedFlag = {
   id: string;
   label: string;
@@ -16,6 +23,8 @@ export type Drill = {
   pattern_family: string;
   difficulty: 1 | 2 | 3 | 4 | 5;
   ground_truth: Verdict;
+  context: UserContext;
+  ai_amplified: boolean;
   message: {
     from_name: string;
     from_handle: string;
@@ -29,6 +38,7 @@ export type Drill = {
     tells: string[];
     safe_move: string;
     consequence: string;
+    behavioral_reinforcement: string;
   };
   tags: string[];
 };

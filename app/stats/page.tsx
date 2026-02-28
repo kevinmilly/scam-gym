@@ -38,7 +38,7 @@ export default function StatsPage() {
           No data yet
         </h2>
         <p className="mb-6" style={{ color: "var(--text-muted)" }}>
-          Complete a few drills to start building your profile.
+          Complete a few drills to start building your vulnerability profile.
         </p>
         <button
           onClick={() => router.push("/drill")}
@@ -51,8 +51,6 @@ export default function StatsPage() {
     );
   }
 
-  const overallPct = Math.round(stats.overallAccuracy * 100);
-
   return (
     <div className="flex flex-col min-h-dvh">
       {/* Header */}
@@ -64,7 +62,7 @@ export default function StatsPage() {
           ← Drill
         </button>
         <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-          My Profile
+          My Vulnerabilities
         </span>
         <button onClick={() => router.push("/settings")} className="text-sm" style={{ color: "var(--text-muted)" }}>
           Settings
@@ -72,23 +70,27 @@ export default function StatsPage() {
       </div>
 
       <div className="px-4 py-5 space-y-6 overflow-y-auto flex-1">
-        {/* Overview */}
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { label: "Drills", value: stats.totalAttempts },
-            { label: "Correct", value: `${overallPct}%` },
-            { label: "Right", value: stats.totalCorrect },
-          ].map(({ label, value }) => (
-            <div
-              key={label}
-              className="rounded-2xl p-4 text-center border"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              <div className="text-2xl font-bold" style={{ color: "var(--text)" }}>{value}</div>
-              <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{label}</div>
-            </div>
-          ))}
-        </div>
+        {/* Total drills */}
+        <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+          {stats.totalAttempts} drills completed · {Math.round(stats.overallAccuracy * 100)}% overall accuracy
+        </p>
+
+        {/* Insight summary */}
+        {stats.insightSummary.length > 0 && (
+          <div
+            className="rounded-2xl p-4 border space-y-2"
+            style={{ background: "rgba(239,68,68,0.06)", borderColor: "rgba(239,68,68,0.25)" }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#ef4444" }}>
+              Your vulnerability profile
+            </p>
+            {stats.insightSummary.map((line, i) => (
+              <p key={i} className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+                → {line}
+              </p>
+            ))}
+          </div>
+        )}
 
         {/* Vulnerabilities */}
         {stats.topVulnerabilities.length > 0 && (
@@ -156,7 +158,47 @@ export default function StatsPage() {
           </div>
         )}
 
-        {/* Confidence bins */}
+        {/* AI-amplified comparison */}
+        {stats.aiSplit && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+              AI-polished vs standard messages
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <div
+                className="rounded-xl p-4 border text-center"
+                style={{ background: "rgba(239,68,68,0.06)", borderColor: "rgba(239,68,68,0.25)" }}
+              >
+                <div className="text-xs font-semibold mb-1" style={{ color: "#ef4444" }}>AI-Polished</div>
+                <div className="text-2xl font-bold" style={{ color: "var(--text)" }}>
+                  {Math.round(stats.aiSplit.aiAccuracy * 100)}%
+                </div>
+                <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+                  {stats.aiSplit.aiCount} drills
+                </div>
+              </div>
+              <div
+                className="rounded-xl p-4 border text-center"
+                style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              >
+                <div className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>Standard</div>
+                <div className="text-2xl font-bold" style={{ color: "var(--text)" }}>
+                  {Math.round(stats.aiSplit.nonAiAccuracy * 100)}%
+                </div>
+                <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+                  {stats.aiSplit.nonAiCount} drills
+                </div>
+              </div>
+            </div>
+            {stats.aiSplit.aiAccuracy < stats.aiSplit.nonAiAccuracy && (
+              <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
+                You&apos;re less accurate on AI-polished messages — polished language makes scams harder to spot.
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Confidence calibration */}
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
             Calibration by confidence level
@@ -187,10 +229,7 @@ export default function StatsPage() {
                       style={{ width: `${acc * 100}%`, background: barColor }}
                     />
                   </div>
-                  <div
-                    className="mt-0.5 text-xs text-right"
-                    style={{ color: "var(--text-muted)" }}
-                  >
+                  <div className="mt-0.5 text-xs text-right" style={{ color: "var(--text-muted)" }}>
                     Expected: {bin.midpoint}%
                   </div>
                 </div>
@@ -226,10 +265,7 @@ export default function StatsPage() {
                         Said {a.userVerdict} at {a.confidence}% · Was {drill.ground_truth}
                       </span>
                     </div>
-                    <p
-                      className="text-sm truncate"
-                      style={{ color: "var(--text)" }}
-                    >
+                    <p className="text-sm truncate" style={{ color: "var(--text)" }}>
                       {drill.message.body.slice(0, 80)}…
                     </p>
                     <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
