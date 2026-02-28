@@ -13,7 +13,7 @@ import { selectNextDrill, isPoolExhausted } from "./drillEngine";
 import { getAllAttempts } from "./db";
 import drillsData from "@/data/drills.json";
 
-const drills = drillsData as Drill[];
+const allDrills = drillsData as Drill[];
 
 const CONTEXT_KEY = "scamgym_context";
 
@@ -55,26 +55,26 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
     attemptsRef.current = all;
   }, []);
 
-  // Initial load
+  // Re-initialize drill queue whenever context changes
   useEffect(() => {
+    if (!selectedContext) return;
+    const pool = allDrills.filter((d) => d.context === selectedContext);
     refreshAttempts().then(() => {
-      const current = selectNextDrill(drills, attemptsRef.current);
-      const next = selectNextDrill(drills, attemptsRef.current, current.id);
+      const current = selectNextDrill(pool, attemptsRef.current);
+      const next = selectNextDrill(pool, attemptsRef.current, current.id);
       setCurrentDrill(current);
       setNextDrill(next);
     });
-  }, [refreshAttempts]);
+  }, [selectedContext, refreshAttempts]);
 
   const advance = useCallback(() => {
     setCurrentDrill(nextDrill);
-    // Prefetch the drill after next using current attempts
-    const upcoming = selectNextDrill(
-      drills,
-      attemptsRef.current,
-      nextDrill?.id
-    );
+    const pool = selectedContext
+      ? allDrills.filter((d) => d.context === selectedContext)
+      : allDrills;
+    const upcoming = selectNextDrill(pool, attemptsRef.current, nextDrill?.id);
     setNextDrill(upcoming);
-  }, [nextDrill]);
+  }, [nextDrill, selectedContext]);
 
   const recordAttempt = useCallback((attempt: Attempt) => {
     const updated = [...attemptsRef.current, attempt];
@@ -82,7 +82,10 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
     setAttempts(updated);
   }, []);
 
-  const poolExhausted = isPoolExhausted(drills, attempts);
+  const filteredDrills = selectedContext
+    ? allDrills.filter((d) => d.context === selectedContext)
+    : allDrills;
+  const poolExhausted = isPoolExhausted(filteredDrills, attempts);
 
   return (
     <DrillContext.Provider
@@ -109,4 +112,4 @@ export function useDrillContext(): DrillContextValue {
   return ctx;
 }
 
-export { drills };
+export { allDrills };

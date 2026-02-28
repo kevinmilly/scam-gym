@@ -6,10 +6,17 @@
   --surface-2: #1c1c26;
   --border: #2a2a38;
   --text: #e8e8f0;
-  --text-muted: #6b6b80;
+  --text-muted: #8b8b9e;
   --accent: #7c6af7;
   --accent-hover: #9585ff;
 }
+
+html { font-size: 18px; }
+
+[data-slow-mode="true"] { font-size: 20px; }
+[data-slow-mode="true"] p,
+[data-slow-mode="true"] span,
+[data-slow-mode="true"] li { line-height: 1.75; }
 
 * {
   box-sizing: border-box;

@@ -43,6 +43,8 @@ export type Drill = {
   tags: string[];
 };
 
+export type BehaviorChoice = "ignore" | "verify" | "respond" | "click" | "call";
+
 export type Attempt = {
   id: string;
   drillId: string;
@@ -54,6 +56,7 @@ export type Attempt = {
   brierScore: number; // 0–1
   redFlagRecall: number; // 0–1
   syncedAt: number | null;
+  behaviorChoice?: BehaviorChoice;
 };
 
 export type ContentFlag = {

@@ -33,7 +33,7 @@ function EmailCard({ message }: { message: Drill["message"] }) {
             {message.from_name[0].toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
-            <div className="font-semibold text-sm truncate" style={{ color: "var(--text)" }}>
+            <div className="font-semibold text-base truncate" style={{ color: "var(--text)" }}>
               {message.from_name}
             </div>
             <div className="text-xs truncate" style={{ color: "var(--text-muted)" }}>
@@ -42,7 +42,7 @@ function EmailCard({ message }: { message: Drill["message"] }) {
           </div>
         </div>
         {message.subject && (
-          <div className="mt-2 font-semibold text-sm" style={{ color: "var(--text)" }}>
+          <div className="mt-2 font-semibold text-base" style={{ color: "var(--text)" }}>
             {message.subject}
           </div>
         )}
@@ -51,7 +51,7 @@ function EmailCard({ message }: { message: Drill["message"] }) {
       {/* Email body */}
       <div className="px-4 py-4">
         <p
-          className="text-sm leading-relaxed whitespace-pre-line"
+          className="text-base leading-relaxed whitespace-pre-line"
           style={{ color: "var(--text)" }}
         >
           {message.body}
@@ -79,7 +79,7 @@ function SmsCard({ message }: { message: Drill["message"] }) {
           📱
         </div>
         <div>
-          <div className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+          <div className="font-semibold text-base" style={{ color: "var(--text)" }}>
             {message.from_name}
           </div>
           <div className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -91,7 +91,7 @@ function SmsCard({ message }: { message: Drill["message"] }) {
       {/* SMS bubble */}
       <div className="px-4 py-4">
         <div
-          className="inline-block max-w-[85%] px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed"
+          className="inline-block max-w-[85%] px-4 py-3 rounded-2xl rounded-tl-sm text-base leading-relaxed"
           style={{ background: "var(--surface-2)", color: "var(--text)" }}
         >
           {message.body}
@@ -119,7 +119,7 @@ function DmCard({ message }: { message: Drill["message"] }) {
           {message.from_name[0].toUpperCase()}
         </div>
         <div>
-          <div className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+          <div className="font-semibold text-base" style={{ color: "var(--text)" }}>
             {message.from_name}
           </div>
           <div className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -136,7 +136,7 @@ function DmCard({ message }: { message: Drill["message"] }) {
 
       {/* DM message */}
       <div className="px-4 py-4">
-        <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+        <p className="text-base leading-relaxed" style={{ color: "var(--text)" }}>
           {message.body}
         </p>
       </div>

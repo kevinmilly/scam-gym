@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { DrillProvider } from "@/lib/DrillContext";
+import SlowModeInit from "@/lib/SlowModeInit";
 
 export const metadata: Metadata = {
   title: "Scam Gym",
@@ -12,7 +13,6 @@ export const viewport: Viewport = {
   themeColor: "#0a0a0f",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <SlowModeInit />
         <DrillProvider>
           <main className="min-h-dvh max-w-lg mx-auto">
             {children}

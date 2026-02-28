@@ -1,0 +1,840 @@
+[
+  {
+    "id": "sms_government_impersonation_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "government_impersonation",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "IRS Collection Dept",
+      "from_handle": "+1 (202) 555-0147",
+      "subject": null,
+      "body": "URGENT: IRS Case #4471-TX. Unpaid taxes of $2,847 will result in arrest warrant within 24 hours. Call 1-888-555-0199 immediately to avoid prosecution."
+    },
+    "red_flags": [
+      { "id": "irs_never_texts", "label": "IRS never contacts by text" },
+      { "id": "arrest_threat", "label": "Arrest threat for tax debt" },
+      { "id": "urgency_timer", "label": "24-hour deadline pressure" },
+      { "id": "unknown_number", "label": "Random phone number, not IRS" }
+    ],
+    "correct_red_flag_ids": ["irs_never_texts", "arrest_threat", "urgency_timer", "unknown_number"],
+    "explanation": {
+      "short": "The IRS only contacts taxpayers by mail — never by text, and never with arrest threats.",
+      "tells": [
+        "The IRS initiates all contact by postal mail, never by text or phone cold call",
+        "IRS agents never threaten immediate arrest — that requires a court order after years of process",
+        "Urgency (24 hours) is designed to prevent you from verifying the claim",
+        "The callback number is not an official IRS line — irs.gov lists only 1-800-829-1040"
+      ],
+      "safe_move": "Ignore and delete. If worried about real tax debt, go to irs.gov directly or call 1-800-829-1040.",
+      "consequence": "Calling connects you to scammers who will demand payment by gift card, wire transfer, or crypto — methods the IRS never uses.",
+      "behavioral_reinforcement": "Any tax-related text or call threatening arrest is always a scam — the IRS mails letters first, every time."
+    },
+    "tags": ["irs", "government", "arrest-threat", "tax", "elderly-target"]
+  },
+  {
+    "id": "sms_government_impersonation_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "government_impersonation",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Social Security Admin",
+      "from_handle": "+1 (800) 555-0233",
+      "subject": null,
+      "body": "ALERT: Your Social Security number has been suspended due to suspicious activity. Call 1-888-555-0291 within 2 hours to reactivate or your benefits will stop permanently."
+    },
+    "red_flags": [
+      { "id": "ssa_never_suspends_ssn", "label": "SSA cannot suspend a Social Security number" },
+      { "id": "urgency_pressure", "label": "2-hour deadline to call" },
+      { "id": "unknown_number", "label": "Not an official SSA number" },
+      { "id": "benefits_threat", "label": "Threat to stop benefits" }
+    ],
+    "correct_red_flag_ids": ["ssa_never_suspends_ssn", "urgency_pressure", "unknown_number", "benefits_threat"],
+    "explanation": {
+      "short": "Social Security numbers cannot be 'suspended' — this is a fabricated threat designed to panic older adults.",
+      "tells": [
+        "The SSA does not suspend Social Security numbers — this concept does not exist",
+        "The real SSA number is 1-800-772-1213 — any other number is suspicious",
+        "SSA contacts by mail for most issues, rarely by phone and never with 2-hour ultimatums",
+        "Threatening to cut off benefits is a manipulation tactic to force immediate action"
+      ],
+      "safe_move": "Hang up or ignore. Call the real SSA at 1-800-772-1213 if concerned, or visit ssa.gov.",
+      "consequence": "Scammers will ask you to 'confirm your SSN to reactivate it' — giving them everything they need for identity theft.",
+      "behavioral_reinforcement": "Social Security numbers can never be suspended — anyone claiming this is running a scam."
+    },
+    "tags": ["social-security", "government", "elderly-target", "identity-theft"]
+  },
+  {
+    "id": "email_tech_support_family_safety_001",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft Security Team",
+      "from_handle": "alert@novasoft-security-center.net",
+      "subject": "CRITICAL: Virus Detected on Your Computer — Action Required",
+      "body": "Our systems have detected 3 viruses on your device that are stealing your banking passwords. Your computer will be disabled in 24 hours unless you call our certified technician at 1-877-555-0344 immediately. Do NOT turn off your computer."
+    },
+    "red_flags": [
+      { "id": "unsolicited_virus_claim", "label": "Unsolicited 'virus detected' claim" },
+      { "id": "lookalike_domain", "label": "Lookalike domain (not novasoft.com)" },
+      { "id": "do_not_turn_off", "label": "'Do NOT turn off' instruction" },
+      { "id": "urgency_disable_threat", "label": "Computer 'will be disabled' threat" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_virus_claim", "lookalike_domain", "do_not_turn_off", "urgency_disable_threat"],
+    "explanation": {
+      "short": "Legitimate software companies cannot detect viruses on your device and email you about them — only a local scan can do that.",
+      "tells": [
+        "No company can remotely detect viruses on your computer and email you results",
+        "The domain is novasoft-security-center.net, not novasoft.com — hyphenated fakes are a red flag",
+        "'Do NOT turn off your computer' is a manipulation tactic to keep you panicked and on the phone",
+        "Real security software shows alerts on your own screen, not via unsolicited email"
+      ],
+      "safe_move": "Delete the email. Run your actual security software to scan if worried. Never call a number from an unsolicited email.",
+      "consequence": "Calling grants scammers remote access to your computer — they will steal passwords, install malware, and charge hundreds for 'repairs.'",
+      "behavioral_reinforcement": "Legitimate tech companies never email you virus warnings with a phone number to call — that is always a scam."
+    },
+    "tags": ["tech-support", "virus", "remote-access", "elderly-target"]
+  },
+  {
+    "id": "sms_romance_social_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "romance_social",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Unknown",
+      "from_handle": "+1 (646) 555-0318",
+      "subject": null,
+      "body": "Hi Dorothy! It's me, Marcus from your church group. I got a new number. How have you been? I've been thinking about you :) It would mean so much to reconnect."
+    },
+    "red_flags": [
+      { "id": "unknown_number_claiming_familiarity", "label": "Unknown number claiming to know you" },
+      { "id": "no_verification_of_identity", "label": "No way to verify who this is" },
+      { "id": "unusual_personal_warmth", "label": "Unusually warm from a 'new number'" }
+    ],
+    "correct_red_flag_ids": ["unknown_number_claiming_familiarity", "no_verification_of_identity"],
+    "explanation": {
+      "short": "A message from an unknown number claiming to be someone you know is a common way to start a romance or friendship scam.",
+      "tells": [
+        "If this were really Marcus, he would give a reason why you'd recognize him (last conversation, shared memory)",
+        "Scammers claim a 'new number' to explain why the contact is unfamiliar",
+        "The goal is to build familiarity over weeks before eventually asking for money or gift cards"
+      ],
+      "safe_move": "Don't respond. If you think it might be real, contact Marcus through a number you already have or ask a mutual friend.",
+      "consequence": "Engaging starts a months-long relationship that ends with a request for money — often framed as an emergency.",
+      "behavioral_reinforcement": "Always verify new numbers through a trusted channel before engaging — scammers rely on politeness and the fear of seeming rude."
+    },
+    "tags": ["romance", "wrong-number", "social-engineering", "elderly-target"]
+  },
+  {
+    "id": "sms_romance_social_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "romance_social",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Unknown",
+      "from_handle": "+1 (917) 555-0422",
+      "subject": null,
+      "body": "Grandma, it's me! I'm in trouble. I was in a car accident in Canada and I'm in jail. Please don't call mom and dad — they'll be so upset. I need $2,400 in gift cards to pay bail. Please, I need you."
+    },
+    "red_flags": [
+      { "id": "grandparent_scam_pattern", "label": "Grandchild in trouble from unknown number" },
+      { "id": "secrecy_request", "label": "'Don't tell parents' — keep it secret" },
+      { "id": "gift_card_payment", "label": "Bail paid via gift cards (impossible)" },
+      { "id": "emotional_urgency", "label": "Urgent emotional appeal to bypass judgment" }
+    ],
+    "correct_red_flag_ids": ["grandparent_scam_pattern", "secrecy_request", "gift_card_payment", "emotional_urgency"],
+    "explanation": {
+      "short": "This is the 'grandparent scam' — bail is never paid with gift cards, and real family emergencies don't require secrecy.",
+      "tells": [
+        "Bail bondsmen and courts accept cash or official payment — never gift cards",
+        "The secrecy instruction ('don't tell mom and dad') is specifically designed to prevent verification",
+        "Real family members in trouble would be reachable at their usual number or through official channels",
+        "The urgency and emotion are engineered to override critical thinking"
+      ],
+      "safe_move": "Hang up. Call your grandchild's actual phone number. Call their parents. This is almost certainly a scam.",
+      "consequence": "Gift card numbers are given to scammers immediately and cannot be recovered — victims have lost tens of thousands of dollars.",
+      "behavioral_reinforcement": "Any emergency requiring gift card payment is 100% a scam — no legitimate emergency, legal or medical, works that way."
+    },
+    "tags": ["grandparent-scam", "gift-card", "family-emergency", "elderly-target"]
+  },
+  {
+    "id": "email_subscription_renewal_family_safety_001",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "GuardMax Security",
+      "from_handle": "billing@guardmax-renewal-center.com",
+      "subject": "Your GuardMax subscription renews today — $299.99 will be charged",
+      "body": "Your annual GuardMax Protection Plan has been renewed and $299.99 will be charged to your card on file. If you did not authorize this, call our cancellation line at 1-877-555-0561 within 24 hours to receive a full refund."
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain (not guardmax.com)" },
+      { "id": "unsolicited_charge_threat", "label": "Surprise charge to create panic" },
+      { "id": "call_to_cancel", "label": "Must call to cancel (social engineering)" },
+      { "id": "high_dollar_amount", "label": "High amount to maximize urgency" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "unsolicited_charge_threat", "call_to_cancel"],
+    "explanation": {
+      "short": "This fake billing notice is designed to make you panic and call — the phone number is the trap.",
+      "tells": [
+        "The domain is guardmax-renewal-center.com — real companies use their own domain for billing emails",
+        "Scammers send this to everyone, hoping some people have heard of the product",
+        "Calling the 'cancellation line' connects you to scammers who ask for remote access to 'process the refund'"
+      ],
+      "safe_move": "Do not call. Check your actual bank account for any charge. If GuardMax is installed, check billing through the app itself.",
+      "consequence": "Calling leads to remote access scams where they 'accidentally' transfer too much and ask you to send the difference back via wire.",
+      "behavioral_reinforcement": "Never call a number in an email about an unexpected charge — go to the company's official website to verify any billing."
+    },
+    "tags": ["antivirus", "fake-billing", "subscription", "refund-scam"]
+  },
+  {
+    "id": "sms_bank_fraud_alert_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BluePeak Bank",
+      "from_handle": "+1 (888) 555-0712",
+      "subject": null,
+      "body": "BluePeak Alert: A Zelle transfer of $850 to 'John T.' is pending your confirmation. If you did NOT request this, reply STOP or call 1-888-555-0712 to reverse it immediately."
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Not BluePeak's known short code" },
+      { "id": "reply_to_cancel", "label": "Asks you to reply to stop a transfer" },
+      { "id": "zelle_reversal_impossible", "label": "Zelle transfers cannot be reversed by replying" },
+      { "id": "urgency_pending_transfer", "label": "'Pending' transfer creates false urgency" }
+    ],
+    "correct_red_flag_ids": ["unknown_number", "reply_to_cancel", "zelle_reversal_impossible"],
+    "explanation": {
+      "short": "Banks use official short codes for alerts, and Zelle transfers cannot be reversed by replying STOP to a text.",
+      "tells": [
+        "Real bank fraud texts come from consistent short codes like 63775 — not random 10-digit numbers",
+        "Replying STOP does nothing to reverse a bank transfer — it confirms your number is active to scammers",
+        "Calling the number in the text connects you to the scammer, not your bank"
+      ],
+      "safe_move": "Don't reply or call. Open your banking app directly or call the number on the back of your debit card to verify any transfer.",
+      "consequence": "Calling the number leads to a scammer posing as your bank who convinces you to 'verify' your account by giving them your login.",
+      "behavioral_reinforcement": "Always call your bank using the number on the back of your card — never the number in a suspicious text."
+    },
+    "tags": ["bank", "zelle", "fraud-alert", "impersonation"]
+  },
+  {
+    "id": "sms_delivery_toll_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "QuickDeliver",
+      "from_handle": "+1 (332) 555-0819",
+      "subject": null,
+      "body": "QuickDeliver: Your package requires a $3.50 customs clearance fee. Without payment your parcel will be returned. Pay now: quickdeliver-customs-fee.com/pay"
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain (not quickdeliver.com)" },
+      { "id": "unexpected_fee", "label": "Unexpected customs fee via text link" },
+      { "id": "unknown_number", "label": "Random 10-digit number" },
+      { "id": "low_dollar_bait", "label": "Small fee amount to seem harmless" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "unexpected_fee", "unknown_number"],
+    "explanation": {
+      "short": "Carriers never text random links to collect customs fees — this is a card-skimming page.",
+      "tells": [
+        "The domain quickdeliver-customs-fee.com is not the carrier's official site",
+        "Real carriers communicate through official apps or their own domains",
+        "The small $3.50 fee is intentionally low to seem harmless — but the payment page captures your full card details"
+      ],
+      "safe_move": "Go to quickdeliver.com directly and enter your tracking number. Never click a payment link in a text.",
+      "consequence": "The card details you enter go straight to scammers — they will make much larger charges later.",
+      "behavioral_reinforcement": "A real delivery fee notice will always direct you to the carrier's official website or app, never a third-party payment link."
+    },
+    "tags": ["delivery", "customs-fee", "card-skimming", "link"]
+  },
+  {
+    "id": "sms_otp_sim_swap_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "otp_sim_swap",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Unknown",
+      "from_handle": "+1 (404) 555-0631",
+      "subject": null,
+      "body": "Hi! I accidentally entered your number when signing up for PeachDevice. The verification code they sent me is landing on your phone. Can you just text me the 6-digit code you received? Really appreciate it!"
+    },
+    "red_flags": [
+      { "id": "asking_for_otp_code", "label": "Stranger asking you to forward an OTP code" },
+      { "id": "social_engineering_mistake", "label": "'I accidentally used your number' story" },
+      { "id": "forwarding_code_is_access", "label": "That code gives access to your account" }
+    ],
+    "correct_red_flag_ids": ["asking_for_otp_code", "social_engineering_mistake", "forwarding_code_is_access"],
+    "explanation": {
+      "short": "Any request to share a verification code you received is an account takeover attempt — even if the story sounds innocent.",
+      "tells": [
+        "Verification codes are sent to confirm YOU own the account — sharing it hands that access to someone else",
+        "The 'accidental sign-up' story is a classic social engineering script designed to sound harmless",
+        "PeachDevice would not send a code to a wrong number without confirming the phone number first"
+      ],
+      "safe_move": "Do not share any code you receive. If a code arrives unexpectedly, it means someone is trying to access your account.",
+      "consequence": "The code is for your PeachDevice account — once given, the scammer takes it over and locks you out.",
+      "behavioral_reinforcement": "Never share a verification code with anyone for any reason — legitimate companies never ask for codes you received."
+    },
+    "tags": ["otp", "account-takeover", "social-engineering", "verification-code"]
+  },
+  {
+    "id": "email_credential_phishing_family_safety_001",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CloudSync Security",
+      "from_handle": "security@cloudsync-accounts-verify.com",
+      "subject": "Action Required: Sign-in from new device detected",
+      "body": "We detected a sign-in to your CloudSync account from Windows 11 in Chicago, IL. If this wasn't you, your account may be compromised. Verify your identity within 12 hours to prevent account suspension: cloudsync-accounts-verify.com/confirm"
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain (not cloudsync.com)" },
+      { "id": "urgency_12_hours", "label": "12-hour window to respond" },
+      { "id": "verify_identity_link", "label": "Link asks you to 'verify identity'" },
+      { "id": "suspension_threat", "label": "Threat of account suspension" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "urgency_12_hours", "verify_identity_link"],
+    "explanation": {
+      "short": "The domain is a fake designed to harvest your login credentials — the real CloudSync would use cloudsync.com.",
+      "tells": [
+        "cloudsync-accounts-verify.com is not cloudsync.com — hyphens and extra words are a phishing sign",
+        "Real sign-in alerts let you review the activity in your account settings — they don't link to separate 'verify' pages",
+        "The 12-hour urgency discourages careful examination"
+      ],
+      "safe_move": "Go directly to cloudsync.com and sign in there to review recent activity. Do not click the link in the email.",
+      "consequence": "The 'verify identity' page is a fake login that captures your username and password for the scammer.",
+      "behavioral_reinforcement": "Always go to a service's real website by typing it yourself — never click 'verify' links in security alert emails."
+    },
+    "tags": ["phishing", "login", "credential-theft", "fake-security-alert"]
+  },
+  {
+    "id": "email_charity_fraud_family_safety_001",
+    "channel": "email",
+    "pattern_family": "charity_fraud",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Disaster Relief Now",
+      "from_handle": "give@disaster-relief-now-fund.org",
+      "subject": "Children are dying — your donation today saves lives",
+      "body": "The flooding in Louisiana has left 12,000 families without food or shelter. We are on the ground RIGHT NOW but our funds run out at midnight. Every $25 saves a child. Donate at: relief-fund-donate.net/louisiana\n\nYour compassion is the only thing standing between these families and despair."
+    },
+    "red_flags": [
+      { "id": "unknown_charity", "label": "Unknown organization not verifiable" },
+      { "id": "lookalike_donation_domain", "label": "Donation link on different domain" },
+      { "id": "midnight_deadline", "label": "Midnight fundraising deadline" },
+      { "id": "extreme_emotional_language", "label": "Extreme emotional language to bypass judgment" }
+    ],
+    "correct_red_flag_ids": ["unknown_charity", "lookalike_donation_domain", "midnight_deadline", "extreme_emotional_language"],
+    "explanation": {
+      "short": "The emotional urgency and unverifiable charity are designed to capture donations before you can research legitimacy.",
+      "tells": [
+        "Legitimate charities are registered with the IRS and verifiable on charitynavigator.org or give.org",
+        "The donation link is on a different domain than the sender — real charities use their own domain",
+        "Midnight deadlines are a pressure tactic — real relief organizations don't stop working at midnight",
+        "Extreme emotional language ('children are dying') is a manipulation tactic common in charity fraud"
+      ],
+      "safe_move": "If you want to donate to disaster relief, go to a known organization like redcross.org directly.",
+      "consequence": "Your donation goes to scammers. None of it reaches any disaster victims.",
+      "behavioral_reinforcement": "Always verify a charity at charitynavigator.org before donating — urgency is the enemy of due diligence."
+    },
+    "tags": ["charity", "disaster-relief", "donation-scam", "emotional-manipulation"]
+  },
+  {
+    "id": "email_malware_attachment_family_safety_001",
+    "channel": "email",
+    "pattern_family": "malware_attachment",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Medicare Benefits Office",
+      "from_handle": "benefits@medicare-update-2024.com",
+      "subject": "Your Medicare benefits summary is ready — open attached PDF",
+      "body": "Dear Beneficiary,\n\nYour updated Medicare benefits summary for 2025 is attached. Please open the document to review your new coverage details and confirm your information is up to date.\n\nIf you have questions, call 1-855-555-0344.\n\nMedicare Benefits Administration"
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain (not medicare.gov)" },
+      { "id": "unsolicited_attachment", "label": "Unsolicited attachment to open" },
+      { "id": "gov_agency_using_dot_com", "label": "Government agency using .com not .gov" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "unsolicited_attachment", "gov_agency_using_dot_com"],
+    "explanation": {
+      "short": "Medicare is a government program — its real domain is medicare.gov, not a .com with hyphens.",
+      "tells": [
+        "All U.S. government agency emails come from .gov domains — any .com claiming to be Medicare is fake",
+        "Medicare sends summaries by mail, not unsolicited email with attachments",
+        "Opening the attachment could install malware or prompt for personal information"
+      ],
+      "safe_move": "Delete the email. Check your Medicare information at medicare.gov or call 1-800-MEDICARE (1-800-633-4227).",
+      "consequence": "The attachment may install malware, or the phone number connects to scammers who request your Medicare ID and personal details.",
+      "behavioral_reinforcement": "Government agencies always use .gov email addresses — a .com claiming to be Medicare, IRS, or SSA is always fake."
+    },
+    "tags": ["medicare", "government", "attachment", "elderly-target", "malware"]
+  },
+  {
+    "id": "dm_crypto_wallet_family_safety_001",
+    "channel": "dm",
+    "pattern_family": "crypto_wallet",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "David Hoffman",
+      "from_handle": "@david.hoffman.invest",
+      "subject": null,
+      "body": "Hello! I help seniors grow their retirement savings with a simple crypto strategy. My clients average 40% returns per month. I only take on 2 new clients at a time. Interested in a free consultation? Many of my clients doubled their savings in 90 days."
+    },
+    "red_flags": [
+      { "id": "unrealistic_returns", "label": "40% monthly returns (impossible consistently)" },
+      { "id": "unsolicited_dm_investment", "label": "Unsolicited investment pitch via DM" },
+      { "id": "artificial_scarcity", "label": "'Only 2 spots left' artificial scarcity" },
+      { "id": "too_good_to_be_true", "label": "Doubled savings in 90 days claim" }
+    ],
+    "correct_red_flag_ids": ["unrealistic_returns", "unsolicited_dm_investment", "artificial_scarcity"],
+    "explanation": {
+      "short": "No legitimate investment consistently returns 40% per month — that would make it the most successful fund in history.",
+      "tells": [
+        "40% monthly returns would be 5,600% annually — no legitimate investment comes close to this",
+        "Licensed financial advisors do not solicit clients via social media DMs",
+        "Targeting seniors with retirement savings pitches is a common pattern in investment fraud",
+        "The '2 spots left' scarcity tactic is designed to prevent careful research"
+      ],
+      "safe_move": "Do not respond. Block and report the account. Any investment opportunity should be researched through FINRA's BrokerCheck.",
+      "consequence": "This is likely a pig-butchering or Ponzi scheme — you will send money, see fake 'gains,' then be unable to withdraw.",
+      "behavioral_reinforcement": "Guaranteed high investment returns are always a lie — the higher the promised return, the bigger the scam."
+    },
+    "tags": ["crypto", "investment", "pig-butchering", "elderly-target", "retirement"]
+  },
+  {
+    "id": "email_account_verification_family_safety_001",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PeachDevice Support",
+      "from_handle": "no-reply@peachdevice-id-verify.com",
+      "subject": "Your PeachDevice storage is 98% full — verify to continue",
+      "body": "Your PeachDevice account is nearly out of storage. Your photos and contacts will be deleted in 48 hours unless you verify your account and update your payment information. Tap here to keep your data: peachdevice-id-verify.com/storage"
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain (not peachdevice.com)" },
+      { "id": "data_deletion_threat", "label": "Threat to delete photos/contacts" },
+      { "id": "payment_update_request", "label": "Asks for payment info to avoid data loss" },
+      { "id": "urgency_48_hours", "label": "48-hour countdown" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "data_deletion_threat", "payment_update_request"],
+    "explanation": {
+      "short": "PeachDevice alerts come from peachdevice.com — this domain is fake, and real storage alerts don't demand payment via email link.",
+      "tells": [
+        "peachdevice-id-verify.com is not peachdevice.com — real company emails always use the company's official domain",
+        "Real storage warnings appear in the device's settings app, not email links with payment requests",
+        "Threatening to delete irreplaceable photos is designed to make seniors panic and act without thinking"
+      ],
+      "safe_move": "Check storage settings directly on your device. If storage is low, manage it through the device's official settings.",
+      "consequence": "The 'verify' page captures your account login and payment card — giving scammers access to your account and finances.",
+      "behavioral_reinforcement": "Never update payment information through a link in an email — always go to the company's app or website directly."
+    },
+    "tags": ["phishing", "cloud-storage", "payment-info", "account-takeover"]
+  },
+  {
+    "id": "sms_otp_sim_swap_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "otp_sim_swap",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Carrier Support",
+      "from_handle": "+1 (866) 555-0944",
+      "subject": null,
+      "body": "NovaMobile: We're updating your account security. To complete verification, reply with the 6-digit code you just received from us. Failure to verify will suspend your service within 1 hour."
+    },
+    "red_flags": [
+      { "id": "carrier_asking_for_code_via_text", "label": "Carrier asking you to reply with a code" },
+      { "id": "service_suspension_threat", "label": "1-hour suspension threat" },
+      { "id": "unknown_number", "label": "Not an official carrier short code" },
+      { "id": "mfa_fatigue_attack", "label": "They triggered the code, now want you to confirm it" }
+    ],
+    "correct_red_flag_ids": ["carrier_asking_for_code_via_text", "service_suspension_threat", "mfa_fatigue_attack"],
+    "explanation": {
+      "short": "The scammer triggered a verification code to be sent to your phone, and now wants you to hand it back to them.",
+      "tells": [
+        "Your carrier never asks you to reply with a verification code — they sent it to confirm you have the phone",
+        "This is an account takeover attempt: the code they want IS your account's security code",
+        "Real carrier service issues don't threaten 1-hour suspension via text"
+      ],
+      "safe_move": "Do not reply. Call your carrier directly using the number on your bill or carrier's official website.",
+      "consequence": "Replying with the code hands the scammer control of your phone number — enabling SIM swap to hijack all your accounts.",
+      "behavioral_reinforcement": "Never reply to a text with a code you received — anyone asking for a code you were just sent is trying to take over your account."
+    },
+    "tags": ["sim-swap", "otp", "carrier", "account-takeover", "mfa"]
+  },
+  {
+    "id": "email_government_impersonation_family_safety_001",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "State DMV Office",
+      "from_handle": "renewal@dmv-registration-services.com",
+      "subject": "Final Notice: Vehicle Registration Overdue — Fee Increasing",
+      "body": "Your vehicle registration has expired. A late fee of $47.00 has been applied. Pay the total of $139.00 online before the end of this month to avoid your registration being flagged and your vehicle becoming unregisterable. Pay at: dmv-registration-services.com/pay"
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain (not your state's .gov)" },
+      { "id": "gov_agency_using_dot_com", "label": "Government agency using .com not .gov" },
+      { "id": "urgency_fee_increase", "label": "Threat of escalating fees" },
+      { "id": "payment_link_in_email", "label": "Direct payment link in email" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "gov_agency_using_dot_com", "payment_link_in_email"],
+    "explanation": {
+      "short": "Your state DMV uses a .gov domain — any DMV email from a .com is a fake payment page.",
+      "tells": [
+        "All state DMV offices use [state].gov domains — no legitimate DMV uses dmv-registration-services.com",
+        "Real registration renewals are mailed or accessible through your state's official DMV website",
+        "The payment amount and urgency are designed to feel routine enough to not question"
+      ],
+      "safe_move": "Visit your state's official DMV website (e.g., dmv.ca.gov, nydmv.ny.gov) directly to check your registration status.",
+      "consequence": "The payment page captures your card details — no registration is renewed, and the money goes to scammers.",
+      "behavioral_reinforcement": "Government fees are always paid through official .gov websites — never through .com links in emails."
+    },
+    "tags": ["dmv", "government", "vehicle-registration", "payment-scam"]
+  },
+  {
+    "id": "sms_bank_fraud_alert_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NorthStar Bank",
+      "from_handle": "63775",
+      "subject": null,
+      "body": "NorthStar Bank: Did you attempt a $412.00 purchase at GardenMart in Phoenix, AZ? Reply YES to approve or NO to decline and freeze card. Msg&Data rates may apply."
+    },
+    "red_flags": [
+      { "id": "purchase_you_didnt_make", "label": "Purchase you don't recognize" },
+      { "id": "asks_for_reply", "label": "Asks you to reply YES or NO" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate bank fraud alert — real bank texts come from short codes (5-6 digits), not 10-digit numbers, and only ask YES or NO.",
+      "tells": [
+        "Legitimate bank fraud alerts come from 5-digit short codes like 63775, not 10-digit numbers",
+        "The message asks only YES or NO — it does not ask for account numbers, passwords, or to call a separate number",
+        "No link is included — real fraud alerts don't need you to click anything"
+      ],
+      "safe_move": "Reply YES if you made the purchase, NO if you didn't. If NO, your bank will call you from their official number.",
+      "consequence": "Not responding to a real fraud alert may result in legitimate purchases being blocked.",
+      "behavioral_reinforcement": "Real bank fraud alerts use short codes and only ask YES or NO — they never include links or ask you to call an unknown number."
+    },
+    "tags": ["bank", "fraud-alert", "legit", "short-code"]
+  },
+  {
+    "id": "sms_delivery_toll_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "SwiftShip",
+      "from_handle": "48773",
+      "subject": null,
+      "body": "SwiftShip: Your package (tracking #SW8842917) is out for delivery today by 8pm. Track at swiftship.com/track or reply STOP to opt out of alerts."
+    },
+    "red_flags": [
+      { "id": "unexpected_package", "label": "Didn't expect a delivery" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate delivery notification — short code sender, official domain, no payment or login requested.",
+      "tells": [
+        "Comes from a short code (48773), which carriers register with wireless providers",
+        "The tracking link goes to swiftship.com — the carrier's official domain, not a lookalike",
+        "No payment, no clicking a link to 'release' the package, no fee requested"
+      ],
+      "safe_move": "You can track the package at swiftship.com using the tracking number provided.",
+      "consequence": "No action needed unless you want to track the package.",
+      "behavioral_reinforcement": "Legitimate delivery texts use short codes and direct you to the carrier's real website — no fees, no pressure."
+    },
+    "tags": ["delivery", "legit", "short-code", "package-tracking"]
+  },
+  {
+    "id": "email_subscription_renewal_family_safety_002",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Reader's Companion",
+      "from_handle": "membership@readerscompanion.com",
+      "subject": "Your annual membership renews in 30 days — here's what's included",
+      "body": "Hi Dorothy,\n\nYour Reader's Companion membership (Plan: Annual Digital) renews on March 15 for $39.99. No action needed — we'll charge the card ending in 4471 on file.\n\nTo manage your subscription, visit readerscompanion.com/account or call us at 1-800-555-0221.\n\nThank you for being a member!"
+    },
+    "red_flags": [
+      { "id": "charge_coming", "label": "Upcoming charge on card" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate renewal notice — it comes from the company's real domain, shows your card's last 4 digits, and gives 30 days' notice.",
+      "tells": [
+        "Sent from readerscompanion.com — the company's actual domain",
+        "Shows your card's last 4 digits as confirmation you're an existing customer — scammers don't know this",
+        "30-day advance notice is standard practice for legitimate renewals",
+        "Provides both a web address and phone number for managing your subscription"
+      ],
+      "safe_move": "No action needed if you want to keep the subscription. Visit readerscompanion.com/account to cancel or update your plan.",
+      "consequence": "No risk — this is a routine renewal notice.",
+      "behavioral_reinforcement": "A legitimate renewal shows your last 4 card digits and gives ample notice — fake billing notices create panic with surprise charges."
+    },
+    "tags": ["subscription", "renewal", "legit", "magazine"]
+  },
+  {
+    "id": "email_tech_support_family_safety_002",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "GuardMax Security",
+      "from_handle": "billing@guardmax.com",
+      "subject": "Your GuardMax subscription renewed successfully",
+      "body": "Hi Robert,\n\nYour GuardMax Total Protection subscription has been renewed for another year. You were charged $89.99 on your Visa ending in 7823.\n\nNo action is needed. Your devices remain protected.\n\nIf you have questions, visit guardmax.com/support or call 1-800-555-0189.\n\nThe GuardMax Team"
+    },
+    "red_flags": [
+      { "id": "charge_already_made", "label": "Charge already applied to your card" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate renewal confirmation — it comes from guardmax.com and shows your actual card details.",
+      "tells": [
+        "Sent from guardmax.com — not guardmax-renewal-center.com or any hyphenated fake",
+        "Confirms the last 4 digits of the card on file — a real company knows this, scammers don't",
+        "No phone number to 'cancel' a surprise charge — just their standard support line",
+        "No urgency, no threats, no links to 'verify' anything"
+      ],
+      "safe_move": "No action needed if you have GuardMax and recognize this subscription.",
+      "consequence": "No risk — this is a confirmation of a known subscription.",
+      "behavioral_reinforcement": "Legitimate billing emails confirm card details you already know — they don't create panic about unexpected charges."
+    },
+    "tags": ["antivirus", "renewal", "legit", "billing-confirmation"]
+  },
+  {
+    "id": "email_account_verification_family_safety_002",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft Account Team",
+      "from_handle": "account-security@novasoft.com",
+      "subject": "We noticed a new sign-in to your account",
+      "body": "Hi Margaret,\n\nWe noticed a sign-in to your NovaSoft account from a new device (iPhone, Chicago IL) on Feb 14 at 2:11 PM.\n\nIf this was you, no action is needed.\n\nIf this wasn't you, secure your account at novasoft.com/security — do not click any other links.\n\nNovaSoft Security Team"
+    },
+    "red_flags": [
+      { "id": "unfamiliar_sign_in_location", "label": "Sign-in from a city you don't recognize" },
+      { "id": "links_in_security_email", "label": "Link to click in security email" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate security notification from NovaSoft — it comes from novasoft.com and tells you to go to the real site, not a link.",
+      "tells": [
+        "Sent from account-security@novasoft.com — the company's actual domain",
+        "Crucially, the email says 'do not click any other links' and directs you to the main site",
+        "If it were you signing in (e.g., you got a new phone), this is just routine",
+        "Real security alerts don't include 'verify identity' links — they direct you to the main website"
+      ],
+      "safe_move": "If the sign-in was you, no action needed. If not, go to novasoft.com directly and change your password.",
+      "consequence": "No risk from this email — but if someone else signed in, change your password promptly.",
+      "behavioral_reinforcement": "A legitimate security alert directs you to the main website — it does not include a 'verify here' link in the email body."
+    },
+    "tags": ["sign-in-alert", "account-security", "legit", "novasoft"]
+  },
+  {
+    "id": "email_bank_fraud_alert_family_safety_001",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BluePeak Bank",
+      "from_handle": "alerts@bluepeak.com",
+      "subject": "Unusual activity on your account — please review",
+      "body": "Dear Helen,\n\nWe noticed a transaction that may be unusual for your account:\n\n$214.00 — TechGadgets Online — Feb 12\n\nIf you recognize this transaction, no action is needed. If you don't, please call the number on the back of your debit card or log in at bluepeak.com to dispute it.\n\nDo not reply to this email.\n\nBluePeak Fraud Prevention"
+    },
+    "red_flags": [
+      { "id": "unfamiliar_merchant", "label": "Merchant you don't recognize" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate fraud alert from BluePeak — it comes from bluepeak.com and directs you to call the number on your card, not a link.",
+      "tells": [
+        "Sent from alerts@bluepeak.com — the bank's official domain",
+        "Directs you to the number on your card or bluepeak.com — not a separate support number",
+        "Says 'do not reply to this email' — a real security measure, not a redirect to a scam phone line",
+        "No login link embedded in the email, no urgency, no threat of account closure"
+      ],
+      "safe_move": "If you recognize the transaction, no action needed. If not, call the number on your card.",
+      "consequence": "No risk from this email. Acting on it promptly (if the charge is fraudulent) protects your account.",
+      "behavioral_reinforcement": "Legitimate bank fraud emails reference your card's back number — they don't embed a call-now link to an unknown number."
+    },
+    "tags": ["bank", "fraud-alert", "legit", "bluepeak"]
+  },
+  {
+    "id": "email_government_impersonation_family_safety_002",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "City Library — Overdue Notice",
+      "from_handle": "notices@citylibraryohio.gov",
+      "subject": "Overdue items on your library account",
+      "body": "Dear Patron,\n\nYou have overdue items on your library account:\n\n- 'The Garden of Lost Souls' (due Jan 28) — $0.50/day\n\nPlease return the item or renew online at citylibraryohio.gov/account. Your total fine is currently $4.00.\n\nThank you,\nCity Library System"
+    },
+    "red_flags": [
+      { "id": "fine_you_owe", "label": "Library fine you may not have expected" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate library overdue notice — it comes from a .gov domain and contains specific, accurate account details.",
+      "tells": [
+        "Sent from citylibraryohio.gov — a government domain, consistent with a public library",
+        "Contains specific book title and a small, realistic fine amount",
+        "Directs you to the library's own website — not a third-party payment link",
+        "No urgency, no threats, no unusual requests"
+      ],
+      "safe_move": "Return the book or renew at citylibraryohio.gov. The fine is small and easy to pay through the official site.",
+      "consequence": "No risk — just a routine overdue notice.",
+      "behavioral_reinforcement": "Government and public institution emails use .gov domains and include specific details matching your actual account."
+    },
+    "tags": ["library", "government", "legit", "fine-notice"]
+  },
+  {
+    "id": "sms_government_impersonation_family_safety_003",
+    "channel": "sms",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Medicare",
+      "from_handle": "77969",
+      "subject": null,
+      "body": "Medicare: Your annual wellness visit reminder is due. Schedule at medicare.gov or call 1-800-MEDICARE. Reply STOP to opt out of reminders."
+    },
+    "red_flags": [
+      { "id": "government_contacting_you", "label": "Government agency sending a text" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate Medicare wellness reminder — it uses a short code and directs you only to medicare.gov or the official 1-800-MEDICARE line.",
+      "tells": [
+        "Comes from a short code (77969), consistent with official government notification programs",
+        "Only directs to medicare.gov and the official 1-800-MEDICARE number — no other links",
+        "No request for payment, personal information, or urgency",
+        "Offers opt-out via STOP — standard for legitimate government SMS programs"
+      ],
+      "safe_move": "Schedule your wellness visit at medicare.gov if you haven't had one this year.",
+      "consequence": "No risk — this is a health reminder you can act on or ignore.",
+      "behavioral_reinforcement": "Government texts from short codes directing only to .gov websites and known numbers are legitimate — scam texts use 10-digit numbers and sketchy links."
+    },
+    "tags": ["medicare", "government", "legit", "wellness", "short-code"]
+  },
+  {
+    "id": "email_tech_support_family_safety_003",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PeachDevice Support",
+      "from_handle": "support@peachdevice-help-center.net",
+      "subject": "Your PeachDevice account has been locked — call us now",
+      "body": "We have locked your PeachDevice account after detecting unauthorized access. To unlock your account and recover your photos, call our Senior Assistance Line at 1-888-555-0774. Our technicians are available 24/7. Do not attempt to log in until you call us."
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain (not peachdevice.com)" },
+      { "id": "senior_assistance_line", "label": "Targeted 'Senior Assistance Line'" },
+      { "id": "do_not_login_instruction", "label": "'Do not log in' prevents self-verification" },
+      { "id": "unsolicited_account_lock", "label": "Unsolicited account lock with call-now instruction" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "senior_assistance_line", "do_not_login_instruction"],
+    "explanation": {
+      "short": "PeachDevice sends account notices from peachdevice.com — this domain is fake, and the 'Senior Assistance Line' is a social engineering signal.",
+      "tells": [
+        "peachdevice-help-center.net is not peachdevice.com — always check the full domain",
+        "A 'Senior Assistance Line' label is used to target older adults specifically",
+        "'Do not log in until you call' prevents you from verifying the claim yourself",
+        "Real PeachDevice account issues are resolved at appleid.apple.com directly"
+      ],
+      "safe_move": "Ignore the email. Go to peachdevice.com directly and sign in to check your account status.",
+      "consequence": "Calling connects you to scammers who ask for remote device access — they will steal your account and financial information.",
+      "behavioral_reinforcement": "When told not to log in and to call instead, that's the scam — always verify account issues yourself through the official website."
+    },
+    "tags": ["tech-support", "account-lock", "elderly-target", "remote-access"]
+  }
+]

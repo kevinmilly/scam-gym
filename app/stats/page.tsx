@@ -6,7 +6,7 @@ import { getAllAttempts } from "@/lib/db";
 import { computeStats, familyLabel } from "@/lib/stats";
 import type { StatsResult } from "@/lib/stats";
 import type { Attempt } from "@/lib/types";
-import { drills } from "@/lib/DrillContext";
+import { allDrills as drills } from "@/lib/DrillContext";
 
 export default function StatsPage() {
   const router = useRouter();

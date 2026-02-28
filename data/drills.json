@@ -429,7 +429,7 @@
     },
     "tags": [
       "email",
-      "google",
+      "bizlistings",
       "account_security",
       "legitimate"
     ],
@@ -3576,7 +3576,7 @@
       "behavioral_reinforcement": "Any unexpected change to banking details, payment methods, or wire transfer instructions requires direct verbal confirmation with a known contact before acting."
     },
     "tags": [
-      "docusign",
+      "signvault",
       "contract",
       "vendor",
       "legitimate"
@@ -7342,6 +7342,3821 @@
       "legitimate",
       "maintenance_notice",
       "dm"
+    ]
+  },
+  {
+    "id": "sms_government_impersonation_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "government_impersonation",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "IRS Collection Dept",
+      "from_handle": "+1 (202) 555-0147",
+      "subject": null,
+      "body": "URGENT: IRS Case #4471-TX. Unpaid taxes of $2,847 will result in arrest warrant within 24 hours. Call 1-888-555-0199 immediately to avoid prosecution."
+    },
+    "red_flags": [
+      {
+        "id": "irs_never_texts",
+        "label": "IRS never contacts by text"
+      },
+      {
+        "id": "arrest_threat",
+        "label": "Arrest threat for tax debt"
+      },
+      {
+        "id": "urgency_timer",
+        "label": "24-hour deadline pressure"
+      },
+      {
+        "id": "unknown_number",
+        "label": "Random phone number, not IRS"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "irs_never_texts",
+      "arrest_threat",
+      "urgency_timer",
+      "unknown_number"
+    ],
+    "explanation": {
+      "short": "The IRS only contacts taxpayers by mail — never by text, and never with arrest threats.",
+      "tells": [
+        "The IRS initiates all contact by postal mail, never by text or phone cold call",
+        "IRS agents never threaten immediate arrest — that requires a court order after years of process",
+        "Urgency (24 hours) is designed to prevent you from verifying the claim",
+        "The callback number is not an official IRS line — irs.gov lists only 1-800-829-1040"
+      ],
+      "safe_move": "Ignore and delete. If worried about real tax debt, go to irs.gov directly or call 1-800-829-1040.",
+      "consequence": "Calling connects you to scammers who will demand payment by gift card, wire transfer, or crypto — methods the IRS never uses.",
+      "behavioral_reinforcement": "Any tax-related text or call threatening arrest is always a scam — the IRS mails letters first, every time."
+    },
+    "tags": [
+      "irs",
+      "government",
+      "arrest-threat",
+      "tax",
+      "elderly-target"
+    ]
+  },
+  {
+    "id": "sms_government_impersonation_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "government_impersonation",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Social Security Admin",
+      "from_handle": "+1 (800) 555-0233",
+      "subject": null,
+      "body": "ALERT: Your Social Security number has been suspended due to suspicious activity. Call 1-888-555-0291 within 2 hours to reactivate or your benefits will stop permanently."
+    },
+    "red_flags": [
+      {
+        "id": "ssa_never_suspends_ssn",
+        "label": "SSA cannot suspend a Social Security number"
+      },
+      {
+        "id": "urgency_pressure",
+        "label": "2-hour deadline to call"
+      },
+      {
+        "id": "unknown_number",
+        "label": "Not an official SSA number"
+      },
+      {
+        "id": "benefits_threat",
+        "label": "Threat to stop benefits"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "ssa_never_suspends_ssn",
+      "urgency_pressure",
+      "unknown_number",
+      "benefits_threat"
+    ],
+    "explanation": {
+      "short": "Social Security numbers cannot be 'suspended' — this is a fabricated threat designed to panic older adults.",
+      "tells": [
+        "The SSA does not suspend Social Security numbers — this concept does not exist",
+        "The real SSA number is 1-800-772-1213 — any other number is suspicious",
+        "SSA contacts by mail for most issues, rarely by phone and never with 2-hour ultimatums",
+        "Threatening to cut off benefits is a manipulation tactic to force immediate action"
+      ],
+      "safe_move": "Hang up or ignore. Call the real SSA at 1-800-772-1213 if concerned, or visit ssa.gov.",
+      "consequence": "Scammers will ask you to 'confirm your SSN to reactivate it' — giving them everything they need for identity theft.",
+      "behavioral_reinforcement": "Social Security numbers can never be suspended — anyone claiming this is running a scam."
+    },
+    "tags": [
+      "social-security",
+      "government",
+      "elderly-target",
+      "identity-theft"
+    ]
+  },
+  {
+    "id": "email_tech_support_family_safety_001",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft Security Team",
+      "from_handle": "alert@novasoft-security-center.net",
+      "subject": "CRITICAL: Virus Detected on Your Computer — Action Required",
+      "body": "Our systems have detected 3 viruses on your device that are stealing your banking passwords. Your computer will be disabled in 24 hours unless you call our certified technician at 1-877-555-0344 immediately. Do NOT turn off your computer."
+    },
+    "red_flags": [
+      {
+        "id": "unsolicited_virus_claim",
+        "label": "Unsolicited 'virus detected' claim"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not novasoft.com)"
+      },
+      {
+        "id": "do_not_turn_off",
+        "label": "'Do NOT turn off' instruction"
+      },
+      {
+        "id": "urgency_disable_threat",
+        "label": "Computer 'will be disabled' threat"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "unsolicited_virus_claim",
+      "lookalike_domain",
+      "do_not_turn_off",
+      "urgency_disable_threat"
+    ],
+    "explanation": {
+      "short": "Legitimate software companies cannot detect viruses on your device and email you about them — only a local scan can do that.",
+      "tells": [
+        "No company can remotely detect viruses on your computer and email you results",
+        "The domain is novasoft-security-center.net, not novasoft.com — hyphenated fakes are a red flag",
+        "'Do NOT turn off your computer' is a manipulation tactic to keep you panicked and on the phone",
+        "Real security software shows alerts on your own screen, not via unsolicited email"
+      ],
+      "safe_move": "Delete the email. Run your actual security software to scan if worried. Never call a number from an unsolicited email.",
+      "consequence": "Calling grants scammers remote access to your computer — they will steal passwords, install malware, and charge hundreds for 'repairs.'",
+      "behavioral_reinforcement": "Legitimate tech companies never email you virus warnings with a phone number to call — that is always a scam."
+    },
+    "tags": [
+      "tech-support",
+      "virus",
+      "remote-access",
+      "elderly-target"
+    ]
+  },
+  {
+    "id": "sms_romance_social_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "romance_social",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Unknown",
+      "from_handle": "+1 (646) 555-0318",
+      "subject": null,
+      "body": "Hi Dorothy! It's me, Marcus from your church group. I got a new number. How have you been? I've been thinking about you :) It would mean so much to reconnect."
+    },
+    "red_flags": [
+      {
+        "id": "unknown_number_claiming_familiarity",
+        "label": "Unknown number claiming to know you"
+      },
+      {
+        "id": "no_verification_of_identity",
+        "label": "No way to verify who this is"
+      },
+      {
+        "id": "unusual_personal_warmth",
+        "label": "Unusually warm from a 'new number'"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "unknown_number_claiming_familiarity",
+      "no_verification_of_identity"
+    ],
+    "explanation": {
+      "short": "A message from an unknown number claiming to be someone you know is a common way to start a romance or friendship scam.",
+      "tells": [
+        "If this were really Marcus, he would give a reason why you'd recognize him (last conversation, shared memory)",
+        "Scammers claim a 'new number' to explain why the contact is unfamiliar",
+        "The goal is to build familiarity over weeks before eventually asking for money or gift cards"
+      ],
+      "safe_move": "Don't respond. If you think it might be real, contact Marcus through a number you already have or ask a mutual friend.",
+      "consequence": "Engaging starts a months-long relationship that ends with a request for money — often framed as an emergency.",
+      "behavioral_reinforcement": "Always verify new numbers through a trusted channel before engaging — scammers rely on politeness and the fear of seeming rude."
+    },
+    "tags": [
+      "romance",
+      "wrong-number",
+      "social-engineering",
+      "elderly-target"
+    ]
+  },
+  {
+    "id": "sms_romance_social_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "romance_social",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Unknown",
+      "from_handle": "+1 (917) 555-0422",
+      "subject": null,
+      "body": "Grandma, it's me! I'm in trouble. I was in a car accident in Canada and I'm in jail. Please don't call mom and dad — they'll be so upset. I need $2,400 in gift cards to pay bail. Please, I need you."
+    },
+    "red_flags": [
+      {
+        "id": "grandparent_scam_pattern",
+        "label": "Grandchild in trouble from unknown number"
+      },
+      {
+        "id": "secrecy_request",
+        "label": "'Don't tell parents' — keep it secret"
+      },
+      {
+        "id": "gift_card_payment",
+        "label": "Bail paid via gift cards (impossible)"
+      },
+      {
+        "id": "emotional_urgency",
+        "label": "Urgent emotional appeal to bypass judgment"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "grandparent_scam_pattern",
+      "secrecy_request",
+      "gift_card_payment",
+      "emotional_urgency"
+    ],
+    "explanation": {
+      "short": "This is the 'grandparent scam' — bail is never paid with gift cards, and real family emergencies don't require secrecy.",
+      "tells": [
+        "Bail bondsmen and courts accept cash or official payment — never gift cards",
+        "The secrecy instruction ('don't tell mom and dad') is specifically designed to prevent verification",
+        "Real family members in trouble would be reachable at their usual number or through official channels",
+        "The urgency and emotion are engineered to override critical thinking"
+      ],
+      "safe_move": "Hang up. Call your grandchild's actual phone number. Call their parents. This is almost certainly a scam.",
+      "consequence": "Gift card numbers are given to scammers immediately and cannot be recovered — victims have lost tens of thousands of dollars.",
+      "behavioral_reinforcement": "Any emergency requiring gift card payment is 100% a scam — no legitimate emergency, legal or medical, works that way."
+    },
+    "tags": [
+      "grandparent-scam",
+      "gift-card",
+      "family-emergency",
+      "elderly-target"
+    ]
+  },
+  {
+    "id": "email_subscription_renewal_family_safety_001",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "GuardMax Security",
+      "from_handle": "billing@guardmax-renewal-center.com",
+      "subject": "Your GuardMax subscription renews today — $299.99 will be charged",
+      "body": "Your annual GuardMax Protection Plan has been renewed and $299.99 will be charged to your card on file. If you did not authorize this, call our cancellation line at 1-877-555-0561 within 24 hours to receive a full refund."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not guardmax.com)"
+      },
+      {
+        "id": "unsolicited_charge_threat",
+        "label": "Surprise charge to create panic"
+      },
+      {
+        "id": "call_to_cancel",
+        "label": "Must call to cancel (social engineering)"
+      },
+      {
+        "id": "high_dollar_amount",
+        "label": "High amount to maximize urgency"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "unsolicited_charge_threat",
+      "call_to_cancel"
+    ],
+    "explanation": {
+      "short": "This fake billing notice is designed to make you panic and call — the phone number is the trap.",
+      "tells": [
+        "The domain is guardmax-renewal-center.com — real companies use their own domain for billing emails",
+        "Scammers send this to everyone, hoping some people have heard of the product",
+        "Calling the 'cancellation line' connects you to scammers who ask for remote access to 'process the refund'"
+      ],
+      "safe_move": "Do not call. Check your actual bank account for any charge. If GuardMax is installed, check billing through the app itself.",
+      "consequence": "Calling leads to remote access scams where they 'accidentally' transfer too much and ask you to send the difference back via wire.",
+      "behavioral_reinforcement": "Never call a number in an email about an unexpected charge — go to the company's official website to verify any billing."
+    },
+    "tags": [
+      "antivirus",
+      "fake-billing",
+      "subscription",
+      "refund-scam"
+    ]
+  },
+  {
+    "id": "sms_bank_fraud_alert_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BluePeak Bank",
+      "from_handle": "+1 (888) 555-0712",
+      "subject": null,
+      "body": "BluePeak Alert: A Zelle transfer of $850 to 'John T.' is pending your confirmation. If you did NOT request this, reply STOP or call 1-888-555-0712 to reverse it immediately."
+    },
+    "red_flags": [
+      {
+        "id": "unknown_number",
+        "label": "Not BluePeak's known short code"
+      },
+      {
+        "id": "reply_to_cancel",
+        "label": "Asks you to reply to stop a transfer"
+      },
+      {
+        "id": "zelle_reversal_impossible",
+        "label": "Zelle transfers cannot be reversed by replying"
+      },
+      {
+        "id": "urgency_pending_transfer",
+        "label": "'Pending' transfer creates false urgency"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "unknown_number",
+      "reply_to_cancel",
+      "zelle_reversal_impossible"
+    ],
+    "explanation": {
+      "short": "Banks use official short codes for alerts, and Zelle transfers cannot be reversed by replying STOP to a text.",
+      "tells": [
+        "Real bank fraud texts come from consistent short codes like 63775 — not random 10-digit numbers",
+        "Replying STOP does nothing to reverse a bank transfer — it confirms your number is active to scammers",
+        "Calling the number in the text connects you to the scammer, not your bank"
+      ],
+      "safe_move": "Don't reply or call. Open your banking app directly or call the number on the back of your debit card to verify any transfer.",
+      "consequence": "Calling the number leads to a scammer posing as your bank who convinces you to 'verify' your account by giving them your login.",
+      "behavioral_reinforcement": "Always call your bank using the number on the back of your card — never the number in a suspicious text."
+    },
+    "tags": [
+      "bank",
+      "zelle",
+      "fraud-alert",
+      "impersonation"
+    ]
+  },
+  {
+    "id": "sms_delivery_toll_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "QuickDeliver",
+      "from_handle": "+1 (332) 555-0819",
+      "subject": null,
+      "body": "QuickDeliver: Your package requires a $3.50 customs clearance fee. Without payment your parcel will be returned. Pay now: quickdeliver-customs-fee.com/pay"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not quickdeliver.com)"
+      },
+      {
+        "id": "unexpected_fee",
+        "label": "Unexpected customs fee via text link"
+      },
+      {
+        "id": "unknown_number",
+        "label": "Random 10-digit number"
+      },
+      {
+        "id": "low_dollar_bait",
+        "label": "Small fee amount to seem harmless"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "unexpected_fee",
+      "unknown_number"
+    ],
+    "explanation": {
+      "short": "Carriers never text random links to collect customs fees — this is a card-skimming page.",
+      "tells": [
+        "The domain quickdeliver-customs-fee.com is not the carrier's official site",
+        "Real carriers communicate through official apps or their own domains",
+        "The small $3.50 fee is intentionally low to seem harmless — but the payment page captures your full card details"
+      ],
+      "safe_move": "Go to quickdeliver.com directly and enter your tracking number. Never click a payment link in a text.",
+      "consequence": "The card details you enter go straight to scammers — they will make much larger charges later.",
+      "behavioral_reinforcement": "A real delivery fee notice will always direct you to the carrier's official website or app, never a third-party payment link."
+    },
+    "tags": [
+      "delivery",
+      "customs-fee",
+      "card-skimming",
+      "link"
+    ]
+  },
+  {
+    "id": "sms_otp_sim_swap_family_safety_001",
+    "channel": "sms",
+    "pattern_family": "otp_sim_swap",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Unknown",
+      "from_handle": "+1 (404) 555-0631",
+      "subject": null,
+      "body": "Hi! I accidentally entered your number when signing up for PeachDevice. The verification code they sent me is landing on your phone. Can you just text me the 6-digit code you received? Really appreciate it!"
+    },
+    "red_flags": [
+      {
+        "id": "asking_for_otp_code",
+        "label": "Stranger asking you to forward an OTP code"
+      },
+      {
+        "id": "social_engineering_mistake",
+        "label": "'I accidentally used your number' story"
+      },
+      {
+        "id": "forwarding_code_is_access",
+        "label": "That code gives access to your account"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "asking_for_otp_code",
+      "social_engineering_mistake",
+      "forwarding_code_is_access"
+    ],
+    "explanation": {
+      "short": "Any request to share a verification code you received is an account takeover attempt — even if the story sounds innocent.",
+      "tells": [
+        "Verification codes are sent to confirm YOU own the account — sharing it hands that access to someone else",
+        "The 'accidental sign-up' story is a classic social engineering script designed to sound harmless",
+        "PeachDevice would not send a code to a wrong number without confirming the phone number first"
+      ],
+      "safe_move": "Do not share any code you receive. If a code arrives unexpectedly, it means someone is trying to access your account.",
+      "consequence": "The code is for your PeachDevice account — once given, the scammer takes it over and locks you out.",
+      "behavioral_reinforcement": "Never share a verification code with anyone for any reason — legitimate companies never ask for codes you received."
+    },
+    "tags": [
+      "otp",
+      "account-takeover",
+      "social-engineering",
+      "verification-code"
+    ]
+  },
+  {
+    "id": "email_credential_phishing_family_safety_001",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CloudSync Security",
+      "from_handle": "security@cloudsync-accounts-verify.com",
+      "subject": "Action Required: Sign-in from new device detected",
+      "body": "We detected a sign-in to your CloudSync account from Windows 11 in Chicago, IL. If this wasn't you, your account may be compromised. Verify your identity within 12 hours to prevent account suspension: cloudsync-accounts-verify.com/confirm"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not cloudsync.com)"
+      },
+      {
+        "id": "urgency_12_hours",
+        "label": "12-hour window to respond"
+      },
+      {
+        "id": "verify_identity_link",
+        "label": "Link asks you to 'verify identity'"
+      },
+      {
+        "id": "suspension_threat",
+        "label": "Threat of account suspension"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "urgency_12_hours",
+      "verify_identity_link"
+    ],
+    "explanation": {
+      "short": "The domain is a fake designed to harvest your login credentials — the real CloudSync would use cloudsync.com.",
+      "tells": [
+        "cloudsync-accounts-verify.com is not cloudsync.com — hyphens and extra words are a phishing sign",
+        "Real sign-in alerts let you review the activity in your account settings — they don't link to separate 'verify' pages",
+        "The 12-hour urgency discourages careful examination"
+      ],
+      "safe_move": "Go directly to cloudsync.com and sign in there to review recent activity. Do not click the link in the email.",
+      "consequence": "The 'verify identity' page is a fake login that captures your username and password for the scammer.",
+      "behavioral_reinforcement": "Always go to a service's real website by typing it yourself — never click 'verify' links in security alert emails."
+    },
+    "tags": [
+      "phishing",
+      "login",
+      "credential-theft",
+      "fake-security-alert"
+    ]
+  },
+  {
+    "id": "email_charity_fraud_family_safety_001",
+    "channel": "email",
+    "pattern_family": "charity_fraud",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Disaster Relief Now",
+      "from_handle": "give@disaster-relief-now-fund.org",
+      "subject": "Children are dying — your donation today saves lives",
+      "body": "The flooding in Louisiana has left 12,000 families without food or shelter. We are on the ground RIGHT NOW but our funds run out at midnight. Every $25 saves a child. Donate at: relief-fund-donate.net/louisiana\n\nYour compassion is the only thing standing between these families and despair."
+    },
+    "red_flags": [
+      {
+        "id": "unknown_charity",
+        "label": "Unknown organization not verifiable"
+      },
+      {
+        "id": "lookalike_donation_domain",
+        "label": "Donation link on different domain"
+      },
+      {
+        "id": "midnight_deadline",
+        "label": "Midnight fundraising deadline"
+      },
+      {
+        "id": "extreme_emotional_language",
+        "label": "Extreme emotional language to bypass judgment"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "unknown_charity",
+      "lookalike_donation_domain",
+      "midnight_deadline",
+      "extreme_emotional_language"
+    ],
+    "explanation": {
+      "short": "The emotional urgency and unverifiable charity are designed to capture donations before you can research legitimacy.",
+      "tells": [
+        "Legitimate charities are registered with the IRS and verifiable on charitynavigator.org or give.org",
+        "The donation link is on a different domain than the sender — real charities use their own domain",
+        "Midnight deadlines are a pressure tactic — real relief organizations don't stop working at midnight",
+        "Extreme emotional language ('children are dying') is a manipulation tactic common in charity fraud"
+      ],
+      "safe_move": "If you want to donate to disaster relief, go to a known organization like redcross.org directly.",
+      "consequence": "Your donation goes to scammers. None of it reaches any disaster victims.",
+      "behavioral_reinforcement": "Always verify a charity at charitynavigator.org before donating — urgency is the enemy of due diligence."
+    },
+    "tags": [
+      "charity",
+      "disaster-relief",
+      "donation-scam",
+      "emotional-manipulation"
+    ]
+  },
+  {
+    "id": "email_malware_attachment_family_safety_001",
+    "channel": "email",
+    "pattern_family": "malware_attachment",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Medicare Benefits Office",
+      "from_handle": "benefits@medicare-update-2024.com",
+      "subject": "Your Medicare benefits summary is ready — open attached PDF",
+      "body": "Dear Beneficiary,\n\nYour updated Medicare benefits summary for 2025 is attached. Please open the document to review your new coverage details and confirm your information is up to date.\n\nIf you have questions, call 1-855-555-0344.\n\nMedicare Benefits Administration"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not medicare.gov)"
+      },
+      {
+        "id": "unsolicited_attachment",
+        "label": "Unsolicited attachment to open"
+      },
+      {
+        "id": "gov_agency_using_dot_com",
+        "label": "Government agency using .com not .gov"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "unsolicited_attachment",
+      "gov_agency_using_dot_com"
+    ],
+    "explanation": {
+      "short": "Medicare is a government program — its real domain is medicare.gov, not a .com with hyphens.",
+      "tells": [
+        "All U.S. government agency emails come from .gov domains — any .com claiming to be Medicare is fake",
+        "Medicare sends summaries by mail, not unsolicited email with attachments",
+        "Opening the attachment could install malware or prompt for personal information"
+      ],
+      "safe_move": "Delete the email. Check your Medicare information at medicare.gov or call 1-800-MEDICARE (1-800-633-4227).",
+      "consequence": "The attachment may install malware, or the phone number connects to scammers who request your Medicare ID and personal details.",
+      "behavioral_reinforcement": "Government agencies always use .gov email addresses — a .com claiming to be Medicare, IRS, or SSA is always fake."
+    },
+    "tags": [
+      "medicare",
+      "government",
+      "attachment",
+      "elderly-target",
+      "malware"
+    ]
+  },
+  {
+    "id": "dm_crypto_wallet_family_safety_001",
+    "channel": "dm",
+    "pattern_family": "crypto_wallet",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "David Hoffman",
+      "from_handle": "@david.hoffman.invest",
+      "subject": null,
+      "body": "Hello! I help seniors grow their retirement savings with a simple crypto strategy. My clients average 40% returns per month. I only take on 2 new clients at a time. Interested in a free consultation? Many of my clients doubled their savings in 90 days."
+    },
+    "red_flags": [
+      {
+        "id": "unrealistic_returns",
+        "label": "40% monthly returns (impossible consistently)"
+      },
+      {
+        "id": "unsolicited_dm_investment",
+        "label": "Unsolicited investment pitch via DM"
+      },
+      {
+        "id": "artificial_scarcity",
+        "label": "'Only 2 spots left' artificial scarcity"
+      },
+      {
+        "id": "too_good_to_be_true",
+        "label": "Doubled savings in 90 days claim"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "unrealistic_returns",
+      "unsolicited_dm_investment",
+      "artificial_scarcity"
+    ],
+    "explanation": {
+      "short": "No legitimate investment consistently returns 40% per month — that would make it the most successful fund in history.",
+      "tells": [
+        "40% monthly returns would be 5,600% annually — no legitimate investment comes close to this",
+        "Licensed financial advisors do not solicit clients via social media DMs",
+        "Targeting seniors with retirement savings pitches is a common pattern in investment fraud",
+        "The '2 spots left' scarcity tactic is designed to prevent careful research"
+      ],
+      "safe_move": "Do not respond. Block and report the account. Any investment opportunity should be researched through FINRA's BrokerCheck.",
+      "consequence": "This is likely a pig-butchering or Ponzi scheme — you will send money, see fake 'gains,' then be unable to withdraw.",
+      "behavioral_reinforcement": "Guaranteed high investment returns are always a lie — the higher the promised return, the bigger the scam."
+    },
+    "tags": [
+      "crypto",
+      "investment",
+      "pig-butchering",
+      "elderly-target",
+      "retirement"
+    ]
+  },
+  {
+    "id": "email_account_verification_family_safety_001",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PeachDevice Support",
+      "from_handle": "no-reply@peachdevice-id-verify.com",
+      "subject": "Your PeachDevice storage is 98% full — verify to continue",
+      "body": "Your PeachDevice account is nearly out of storage. Your photos and contacts will be deleted in 48 hours unless you verify your account and update your payment information. Tap here to keep your data: peachdevice-id-verify.com/storage"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not peachdevice.com)"
+      },
+      {
+        "id": "data_deletion_threat",
+        "label": "Threat to delete photos/contacts"
+      },
+      {
+        "id": "payment_update_request",
+        "label": "Asks for payment info to avoid data loss"
+      },
+      {
+        "id": "urgency_48_hours",
+        "label": "48-hour countdown"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "data_deletion_threat",
+      "payment_update_request"
+    ],
+    "explanation": {
+      "short": "PeachDevice alerts come from peachdevice.com — this domain is fake, and real storage alerts don't demand payment via email link.",
+      "tells": [
+        "peachdevice-id-verify.com is not peachdevice.com — real company emails always use the company's official domain",
+        "Real storage warnings appear in the device's settings app, not email links with payment requests",
+        "Threatening to delete irreplaceable photos is designed to make seniors panic and act without thinking"
+      ],
+      "safe_move": "Check storage settings directly on your device. If storage is low, manage it through the device's official settings.",
+      "consequence": "The 'verify' page captures your account login and payment card — giving scammers access to your account and finances.",
+      "behavioral_reinforcement": "Never update payment information through a link in an email — always go to the company's app or website directly."
+    },
+    "tags": [
+      "phishing",
+      "cloud-storage",
+      "payment-info",
+      "account-takeover"
+    ]
+  },
+  {
+    "id": "sms_otp_sim_swap_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "otp_sim_swap",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Carrier Support",
+      "from_handle": "+1 (866) 555-0944",
+      "subject": null,
+      "body": "NovaMobile: We're updating your account security. To complete verification, reply with the 6-digit code you just received from us. Failure to verify will suspend your service within 1 hour."
+    },
+    "red_flags": [
+      {
+        "id": "carrier_asking_for_code_via_text",
+        "label": "Carrier asking you to reply with a code"
+      },
+      {
+        "id": "service_suspension_threat",
+        "label": "1-hour suspension threat"
+      },
+      {
+        "id": "unknown_number",
+        "label": "Not an official carrier short code"
+      },
+      {
+        "id": "mfa_fatigue_attack",
+        "label": "They triggered the code, now want you to confirm it"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "carrier_asking_for_code_via_text",
+      "service_suspension_threat",
+      "mfa_fatigue_attack"
+    ],
+    "explanation": {
+      "short": "The scammer triggered a verification code to be sent to your phone, and now wants you to hand it back to them.",
+      "tells": [
+        "Your carrier never asks you to reply with a verification code — they sent it to confirm you have the phone",
+        "This is an account takeover attempt: the code they want IS your account's security code",
+        "Real carrier service issues don't threaten 1-hour suspension via text"
+      ],
+      "safe_move": "Do not reply. Call your carrier directly using the number on your bill or carrier's official website.",
+      "consequence": "Replying with the code hands the scammer control of your phone number — enabling SIM swap to hijack all your accounts.",
+      "behavioral_reinforcement": "Never reply to a text with a code you received — anyone asking for a code you were just sent is trying to take over your account."
+    },
+    "tags": [
+      "sim-swap",
+      "otp",
+      "carrier",
+      "account-takeover",
+      "mfa"
+    ]
+  },
+  {
+    "id": "email_government_impersonation_family_safety_001",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "State DMV Office",
+      "from_handle": "renewal@dmv-registration-services.com",
+      "subject": "Final Notice: Vehicle Registration Overdue — Fee Increasing",
+      "body": "Your vehicle registration has expired. A late fee of $47.00 has been applied. Pay the total of $139.00 online before the end of this month to avoid your registration being flagged and your vehicle becoming unregisterable. Pay at: dmv-registration-services.com/pay"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not your state's .gov)"
+      },
+      {
+        "id": "gov_agency_using_dot_com",
+        "label": "Government agency using .com not .gov"
+      },
+      {
+        "id": "urgency_fee_increase",
+        "label": "Threat of escalating fees"
+      },
+      {
+        "id": "payment_link_in_email",
+        "label": "Direct payment link in email"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "gov_agency_using_dot_com",
+      "payment_link_in_email"
+    ],
+    "explanation": {
+      "short": "Your state DMV uses a .gov domain — any DMV email from a .com is a fake payment page.",
+      "tells": [
+        "All state DMV offices use [state].gov domains — no legitimate DMV uses dmv-registration-services.com",
+        "Real registration renewals are mailed or accessible through your state's official DMV website",
+        "The payment amount and urgency are designed to feel routine enough to not question"
+      ],
+      "safe_move": "Visit your state's official DMV website (e.g., dmv.ca.gov, nydmv.ny.gov) directly to check your registration status.",
+      "consequence": "The payment page captures your card details — no registration is renewed, and the money goes to scammers.",
+      "behavioral_reinforcement": "Government fees are always paid through official .gov websites — never through .com links in emails."
+    },
+    "tags": [
+      "dmv",
+      "government",
+      "vehicle-registration",
+      "payment-scam"
+    ]
+  },
+  {
+    "id": "sms_bank_fraud_alert_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NorthStar Bank",
+      "from_handle": "63775",
+      "subject": null,
+      "body": "NorthStar Bank: Did you attempt a $412.00 purchase at GardenMart in Phoenix, AZ? Reply YES to approve or NO to decline and freeze card. Msg&Data rates may apply."
+    },
+    "red_flags": [
+      {
+        "id": "purchase_you_didnt_make",
+        "label": "Purchase you don't recognize"
+      },
+      {
+        "id": "asks_for_reply",
+        "label": "Asks you to reply YES or NO"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate bank fraud alert — real bank texts come from short codes (5-6 digits), not 10-digit numbers, and only ask YES or NO.",
+      "tells": [
+        "Legitimate bank fraud alerts come from 5-digit short codes like 63775, not 10-digit numbers",
+        "The message asks only YES or NO — it does not ask for account numbers, passwords, or to call a separate number",
+        "No link is included — real fraud alerts don't need you to click anything"
+      ],
+      "safe_move": "Reply YES if you made the purchase, NO if you didn't. If NO, your bank will call you from their official number.",
+      "consequence": "Not responding to a real fraud alert may result in legitimate purchases being blocked.",
+      "behavioral_reinforcement": "Real bank fraud alerts use short codes and only ask YES or NO — they never include links or ask you to call an unknown number."
+    },
+    "tags": [
+      "bank",
+      "fraud-alert",
+      "legit",
+      "short-code"
+    ]
+  },
+  {
+    "id": "sms_delivery_toll_family_safety_002",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "SwiftShip",
+      "from_handle": "48773",
+      "subject": null,
+      "body": "SwiftShip: Your package (tracking #SW8842917) is out for delivery today by 8pm. Track at swiftship.com/track or reply STOP to opt out of alerts."
+    },
+    "red_flags": [
+      {
+        "id": "unexpected_package",
+        "label": "Didn't expect a delivery"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate delivery notification — short code sender, official domain, no payment or login requested.",
+      "tells": [
+        "Comes from a short code (48773), which carriers register with wireless providers",
+        "The tracking link goes to swiftship.com — the carrier's official domain, not a lookalike",
+        "No payment, no clicking a link to 'release' the package, no fee requested"
+      ],
+      "safe_move": "You can track the package at swiftship.com using the tracking number provided.",
+      "consequence": "No action needed unless you want to track the package.",
+      "behavioral_reinforcement": "Legitimate delivery texts use short codes and direct you to the carrier's real website — no fees, no pressure."
+    },
+    "tags": [
+      "delivery",
+      "legit",
+      "short-code",
+      "package-tracking"
+    ]
+  },
+  {
+    "id": "email_subscription_renewal_family_safety_002",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Reader's Companion",
+      "from_handle": "membership@readerscompanion.com",
+      "subject": "Your annual membership renews in 30 days — here's what's included",
+      "body": "Hi Dorothy,\n\nYour Reader's Companion membership (Plan: Annual Digital) renews on March 15 for $39.99. No action needed — we'll charge the card ending in 4471 on file.\n\nTo manage your subscription, visit readerscompanion.com/account or call us at 1-800-555-0221.\n\nThank you for being a member!"
+    },
+    "red_flags": [
+      {
+        "id": "charge_coming",
+        "label": "Upcoming charge on card"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate renewal notice — it comes from the company's real domain, shows your card's last 4 digits, and gives 30 days' notice.",
+      "tells": [
+        "Sent from readerscompanion.com — the company's actual domain",
+        "Shows your card's last 4 digits as confirmation you're an existing customer — scammers don't know this",
+        "30-day advance notice is standard practice for legitimate renewals",
+        "Provides both a web address and phone number for managing your subscription"
+      ],
+      "safe_move": "No action needed if you want to keep the subscription. Visit readerscompanion.com/account to cancel or update your plan.",
+      "consequence": "No risk — this is a routine renewal notice.",
+      "behavioral_reinforcement": "A legitimate renewal shows your last 4 card digits and gives ample notice — fake billing notices create panic with surprise charges."
+    },
+    "tags": [
+      "subscription",
+      "renewal",
+      "legit",
+      "magazine"
+    ]
+  },
+  {
+    "id": "email_tech_support_family_safety_002",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "GuardMax Security",
+      "from_handle": "billing@guardmax.com",
+      "subject": "Your GuardMax subscription renewed successfully",
+      "body": "Hi Robert,\n\nYour GuardMax Total Protection subscription has been renewed for another year. You were charged $89.99 on your Visa ending in 7823.\n\nNo action is needed. Your devices remain protected.\n\nIf you have questions, visit guardmax.com/support or call 1-800-555-0189.\n\nThe GuardMax Team"
+    },
+    "red_flags": [
+      {
+        "id": "charge_already_made",
+        "label": "Charge already applied to your card"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate renewal confirmation — it comes from guardmax.com and shows your actual card details.",
+      "tells": [
+        "Sent from guardmax.com — not guardmax-renewal-center.com or any hyphenated fake",
+        "Confirms the last 4 digits of the card on file — a real company knows this, scammers don't",
+        "No phone number to 'cancel' a surprise charge — just their standard support line",
+        "No urgency, no threats, no links to 'verify' anything"
+      ],
+      "safe_move": "No action needed if you have GuardMax and recognize this subscription.",
+      "consequence": "No risk — this is a confirmation of a known subscription.",
+      "behavioral_reinforcement": "Legitimate billing emails confirm card details you already know — they don't create panic about unexpected charges."
+    },
+    "tags": [
+      "antivirus",
+      "renewal",
+      "legit",
+      "billing-confirmation"
+    ]
+  },
+  {
+    "id": "email_account_verification_family_safety_002",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft Account Team",
+      "from_handle": "account-security@novasoft.com",
+      "subject": "We noticed a new sign-in to your account",
+      "body": "Hi Margaret,\n\nWe noticed a sign-in to your NovaSoft account from a new device (iPhone, Chicago IL) on Feb 14 at 2:11 PM.\n\nIf this was you, no action is needed.\n\nIf this wasn't you, secure your account at novasoft.com/security — do not click any other links.\n\nNovaSoft Security Team"
+    },
+    "red_flags": [
+      {
+        "id": "unfamiliar_sign_in_location",
+        "label": "Sign-in from a city you don't recognize"
+      },
+      {
+        "id": "links_in_security_email",
+        "label": "Link to click in security email"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate security notification from NovaSoft — it comes from novasoft.com and tells you to go to the real site, not a link.",
+      "tells": [
+        "Sent from account-security@novasoft.com — the company's actual domain",
+        "Crucially, the email says 'do not click any other links' and directs you to the main site",
+        "If it were you signing in (e.g., you got a new phone), this is just routine",
+        "Real security alerts don't include 'verify identity' links — they direct you to the main website"
+      ],
+      "safe_move": "If the sign-in was you, no action needed. If not, go to novasoft.com directly and change your password.",
+      "consequence": "No risk from this email — but if someone else signed in, change your password promptly.",
+      "behavioral_reinforcement": "A legitimate security alert directs you to the main website — it does not include a 'verify here' link in the email body."
+    },
+    "tags": [
+      "sign-in-alert",
+      "account-security",
+      "legit",
+      "novasoft"
+    ]
+  },
+  {
+    "id": "email_bank_fraud_alert_family_safety_001",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BluePeak Bank",
+      "from_handle": "alerts@bluepeak.com",
+      "subject": "Unusual activity on your account — please review",
+      "body": "Dear Helen,\n\nWe noticed a transaction that may be unusual for your account:\n\n$214.00 — TechGadgets Online — Feb 12\n\nIf you recognize this transaction, no action is needed. If you don't, please call the number on the back of your debit card or log in at bluepeak.com to dispute it.\n\nDo not reply to this email.\n\nBluePeak Fraud Prevention"
+    },
+    "red_flags": [
+      {
+        "id": "unfamiliar_merchant",
+        "label": "Merchant you don't recognize"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate fraud alert from BluePeak — it comes from bluepeak.com and directs you to call the number on your card, not a link.",
+      "tells": [
+        "Sent from alerts@bluepeak.com — the bank's official domain",
+        "Directs you to the number on your card or bluepeak.com — not a separate support number",
+        "Says 'do not reply to this email' — a real security measure, not a redirect to a scam phone line",
+        "No login link embedded in the email, no urgency, no threat of account closure"
+      ],
+      "safe_move": "If you recognize the transaction, no action needed. If not, call the number on your card.",
+      "consequence": "No risk from this email. Acting on it promptly (if the charge is fraudulent) protects your account.",
+      "behavioral_reinforcement": "Legitimate bank fraud emails reference your card's back number — they don't embed a call-now link to an unknown number."
+    },
+    "tags": [
+      "bank",
+      "fraud-alert",
+      "legit",
+      "bluepeak"
+    ]
+  },
+  {
+    "id": "email_government_impersonation_family_safety_002",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "City Library — Overdue Notice",
+      "from_handle": "notices@citylibraryohio.gov",
+      "subject": "Overdue items on your library account",
+      "body": "Dear Patron,\n\nYou have overdue items on your library account:\n\n- 'The Garden of Lost Souls' (due Jan 28) — $0.50/day\n\nPlease return the item or renew online at citylibraryohio.gov/account. Your total fine is currently $4.00.\n\nThank you,\nCity Library System"
+    },
+    "red_flags": [
+      {
+        "id": "fine_you_owe",
+        "label": "Library fine you may not have expected"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate library overdue notice — it comes from a .gov domain and contains specific, accurate account details.",
+      "tells": [
+        "Sent from citylibraryohio.gov — a government domain, consistent with a public library",
+        "Contains specific book title and a small, realistic fine amount",
+        "Directs you to the library's own website — not a third-party payment link",
+        "No urgency, no threats, no unusual requests"
+      ],
+      "safe_move": "Return the book or renew at citylibraryohio.gov. The fine is small and easy to pay through the official site.",
+      "consequence": "No risk — just a routine overdue notice.",
+      "behavioral_reinforcement": "Government and public institution emails use .gov domains and include specific details matching your actual account."
+    },
+    "tags": [
+      "library",
+      "government",
+      "legit",
+      "fine-notice"
+    ]
+  },
+  {
+    "id": "sms_government_impersonation_family_safety_003",
+    "channel": "sms",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Medicare",
+      "from_handle": "77969",
+      "subject": null,
+      "body": "Medicare: Your annual wellness visit reminder is due. Schedule at medicare.gov or call 1-800-MEDICARE. Reply STOP to opt out of reminders."
+    },
+    "red_flags": [
+      {
+        "id": "government_contacting_you",
+        "label": "Government agency sending a text"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate Medicare wellness reminder — it uses a short code and directs you only to medicare.gov or the official 1-800-MEDICARE line.",
+      "tells": [
+        "Comes from a short code (77969), consistent with official government notification programs",
+        "Only directs to medicare.gov and the official 1-800-MEDICARE number — no other links",
+        "No request for payment, personal information, or urgency",
+        "Offers opt-out via STOP — standard for legitimate government SMS programs"
+      ],
+      "safe_move": "Schedule your wellness visit at medicare.gov if you haven't had one this year.",
+      "consequence": "No risk — this is a health reminder you can act on or ignore.",
+      "behavioral_reinforcement": "Government texts from short codes directing only to .gov websites and known numbers are legitimate — scam texts use 10-digit numbers and sketchy links."
+    },
+    "tags": [
+      "medicare",
+      "government",
+      "legit",
+      "wellness",
+      "short-code"
+    ]
+  },
+  {
+    "id": "email_tech_support_family_safety_003",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PeachDevice Support",
+      "from_handle": "support@peachdevice-help-center.net",
+      "subject": "Your PeachDevice account has been locked — call us now",
+      "body": "We have locked your PeachDevice account after detecting unauthorized access. To unlock your account and recover your photos, call our Senior Assistance Line at 1-888-555-0774. Our technicians are available 24/7. Do not attempt to log in until you call us."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not peachdevice.com)"
+      },
+      {
+        "id": "senior_assistance_line",
+        "label": "Targeted 'Senior Assistance Line'"
+      },
+      {
+        "id": "do_not_login_instruction",
+        "label": "'Do not log in' prevents self-verification"
+      },
+      {
+        "id": "unsolicited_account_lock",
+        "label": "Unsolicited account lock with call-now instruction"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "senior_assistance_line",
+      "do_not_login_instruction"
+    ],
+    "explanation": {
+      "short": "PeachDevice sends account notices from peachdevice.com — this domain is fake, and the 'Senior Assistance Line' is a social engineering signal.",
+      "tells": [
+        "peachdevice-help-center.net is not peachdevice.com — always check the full domain",
+        "A 'Senior Assistance Line' label is used to target older adults specifically",
+        "'Do not log in until you call' prevents you from verifying the claim yourself",
+        "Real PeachDevice account issues are resolved at appleid.apple.com directly"
+      ],
+      "safe_move": "Ignore the email. Go to peachdevice.com directly and sign in to check your account status.",
+      "consequence": "Calling connects you to scammers who ask for remote device access — they will steal your account and financial information.",
+      "behavioral_reinforcement": "When told not to log in and to call instead, that's the scam — always verify account issues yourself through the official website."
+    },
+    "tags": [
+      "tech-support",
+      "account-lock",
+      "elderly-target",
+      "remote-access"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "TalentHub Recruiter",
+      "from_handle": "recruiter@talenthub-careers.net",
+      "subject": "Congratulations! You've been selected for a remote position — $85/hr",
+      "body": "Hi! We reviewed your profile and you're a great fit for our Remote Data Entry Specialist role. Starting pay is $85/hr, fully remote, flexible hours. No experience necessary — we provide full training. Reply with your full name, address, and date of birth to begin the onboarding process."
+    },
+    "red_flags": [
+      {
+        "id": "too_high_pay_no_experience",
+        "label": "$85/hr with no experience required"
+      },
+      {
+        "id": "pii_request_in_email",
+        "label": "Requests full name, address, DOB upfront"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not talenthub.com)"
+      },
+      {
+        "id": "no_interview_required",
+        "label": "Hired without any interview"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "too_high_pay_no_experience",
+      "pii_request_in_email",
+      "no_interview_required"
+    ],
+    "explanation": {
+      "short": "No legitimate employer pays $85/hr for no-experience data entry — and real jobs never request your date of birth over email.",
+      "tells": [
+        "$85/hr data entry with no experience is not a real market rate — it's designed to attract and then exploit",
+        "Legitimate employers collect personal information through secure onboarding portals, not email replies",
+        "You were 'selected' without applying or interviewing — real hiring processes require this",
+        "The domain talenthub-careers.net is not the official TalentHub platform"
+      ],
+      "safe_move": "Do not reply. Research TalentHub directly at talenthub.com and report the solicitation as spam.",
+      "consequence": "Your PII (name, address, DOB) is used for identity theft, or you'll receive a fraudulent check as part of a check overpayment scam.",
+      "behavioral_reinforcement": "Unsolicited job offers with high pay and no interview are bait — real employers post jobs and hold interviews."
+    },
+    "tags": [
+      "job-scam",
+      "data-entry",
+      "pii-theft",
+      "fake-offer"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_002",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "HR — Pinnacle Staffing",
+      "from_handle": "hr@pinnacle-staffingco.com",
+      "subject": "Welcome aboard — your first check is attached",
+      "body": "Congratulations on joining our remote bookkeeping team! Your signing bonus of $3,800 is attached as a check. Please deposit it and use $2,200 to purchase office supplies from our approved vendor (we'll send the link). Keep the remaining $1,600 as your first week's advance. Let us know once deposited!"
+    },
+    "red_flags": [
+      {
+        "id": "check_to_purchase_supplies",
+        "label": "Deposit check and buy supplies — classic check scam"
+      },
+      {
+        "id": "keep_the_remainder",
+        "label": "Told to keep part of the check"
+      },
+      {
+        "id": "approved_vendor_link_incoming",
+        "label": "Supplies from 'approved vendor' link"
+      },
+      {
+        "id": "no_w2_or_hr_portal",
+        "label": "No official onboarding portal"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "check_to_purchase_supplies",
+      "keep_the_remainder",
+      "approved_vendor_link_incoming"
+    ],
+    "explanation": {
+      "short": "This is a check overpayment scam — the check will bounce after you've already spent $2,200 on fake 'supplies.'",
+      "tells": [
+        "Legitimate employers never send checks before you start and ask you to forward money elsewhere",
+        "The check will appear to clear initially, but bounce 1–2 weeks later — you're liable for the full amount",
+        "The 'approved vendor' is controlled by the scammer — your $2,200 goes directly to them",
+        "No real employer onboards a new hire via email check attachment"
+      ],
+      "safe_move": "Do not deposit any check. Report the email as fraud and block the sender.",
+      "consequence": "You deposit, spend $2,200, then the check bounces. Your bank holds you responsible for the negative balance.",
+      "behavioral_reinforcement": "Any job that mails you a check before you start and asks you to send part of it elsewhere is always a scam."
+    },
+    "tags": [
+      "check-scam",
+      "overpayment",
+      "bookkeeping",
+      "remote-work"
+    ]
+  },
+  {
+    "id": "dm_job_seeker_job_seeker_001",
+    "channel": "dm",
+    "pattern_family": "job_seeker",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Sarah Chen — Talent Partner at Apex",
+      "from_handle": "@sarah.chen.apex.recruit",
+      "subject": null,
+      "body": "Hi! I came across your profile and think you'd be a great fit for a Senior UX Role at Apex Technologies ($130k+, remote). We're moving fast on this — can you hop on a quick CloudMeet today? I'll send a link. Just need a soft copy of your resume to share with the hiring manager first."
+    },
+    "red_flags": [
+      {
+        "id": "dm_not_official_recruiter_channel",
+        "label": "Recruiter contacting via personal DM handle"
+      },
+      {
+        "id": "moving_fast_pressure",
+        "label": "'Moving fast' — pressure to decide quickly"
+      },
+      {
+        "id": "resume_via_dm",
+        "label": "Resume requested via social DM"
+      },
+      {
+        "id": "unverifiable_recruiter_identity",
+        "label": "Recruiter identity hard to verify"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "dm_not_official_recruiter_channel",
+      "moving_fast_pressure",
+      "resume_via_dm"
+    ],
+    "explanation": {
+      "short": "Legitimate corporate recruiters contact candidates through verified company accounts or official platforms — not personal-looking DM handles.",
+      "tells": [
+        "A real Apex Technologies recruiter would message from a verified company profile or email",
+        "'Moving fast' is urgency designed to prevent you from verifying the recruiter's identity",
+        "Sending your resume in DM bypasses any official application system — it may be harvested for identity theft",
+        "The handle @sarah.chen.apex.recruit is a personal-style account, not a verified company presence"
+      ],
+      "safe_move": "Don't send your resume. Search for the role on Apex Technologies' official site. If interested, apply through the official channel.",
+      "consequence": "Your resume contains your home address, phone, and work history — valuable for identity theft or targeted spear phishing.",
+      "behavioral_reinforcement": "Verify recruiter identity through the company's official website before sharing any documents."
+    },
+    "tags": [
+      "recruiter",
+      "linkedin-style",
+      "resume-theft",
+      "social-engineering"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_003",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Onboarding — BrightPath Solutions",
+      "from_handle": "onboarding@brightpath-solutions.co",
+      "subject": "Action Required: Purchase your remote work equipment",
+      "body": "Welcome to BrightPath! Before your start date, you'll need to purchase your home office equipment through our certified supplier. Total cost: $847. You'll be fully reimbursed on your first paycheck. Purchase link: brightpath-equip.com/order\n\nPlease complete this within 48 hours to hold your position."
+    },
+    "red_flags": [
+      {
+        "id": "upfront_equipment_purchase",
+        "label": "Must buy equipment before starting"
+      },
+      {
+        "id": "reimbursed_on_first_check_promise",
+        "label": "Reimbursement promised on first paycheck"
+      },
+      {
+        "id": "third_party_supplier_link",
+        "label": "Equipment from a separate third-party link"
+      },
+      {
+        "id": "lose_position_urgency",
+        "label": "'Hold your position' 48-hour threat"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "upfront_equipment_purchase",
+      "reimbursed_on_first_check_promise",
+      "third_party_supplier_link"
+    ],
+    "explanation": {
+      "short": "Legitimate remote employers ship equipment to you or reimburse through official expense systems — they never ask new hires to buy from a third-party link.",
+      "tells": [
+        "Real companies either ship hardware directly or set up corporate accounts — they don't ask new hires to buy equipment out-of-pocket upfront",
+        "The reimbursement promise disappears once you pay — you will never hear from 'BrightPath' again",
+        "The equipment link (brightpath-equip.com) is a separate domain from the employer — a fake vendor",
+        ".co domains are cheap and commonly used for job scams"
+      ],
+      "safe_move": "Do not purchase anything. Verify the company exists at brightpathsolutions.com or CareerNet. Contact them through an independently verified number.",
+      "consequence": "You pay $847, the equipment never arrives, and the 'company' disappears. The money is unrecoverable.",
+      "behavioral_reinforcement": "Any job that asks you to pay for equipment before starting — with a reimbursement promise — is a scam."
+    },
+    "tags": [
+      "equipment-scam",
+      "onboarding",
+      "remote-work",
+      "upfront-payment"
+    ]
+  },
+  {
+    "id": "email_credential_phishing_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "JobBridge",
+      "from_handle": "alerts@jobbridge-notifications.com",
+      "subject": "3 employers viewed your profile — verify to see who",
+      "body": "Great news! 3 recruiters viewed your JobBridge profile in the last 24 hours. Log in to see who's interested and send them a message before they move on. Your profile visibility expires in 12 hours without verification.\n\nVerify and see who viewed you: jobbridge-verify.com/profile"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not jobbridge.com)"
+      },
+      {
+        "id": "urgency_profile_expires",
+        "label": "Profile 'expires' in 12 hours"
+      },
+      {
+        "id": "verify_to_see_link",
+        "label": "Must verify via link to see results"
+      },
+      {
+        "id": "curiosity_bait",
+        "label": "Who viewed you — curiosity hook"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "urgency_profile_expires",
+      "verify_to_see_link"
+    ],
+    "explanation": {
+      "short": "The domain is a lookalike — the real JobBridge sends alerts from jobbridge.com, not jobbridge-notifications.com.",
+      "tells": [
+        "jobbridge-notifications.com is not jobbridge.com — real platforms send from their own domain",
+        "'Profile visibility expires in 12 hours' is fabricated urgency — job platforms don't delete profiles this way",
+        "The 'verify here' link leads to a fake login page to capture your credentials",
+        "Curiosity about who viewed you is the emotional hook to make you click without checking the URL"
+      ],
+      "safe_move": "Go to jobbridge.com directly and log in there to check profile views.",
+      "consequence": "The fake login page captures your JobBridge username and password — the scammer can then access your profile and apply to jobs as you.",
+      "behavioral_reinforcement": "When a job platform 'notification' asks you to verify, always go directly to the site — never through the email link."
+    },
+    "tags": [
+      "phishing",
+      "job-platform",
+      "credential-theft",
+      "fake-login"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_004",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "HR Department",
+      "from_handle": "hr@workfromhome-earnmore.biz",
+      "subject": "Earn $500–$800/week stuffing envelopes from home",
+      "body": "We are looking for motivated individuals to earn $500–$800 weekly stuffing envelopes at home. No experience needed. Start immediately. There is a small $25 registration/materials fee to receive your starter kit. Pay at the link below and we'll ship your kit within 3 days.\n\nearnathhome-register.com/start"
+    },
+    "red_flags": [
+      {
+        "id": "envelope_stuffing_not_real_job",
+        "label": "Envelope stuffing is not a real paid job"
+      },
+      {
+        "id": "upfront_registration_fee",
+        "label": "Must pay $25 to 'start'"
+      },
+      {
+        "id": "unprofessional_domain",
+        "label": "Domain (workfromhome-earnmore.biz) not a real company"
+      },
+      {
+        "id": "no_company_name",
+        "label": "No verifiable company name"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "envelope_stuffing_not_real_job",
+      "upfront_registration_fee",
+      "unprofessional_domain"
+    ],
+    "explanation": {
+      "short": "Envelope stuffing jobs have been a well-known scam for decades — no one pays $800/week for this, and any job requiring a fee to start is a scam.",
+      "tells": [
+        "Legitimate jobs never require you to pay a fee to receive work or materials",
+        "Envelope stuffing as paid employment does not exist at scale — it's always a scam front",
+        "The .biz domain and generic 'HR Department' sender indicate no real company",
+        "The fee is the entire point — you pay $25, receive nothing meaningful, and the scammers move on"
+      ],
+      "safe_move": "Ignore and delete. Report as job scam if you received it through a job platform.",
+      "consequence": "You pay $25, receive worthless 'materials' or nothing at all, and the 'company' is unreachable.",
+      "behavioral_reinforcement": "Any job requiring you to pay a fee to get started — however small — is a scam. Legitimate employers pay you, not the reverse."
+    },
+    "tags": [
+      "envelope-stuffing",
+      "work-from-home",
+      "fee-to-start",
+      "classic-scam"
+    ]
+  },
+  {
+    "id": "dm_job_seeker_job_seeker_002",
+    "channel": "dm",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Marcus Lee",
+      "from_handle": "@marcuslee_brand",
+      "subject": null,
+      "body": "Hey! I manage social media for several brands and I'm looking for brand ambassadors. You'd post 2–3 times a week about products and earn $300–$500/week. Just need to buy a starter product bundle at a discount ($129) to get familiar with the line. DM me 'INTERESTED' to start!"
+    },
+    "red_flags": [
+      {
+        "id": "buy_product_to_work",
+        "label": "Must buy products to become an ambassador"
+      },
+      {
+        "id": "unsolicited_brand_ambassador_dm",
+        "label": "Unsolicited DM job offer"
+      },
+      {
+        "id": "personal_account_not_brand",
+        "label": "Offer comes from personal account, not brand"
+      },
+      {
+        "id": "mlm_pattern",
+        "label": "Pay to participate structure"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "buy_product_to_work",
+      "unsolicited_brand_ambassador_dm",
+      "mlm_pattern"
+    ],
+    "explanation": {
+      "short": "Real brand ambassadors are not required to purchase products upfront — any arrangement requiring payment to work is an MLM or scam.",
+      "tells": [
+        "Legitimate brand partnerships provide products for free as part of a paid arrangement",
+        "Paying $129 for a 'starter bundle' is the actual business model — your income is a fiction",
+        "Real brand ambassador programs are run through official company channels, not personal DMs",
+        "The income promise ($300–$500/week) is unverifiable and designed to justify the upfront cost"
+      ],
+      "safe_move": "Do not pay. Look up the brand's official ambassador program at their company website if interested.",
+      "consequence": "You pay $129 for products you may not be able to sell, and the promised income never materializes.",
+      "behavioral_reinforcement": "Any job offer that requires you to buy something first is either a scam or an MLM — neither are reliable income."
+    },
+    "tags": [
+      "brand-ambassador",
+      "mlm",
+      "upfront-payment",
+      "social-media"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_005",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "OperationsHire",
+      "from_handle": "noreply@operationshire.co",
+      "subject": "You are hired as a Mystery Shopper — check enclosed",
+      "body": "Congratulations! You have been selected as a Mystery Shopper for our national retail audit program. Your assignment kit and $2,950 check will arrive by SwiftShip within 3 days. Deposit the check, keep $350 as your fee, and use the remainder to evaluate MoneyGram services at Walmart. Send the evaluation via the included form."
+    },
+    "red_flags": [
+      {
+        "id": "check_scam_pattern",
+        "label": "Deposit check and wire money elsewhere"
+      },
+      {
+        "id": "selected_without_applying",
+        "label": "Hired without applying or interviewing"
+      },
+      {
+        "id": "evaluate_money_transfer_service",
+        "label": "Job involves wiring money via MoneyGram"
+      },
+      {
+        "id": "keep_fee_from_check",
+        "label": "Keep a cut from the check"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "check_scam_pattern",
+      "selected_without_applying",
+      "evaluate_money_transfer_service"
+    ],
+    "explanation": {
+      "short": "Mystery shopper check scams are one of the most common job frauds — the check bounces after you've already wired $2,600.",
+      "tells": [
+        "Real mystery shopping pays $10–$25 per assignment — not $350 plus access to thousands of dollars",
+        "Legitimate mystery shoppers are never asked to evaluate wire transfer services with their own money",
+        "The check will clear initially but bounce 1–2 weeks later — you are liable for the wire you sent",
+        "Selected without applying or any interview process is a universal scam signal"
+      ],
+      "safe_move": "Do not deposit any unsolicited check. Report to the FTC at reportfraud.ftc.gov.",
+      "consequence": "You send $2,600 via MoneyGram before the check bounces. That money is gone permanently.",
+      "behavioral_reinforcement": "Mystery shopping jobs that mail you a check and ask you to wire money are always scams — 100% of the time."
+    },
+    "tags": [
+      "mystery-shopper",
+      "check-scam",
+      "wire-transfer",
+      "classic-fraud"
+    ]
+  },
+  {
+    "id": "email_malware_attachment_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "malware_attachment",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Contracts — Meridian Group",
+      "from_handle": "contracts@meridian-group.co",
+      "subject": "Employment Agreement — Please Review and Sign",
+      "body": "Please find attached your employment agreement for the Remote Project Coordinator role. Review the document, enable macros if prompted to view the full contract, and reply with your signed copy.\n\nStart date: March 1. We look forward to welcoming you to the team!"
+    },
+    "red_flags": [
+      {
+        "id": "enable_macros_instruction",
+        "label": "'Enable macros' to view document"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain, not an established company"
+      },
+      {
+        "id": "contract_without_interview_process",
+        "label": "Contract sent without prior interview contact"
+      },
+      {
+        "id": "attachment_from_unknown_sender",
+        "label": "Attachment from unverified sender"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "enable_macros_instruction",
+      "lookalike_domain",
+      "attachment_from_unknown_sender"
+    ],
+    "explanation": {
+      "short": "Enabling macros in a Word document from an unknown sender is one of the most common ways malware is installed.",
+      "tells": [
+        "'Enable macros to view the full document' is a standard malware delivery technique — real contracts don't require macros",
+        "Legitimate employment contracts are sent via SignVault-style portals, not macro-enabled Word files",
+        "The .co domain is cheap and easy to register — commonly used in impersonation attacks",
+        "You have no prior relationship with 'Meridian Group' to explain this contract"
+      ],
+      "safe_move": "Do not open the attachment or enable macros. Research the company independently and contact them through an official channel.",
+      "consequence": "Enabling macros runs hidden code that installs a keylogger or remote access tool on your computer.",
+      "behavioral_reinforcement": "Never enable macros in an Office document you received unexpectedly — this is almost always malware delivery."
+    },
+    "tags": [
+      "malware",
+      "macros",
+      "fake-contract",
+      "attachment"
+    ]
+  },
+  {
+    "id": "sms_job_seeker_job_seeker_001",
+    "channel": "sms",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CareerLink",
+      "from_handle": "+1 (646) 555-0284",
+      "subject": null,
+      "body": "CareerLink: Your application has been reviewed and you've been shortlisted for a remote role paying $72/hr. Complete your profile at: careerlink-apply.net/shortlist?ref=7829"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not careerlink.com)"
+      },
+      {
+        "id": "unknown_number",
+        "label": "Not a CareerLink short code"
+      },
+      {
+        "id": "shortlisted_without_recent_application",
+        "label": "May not have applied to this"
+      },
+      {
+        "id": "high_rate_generic_offer",
+        "label": "Vague $72/hr role with no details"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "unknown_number",
+      "high_rate_generic_offer"
+    ],
+    "explanation": {
+      "short": "A $72/hr shortlisting text from a random number pointing to a lookalike domain is credential harvesting, not a job offer.",
+      "tells": [
+        "CareerLink would message from a short code or from careerlink.com — not a 10-digit number",
+        "careerlink-apply.net is not careerlink.com — the hyphenated domain is a fake",
+        "No role title, no company name, no reason for the high rate — real shortlist emails include specifics",
+        "The link contains a tracking ref parameter designed to associate your click with your phone number"
+      ],
+      "safe_move": "Log in to CareerLink directly at careerlink.com to check your applications and messages.",
+      "consequence": "The link leads to a fake login page — your credentials are captured and your job platform account is taken over.",
+      "behavioral_reinforcement": "Job platform notifications should always be verified by logging in to the platform directly, never through a link in a text."
+    },
+    "tags": [
+      "job-platform",
+      "credential-phishing",
+      "shortlist-bait",
+      "sms"
+    ]
+  },
+  {
+    "id": "email_oauth_consent_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "oauth_consent",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "HireNow Applicant Portal",
+      "from_handle": "apply@hirenow-portal.co",
+      "subject": "Authorize access to complete your application",
+      "body": "To complete your application for the Data Analyst role, please authorize our HireNow portal to access your CloudSync account. This is required to verify your work history documents.\n\nAuthorize: hirenow-portal.co/oauth/cloudsync\n\nThis process takes under 2 minutes."
+    },
+    "red_flags": [
+      {
+        "id": "third_party_cloud_access_for_job",
+        "label": "Job application requires cloud account access"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain for 'official' job portal"
+      },
+      {
+        "id": "cloud_access_to_verify_work_history",
+        "label": "Odd reason for cloud access"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "third_party_cloud_access_for_job",
+      "lookalike_domain",
+      "cloud_access_to_verify_work_history"
+    ],
+    "explanation": {
+      "short": "No legitimate job portal requires access to your cloud storage account — this is an OAuth token theft attempt.",
+      "tells": [
+        "Employers verify work history via references and resume documents — never by accessing your personal cloud",
+        "Authorizing the OAuth link gives the fake portal read/write access to all your cloud files",
+        "The .co domain is a budget registration typically avoided by established companies",
+        "Real applicant portals are established brands (Greenhouse, Lever, Workday) with verifiable company ownership"
+      ],
+      "safe_move": "Do not authorize. Research the company independently. Submit documents as PDF attachments through official channels.",
+      "consequence": "The OAuth grant gives attackers access to your entire cloud account — files, emails, and anything synced.",
+      "behavioral_reinforcement": "Never authorize third-party apps to access your accounts during a job application — no legitimate employer requires this."
+    },
+    "tags": [
+      "oauth",
+      "cloud-access",
+      "token-theft",
+      "job-application"
+    ]
+  },
+  {
+    "id": "dm_romance_social_job_seeker_001",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 5,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Elaine Xu",
+      "from_handle": "@elaine.xu.finance",
+      "subject": null,
+      "body": "Hey! I saw you're in finance too — small world! I've been doing freelance consulting while also investing. My mentor taught me a crypto strategy that's been life-changing. I was skeptical too but I've made $18k this month. Happy to show you how it works over a call sometime if you're curious? No pressure at all!"
+    },
+    "red_flags": [
+      {
+        "id": "strangers_investment_opportunity_dm",
+        "label": "Stranger offering investment advice via DM"
+      },
+      {
+        "id": "mentor_framework",
+        "label": "Mentor who taught a 'strategy'"
+      },
+      {
+        "id": "life_changing_returns",
+        "label": "$18k in a month — unverifiable claim"
+      },
+      {
+        "id": "no_pressure_framing",
+        "label": "'No pressure' designed to lower guard"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "strangers_investment_opportunity_dm",
+      "mentor_framework",
+      "life_changing_returns"
+    ],
+    "explanation": {
+      "short": "This is the opening move of a pig-butchering scam — build trust over weeks, then introduce a 'mentor' and a fake crypto platform.",
+      "tells": [
+        "The script follows pig-butchering exactly: shared interest → casual conversation → mention of crypto gains → offer to explain",
+        "The 'mentor' is the next step — eventually you'll be invited to invest on a platform the mentor 'recommends'",
+        "$18k/month claims are unverifiable and are used to establish credibility without evidence",
+        "'No pressure at all' is a disarming phrase designed to make you lower skepticism"
+      ],
+      "safe_move": "Do not engage further. Block the account. Report it as a romance/investment scam on the platform.",
+      "consequence": "Engaging leads to a weeks-long relationship that ends with you investing on a fake exchange where your funds are unwithdrawable.",
+      "behavioral_reinforcement": "Strangers who mention crypto gains and offer to teach you their 'strategy' are running pig-butchering scams — 100% of the time."
+    },
+    "tags": [
+      "pig-butchering",
+      "crypto",
+      "romance-investment",
+      "pig-butchering"
+    ]
+  },
+  {
+    "id": "email_credential_phishing_job_seeker_002",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "GlassDoor Alerts",
+      "from_handle": "alerts@glassdoor-jobs.net",
+      "subject": "Your Glassdoor review was flagged — verify account to avoid suspension",
+      "body": "A recent review you posted may violate our community guidelines. To prevent account suspension, please verify your identity at the link below within 48 hours.\n\nVerify: glassdoor-jobs.net/verify-account\n\nFailure to verify will result in removal of your profile and reviews."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "glassdoor-jobs.net, not glassdoor.com"
+      },
+      {
+        "id": "account_suspension_threat",
+        "label": "Threat to remove profile and reviews"
+      },
+      {
+        "id": "urgency_48_hours",
+        "label": "48-hour verification window"
+      },
+      {
+        "id": "verify_identity_link",
+        "label": "Link to 'verify identity'"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "account_suspension_threat",
+      "verify_identity_link"
+    ],
+    "explanation": {
+      "short": "glassdoor-jobs.net is not glassdoor.com — this is a credential phishing page designed to steal your Glassdoor login.",
+      "tells": [
+        "Real Glassdoor communications come from @glassdoor.com — not glassdoor-jobs.net",
+        "Glassdoor would display a warning directly in your account dashboard, not suspend you via email alone",
+        "The 48-hour urgency and 'verify identity' link pattern is classic phishing",
+        "As a job seeker with an active Glassdoor account, this threat is especially designed to motivate action"
+      ],
+      "safe_move": "Go directly to glassdoor.com and log in to check your account status — do not use the email link.",
+      "consequence": "The fake login captures your Glassdoor credentials — and if you reuse passwords, many other accounts too.",
+      "behavioral_reinforcement": "Account violation notices are always verifiable by logging into the platform directly — never act on email links alone."
+    },
+    "tags": [
+      "phishing",
+      "glassdoor",
+      "credential-theft",
+      "job-platform"
+    ]
+  },
+  {
+    "id": "email_otp_sim_swap_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "otp_sim_swap",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Payroll Setup — Vertex Corp",
+      "from_handle": "payroll@vertex-corp-hr.co",
+      "subject": "Confirm your phone number to receive direct deposit",
+      "body": "Hi! To complete your payroll setup, we need to verify your phone number for direct deposit. We'll send a 6-digit code to your phone. Please reply to this email with the code once you receive it so we can finalize your account."
+    },
+    "red_flags": [
+      {
+        "id": "email_reply_with_otp_code",
+        "label": "Asked to email back a code sent to your phone"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain for HR (not vertex-corp.com)"
+      },
+      {
+        "id": "direct_deposit_setup_via_email",
+        "label": "Payroll setup via email reply, not HR portal"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "email_reply_with_otp_code",
+      "lookalike_domain",
+      "direct_deposit_setup_via_email"
+    ],
+    "explanation": {
+      "short": "Legitimate payroll departments use secure HR portals — asking you to reply to an email with an SMS code is account takeover.",
+      "tells": [
+        "They triggered a verification code to be sent to your number, and now want you to hand it back via email",
+        "The code is not for 'direct deposit setup' — it's the key to whatever account they're targeting",
+        "Real payroll onboarding uses platforms like Workday, ADP, or Gusto — not email code exchanges",
+        "The .co domain is a budget registration inconsistent with a real corporation's HR system"
+      ],
+      "safe_move": "Do not reply with any code. Contact Vertex Corp directly using a phone number from their official website to verify.",
+      "consequence": "The code hands them access to whatever account it was issued for — likely your bank or email.",
+      "behavioral_reinforcement": "Payroll setup never requires you to share a code that was texted to you — that is account takeover, not onboarding."
+    },
+    "tags": [
+      "otp",
+      "payroll-scam",
+      "account-takeover",
+      "onboarding"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_006",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Subscription Ops — Zoomify",
+      "from_handle": "billing@zoomify-business.net",
+      "subject": "Your Zoomify Pro account for your interview is expiring",
+      "body": "Your free Zoomify Pro trial for job seekers expires in 24 hours. To continue using Zoomify for your upcoming interviews without interruption, renew at $14.99/month. Act now to avoid reverting to basic — which disables video in interviews.\n\nRenew: zoomify-business.net/renew"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_video_platform",
+        "label": "Lookalike of real video platform (not zoomify.com)"
+      },
+      {
+        "id": "job_seeker_specific_bait",
+        "label": "Targeted at job seekers — interview disruption fear"
+      },
+      {
+        "id": "urgency_24_hours",
+        "label": "24-hour expiry with interview threat"
+      },
+      {
+        "id": "payment_link_in_email",
+        "label": "Renewal link in email body"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_video_platform",
+      "job_seeker_specific_bait",
+      "payment_link_in_email"
+    ],
+    "explanation": {
+      "short": "zoomify-business.net is a fake — this phishing email exploits job seekers' anxiety about interview tools to steal payment info.",
+      "tells": [
+        "The sender domain is zoomify-business.net, not zoomify.com — always check the actual domain",
+        "Threatening to disable video in upcoming interviews targets the specific fear of a job seeker",
+        "Renewing through an email link goes to a fake payment page — your card details are captured",
+        "Real video conferencing apps manage subscriptions within their own app, not via emailed links"
+      ],
+      "safe_move": "Go to zoomify.com directly to check your subscription status. Do not use the link in the email.",
+      "consequence": "Your payment card details are captured by the fake renewal page — no subscription is actually renewed.",
+      "behavioral_reinforcement": "Manage all software subscriptions through the official app or website — never through a renewal link in an email."
+    },
+    "tags": [
+      "subscription-scam",
+      "video-conference",
+      "job-seeker-bait",
+      "payment-phishing"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_007",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "TalentHub — Recruiting Team",
+      "from_handle": "recruiting@talenthub.com",
+      "subject": "Update on your application to Meridian Analytics",
+      "body": "Hi Alex,\n\nThank you for applying to the Data Analyst position at Meridian Analytics. After careful review, we've decided to move forward with other candidates whose experience more closely matches the role.\n\nWe'll keep your profile on file and encourage you to apply to future openings.\n\nBest,\nTalentHub Recruiting"
+    },
+    "red_flags": [
+      {
+        "id": "rejection_you_didnt_expect",
+        "label": "Application rejection you don't remember"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate rejection email — it comes from talenthub.com, references a specific role, and asks for nothing.",
+      "tells": [
+        "Sent from talenthub.com — the platform's official domain",
+        "References a specific company (Meridian Analytics) and role (Data Analyst) consistent with a real application",
+        "No links to click, no requests for information, no urgency",
+        "Polite, specific, and asks nothing from you — scam emails always want something"
+      ],
+      "safe_move": "No action needed. Keep track of your applications to recognize legitimate follow-ups.",
+      "consequence": "No risk — this is a routine rejection notice.",
+      "behavioral_reinforcement": "Legitimate rejection emails come from the platform's domain, reference your specific application, and ask for nothing."
+    },
+    "tags": [
+      "rejection",
+      "job-application",
+      "legit",
+      "talenthub"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_008",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Veritas HR — Tara Simmons",
+      "from_handle": "tsimmons@veritashr.com",
+      "subject": "Interview Confirmation — Thursday Feb 27 at 2pm EST",
+      "body": "Hi Jordan,\n\nThis is a confirmation for your video interview on Thursday, February 27 at 2:00 PM EST for the Product Manager role at Veritas.\n\nInterview link: cloudmeet.com/xyz-abc-def (CloudMeet)\nDuration: 45 minutes\nInterviewers: Tara Simmons (HR), Devon Park (Hiring Manager)\n\nPlease bring a copy of your resume. Let me know if you need to reschedule.\n\nTara Simmons | HR Business Partner | Veritas HR"
+    },
+    "red_flags": [
+      {
+        "id": "interview_link_in_email",
+        "label": "Video call link in email"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate interview confirmation — it comes from the company's real domain and contains specific, consistent details.",
+      "tells": [
+        "Sent from tsimmons@veritashr.com — a corporate email at the company's domain",
+        "Contains specific interviewer names, a real-looking CloudMeet link, and matches a role you presumably applied for",
+        "No payment, no credential request, no urgency beyond normal scheduling",
+        "Provides a reschedule option — a normal professional courtesy"
+      ],
+      "safe_move": "Add it to your calendar and prepare for the interview. Verify by checking your original application confirmation.",
+      "consequence": "No risk — this is a routine interview confirmation.",
+      "behavioral_reinforcement": "Interview confirmations from company domains with specific names and a rescheduling option are legitimate — scams don't offer to reschedule."
+    },
+    "tags": [
+      "interview",
+      "confirmation",
+      "legit",
+      "job-application"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_009",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Sterling Background Services",
+      "from_handle": "noreply@sterlingcheck.com",
+      "subject": "Background check requested by Apex Technologies",
+      "body": "Apex Technologies has requested a background check as part of your pre-employment process. Please complete the form at sterlingcheck.com/candidate to submit your information securely.\n\nThis authorization expires in 7 days. If you have not applied to Apex Technologies, disregard this email."
+    },
+    "red_flags": [
+      {
+        "id": "third_party_requesting_pii",
+        "label": "Third party asking for personal info"
+      },
+      {
+        "id": "form_link_in_email",
+        "label": "Link to external form"
+      },
+      {
+        "id": "7_day_deadline",
+        "label": "7-day deadline"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate background check request — Sterling is a real background screening company, and the link goes to sterlingcheck.com.",
+      "tells": [
+        "Sterling Background Services (sterlingcheck.com) is a major background screening company used by many employers",
+        "The link goes to sterlingcheck.com — the company's real domain, not a lookalike",
+        "Background checks from a third party are standard hiring practice before employment",
+        "The email acknowledges you may not have applied ('if you have not applied, disregard') — scams don't do this"
+      ],
+      "safe_move": "If you recently interviewed at Apex Technologies and are expecting this step, proceed at sterlingcheck.com.",
+      "consequence": "No risk. If unexpected, verify with your Apex Technologies contact first.",
+      "behavioral_reinforcement": "Background checks from known services like Sterling are legitimate — verify the link goes to the screener's official domain."
+    },
+    "tags": [
+      "background-check",
+      "pre-employment",
+      "legit",
+      "third-party"
+    ]
+  },
+  {
+    "id": "email_job_seeker_job_seeker_010",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Derek Walsh — Veritas HR",
+      "from_handle": "dwalsh@veritashr.com",
+      "subject": "Offer Letter — Product Manager, Veritas",
+      "body": "Hi Jordan,\n\nPlease find attached your offer letter for the Product Manager position at Veritas. Start date: March 10. Salary: $95,000/year plus benefits.\n\nWe use Workday for onboarding — you'll receive a separate invite from workday.com within 24 hours to complete your forms.\n\nPlease sign via SignVault (a separate email will follow from signvault.com) and return by February 28.\n\nCongratulations!\nDerek Walsh | VP of HR | Veritas"
+    },
+    "red_flags": [
+      {
+        "id": "attachment_in_offer_email",
+        "label": "Attachment in offer email"
+      },
+      {
+        "id": "multiple_platforms_mentioned",
+        "label": "Multiple third-party platforms referenced"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate offer letter — from a company domain, referencing established platforms (Workday, SignVault), with specific details matching your interview process.",
+      "tells": [
+        "Sent from dwalsh@veritashr.com — the company's domain, consistent with prior contact",
+        "Mentions Workday and SignVault for onboarding — established enterprise platforms with their own domains",
+        "Specific salary, start date, and role are consistent with a real offer following an interview",
+        "No payment requests, no unusual links — just instructions to use established tools"
+      ],
+      "safe_move": "Sign via the SignVault email that comes from signvault.com. Complete onboarding through the Workday invite from workday.com.",
+      "consequence": "No risk from this email. Verify the SignVault and WorkPortal emails also come from their official domains.",
+      "behavioral_reinforcement": "A real offer letter from a company's domain referencing established HR platforms is legitimate — verify each platform invite separately."
+    },
+    "tags": [
+      "offer-letter",
+      "onboarding",
+      "legit",
+      "job-application"
+    ]
+  },
+  {
+    "id": "dm_job_seeker_job_seeker_003",
+    "channel": "dm",
+    "pattern_family": "job_seeker",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "TalentHub",
+      "from_handle": "@talenthub_official",
+      "subject": null,
+      "body": "Hi! A recruiter at Apex Technologies viewed your profile and saved it to their candidate list. Log in at talenthub.com to see your profile activity and message them directly if you're interested."
+    },
+    "red_flags": [
+      {
+        "id": "platform_dm_with_link",
+        "label": "Platform DM with link to site"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate TalentHub platform notification — it comes from their verified account and directs you to talenthub.com.",
+      "tells": [
+        "Sent from @talenthub_official — a verified platform account, not a personal-style handle",
+        "Directs you to talenthub.com — the platform's own domain",
+        "No request for personal info, no urgency, no payment",
+        "Profile activity notifications are a standard job platform feature"
+      ],
+      "safe_move": "Log in to talenthub.com to view your profile activity and reach out to the recruiter if interested.",
+      "consequence": "No risk — routine job platform activity notification.",
+      "behavioral_reinforcement": "Legitimate job platform notifications come from verified accounts and direct you only to the platform's official domain."
+    },
+    "tags": [
+      "job-platform",
+      "profile-view",
+      "legit",
+      "recruiter"
+    ]
+  },
+  {
+    "id": "email_bank_fraud_alert_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BluePeak Bank",
+      "from_handle": "security@bluepeak.com",
+      "subject": "Unusual direct deposit detected on your account",
+      "body": "Hi Jordan,\n\nWe noticed a direct deposit of $3,800 from PINNACLE-STAFFING was posted to your account today — which is outside your usual deposit history.\n\nIf this was expected (e.g., a new employer or freelance payment), no action is needed.\n\nIf this is unexpected, please call the number on the back of your debit card immediately.\n\nBluePeak Security Team"
+    },
+    "red_flags": [
+      {
+        "id": "unexpected_large_deposit",
+        "label": "Unexpected large deposit from unknown source"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate bank security notice — it comes from bluepeak.com and directs you to your card's back number, not a link.",
+      "tells": [
+        "Sent from security@bluepeak.com — the bank's official domain",
+        "Asks you to call the number on your card — not a separate number in the email",
+        "Acknowledges a legitimate scenario (new employer) to help you assess before acting",
+        "No embedded link to click, no urgency beyond 'if unexpected, call your bank'"
+      ],
+      "safe_move": "If the deposit is from a new employer or side work, no action needed. If unexpected, call BluePeak using the number on your card.",
+      "consequence": "No risk from this email. An unexpected deposit could indicate a check scam setup — if uncertain, call your bank.",
+      "behavioral_reinforcement": "Legitimate bank security emails direct you to your card's back number — they do not include emergency call-now links."
+    },
+    "tags": [
+      "bank",
+      "direct-deposit",
+      "fraud-alert",
+      "legit"
+    ]
+  },
+  {
+    "id": "email_account_verification_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "JobBridge Security",
+      "from_handle": "security@jobbridge.com",
+      "subject": "Password reset requested for your account",
+      "body": "We received a request to reset the password for your JobBridge account (jordan@email.com). If you requested this, click the link below within 1 hour:\n\njobbridge.com/reset?token=a9f2c...\n\nIf you did not request this, no action is needed — your current password remains unchanged."
+    },
+    "red_flags": [
+      {
+        "id": "password_reset_you_might_not_have_requested",
+        "label": "Password reset you didn't initiate"
+      },
+      {
+        "id": "link_with_token",
+        "label": "Link with token parameter"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate password reset email — it comes from jobbridge.com, only acts if you requested it, and assures you no action is needed if you didn't.",
+      "tells": [
+        "Sent from security@jobbridge.com — the platform's official domain",
+        "The reset link goes to jobbridge.com — the platform's own domain with a reset token",
+        "Explicitly states 'if you did not request this, no action is needed' — phishing emails never say this",
+        "1-hour token expiry is standard security practice for password resets"
+      ],
+      "safe_move": "If you initiated the reset, use the link. If not, ignore it — your password hasn't changed.",
+      "consequence": "No risk. If you didn't request a reset, someone may be trying your email on the platform — consider enabling two-factor authentication.",
+      "behavioral_reinforcement": "Legitimate password reset emails offer a clear 'if you didn't do this, ignore it' option — phishing emails create panic instead."
+    },
+    "tags": [
+      "password-reset",
+      "account-security",
+      "legit",
+      "job-platform"
+    ]
+  },
+  {
+    "id": "email_subscription_renewal_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CareerBoost Pro",
+      "from_handle": "billing@careerboost-renewals.net",
+      "subject": "Your resume optimizer subscription renews today — $189/year",
+      "body": "Your CareerBoost Pro annual subscription will renew for $189 today. If you did not authorize this charge, call our cancellation team at 1-866-555-0412 within 6 hours to receive a refund."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "careerboost-renewals.net, not careerboost.com"
+      },
+      {
+        "id": "surprise_charge_to_call",
+        "label": "Surprise charge — must call to cancel"
+      },
+      {
+        "id": "job_seeker_targeted_tool",
+        "label": "Exploits job seeker fear of missing a paid tool"
+      },
+      {
+        "id": "short_window_6_hours",
+        "label": "6-hour cancellation window"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "surprise_charge_to_call"
+    ],
+    "explanation": {
+      "short": "This fake billing notice targets job seekers who may have trialed resume tools — the phone number is the trap.",
+      "tells": [
+        "careerboost-renewals.net is not careerboost.com — real companies bill from their own domain",
+        "Calling the 'cancellation team' connects to scammers who ask for remote access to 'process the refund'",
+        "Job seekers commonly use resume tools, making this a targeted, plausible-sounding scam",
+        "Real subscription renewal emails show the last 4 digits of the card being charged"
+      ],
+      "safe_move": "Do not call. Check your bank statement. If you have a CareerBoost account, manage billing at careerboost.com directly.",
+      "consequence": "Calling leads to a refund scam where they ask for remote computer access and steal banking credentials.",
+      "behavioral_reinforcement": "Never call a number in a billing email about an unexpected charge — verify all billing through the company's official website."
+    },
+    "tags": [
+      "subscription-scam",
+      "resume-tool",
+      "job-seeker-bait",
+      "fake-billing"
+    ]
+  },
+  {
+    "id": "email_government_impersonation_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "USCIS Employment Eligibility",
+      "from_handle": "i9verify@uscis-employment-verify.com",
+      "subject": "Your I-9 Employment Eligibility Verification is pending",
+      "body": "Your employer has initiated an I-9 verification with USCIS. You are required to complete your electronic I-9 form within 3 business days or your employment authorization will be placed on hold. Complete at: uscis-employment-verify.com/i9"
+    },
+    "red_flags": [
+      {
+        "id": "gov_agency_using_dot_com",
+        "label": "USCIS using .com not .gov"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "uscis-employment-verify.com is not uscis.gov"
+      },
+      {
+        "id": "employment_hold_threat",
+        "label": "Employment authorization threatened"
+      },
+      {
+        "id": "urgent_3_day_window",
+        "label": "3-day deadline for government form"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "gov_agency_using_dot_com",
+      "lookalike_domain",
+      "employment_hold_threat"
+    ],
+    "explanation": {
+      "short": "USCIS is a U.S. government agency — all official communications come from .gov domains, never .com.",
+      "tells": [
+        "uscis-employment-verify.com is not uscis.gov — government agencies always use .gov",
+        "Real I-9 forms are completed in person or through an employer's HR system, not a random website",
+        "Threatening to put employment authorization 'on hold' creates panic targeting new job seekers",
+        "USCIS does not directly email employees to complete forms — employers manage this process"
+      ],
+      "safe_move": "Contact your employer's HR department directly to verify the I-9 process. Complete the form through your employer, not a third-party link.",
+      "consequence": "The fake I-9 form captures your Social Security number, ID documents, and other identity information.",
+      "behavioral_reinforcement": "All USCIS and government employment forms use .gov domains — any .com claiming to be a government agency is fake."
+    },
+    "tags": [
+      "uscis",
+      "i-9",
+      "government-impersonation",
+      "new-hire-target"
+    ]
+  },
+  {
+    "id": "email_delivery_toll_job_seeker_001",
+    "channel": "email",
+    "pattern_family": "delivery_toll",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "SwiftShip",
+      "from_handle": "tracking@swiftship.com",
+      "subject": "Your home office equipment has shipped",
+      "body": "Hi Jordan,\n\nYour order from WorkGear Supply (Order #SW-98812) has shipped and is estimated to arrive Thursday, Feb 27.\n\nTracking: SW8819922 — Track at swiftship.com/track\n\nIf you did not place this order, contact WorkGear Supply at workgear.com/support.\n\nSwiftShip"
+    },
+    "red_flags": [
+      {
+        "id": "order_you_may_not_recognize",
+        "label": "Package from unfamiliar sender"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate shipping notification — from swiftship.com, with an order number, and a redirect to the merchant for disputes.",
+      "tells": [
+        "Sent from tracking@swiftship.com — the carrier's official domain",
+        "Contains specific order number and tracking number consistent with a real shipment",
+        "Track link goes to swiftship.com — no third-party domain",
+        "If the package is for new job equipment you ordered, this is routine"
+      ],
+      "safe_move": "Track the package at swiftship.com. If you don't recognize the order, contact WorkGear Supply at workgear.com.",
+      "consequence": "No risk from this email.",
+      "behavioral_reinforcement": "Legitimate shipping emails come from the carrier's official domain and include specific order numbers — no fees or login required."
+    },
+    "tags": [
+      "delivery",
+      "legit",
+      "shipping-notification",
+      "home-office"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_001",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Accounts — SupplyCore Ltd",
+      "from_handle": "accounts@supplycore-ltd.net",
+      "subject": "Updated banking details for future payments",
+      "body": "Dear Valued Client,\n\nPlease be advised that SupplyCore has updated its banking details effective immediately. Kindly update your records and ensure all future payments are directed to:\n\nBank: PinnacleBank\nAccount: 8847221903\nRouting: 021000021\n\nPlease confirm receipt of this email.\n\nKind regards,\nAccounts Receivable — SupplyCore Ltd"
+    },
+    "red_flags": [
+      {
+        "id": "vendor_bank_change_by_email",
+        "label": "Bank account change requested via email only"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "supplycore-ltd.net vs your vendor's real domain"
+      },
+      {
+        "id": "immediate_effective_date",
+        "label": "'Effective immediately' — no verification process"
+      },
+      {
+        "id": "confirmation_request",
+        "label": "Asks you to confirm receipt — validates active email"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "vendor_bank_change_by_email",
+      "lookalike_domain",
+      "immediate_effective_date"
+    ],
+    "explanation": {
+      "short": "Vendor bank account changes should always be verified by phone call to a known number — never actioned from an email alone.",
+      "tells": [
+        "Business Email Compromise (BEC) works by intercepting or spoofing vendor email to redirect payments",
+        "The domain supplycore-ltd.net may differ from your actual vendor's domain by a small change",
+        "Legitimate vendors establish banking change procedures in contracts — not a one-off email",
+        "Calling your vendor's known number (not any number in this email) is the only safe verification"
+      ],
+      "safe_move": "Do not update banking details. Call SupplyCore directly using the number from your contract or prior invoices to verify.",
+      "consequence": "Your next payment goes to the scammer's account. BEC losses average $130,000 per incident for small businesses.",
+      "behavioral_reinforcement": "Any vendor banking change must be verified by phone to a known contact — email alone is never sufficient authorization."
+    },
+    "tags": [
+      "bec",
+      "vendor-fraud",
+      "bank-change",
+      "payment-diversion"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_002",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CEO — Michael Torres",
+      "from_handle": "m.torres@acme-corp.co",
+      "subject": "Urgent — wire needed today",
+      "body": "Hi Sarah, I need you to process an urgent wire transfer of $22,500 to a new vendor before close of business today. This is time sensitive for a deal we're closing. I'm in back-to-back meetings — please handle and confirm when done. I'll explain later. Thanks."
+    },
+    "red_flags": [
+      {
+        "id": "ceo_urgent_wire_by_email",
+        "label": "CEO requesting urgent wire via email"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain, not company's real .com"
+      },
+      {
+        "id": "no_invoice_or_vendor_details",
+        "label": "No invoice, PO, or vendor verification info"
+      },
+      {
+        "id": "in_meetings_no_call",
+        "label": "'In meetings' — unavailable to verify by phone"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "ceo_urgent_wire_by_email",
+      "lookalike_domain",
+      "no_invoice_or_vendor_details"
+    ],
+    "explanation": {
+      "short": "CEO fraud (whaling) follows this exact script: urgent wire, no documentation, unavailable for verification, deadline pressure.",
+      "tells": [
+        "Legitimate wire transfers follow an approval process with invoices, POs, and dual authorization",
+        "The .co domain is a common giveaway — scammers register lookalike domains differing by one character",
+        "'In meetings' is specifically designed to prevent you from calling to verify",
+        "No legitimate CEO authorizes a $22,500 wire with no supporting documentation via a single email"
+      ],
+      "safe_move": "Do not wire anything. Call or text your CEO on their known personal number to verify before any action.",
+      "consequence": "Once wired, funds are typically moved internationally within hours and are unrecoverable.",
+      "behavioral_reinforcement": "Always verify wire requests by phone to a known number — no matter how senior the requestor appears to be."
+    },
+    "tags": [
+      "ceo-fraud",
+      "whaling",
+      "wire-transfer",
+      "bec"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_003",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Billing — OfficePro Supplies",
+      "from_handle": "billing@officepro-supplies-invoice.com",
+      "subject": "Invoice #INV-2024-8812 — Due in 3 days",
+      "body": "Please find attached Invoice #INV-2024-8812 for $1,247.00 for office supplies delivered February 10. Payment is due within 3 days to avoid a 5% late fee. Pay at: officepro-supplies-invoice.com/pay\n\nThank you for your business."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain — not officepro.com"
+      },
+      {
+        "id": "invoice_without_po_match",
+        "label": "Invoice with no reference to a purchase order"
+      },
+      {
+        "id": "late_fee_urgency",
+        "label": "5% late fee threat within 3 days"
+      },
+      {
+        "id": "payment_link_in_email",
+        "label": "Direct payment link in invoice email"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "invoice_without_po_match",
+      "payment_link_in_email"
+    ],
+    "explanation": {
+      "short": "Fake invoice attacks work by sending plausible-looking invoices hoping someone in accounting pays without cross-checking a PO.",
+      "tells": [
+        "The domain officepro-supplies-invoice.com is a fake — your vendor's real billing domain would differ",
+        "Match every invoice to a purchase order — no PO reference is a major red flag in AP processes",
+        "Legitimate invoices from established vendors don't include direct payment links with 3-day deadlines",
+        "Sending to the accounting department hoping someone pays without verification is the core of this attack"
+      ],
+      "safe_move": "Match the invoice to a purchase order before paying. Call OfficePro directly using your existing vendor contact to verify.",
+      "consequence": "Payment goes to the scammer. Without PO matching, businesses commonly pay fraudulent invoices.",
+      "behavioral_reinforcement": "Every invoice should match a purchase order before payment — no PO match, no payment."
+    },
+    "tags": [
+      "fake-invoice",
+      "accounts-payable",
+      "vendor-fraud",
+      "bec"
+    ]
+  },
+  {
+    "id": "email_government_impersonation_small_business_001",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "OSHA Compliance Division",
+      "from_handle": "compliance@osha-regulatory-notice.com",
+      "subject": "Mandatory Safety Compliance Filing — $1,200 Penalty Pending",
+      "body": "Your business has been flagged for a missing annual OSHA safety compliance filing. A $1,200 civil penalty is pending. To avoid this penalty and a possible audit, complete your compliance submission and pay the filing fee of $299 at osha-regulatory-notice.com/filing within 10 days."
+    },
+    "red_flags": [
+      {
+        "id": "gov_agency_using_dot_com",
+        "label": "OSHA using .com not .gov"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "osha-regulatory-notice.com, not osha.gov"
+      },
+      {
+        "id": "penalty_avoidance_fee",
+        "label": "Pay a fee to avoid a penalty — classic scam"
+      },
+      {
+        "id": "vague_violation_claim",
+        "label": "No specific filing or business identifier cited"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "gov_agency_using_dot_com",
+      "lookalike_domain",
+      "penalty_avoidance_fee"
+    ],
+    "explanation": {
+      "short": "OSHA is a federal agency — all communications come from osha.gov, and federal penalties are never resolved by paying a fee to a .com website.",
+      "tells": [
+        "All OSHA communications come from osha.gov — any .com claiming to be OSHA is fake",
+        "Real OSHA violations include your business name, EIN, specific violations cited, and a formal citation",
+        "Paying a 'filing fee' to avoid a penalty is a classic scam structure — no agency works this way",
+        "The vague filing claim is designed to be plausible for any business without being verifiable"
+      ],
+      "safe_move": "Ignore. If concerned about OSHA compliance, contact OSHA directly at osha.gov or 1-800-321-OSHA.",
+      "consequence": "You pay $299, receive no protection from any penalty (which didn't exist), and your payment details are captured.",
+      "behavioral_reinforcement": "Federal agency enforcement always comes from .gov sources — never pay a government penalty through a .com website link."
+    },
+    "tags": [
+      "osha",
+      "government",
+      "compliance-scam",
+      "penalty-fraud"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_004",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "HR Payroll — Jessica Park",
+      "from_handle": "jpark@acme-corp.co",
+      "subject": "Request to update my direct deposit",
+      "body": "Hi, I recently opened a new bank account and need to update my direct deposit information before the next payroll run. New account: BluePeak Bank, Account 9912004471, Routing 021000021. Please update before Friday. Thank you!"
+    },
+    "red_flags": [
+      {
+        "id": "payroll_change_by_email",
+        "label": "Direct deposit change requested via email"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain, not company's real domain"
+      },
+      {
+        "id": "before_friday_urgency",
+        "label": "Before payroll urgency"
+      },
+      {
+        "id": "no_hr_portal_request",
+        "label": "No request through official HR system"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "payroll_change_by_email",
+      "lookalike_domain",
+      "no_hr_portal_request"
+    ],
+    "explanation": {
+      "short": "Payroll diversion fraud works by impersonating an employee requesting a bank change just before payday.",
+      "tells": [
+        "Real payroll updates are processed through HR systems (ADP, Gusto, etc.) — not email requests",
+        "The .co domain likely spoofs the real company domain by one character",
+        "Timing just before payroll is deliberate — it creates urgency and ensures a large payment goes to the scammer",
+        "Verify any direct deposit change by calling the employee at their known phone number"
+      ],
+      "safe_move": "Call the employee at their known number to verify before changing payroll information.",
+      "consequence": "An entire paycheck is deposited to the scammer's account on the next payroll run.",
+      "behavioral_reinforcement": "All payroll changes must be initiated through your HR portal and verified verbally — email alone is never sufficient."
+    },
+    "tags": [
+      "payroll-diversion",
+      "employee-impersonation",
+      "bec",
+      "direct-deposit"
+    ]
+  },
+  {
+    "id": "email_account_verification_small_business_001",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BizListings",
+      "from_handle": "noreply@bizlistings-verify.com",
+      "subject": "Action Required: Verify your BizListings to prevent suspension",
+      "body": "Your BizListings profile for Acme Plumbing is at risk of suspension. Unverified listings are removed after 30 days. Re-verify your listing now to keep your reviews and ranking active.\n\nVerify at: bizlistings-verify.com/listing?id=29847"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "bizlistings-verify.com, not bizlistings.com"
+      },
+      {
+        "id": "listing_suspension_threat",
+        "label": "Threat to remove reviews and ranking"
+      },
+      {
+        "id": "business_specific_details",
+        "label": "Uses your business name to appear legitimate"
+      },
+      {
+        "id": "verify_link_not_bizlistings",
+        "label": "Verify link doesn't go to bizlistings.com"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "listing_suspension_threat",
+      "verify_link_not_bizlistings"
+    ],
+    "explanation": {
+      "short": "BizListings notices come from bizlistings.com — this domain is a fake designed to steal your BizListings account credentials.",
+      "tells": [
+        "bizlistings-verify.com is not bizlistings.com — real BizListings communications always come from bizlistings.com or bizlistings.com/business",
+        "Using your actual business name makes the email appear targeted and legitimate — scammers harvest these from BizDirectory",
+        "The 'verify listing' link leads to a fake BizListings login page to capture your credentials",
+        "Manage your BizListings directly at bizlistings.com/business"
+      ],
+      "safe_move": "Go to bizlistings.com/business directly and check your profile status. Do not use the link in the email.",
+      "consequence": "The fake login captures your BizListings account credentials — giving access to your Gmail, Drive, and business systems.",
+      "behavioral_reinforcement": "All BizListings services use bizlistings.com domains — any business verification email from another domain is a phishing attempt."
+    },
+    "tags": [
+      "bizlistings-business",
+      "credential-phishing",
+      "small-business-target",
+      "listing-scam"
+    ]
+  },
+  {
+    "id": "email_credential_phishing_small_business_001",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BooksOnline Support",
+      "from_handle": "support@booksonline-help.net",
+      "subject": "Your BooksOnline account has been locked — action required",
+      "body": "We've detected unusual activity on your BooksOnline accounting account. To protect your financial data, we've temporarily locked access. Unlock your account at: booksonline-help.net/unlock\n\nFailure to verify within 24 hours will result in account termination and possible data loss."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "booksonline-help.net, not booksonline.com"
+      },
+      {
+        "id": "accounting_data_loss_threat",
+        "label": "Threat of financial data loss"
+      },
+      {
+        "id": "account_locked_urgency",
+        "label": "Account locked with 24-hour window"
+      },
+      {
+        "id": "unlock_via_link",
+        "label": "Unlock via link in email"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "accounting_data_loss_threat",
+      "unlock_via_link"
+    ],
+    "explanation": {
+      "short": "Accounting software phishing is high-value — your bookkeeping credentials give access to your entire financial history and bank connections.",
+      "tells": [
+        "booksonline-help.net is not booksonline.com — real accounting software notifies through the app itself",
+        "Threatening data loss (your entire accounting history) is specifically calibrated to provoke immediate action",
+        "Real lockout notifications include the last login IP and guide you to the official site — not an email link",
+        "Accounting credentials are the highest-value target for small business fraud"
+      ],
+      "safe_move": "Go directly to booksonline.com and log in to check account status. Do not use the email link.",
+      "consequence": "Your bookkeeping credentials give access to bank feeds, vendor payment details, payroll data, and years of financial records.",
+      "behavioral_reinforcement": "Accounting software issues are always resolved through the official app or website — never through an email unlock link."
+    },
+    "tags": [
+      "accounting-software",
+      "credential-phishing",
+      "financial-data",
+      "small-business"
+    ]
+  },
+  {
+    "id": "email_government_impersonation_small_business_002",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "State Department of Revenue",
+      "from_handle": "notice@state-tax-compliance-dept.com",
+      "subject": "Delinquent Sales Tax Notice — Immediate Payment Required",
+      "body": "Our records indicate your business owes $3,419.00 in unpaid sales tax for Q3. Failure to remit within 5 days will result in account levy, license suspension, and referral to our collections agency. Pay online: state-tax-compliance-dept.com/pay"
+    },
+    "red_flags": [
+      {
+        "id": "gov_agency_using_dot_com",
+        "label": "State tax agency using .com not .gov"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "Not your state's actual tax authority domain"
+      },
+      {
+        "id": "levy_and_license_threat",
+        "label": "Threat of levy and license suspension"
+      },
+      {
+        "id": "pay_via_email_link",
+        "label": "Pay via link in email"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "gov_agency_using_dot_com",
+      "lookalike_domain",
+      "pay_via_email_link"
+    ],
+    "explanation": {
+      "short": "State tax authorities use .gov domains — a .com claiming to be your state's Department of Revenue is always fake.",
+      "tells": [
+        "Every state's Department of Revenue uses a .gov domain (e.g., revenue.state.tx.us, tax.ny.gov)",
+        "Real tax delinquency notices arrive by certified mail with specific filing periods and penalty breakdowns",
+        "Paying through a .com link sends money to scammers, not the actual state government",
+        "Threats of levy and license suspension are designed to panic business owners into immediate payment"
+      ],
+      "safe_move": "Verify by visiting your state's official tax authority website directly or calling their published number.",
+      "consequence": "Payment goes to scammers. Your real tax account remains unaffected (and may still have a balance).",
+      "behavioral_reinforcement": "State and federal tax notices arrive by certified mail — never pay a tax bill through a link in an email."
+    },
+    "tags": [
+      "state-tax",
+      "government",
+      "compliance-scam",
+      "business-levy"
+    ]
+  },
+  {
+    "id": "email_tech_support_small_business_001",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "IT Helpdesk — NovaSoft 365",
+      "from_handle": "helpdesk@novasoft-365-support.net",
+      "subject": "Your NovaSoft 365 license is expiring — remote session required",
+      "body": "Your NovaSoft 365 for Business license expires in 48 hours due to a billing issue. To prevent service interruption, our technician needs to connect remotely to renew your license. Schedule your 15-minute session: novasoft-365-support.net/schedule\n\nNote: This affects all users in your organization."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "novasoft-365-support.net, not novasoft.com"
+      },
+      {
+        "id": "remote_session_required",
+        "label": "Remote access required to renew license"
+      },
+      {
+        "id": "all_users_affected_urgency",
+        "label": "'All users affected' — amplified urgency"
+      },
+      {
+        "id": "billing_issue_vague",
+        "label": "Vague 'billing issue' with no details"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "remote_session_required",
+      "all_users_affected_urgency"
+    ],
+    "explanation": {
+      "short": "No software vendor needs remote access to your computer to renew a license — this is a remote access scam targeting business admins.",
+      "tells": [
+        "Software license renewals are handled through vendor portals, not remote support sessions",
+        "novasoft-365-support.net is not novasoft.com — one of the most common IT impersonation patterns",
+        "Saying 'all users affected' multiplies urgency — a common business-targeted pressure tactic",
+        "Remote access to an admin workstation gives attackers access to your entire network"
+      ],
+      "safe_move": "Manage your NovaSoft 365 subscription at novasoft.com/admin. Do not grant remote access from an unsolicited email.",
+      "consequence": "Remote access to an admin account enables credential theft, ransomware installation, and network-wide compromise.",
+      "behavioral_reinforcement": "Software license renewals never require remote access — manage all renewals through the vendor's official admin portal."
+    },
+    "tags": [
+      "remote-access",
+      "it-support",
+      "license-renewal",
+      "business-admin"
+    ]
+  },
+  {
+    "id": "email_malware_attachment_small_business_001",
+    "channel": "email",
+    "pattern_family": "malware_attachment",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Legal — Peterson & Associates",
+      "from_handle": "legal@peterson-associates-law.co",
+      "subject": "Notice of Contract Dispute — Action Required",
+      "body": "Our client has engaged us regarding an outstanding contract dispute with your business. Please review the attached notice of claim (DOC file) and respond within 10 days.\n\nFailure to respond may result in legal action. Enable all document features to view the full claim.\n\nPeterson & Associates LLP"
+    },
+    "red_flags": [
+      {
+        "id": "enable_document_features",
+        "label": "'Enable all document features' to view"
+      },
+      {
+        "id": "legal_threat_urgency",
+        "label": "Legal action threatened — high urgency"
+      },
+      {
+        "id": "unverifiable_law_firm",
+        "label": "Law firm name unverifiable from .co domain"
+      },
+      {
+        "id": "attachment_from_unknown_sender",
+        "label": "DOC attachment from unknown law firm"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "enable_document_features",
+      "legal_threat_urgency",
+      "attachment_from_unknown_sender"
+    ],
+    "explanation": {
+      "short": "'Enable all document features' in a Word file is malware delivery — real law firms send PDFs, not macro-enabled documents.",
+      "tells": [
+        "Legitimate legal notices are sent as PDFs, not macro-enabled Word documents",
+        "'Enable all document features' is the standard malware trigger — it runs embedded VBA code",
+        "Threatening legal action creates the panic that makes people click without thinking",
+        "Real law firms would serve formal notice through registered mail, not .co email attachments"
+      ],
+      "safe_move": "Do not open the attachment. If you believe there may be a real dispute, search for Peterson & Associates independently and contact them through verified means.",
+      "consequence": "Enabling macros installs ransomware or a remote access tool — potentially encrypting your entire business network.",
+      "behavioral_reinforcement": "Never enable macros or document features in a file received by email — this is malware delivery, 100% of the time."
+    },
+    "tags": [
+      "malware",
+      "macros",
+      "legal-threat",
+      "business-attack"
+    ]
+  },
+  {
+    "id": "email_subscription_renewal_small_business_001",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "DomainGuard Renewals",
+      "from_handle": "renewals@domainguard-register.com",
+      "subject": "FINAL NOTICE: yourbusiness.com domain expires in 5 days",
+      "body": "This is a final notice that yourbusiness.com expires in 5 days. Failure to renew will result in domain loss and potential acquisition by competitors. Renew now for $79/year: domainguard-register.com/renew\n\nAct now to protect your online presence."
+    },
+    "red_flags": [
+      {
+        "id": "domain_loss_threat",
+        "label": "Threat of domain loss and competitor acquisition"
+      },
+      {
+        "id": "third_party_registrar_not_yours",
+        "label": "Not your actual domain registrar"
+      },
+      {
+        "id": "high_renewal_price",
+        "label": "$79/year is 3-5x standard domain pricing"
+      },
+      {
+        "id": "urgency_5_days",
+        "label": "5-day countdown on domain expiry"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "third_party_registrar_not_yours",
+      "domain_loss_threat",
+      "high_renewal_price"
+    ],
+    "explanation": {
+      "short": "Domain renewal notices must come from your actual registrar — third-party domain 'expiry' notices are scams designed to transfer your domain and overcharge.",
+      "tells": [
+        "Your domain registrar is already known to you (GoDaddy, Namecheap, etc.) — not DomainGuard",
+        "Paying this 'renewal' may transfer your domain to a different registrar at an inflated price",
+        "Domains typically cost $10–$15/year — $79 is a massive markup",
+        "Scammers harvest domain expiry data and mass-send these notices hoping business owners panic"
+      ],
+      "safe_move": "Log in to your actual domain registrar's website to check your domain's real expiry date. Renew only there.",
+      "consequence": "You pay $79 and may inadvertently transfer your domain to a predatory registrar, losing control of your web presence.",
+      "behavioral_reinforcement": "Domain renewals come only from your registrar — ignore all domain notices from companies you don't recognize."
+    },
+    "tags": [
+      "domain-renewal",
+      "registrar-fraud",
+      "small-business",
+      "domain-scam"
+    ]
+  },
+  {
+    "id": "email_oauth_consent_small_business_001",
+    "channel": "email",
+    "pattern_family": "oauth_consent",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft 365 Admin",
+      "from_handle": "admin-alerts@novasoft365-admin.net",
+      "subject": "Authorize new compliance app for your organization",
+      "body": "Your NovaSoft 365 admin account requires authorization of our new Compliance Monitoring app to meet updated security standards. This app requires access to: all user emails, file storage, calendar events, and admin settings.\n\nAuthorize for your organization: novasoft365-admin.net/authorize"
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_domain",
+        "label": "novasoft365-admin.net, not novasoft.com"
+      },
+      {
+        "id": "broad_permission_scope",
+        "label": "Requests all email, files, calendar, and admin access"
+      },
+      {
+        "id": "compliance_requirement_pretext",
+        "label": "'Required for compliance' — fake mandate"
+      },
+      {
+        "id": "oauth_via_email_link",
+        "label": "Org-wide OAuth consent via email link"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "broad_permission_scope",
+      "oauth_via_email_link"
+    ],
+    "explanation": {
+      "short": "An OAuth grant with access to all email, files, and admin settings from a lookalike domain is a complete organizational account takeover.",
+      "tells": [
+        "novasoft365-admin.net is not novasoft.com — Microsoft/NovaSoft would use their own domain for app authorizations",
+        "Legitimate compliance apps are deployed through the admin portal (admin.novasoft.com), not email links",
+        "The permission scope requested (all email + files + admin) is essentially full organizational access",
+        "'Required for compliance' is an invented pretext — real compliance changes are announced with documentation"
+      ],
+      "safe_move": "Do not authorize. Log in to your admin portal at novasoft.com to manage app permissions.",
+      "consequence": "Authorizing gives attackers persistent access to your entire organization's email, files, and admin controls — even after password changes.",
+      "behavioral_reinforcement": "Never authorize third-party app access through an email link — all app permissions are managed in the admin portal."
+    },
+    "tags": [
+      "oauth",
+      "admin-access",
+      "org-compromise",
+      "business-email"
+    ]
+  },
+  {
+    "id": "email_government_impersonation_small_business_003",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Better Business Bureau — Complaint Division",
+      "from_handle": "complaints@bbb-complaint-portal.org",
+      "subject": "Consumer complaint filed against your business — response required",
+      "body": "A consumer complaint (Case #BBB-2024-04419) has been filed against your business. You have 7 days to respond or your BBB accreditation will be suspended. View and respond to the complaint: bbb-complaint-portal.org/case/04419\n\nImmediate response is required to maintain your rating."
+    },
+    "red_flags": [
+      {
+        "id": "bbb_lookalike_domain",
+        "label": "bbb-complaint-portal.org, not bbb.org"
+      },
+      {
+        "id": "accreditation_suspension_threat",
+        "label": "BBB accreditation suspension threat"
+      },
+      {
+        "id": "7_day_response_window",
+        "label": "7-day urgency on complaint response"
+      },
+      {
+        "id": "link_to_external_portal",
+        "label": "Complaint managed on third-party domain"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "bbb_lookalike_domain",
+      "accreditation_suspension_threat",
+      "link_to_external_portal"
+    ],
+    "explanation": {
+      "short": "The BBB sends all communications from bbb.org — any BBB complaint notice from another domain is a fake.",
+      "tells": [
+        "The BBB's official domain is bbb.org — all legitimate complaint management happens at bbb.org",
+        "Clicking the link on bbb-complaint-portal.org leads to a phishing page or malware download",
+        "Real BBB complaints include your business's specific accreditation details — this is generic",
+        "Threatening accreditation suspension is specifically designed to pressure businesses into clicking"
+      ],
+      "safe_move": "Go directly to bbb.org and search for any complaints against your business using your business name.",
+      "consequence": "The link may harvest your credentials or install malware — and your BBB reputation may be researched to make follow-up scams more convincing.",
+      "behavioral_reinforcement": "The BBB only communicates through bbb.org — any other domain claiming to be the BBB is fake."
+    },
+    "tags": [
+      "bbb",
+      "complaint-scam",
+      "business-reputation",
+      "government-impersonation"
+    ]
+  },
+  {
+    "id": "email_marketplace_small_business_001",
+    "channel": "email",
+    "pattern_family": "marketplace",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "TradeSpace Buyer",
+      "from_handle": "buyer.michael.1291@gmail.com",
+      "subject": "Purchase inquiry — I'll pay via certified check",
+      "body": "Hi, I'm interested in the commercial equipment you listed for $3,200. I'll send a certified check for $5,500 — please keep your fee and use the remaining $2,300 to pay my shipping coordinator who will pick up the item. Let me know if this works!"
+    },
+    "red_flags": [
+      {
+        "id": "overpayment_check_classic",
+        "label": "Overpayment check — classic scam structure"
+      },
+      {
+        "id": "pay_third_party_with_excess",
+        "label": "Send excess to a 'shipping coordinator'"
+      },
+      {
+        "id": "certified_check_not_safe",
+        "label": "Certified checks can be faked and bounce"
+      },
+      {
+        "id": "personal_gmail_buyer",
+        "label": "Buyer using personal Gmail for business purchase"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "overpayment_check_classic",
+      "pay_third_party_with_excess"
+    ],
+    "explanation": {
+      "short": "This is a check overpayment scam — the certified check will bounce after you've already wired $2,300 to the 'shipping coordinator.'",
+      "tells": [
+        "Certified and cashier's checks can be professionally counterfeited — they appear to clear for 1–2 weeks before bouncing",
+        "The shipping coordinator is the scammer — your $2,300 goes directly to them",
+        "No legitimate buyer needs to overpay and have you wire back the difference",
+        "Business equipment buyers typically pay via ACH, wire, or escrow — not certified check to a stranger"
+      ],
+      "safe_move": "Decline. For business equipment sales, use a secure payment method like wire transfer where funds are verified first.",
+      "consequence": "The check bounces after you've sent $2,300. Your bank holds you liable for the full check amount.",
+      "behavioral_reinforcement": "Any buyer who overpays and asks you to forward the difference to a third party is running a check scam."
+    },
+    "tags": [
+      "check-scam",
+      "overpayment",
+      "marketplace",
+      "equipment-sale"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_005",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CEO — Robert Chen",
+      "from_handle": "rchen@acme-corp.co",
+      "subject": "RE: New vendor payment",
+      "body": "Hi — I need you to process a payment to a new vendor for a project I'm handling. $14,800 wire to NexaTrade LLC, account 7712004591, routing 021000089. This needs to go out today and I need confirmation ASAP. Don't discuss with anyone — this is confidential until the deal closes."
+    },
+    "red_flags": [
+      {
+        "id": "confidentiality_instruction",
+        "label": "'Don't discuss with anyone' — secrecy demand"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain spoofing CEO's real email"
+      },
+      {
+        "id": "new_vendor_no_documentation",
+        "label": "New vendor with no invoice or PO"
+      },
+      {
+        "id": "same_day_wire_urgency",
+        "label": "Same-day wire with no documentation"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "confidentiality_instruction",
+      "lookalike_domain",
+      "new_vendor_no_documentation"
+    ],
+    "explanation": {
+      "short": "The secrecy instruction ('don't discuss with anyone') is the clearest signal — it's designed to prevent verification of what is a CEO fraud attack.",
+      "tells": [
+        "Legitimate wire transfers have invoices, purchase orders, and can withstand internal discussion",
+        "Confidentiality demands are specifically used to stop you from calling your CEO to verify",
+        "The .co domain is a one-character difference from the real company domain — a classic BEC technique",
+        "Any wire over a few thousand dollars should require dual authorization and documented business justification"
+      ],
+      "safe_move": "Do not wire anything. Call your CEO directly on their known phone number to verify — regardless of the confidentiality request.",
+      "consequence": "Funds are wired internationally within hours. Recovery rate for BEC wire fraud is under 15% even with rapid FBI reporting.",
+      "behavioral_reinforcement": "Confidentiality requests in payment emails are red flags, not permissions — always verify large wire requests by phone."
+    },
+    "tags": [
+      "bec",
+      "ceo-fraud",
+      "wire-transfer",
+      "confidentiality-trap"
+    ]
+  },
+  {
+    "id": "email_credential_phishing_small_business_002",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PayStream Support",
+      "from_handle": "support@paystream-security.net",
+      "subject": "Unusual login attempt on your PayStream account",
+      "body": "We detected a sign-in attempt to your PayStream merchant account from an unrecognized device. To secure your account and prevent unauthorized transactions, please verify your identity within 4 hours.\n\nVerify: paystream-security.net/merchant-verify\n\nIgnoring this notice may result in account suspension."
+    },
+    "red_flags": [
+      {
+        "id": "lookalike_payment_domain",
+        "label": "paystream-security.net, not paystream.com"
+      },
+      {
+        "id": "merchant_account_bait",
+        "label": "Targets business's payment processing account"
+      },
+      {
+        "id": "4_hour_verification_window",
+        "label": "4-hour urgency"
+      },
+      {
+        "id": "account_suspension_threat",
+        "label": "Suspension threat for inaction"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "lookalike_payment_domain",
+      "merchant_account_bait",
+      "4_hour_verification_window"
+    ],
+    "explanation": {
+      "short": "Payment processor credentials are high-value targets — paystream-security.net is a fake designed to steal your merchant account login.",
+      "tells": [
+        "Real PayStream security notices come from paystream.com — not paystream-security.net",
+        "Merchant account phishing is highly targeted at small businesses — it gives access to payment processing and business banking",
+        "Real payment processors alert via in-app notifications and direct you to the official site",
+        "4-hour windows are designed to prevent careful evaluation"
+      ],
+      "safe_move": "Go directly to paystream.com and log in to check account activity. Do not use the link in the email.",
+      "consequence": "Your merchant account credentials allow the attacker to redirect payouts, process refunds to their cards, or access linked business banking.",
+      "behavioral_reinforcement": "Payment processor security alerts are always verified through the official site — never through an email link."
+    },
+    "tags": [
+      "payment-processor",
+      "merchant-account",
+      "credential-phishing",
+      "small-business"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_006",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Accounts — SupplyCore",
+      "from_handle": "accounts@supplycore.com",
+      "subject": "Invoice #SC-2024-1109 — $892.40 due March 15",
+      "body": "Dear Acme Plumbing,\n\nPlease find attached Invoice #SC-2024-1109 for $892.40 for pipe fittings delivered February 8 (PO #ACM-2024-0091).\n\nPayment is due March 15 to our account on file. No changes to our banking information.\n\nQuestions? Contact us at accounts@supplycore.com or 1-800-555-0210.\n\nSupplyCore Accounts"
+    },
+    "red_flags": [
+      {
+        "id": "large_invoice_from_vendor",
+        "label": "Invoice from known vendor"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate invoice — from the vendor's real domain, referencing a specific PO, and explicitly noting no banking changes.",
+      "tells": [
+        "Sent from accounts@supplycore.com — the vendor's actual domain, not a lookalike",
+        "References a specific PO number (ACM-2024-0091) that should match your purchase records",
+        "Explicitly states 'no changes to our banking information' — a signal a real vendor might include after BEC awareness",
+        "Payment terms are normal (net 30-ish), with a direct vendor contact for questions"
+      ],
+      "safe_move": "Match the invoice to PO #ACM-2024-0091 in your system and pay to the account already on file for SupplyCore.",
+      "consequence": "No risk. Verify the PO number matches before approving payment.",
+      "behavioral_reinforcement": "Legitimate invoices reference specific PO numbers and come from the vendor's real domain — verify both before paying."
+    },
+    "tags": [
+      "invoice",
+      "vendor-payment",
+      "legit",
+      "accounts-payable"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_007",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Project Mgmt — BuildRight Contractors",
+      "from_handle": "projects@buildright-contractors.com",
+      "subject": "Change Order #CO-14 — Additional Materials",
+      "body": "Hi,\n\nThis is a formal change order for the office renovation project. CO-14 adds $3,400 for structural reinforcement materials discovered during Phase 2 demo (see attached scope document).\n\nPer our contract, change orders over $1,000 require your written approval. Please reply to approve or call us at 1-800-555-0318.\n\nBuildRight Project Management"
+    },
+    "red_flags": [
+      {
+        "id": "unexpected_additional_cost",
+        "label": "Additional cost on ongoing project"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate change order — from the contractor's real domain, referencing your specific project and contract terms, requiring your approval.",
+      "tells": [
+        "Sent from projects@buildright-contractors.com — the contractor's own domain",
+        "References specific change order number (CO-14) and project phase — consistent with real construction management",
+        "Follows your actual contract terms (written approval required over $1,000) — a scammer wouldn't know this",
+        "Provides a callback number at the contractor's known number for verification"
+      ],
+      "safe_move": "Verify by calling BuildRight at their known number. Review the attached scope document before approving.",
+      "consequence": "No risk from this email. Review the scope and approve if the work is verified.",
+      "behavioral_reinforcement": "Legitimate change orders reference specific contract terms and project details — and require your approval before work proceeds."
+    },
+    "tags": [
+      "change-order",
+      "contractor",
+      "project-management",
+      "legit"
+    ]
+  },
+  {
+    "id": "sms_bank_fraud_alert_small_business_001",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PinnacleBank Business",
+      "from_handle": "72791",
+      "subject": null,
+      "body": "PinnacleBank Business: Outgoing wire of $14,500 to NexaTrade LLC was submitted. If not authorized by you, call 1-800-555-0100 immediately — this is the number on the back of your business debit card."
+    },
+    "red_flags": [
+      {
+        "id": "large_wire_you_may_not_recognize",
+        "label": "Large outgoing wire"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate bank wire notification — short code sender, real bank number, and no links or login requests.",
+      "tells": [
+        "Comes from a short code (72791) registered to PinnacleBank's business banking alerts",
+        "Provides the number from the back of your debit card as the verification path — not a separate unknown number",
+        "No link, no request to reply with anything, no ask for credentials",
+        "Wire confirmation texts are a genuine fraud prevention service offered by most business banks"
+      ],
+      "safe_move": "If you authorized the wire, no action needed. If not, call 1-800-555-0100 immediately — time matters for wire fraud.",
+      "consequence": "If unauthorized, calling your bank quickly can sometimes halt the wire. Act within minutes.",
+      "behavioral_reinforcement": "Legitimate bank wire alerts come from short codes and reference the number on your card — they never include links or ask you to log in."
+    },
+    "tags": [
+      "wire-transfer",
+      "bank-alert",
+      "legit",
+      "business-banking"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_008",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Payroll — PayrollNow",
+      "from_handle": "payroll@payrollnow.com",
+      "subject": "Payroll processing confirmation — February 28",
+      "body": "Your payroll of $22,140.00 for 8 employees was processed on February 28 and will fund on March 1. ACH deposits are on their way.\n\nView your payroll summary at payrollnow.com/reports.\n\nIf you did not authorize this payroll run, call 1-800-555-0191 immediately.\n\nPayrollNow Team"
+    },
+    "red_flags": [
+      {
+        "id": "large_payroll_debit",
+        "label": "Large payroll amount leaving your account"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate payroll confirmation — from payrollnow.com, confirming a scheduled run you authorized, with a direct contact if something is wrong.",
+      "tells": [
+        "Sent from payrollnow.com — the payroll provider's official domain",
+        "Confirms an amount consistent with your normal payroll and matches your employee count",
+        "Directs to payrollnow.com/reports to verify — the provider's own domain",
+        "Includes an emergency number for unauthorized transactions — standard payroll security practice"
+      ],
+      "safe_move": "Verify the amount and employee count match your records at payrollnow.com/reports.",
+      "consequence": "No risk if the payroll matches your authorization.",
+      "behavioral_reinforcement": "Payroll confirmation emails from your provider's real domain with matching details are routine — verify any discrepancies through the official portal."
+    },
+    "tags": [
+      "payroll",
+      "confirmation",
+      "legit",
+      "business-operations"
+    ]
+  },
+  {
+    "id": "email_account_verification_small_business_002",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft 365 Admin Center",
+      "from_handle": "admin@novasoft.com",
+      "subject": "Admin: A new app was granted access to your organization",
+      "body": "An admin in your organization granted the following app access on Feb 14:\n\nApp: VidLink Pro\nPermissions: Calendar read/write, presence status\nGranted by: admin@yourbusiness.com\n\nIf you authorized this, no action needed. If not, review app permissions at admin.novasoft.com."
+    },
+    "red_flags": [
+      {
+        "id": "third_party_app_access_granted",
+        "label": "Third-party app granted access"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate admin notification from NovaSoft — it comes from novasoft.com and references a specific app grant with limited, named permissions.",
+      "tells": [
+        "Sent from admin@novasoft.com — the software provider's official domain",
+        "Lists the specific app (VidLink Pro), specific permissions (calendar only), and who granted it",
+        "Directs to admin.novasoft.com for review — the official admin portal",
+        "Does not ask you to click anything in the email — just informs and tells you where to review"
+      ],
+      "safe_move": "Verify the grant matches an action taken by your admin. Review app permissions at admin.novasoft.com if needed.",
+      "consequence": "No risk from this email. If the grant was unexpected, revoke the app at admin.novasoft.com.",
+      "behavioral_reinforcement": "Legitimate admin notifications are informational — they come from the provider's domain and direct you to the official portal, not an email link."
+    },
+    "tags": [
+      "admin-notification",
+      "app-permissions",
+      "legit",
+      "novasoft-365"
+    ]
+  },
+  {
+    "id": "email_government_impersonation_small_business_004",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "IRS — Business Tax Account",
+      "from_handle": "do-not-reply@irs.gov",
+      "subject": "CP2000 Notice — Discrepancy in reported income",
+      "body": "This is a notification that the IRS has mailed a CP2000 notice to your registered business address regarding a discrepancy in your 2022 business tax return. The notice was mailed February 12.\n\nYou do not need to take action in response to this email. Your mailed notice contains all details and response instructions.\n\nIRS.gov — Never share personal tax info by email."
+    },
+    "red_flags": [
+      {
+        "id": "irs_email_notification",
+        "label": "Email from the IRS"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate IRS notification email — it comes from irs.gov, asks for nothing, and says to wait for the mailed notice.",
+      "tells": [
+        "Sent from do-not-reply@irs.gov — the IRS's official domain",
+        "Explicitly says 'you do not need to take action in response to this email' — no link, no payment, no call",
+        "Notifies you a physical letter was mailed — consistent with how the IRS actually operates",
+        "Includes a reminder not to share personal tax info by email — a legitimate IRS safety message"
+      ],
+      "safe_move": "Watch for the mailed CP2000 notice and consult a tax professional about the discrepancy.",
+      "consequence": "No risk from this email. The CP2000 is a common correspondence notice, not an audit.",
+      "behavioral_reinforcement": "The IRS emails you only to notify — never to collect. All action items from the IRS come by mail, not by email."
+    },
+    "tags": [
+      "irs",
+      "cp2000",
+      "government",
+      "legit",
+      "tax-notice"
+    ]
+  },
+  {
+    "id": "email_malware_attachment_small_business_002",
+    "channel": "email",
+    "pattern_family": "malware_attachment",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Vendor Inquiry",
+      "from_handle": "procurement@globalvendors-co.net",
+      "subject": "Request for Quotation — see attached PO",
+      "body": "Dear Supplier,\n\nWe are interested in placing a large order with your company. Please review the attached purchase order and provide pricing. The document requires macros to be enabled to display our full specifications.\n\nWe look forward to your response.\n\nGlobalVendors Procurement"
+    },
+    "red_flags": [
+      {
+        "id": "enable_macros_to_view",
+        "label": "'Enable macros' to view purchase order"
+      },
+      {
+        "id": "unsolicited_rfq_from_unknown",
+        "label": "Unsolicited RFQ from unknown company"
+      },
+      {
+        "id": "generic_no_product_specifics",
+        "label": "No specific products mentioned"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "globalvendors-co.net — suspicious sender"
+      }
+    ],
+    "correct_red_flag_ids": [
+      "enable_macros_to_view",
+      "unsolicited_rfq_from_unknown"
+    ],
+    "explanation": {
+      "short": "Fake RFQ (request for quotation) emails are a common malware delivery vector targeting small businesses — the attachment is the payload.",
+      "tells": [
+        "No legitimate purchase order requires macros to be enabled — real POs are PDFs or plain spreadsheets",
+        "An RFQ with no product specifics is a mass-sent phishing attempt — real buyers specify what they need",
+        "The .net domain and generic company name are inconsistent with a real procurement department",
+        "Enabling macros installs malware immediately on your business network"
+      ],
+      "safe_move": "Delete the email. Do not open the attachment. If a legitimate buyer wants to work with you, they can submit inquiries through your website.",
+      "consequence": "Enabling macros delivers ransomware or a remote access tool to your business network.",
+      "behavioral_reinforcement": "Unsolicited RFQs requiring macro-enabled documents are malware — real procurement teams use PDFs and don't require macros."
+    },
+    "tags": [
+      "malware",
+      "macros",
+      "rfq-scam",
+      "vendor-targeting"
+    ]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_009",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "TrustPay Escrow",
+      "from_handle": "transactions@trustpay.com",
+      "subject": "Escrow funds released — Project Completion Confirmed",
+      "body": "This confirms that escrow funds of $8,500 for the Website Redesign project (Contract #TP-20240214) have been released to DevStudio LLC per your approval on February 26.\n\nThe transaction reference is TXN-884412. View details at trustpay.com/transactions.\n\nTrustPay Escrow Services"
+    },
+    "red_flags": [
+      {
+        "id": "large_payment_released",
+        "label": "Large payment released from escrow"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate escrow release confirmation — from trustpay.com, referencing a specific contract and transaction you authorized.",
+      "tells": [
+        "Sent from transactions@trustpay.com — the escrow service's official domain",
+        "References a specific contract number (TP-20240214) and transaction ID (TXN-884412)",
+        "Confirms your approval as the trigger for the release — consistent with how escrow works",
+        "Directs to trustpay.com/transactions for verification — the service's own portal"
+      ],
+      "safe_move": "Verify the transaction at trustpay.com/transactions matches the project completion you approved.",
+      "consequence": "No risk from this email if you authorized the release.",
+      "behavioral_reinforcement": "Legitimate escrow confirmations reference specific contract numbers and your prior approval — verify details match your records."
+    },
+    "tags": [
+      "escrow",
+      "payment-release",
+      "legit",
+      "contract-payment"
+    ]
+  },
+  {
+    "id": "email_subscription_renewal_small_business_002",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft Billing",
+      "from_handle": "billing@novasoft.com",
+      "subject": "Your NovaSoft 365 Business subscription renews March 15",
+      "body": "Your NovaSoft 365 Business (10 users) subscription renews on March 15 for $1,200.00/year. This will be charged to the credit card ending in 8812.\n\nTo update payment info or cancel, visit novasoft.com/billing before March 10.\n\nNovaSoft Billing Team"
+    },
+    "red_flags": [
+      {
+        "id": "large_annual_charge_upcoming",
+        "label": "Large upcoming charge"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate renewal notice from NovaSoft — from their official domain, showing your card's last 4 digits, with 30+ days' notice.",
+      "tells": [
+        "Sent from billing@novasoft.com — the vendor's official domain",
+        "Shows the last 4 digits of the card on file — confirming you're a known customer",
+        "30-day advance notice with a deadline to make changes — standard business subscription practice",
+        "Directs to novasoft.com/billing for changes — the vendor's own portal"
+      ],
+      "safe_move": "No action needed if the subscription is expected. Update payment or cancel at novasoft.com/billing if needed.",
+      "consequence": "No risk from this email.",
+      "behavioral_reinforcement": "Legitimate software renewals show your card's last 4 digits and give advance notice with a self-service portal — no call-to-cancel urgency."
+    },
+    "tags": [
+      "software-renewal",
+      "business-subscription",
+      "legit",
+      "novasoft"
     ]
   }
 ]

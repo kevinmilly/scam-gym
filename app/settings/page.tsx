@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { exportData, importData, resetAllData } from "@/lib/db";
 import { useDrillContext } from "@/lib/DrillContext";
@@ -12,6 +12,18 @@ export default function SettingsPage() {
   const { selectedContext, setSelectedContext } = useDrillContext();
   const [status, setStatus] = useState<string | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [slowMode, setSlowMode] = useState(false);
+
+  useEffect(() => {
+    setSlowMode(localStorage.getItem("scamgym_slowmode") === "1");
+  }, []);
+
+  function toggleSlowMode() {
+    const next = !slowMode;
+    setSlowMode(next);
+    localStorage.setItem("scamgym_slowmode", next ? "1" : "0");
+    document.documentElement.dataset.slowMode = next ? "true" : "false";
+  }
 
   async function handleExport() {
     try {
@@ -61,7 +73,11 @@ export default function SettingsPage() {
         className="flex items-center justify-between px-4 py-3 border-b"
         style={{ borderColor: "var(--border)" }}
       >
-        <button onClick={() => router.back()} className="text-sm" style={{ color: "var(--text-muted)" }}>
+        <button
+          onClick={() => router.back()}
+          className="min-h-[44px] px-3 flex items-center text-sm"
+          style={{ color: "var(--text-muted)" }}
+        >
           ← Back
         </button>
         <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>
@@ -80,7 +96,7 @@ export default function SettingsPage() {
             Training Mode
           </p>
           <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
-            Sets the mental frame for every drill. All drills are available in every mode.
+            Only drills matching your selected mode are shown.
           </p>
           <div className="space-y-2">
             {(Object.keys(CONTEXT_LABELS) as UserContext[]).map((ctx) => {
@@ -109,6 +125,34 @@ export default function SettingsPage() {
                 </button>
               );
             })}
+          </div>
+        </div>
+
+        {/* Slow Mode */}
+        <div
+          className="rounded-2xl border px-4 py-4"
+          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+                Larger text &amp; spacing
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                Increases font size and line spacing
+              </p>
+            </div>
+            <button
+              onClick={toggleSlowMode}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              style={{
+                borderColor: slowMode ? "var(--accent)" : "var(--border)",
+                background: slowMode ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
+                color: slowMode ? "var(--accent)" : "var(--text-muted)",
+              }}
+            >
+              {slowMode ? "ON" : "OFF"}
+            </button>
           </div>
         </div>
 

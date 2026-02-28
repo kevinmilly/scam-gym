@@ -1,0 +1,853 @@
+[
+  {
+    "id": "email_invoice_vendor_small_business_001",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Accounts — SupplyCore Ltd",
+      "from_handle": "accounts@supplycore-ltd.net",
+      "subject": "Updated banking details for future payments",
+      "body": "Dear Valued Client,\n\nPlease be advised that SupplyCore has updated its banking details effective immediately. Kindly update your records and ensure all future payments are directed to:\n\nBank: PinnacleBank\nAccount: 8847221903\nRouting: 021000021\n\nPlease confirm receipt of this email.\n\nKind regards,\nAccounts Receivable — SupplyCore Ltd"
+    },
+    "red_flags": [
+      { "id": "vendor_bank_change_by_email", "label": "Bank account change requested via email only" },
+      { "id": "lookalike_domain", "label": "supplycore-ltd.net vs your vendor's real domain" },
+      { "id": "immediate_effective_date", "label": "'Effective immediately' — no verification process" },
+      { "id": "confirmation_request", "label": "Asks you to confirm receipt — validates active email" }
+    ],
+    "correct_red_flag_ids": ["vendor_bank_change_by_email", "lookalike_domain", "immediate_effective_date"],
+    "explanation": {
+      "short": "Vendor bank account changes should always be verified by phone call to a known number — never actioned from an email alone.",
+      "tells": [
+        "Business Email Compromise (BEC) works by intercepting or spoofing vendor email to redirect payments",
+        "The domain supplycore-ltd.net may differ from your actual vendor's domain by a small change",
+        "Legitimate vendors establish banking change procedures in contracts — not a one-off email",
+        "Calling your vendor's known number (not any number in this email) is the only safe verification"
+      ],
+      "safe_move": "Do not update banking details. Call SupplyCore directly using the number from your contract or prior invoices to verify.",
+      "consequence": "Your next payment goes to the scammer's account. BEC losses average $130,000 per incident for small businesses.",
+      "behavioral_reinforcement": "Any vendor banking change must be verified by phone to a known contact — email alone is never sufficient authorization."
+    },
+    "tags": ["bec", "vendor-fraud", "bank-change", "payment-diversion"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_002",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CEO — Michael Torres",
+      "from_handle": "m.torres@acme-corp.co",
+      "subject": "Urgent — wire needed today",
+      "body": "Hi Sarah, I need you to process an urgent wire transfer of $22,500 to a new vendor before close of business today. This is time sensitive for a deal we're closing. I'm in back-to-back meetings — please handle and confirm when done. I'll explain later. Thanks."
+    },
+    "red_flags": [
+      { "id": "ceo_urgent_wire_by_email", "label": "CEO requesting urgent wire via email" },
+      { "id": "lookalike_domain", "label": ".co domain, not company's real .com" },
+      { "id": "no_invoice_or_vendor_details", "label": "No invoice, PO, or vendor verification info" },
+      { "id": "in_meetings_no_call", "label": "'In meetings' — unavailable to verify by phone" }
+    ],
+    "correct_red_flag_ids": ["ceo_urgent_wire_by_email", "lookalike_domain", "no_invoice_or_vendor_details"],
+    "explanation": {
+      "short": "CEO fraud (whaling) follows this exact script: urgent wire, no documentation, unavailable for verification, deadline pressure.",
+      "tells": [
+        "Legitimate wire transfers follow an approval process with invoices, POs, and dual authorization",
+        "The .co domain is a common giveaway — scammers register lookalike domains differing by one character",
+        "'In meetings' is specifically designed to prevent you from calling to verify",
+        "No legitimate CEO authorizes a $22,500 wire with no supporting documentation via a single email"
+      ],
+      "safe_move": "Do not wire anything. Call or text your CEO on their known personal number to verify before any action.",
+      "consequence": "Once wired, funds are typically moved internationally within hours and are unrecoverable.",
+      "behavioral_reinforcement": "Always verify wire requests by phone to a known number — no matter how senior the requestor appears to be."
+    },
+    "tags": ["ceo-fraud", "whaling", "wire-transfer", "bec"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_003",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Billing — OfficePro Supplies",
+      "from_handle": "billing@officepro-supplies-invoice.com",
+      "subject": "Invoice #INV-2024-8812 — Due in 3 days",
+      "body": "Please find attached Invoice #INV-2024-8812 for $1,247.00 for office supplies delivered February 10. Payment is due within 3 days to avoid a 5% late fee. Pay at: officepro-supplies-invoice.com/pay\n\nThank you for your business."
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "Lookalike domain — not officepro.com" },
+      { "id": "invoice_without_po_match", "label": "Invoice with no reference to a purchase order" },
+      { "id": "late_fee_urgency", "label": "5% late fee threat within 3 days" },
+      { "id": "payment_link_in_email", "label": "Direct payment link in invoice email" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "invoice_without_po_match", "payment_link_in_email"],
+    "explanation": {
+      "short": "Fake invoice attacks work by sending plausible-looking invoices hoping someone in accounting pays without cross-checking a PO.",
+      "tells": [
+        "The domain officepro-supplies-invoice.com is a fake — your vendor's real billing domain would differ",
+        "Match every invoice to a purchase order — no PO reference is a major red flag in AP processes",
+        "Legitimate invoices from established vendors don't include direct payment links with 3-day deadlines",
+        "Sending to the accounting department hoping someone pays without verification is the core of this attack"
+      ],
+      "safe_move": "Match the invoice to a purchase order before paying. Call OfficePro directly using your existing vendor contact to verify.",
+      "consequence": "Payment goes to the scammer. Without PO matching, businesses commonly pay fraudulent invoices.",
+      "behavioral_reinforcement": "Every invoice should match a purchase order before payment — no PO match, no payment."
+    },
+    "tags": ["fake-invoice", "accounts-payable", "vendor-fraud", "bec"]
+  },
+  {
+    "id": "email_government_impersonation_small_business_001",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "OSHA Compliance Division",
+      "from_handle": "compliance@osha-regulatory-notice.com",
+      "subject": "Mandatory Safety Compliance Filing — $1,200 Penalty Pending",
+      "body": "Your business has been flagged for a missing annual OSHA safety compliance filing. A $1,200 civil penalty is pending. To avoid this penalty and a possible audit, complete your compliance submission and pay the filing fee of $299 at osha-regulatory-notice.com/filing within 10 days."
+    },
+    "red_flags": [
+      { "id": "gov_agency_using_dot_com", "label": "OSHA using .com not .gov" },
+      { "id": "lookalike_domain", "label": "osha-regulatory-notice.com, not osha.gov" },
+      { "id": "penalty_avoidance_fee", "label": "Pay a fee to avoid a penalty — classic scam" },
+      { "id": "vague_violation_claim", "label": "No specific filing or business identifier cited" }
+    ],
+    "correct_red_flag_ids": ["gov_agency_using_dot_com", "lookalike_domain", "penalty_avoidance_fee"],
+    "explanation": {
+      "short": "OSHA is a federal agency — all communications come from osha.gov, and federal penalties are never resolved by paying a fee to a .com website.",
+      "tells": [
+        "All OSHA communications come from osha.gov — any .com claiming to be OSHA is fake",
+        "Real OSHA violations include your business name, EIN, specific violations cited, and a formal citation",
+        "Paying a 'filing fee' to avoid a penalty is a classic scam structure — no agency works this way",
+        "The vague filing claim is designed to be plausible for any business without being verifiable"
+      ],
+      "safe_move": "Ignore. If concerned about OSHA compliance, contact OSHA directly at osha.gov or 1-800-321-OSHA.",
+      "consequence": "You pay $299, receive no protection from any penalty (which didn't exist), and your payment details are captured.",
+      "behavioral_reinforcement": "Federal agency enforcement always comes from .gov sources — never pay a government penalty through a .com website link."
+    },
+    "tags": ["osha", "government", "compliance-scam", "penalty-fraud"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_004",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "HR Payroll — Jessica Park",
+      "from_handle": "jpark@acme-corp.co",
+      "subject": "Request to update my direct deposit",
+      "body": "Hi, I recently opened a new bank account and need to update my direct deposit information before the next payroll run. New account: BluePeak Bank, Account 9912004471, Routing 021000021. Please update before Friday. Thank you!"
+    },
+    "red_flags": [
+      { "id": "payroll_change_by_email", "label": "Direct deposit change requested via email" },
+      { "id": "lookalike_domain", "label": ".co domain, not company's real domain" },
+      { "id": "before_friday_urgency", "label": "Before payroll urgency" },
+      { "id": "no_hr_portal_request", "label": "No request through official HR system" }
+    ],
+    "correct_red_flag_ids": ["payroll_change_by_email", "lookalike_domain", "no_hr_portal_request"],
+    "explanation": {
+      "short": "Payroll diversion fraud works by impersonating an employee requesting a bank change just before payday.",
+      "tells": [
+        "Real payroll updates are processed through HR systems (ADP, Gusto, etc.) — not email requests",
+        "The .co domain likely spoofs the real company domain by one character",
+        "Timing just before payroll is deliberate — it creates urgency and ensures a large payment goes to the scammer",
+        "Verify any direct deposit change by calling the employee at their known phone number"
+      ],
+      "safe_move": "Call the employee at their known number to verify before changing payroll information.",
+      "consequence": "An entire paycheck is deposited to the scammer's account on the next payroll run.",
+      "behavioral_reinforcement": "All payroll changes must be initiated through your HR portal and verified verbally — email alone is never sufficient."
+    },
+    "tags": ["payroll-diversion", "employee-impersonation", "bec", "direct-deposit"]
+  },
+  {
+    "id": "email_account_verification_small_business_001",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Google Business Profile",
+      "from_handle": "noreply@google-business-verify.com",
+      "subject": "Action Required: Verify your Google Business Profile to prevent suspension",
+      "body": "Your Google Business Profile listing for Acme Plumbing is at risk of suspension. Unverified listings are removed after 30 days. Re-verify your listing now to keep your reviews and ranking active.\n\nVerify at: google-business-verify.com/listing?id=29847"
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "google-business-verify.com, not google.com" },
+      { "id": "listing_suspension_threat", "label": "Threat to remove reviews and ranking" },
+      { "id": "business_specific_details", "label": "Uses your business name to appear legitimate" },
+      { "id": "verify_link_not_google", "label": "Verify link doesn't go to google.com" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "listing_suspension_threat", "verify_link_not_google"],
+    "explanation": {
+      "short": "Google Business Profile notices come from google.com — this domain is a fake designed to steal your Google account credentials.",
+      "tells": [
+        "google-business-verify.com is not google.com — real Google communications always come from google.com or business.google.com",
+        "Using your actual business name makes the email appear targeted and legitimate — scammers harvest these from Google Maps",
+        "The 'verify listing' link leads to a fake Google login page to capture your credentials",
+        "Manage your Google Business Profile directly at business.google.com"
+      ],
+      "safe_move": "Go to business.google.com directly and check your profile status. Do not use the link in the email.",
+      "consequence": "The fake login captures your Google account credentials — giving access to your Gmail, Drive, and business systems.",
+      "behavioral_reinforcement": "All Google services use google.com domains — any business verification email from another domain is a phishing attempt."
+    },
+    "tags": ["google-business", "credential-phishing", "small-business-target", "listing-scam"]
+  },
+  {
+    "id": "email_credential_phishing_small_business_001",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BooksOnline Support",
+      "from_handle": "support@booksonline-help.net",
+      "subject": "Your BooksOnline account has been locked — action required",
+      "body": "We've detected unusual activity on your BooksOnline accounting account. To protect your financial data, we've temporarily locked access. Unlock your account at: booksonline-help.net/unlock\n\nFailure to verify within 24 hours will result in account termination and possible data loss."
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "booksonline-help.net, not booksonline.com" },
+      { "id": "accounting_data_loss_threat", "label": "Threat of financial data loss" },
+      { "id": "account_locked_urgency", "label": "Account locked with 24-hour window" },
+      { "id": "unlock_via_link", "label": "Unlock via link in email" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "accounting_data_loss_threat", "unlock_via_link"],
+    "explanation": {
+      "short": "Accounting software phishing is high-value — your bookkeeping credentials give access to your entire financial history and bank connections.",
+      "tells": [
+        "booksonline-help.net is not booksonline.com — real accounting software notifies through the app itself",
+        "Threatening data loss (your entire accounting history) is specifically calibrated to provoke immediate action",
+        "Real lockout notifications include the last login IP and guide you to the official site — not an email link",
+        "Accounting credentials are the highest-value target for small business fraud"
+      ],
+      "safe_move": "Go directly to booksonline.com and log in to check account status. Do not use the email link.",
+      "consequence": "Your bookkeeping credentials give access to bank feeds, vendor payment details, payroll data, and years of financial records.",
+      "behavioral_reinforcement": "Accounting software issues are always resolved through the official app or website — never through an email unlock link."
+    },
+    "tags": ["accounting-software", "credential-phishing", "financial-data", "small-business"]
+  },
+  {
+    "id": "email_government_impersonation_small_business_002",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "State Department of Revenue",
+      "from_handle": "notice@state-tax-compliance-dept.com",
+      "subject": "Delinquent Sales Tax Notice — Immediate Payment Required",
+      "body": "Our records indicate your business owes $3,419.00 in unpaid sales tax for Q3. Failure to remit within 5 days will result in account levy, license suspension, and referral to our collections agency. Pay online: state-tax-compliance-dept.com/pay"
+    },
+    "red_flags": [
+      { "id": "gov_agency_using_dot_com", "label": "State tax agency using .com not .gov" },
+      { "id": "lookalike_domain", "label": "Not your state's actual tax authority domain" },
+      { "id": "levy_and_license_threat", "label": "Threat of levy and license suspension" },
+      { "id": "pay_via_email_link", "label": "Pay via link in email" }
+    ],
+    "correct_red_flag_ids": ["gov_agency_using_dot_com", "lookalike_domain", "pay_via_email_link"],
+    "explanation": {
+      "short": "State tax authorities use .gov domains — a .com claiming to be your state's Department of Revenue is always fake.",
+      "tells": [
+        "Every state's Department of Revenue uses a .gov domain (e.g., revenue.state.tx.us, tax.ny.gov)",
+        "Real tax delinquency notices arrive by certified mail with specific filing periods and penalty breakdowns",
+        "Paying through a .com link sends money to scammers, not the actual state government",
+        "Threats of levy and license suspension are designed to panic business owners into immediate payment"
+      ],
+      "safe_move": "Verify by visiting your state's official tax authority website directly or calling their published number.",
+      "consequence": "Payment goes to scammers. Your real tax account remains unaffected (and may still have a balance).",
+      "behavioral_reinforcement": "State and federal tax notices arrive by certified mail — never pay a tax bill through a link in an email."
+    },
+    "tags": ["state-tax", "government", "compliance-scam", "business-levy"]
+  },
+  {
+    "id": "email_tech_support_small_business_001",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "IT Helpdesk — NovaSoft 365",
+      "from_handle": "helpdesk@novasoft-365-support.net",
+      "subject": "Your NovaSoft 365 license is expiring — remote session required",
+      "body": "Your NovaSoft 365 for Business license expires in 48 hours due to a billing issue. To prevent service interruption, our technician needs to connect remotely to renew your license. Schedule your 15-minute session: novasoft-365-support.net/schedule\n\nNote: This affects all users in your organization."
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "novasoft-365-support.net, not novasoft.com" },
+      { "id": "remote_session_required", "label": "Remote access required to renew license" },
+      { "id": "all_users_affected_urgency", "label": "'All users affected' — amplified urgency" },
+      { "id": "billing_issue_vague", "label": "Vague 'billing issue' with no details" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "remote_session_required", "all_users_affected_urgency"],
+    "explanation": {
+      "short": "No software vendor needs remote access to your computer to renew a license — this is a remote access scam targeting business admins.",
+      "tells": [
+        "Software license renewals are handled through vendor portals, not remote support sessions",
+        "novasoft-365-support.net is not novasoft.com — one of the most common IT impersonation patterns",
+        "Saying 'all users affected' multiplies urgency — a common business-targeted pressure tactic",
+        "Remote access to an admin workstation gives attackers access to your entire network"
+      ],
+      "safe_move": "Manage your NovaSoft 365 subscription at novasoft.com/admin. Do not grant remote access from an unsolicited email.",
+      "consequence": "Remote access to an admin account enables credential theft, ransomware installation, and network-wide compromise.",
+      "behavioral_reinforcement": "Software license renewals never require remote access — manage all renewals through the vendor's official admin portal."
+    },
+    "tags": ["remote-access", "it-support", "license-renewal", "business-admin"]
+  },
+  {
+    "id": "email_malware_attachment_small_business_001",
+    "channel": "email",
+    "pattern_family": "malware_attachment",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Legal — Peterson & Associates",
+      "from_handle": "legal@peterson-associates-law.co",
+      "subject": "Notice of Contract Dispute — Action Required",
+      "body": "Our client has engaged us regarding an outstanding contract dispute with your business. Please review the attached notice of claim (DOC file) and respond within 10 days.\n\nFailure to respond may result in legal action. Enable all document features to view the full claim.\n\nPeterson & Associates LLP"
+    },
+    "red_flags": [
+      { "id": "enable_document_features", "label": "'Enable all document features' to view" },
+      { "id": "legal_threat_urgency", "label": "Legal action threatened — high urgency" },
+      { "id": "unverifiable_law_firm", "label": "Law firm name unverifiable from .co domain" },
+      { "id": "attachment_from_unknown_sender", "label": "DOC attachment from unknown law firm" }
+    ],
+    "correct_red_flag_ids": ["enable_document_features", "legal_threat_urgency", "attachment_from_unknown_sender"],
+    "explanation": {
+      "short": "'Enable all document features' in a Word file is malware delivery — real law firms send PDFs, not macro-enabled documents.",
+      "tells": [
+        "Legitimate legal notices are sent as PDFs, not macro-enabled Word documents",
+        "'Enable all document features' is the standard malware trigger — it runs embedded VBA code",
+        "Threatening legal action creates the panic that makes people click without thinking",
+        "Real law firms would serve formal notice through registered mail, not .co email attachments"
+      ],
+      "safe_move": "Do not open the attachment. If you believe there may be a real dispute, search for Peterson & Associates independently and contact them through verified means.",
+      "consequence": "Enabling macros installs ransomware or a remote access tool — potentially encrypting your entire business network.",
+      "behavioral_reinforcement": "Never enable macros or document features in a file received by email — this is malware delivery, 100% of the time."
+    },
+    "tags": ["malware", "macros", "legal-threat", "business-attack"]
+  },
+  {
+    "id": "email_subscription_renewal_small_business_001",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "DomainGuard Renewals",
+      "from_handle": "renewals@domainguard-register.com",
+      "subject": "FINAL NOTICE: yourbusiness.com domain expires in 5 days",
+      "body": "This is a final notice that yourbusiness.com expires in 5 days. Failure to renew will result in domain loss and potential acquisition by competitors. Renew now for $79/year: domainguard-register.com/renew\n\nAct now to protect your online presence."
+    },
+    "red_flags": [
+      { "id": "domain_loss_threat", "label": "Threat of domain loss and competitor acquisition" },
+      { "id": "third_party_registrar_not_yours", "label": "Not your actual domain registrar" },
+      { "id": "high_renewal_price", "label": "$79/year is 3-5x standard domain pricing" },
+      { "id": "urgency_5_days", "label": "5-day countdown on domain expiry" }
+    ],
+    "correct_red_flag_ids": ["third_party_registrar_not_yours", "domain_loss_threat", "high_renewal_price"],
+    "explanation": {
+      "short": "Domain renewal notices must come from your actual registrar — third-party domain 'expiry' notices are scams designed to transfer your domain and overcharge.",
+      "tells": [
+        "Your domain registrar is already known to you (GoDaddy, Namecheap, etc.) — not DomainGuard",
+        "Paying this 'renewal' may transfer your domain to a different registrar at an inflated price",
+        "Domains typically cost $10–$15/year — $79 is a massive markup",
+        "Scammers harvest domain expiry data and mass-send these notices hoping business owners panic"
+      ],
+      "safe_move": "Log in to your actual domain registrar's website to check your domain's real expiry date. Renew only there.",
+      "consequence": "You pay $79 and may inadvertently transfer your domain to a predatory registrar, losing control of your web presence.",
+      "behavioral_reinforcement": "Domain renewals come only from your registrar — ignore all domain notices from companies you don't recognize."
+    },
+    "tags": ["domain-renewal", "registrar-fraud", "small-business", "domain-scam"]
+  },
+  {
+    "id": "email_oauth_consent_small_business_001",
+    "channel": "email",
+    "pattern_family": "oauth_consent",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft 365 Admin",
+      "from_handle": "admin-alerts@novasoft365-admin.net",
+      "subject": "Authorize new compliance app for your organization",
+      "body": "Your NovaSoft 365 admin account requires authorization of our new Compliance Monitoring app to meet updated security standards. This app requires access to: all user emails, file storage, calendar events, and admin settings.\n\nAuthorize for your organization: novasoft365-admin.net/authorize"
+    },
+    "red_flags": [
+      { "id": "lookalike_domain", "label": "novasoft365-admin.net, not novasoft.com" },
+      { "id": "broad_permission_scope", "label": "Requests all email, files, calendar, and admin access" },
+      { "id": "compliance_requirement_pretext", "label": "'Required for compliance' — fake mandate" },
+      { "id": "oauth_via_email_link", "label": "Org-wide OAuth consent via email link" }
+    ],
+    "correct_red_flag_ids": ["lookalike_domain", "broad_permission_scope", "oauth_via_email_link"],
+    "explanation": {
+      "short": "An OAuth grant with access to all email, files, and admin settings from a lookalike domain is a complete organizational account takeover.",
+      "tells": [
+        "novasoft365-admin.net is not novasoft.com — Microsoft/NovaSoft would use their own domain for app authorizations",
+        "Legitimate compliance apps are deployed through the admin portal (admin.novasoft.com), not email links",
+        "The permission scope requested (all email + files + admin) is essentially full organizational access",
+        "'Required for compliance' is an invented pretext — real compliance changes are announced with documentation"
+      ],
+      "safe_move": "Do not authorize. Log in to your admin portal at novasoft.com to manage app permissions.",
+      "consequence": "Authorizing gives attackers persistent access to your entire organization's email, files, and admin controls — even after password changes.",
+      "behavioral_reinforcement": "Never authorize third-party app access through an email link — all app permissions are managed in the admin portal."
+    },
+    "tags": ["oauth", "admin-access", "org-compromise", "business-email"]
+  },
+  {
+    "id": "email_government_impersonation_small_business_003",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Better Business Bureau — Complaint Division",
+      "from_handle": "complaints@bbb-complaint-portal.org",
+      "subject": "Consumer complaint filed against your business — response required",
+      "body": "A consumer complaint (Case #BBB-2024-04419) has been filed against your business. You have 7 days to respond or your BBB accreditation will be suspended. View and respond to the complaint: bbb-complaint-portal.org/case/04419\n\nImmediate response is required to maintain your rating."
+    },
+    "red_flags": [
+      { "id": "bbb_lookalike_domain", "label": "bbb-complaint-portal.org, not bbb.org" },
+      { "id": "accreditation_suspension_threat", "label": "BBB accreditation suspension threat" },
+      { "id": "7_day_response_window", "label": "7-day urgency on complaint response" },
+      { "id": "link_to_external_portal", "label": "Complaint managed on third-party domain" }
+    ],
+    "correct_red_flag_ids": ["bbb_lookalike_domain", "accreditation_suspension_threat", "link_to_external_portal"],
+    "explanation": {
+      "short": "The BBB sends all communications from bbb.org — any BBB complaint notice from another domain is a fake.",
+      "tells": [
+        "The BBB's official domain is bbb.org — all legitimate complaint management happens at bbb.org",
+        "Clicking the link on bbb-complaint-portal.org leads to a phishing page or malware download",
+        "Real BBB complaints include your business's specific accreditation details — this is generic",
+        "Threatening accreditation suspension is specifically designed to pressure businesses into clicking"
+      ],
+      "safe_move": "Go directly to bbb.org and search for any complaints against your business using your business name.",
+      "consequence": "The link may harvest your credentials or install malware — and your BBB reputation may be researched to make follow-up scams more convincing.",
+      "behavioral_reinforcement": "The BBB only communicates through bbb.org — any other domain claiming to be the BBB is fake."
+    },
+    "tags": ["bbb", "complaint-scam", "business-reputation", "government-impersonation"]
+  },
+  {
+    "id": "email_marketplace_small_business_001",
+    "channel": "email",
+    "pattern_family": "marketplace",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "TradeSpace Buyer",
+      "from_handle": "buyer.michael.1291@gmail.com",
+      "subject": "Purchase inquiry — I'll pay via certified check",
+      "body": "Hi, I'm interested in the commercial equipment you listed for $3,200. I'll send a certified check for $5,500 — please keep your fee and use the remaining $2,300 to pay my shipping coordinator who will pick up the item. Let me know if this works!"
+    },
+    "red_flags": [
+      { "id": "overpayment_check_classic", "label": "Overpayment check — classic scam structure" },
+      { "id": "pay_third_party_with_excess", "label": "Send excess to a 'shipping coordinator'" },
+      { "id": "certified_check_not_safe", "label": "Certified checks can be faked and bounce" },
+      { "id": "personal_gmail_buyer", "label": "Buyer using personal Gmail for business purchase" }
+    ],
+    "correct_red_flag_ids": ["overpayment_check_classic", "pay_third_party_with_excess"],
+    "explanation": {
+      "short": "This is a check overpayment scam — the certified check will bounce after you've already wired $2,300 to the 'shipping coordinator.'",
+      "tells": [
+        "Certified and cashier's checks can be professionally counterfeited — they appear to clear for 1–2 weeks before bouncing",
+        "The shipping coordinator is the scammer — your $2,300 goes directly to them",
+        "No legitimate buyer needs to overpay and have you wire back the difference",
+        "Business equipment buyers typically pay via ACH, wire, or escrow — not certified check to a stranger"
+      ],
+      "safe_move": "Decline. For business equipment sales, use a secure payment method like wire transfer where funds are verified first.",
+      "consequence": "The check bounces after you've sent $2,300. Your bank holds you liable for the full check amount.",
+      "behavioral_reinforcement": "Any buyer who overpays and asks you to forward the difference to a third party is running a check scam."
+    },
+    "tags": ["check-scam", "overpayment", "marketplace", "equipment-sale"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_005",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "CEO — Robert Chen",
+      "from_handle": "rchen@acme-corp.co",
+      "subject": "RE: New vendor payment",
+      "body": "Hi — I need you to process a payment to a new vendor for a project I'm handling. $14,800 wire to NexaTrade LLC, account 7712004591, routing 021000089. This needs to go out today and I need confirmation ASAP. Don't discuss with anyone — this is confidential until the deal closes."
+    },
+    "red_flags": [
+      { "id": "confidentiality_instruction", "label": "'Don't discuss with anyone' — secrecy demand" },
+      { "id": "lookalike_domain", "label": ".co domain spoofing CEO's real email" },
+      { "id": "new_vendor_no_documentation", "label": "New vendor with no invoice or PO" },
+      { "id": "same_day_wire_urgency", "label": "Same-day wire with no documentation" }
+    ],
+    "correct_red_flag_ids": ["confidentiality_instruction", "lookalike_domain", "new_vendor_no_documentation"],
+    "explanation": {
+      "short": "The secrecy instruction ('don't discuss with anyone') is the clearest signal — it's designed to prevent verification of what is a CEO fraud attack.",
+      "tells": [
+        "Legitimate wire transfers have invoices, purchase orders, and can withstand internal discussion",
+        "Confidentiality demands are specifically used to stop you from calling your CEO to verify",
+        "The .co domain is a one-character difference from the real company domain — a classic BEC technique",
+        "Any wire over a few thousand dollars should require dual authorization and documented business justification"
+      ],
+      "safe_move": "Do not wire anything. Call your CEO directly on their known phone number to verify — regardless of the confidentiality request.",
+      "consequence": "Funds are wired internationally within hours. Recovery rate for BEC wire fraud is under 15% even with rapid FBI reporting.",
+      "behavioral_reinforcement": "Confidentiality requests in payment emails are red flags, not permissions — always verify large wire requests by phone."
+    },
+    "tags": ["bec", "ceo-fraud", "wire-transfer", "confidentiality-trap"]
+  },
+  {
+    "id": "email_credential_phishing_small_business_002",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PayStream Support",
+      "from_handle": "support@paystream-security.net",
+      "subject": "Unusual login attempt on your PayStream account",
+      "body": "We detected a sign-in attempt to your PayStream merchant account from an unrecognized device. To secure your account and prevent unauthorized transactions, please verify your identity within 4 hours.\n\nVerify: paystream-security.net/merchant-verify\n\nIgnoring this notice may result in account suspension."
+    },
+    "red_flags": [
+      { "id": "lookalike_payment_domain", "label": "paystream-security.net, not paystream.com" },
+      { "id": "merchant_account_bait", "label": "Targets business's payment processing account" },
+      { "id": "4_hour_verification_window", "label": "4-hour urgency" },
+      { "id": "account_suspension_threat", "label": "Suspension threat for inaction" }
+    ],
+    "correct_red_flag_ids": ["lookalike_payment_domain", "merchant_account_bait", "4_hour_verification_window"],
+    "explanation": {
+      "short": "Payment processor credentials are high-value targets — paystream-security.net is a fake designed to steal your merchant account login.",
+      "tells": [
+        "Real PayStream security notices come from paystream.com — not paystream-security.net",
+        "Merchant account phishing is highly targeted at small businesses — it gives access to payment processing and business banking",
+        "Real payment processors alert via in-app notifications and direct you to the official site",
+        "4-hour windows are designed to prevent careful evaluation"
+      ],
+      "safe_move": "Go directly to paystream.com and log in to check account activity. Do not use the link in the email.",
+      "consequence": "Your merchant account credentials allow the attacker to redirect payouts, process refunds to their cards, or access linked business banking.",
+      "behavioral_reinforcement": "Payment processor security alerts are always verified through the official site — never through an email link."
+    },
+    "tags": ["payment-processor", "merchant-account", "credential-phishing", "small-business"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_006",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Accounts — SupplyCore",
+      "from_handle": "accounts@supplycore.com",
+      "subject": "Invoice #SC-2024-1109 — $892.40 due March 15",
+      "body": "Dear Acme Plumbing,\n\nPlease find attached Invoice #SC-2024-1109 for $892.40 for pipe fittings delivered February 8 (PO #ACM-2024-0091).\n\nPayment is due March 15 to our account on file. No changes to our banking information.\n\nQuestions? Contact us at accounts@supplycore.com or 1-800-555-0210.\n\nSupplyCore Accounts"
+    },
+    "red_flags": [
+      { "id": "large_invoice_from_vendor", "label": "Invoice from known vendor" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate invoice — from the vendor's real domain, referencing a specific PO, and explicitly noting no banking changes.",
+      "tells": [
+        "Sent from accounts@supplycore.com — the vendor's actual domain, not a lookalike",
+        "References a specific PO number (ACM-2024-0091) that should match your purchase records",
+        "Explicitly states 'no changes to our banking information' — a signal a real vendor might include after BEC awareness",
+        "Payment terms are normal (net 30-ish), with a direct vendor contact for questions"
+      ],
+      "safe_move": "Match the invoice to PO #ACM-2024-0091 in your system and pay to the account already on file for SupplyCore.",
+      "consequence": "No risk. Verify the PO number matches before approving payment.",
+      "behavioral_reinforcement": "Legitimate invoices reference specific PO numbers and come from the vendor's real domain — verify both before paying."
+    },
+    "tags": ["invoice", "vendor-payment", "legit", "accounts-payable"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_007",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Project Mgmt — BuildRight Contractors",
+      "from_handle": "projects@buildright-contractors.com",
+      "subject": "Change Order #CO-14 — Additional Materials",
+      "body": "Hi,\n\nThis is a formal change order for the office renovation project. CO-14 adds $3,400 for structural reinforcement materials discovered during Phase 2 demo (see attached scope document).\n\nPer our contract, change orders over $1,000 require your written approval. Please reply to approve or call us at 1-800-555-0318.\n\nBuildRight Project Management"
+    },
+    "red_flags": [
+      { "id": "unexpected_additional_cost", "label": "Additional cost on ongoing project" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate change order — from the contractor's real domain, referencing your specific project and contract terms, requiring your approval.",
+      "tells": [
+        "Sent from projects@buildright-contractors.com — the contractor's own domain",
+        "References specific change order number (CO-14) and project phase — consistent with real construction management",
+        "Follows your actual contract terms (written approval required over $1,000) — a scammer wouldn't know this",
+        "Provides a callback number at the contractor's known number for verification"
+      ],
+      "safe_move": "Verify by calling BuildRight at their known number. Review the attached scope document before approving.",
+      "consequence": "No risk from this email. Review the scope and approve if the work is verified.",
+      "behavioral_reinforcement": "Legitimate change orders reference specific contract terms and project details — and require your approval before work proceeds."
+    },
+    "tags": ["change-order", "contractor", "project-management", "legit"]
+  },
+  {
+    "id": "sms_bank_fraud_alert_small_business_001",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "PinnacleBank Business",
+      "from_handle": "72791",
+      "subject": null,
+      "body": "PinnacleBank Business: Outgoing wire of $14,500 to NexaTrade LLC was submitted. If not authorized by you, call 1-800-555-0100 immediately — this is the number on the back of your business debit card."
+    },
+    "red_flags": [
+      { "id": "large_wire_you_may_not_recognize", "label": "Large outgoing wire" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate bank wire notification — short code sender, real bank number, and no links or login requests.",
+      "tells": [
+        "Comes from a short code (72791) registered to PinnacleBank's business banking alerts",
+        "Provides the number from the back of your debit card as the verification path — not a separate unknown number",
+        "No link, no request to reply with anything, no ask for credentials",
+        "Wire confirmation texts are a genuine fraud prevention service offered by most business banks"
+      ],
+      "safe_move": "If you authorized the wire, no action needed. If not, call 1-800-555-0100 immediately — time matters for wire fraud.",
+      "consequence": "If unauthorized, calling your bank quickly can sometimes halt the wire. Act within minutes.",
+      "behavioral_reinforcement": "Legitimate bank wire alerts come from short codes and reference the number on your card — they never include links or ask you to log in."
+    },
+    "tags": ["wire-transfer", "bank-alert", "legit", "business-banking"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_008",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Payroll — PayrollNow",
+      "from_handle": "payroll@payrollnow.com",
+      "subject": "Payroll processing confirmation — February 28",
+      "body": "Your payroll of $22,140.00 for 8 employees was processed on February 28 and will fund on March 1. ACH deposits are on their way.\n\nView your payroll summary at payrollnow.com/reports.\n\nIf you did not authorize this payroll run, call 1-800-555-0191 immediately.\n\nPayrollNow Team"
+    },
+    "red_flags": [
+      { "id": "large_payroll_debit", "label": "Large payroll amount leaving your account" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate payroll confirmation — from payrollnow.com, confirming a scheduled run you authorized, with a direct contact if something is wrong.",
+      "tells": [
+        "Sent from payrollnow.com — the payroll provider's official domain",
+        "Confirms an amount consistent with your normal payroll and matches your employee count",
+        "Directs to payrollnow.com/reports to verify — the provider's own domain",
+        "Includes an emergency number for unauthorized transactions — standard payroll security practice"
+      ],
+      "safe_move": "Verify the amount and employee count match your records at payrollnow.com/reports.",
+      "consequence": "No risk if the payroll matches your authorization.",
+      "behavioral_reinforcement": "Payroll confirmation emails from your provider's real domain with matching details are routine — verify any discrepancies through the official portal."
+    },
+    "tags": ["payroll", "confirmation", "legit", "business-operations"]
+  },
+  {
+    "id": "email_account_verification_small_business_002",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft 365 Admin Center",
+      "from_handle": "admin@novasoft.com",
+      "subject": "Admin: A new app was granted access to your organization",
+      "body": "An admin in your organization granted the following app access on Feb 14:\n\nApp: Zoom for Business\nPermissions: Calendar read/write, presence status\nGranted by: admin@yourbusiness.com\n\nIf you authorized this, no action needed. If not, review app permissions at admin.novasoft.com."
+    },
+    "red_flags": [
+      { "id": "third_party_app_access_granted", "label": "Third-party app granted access" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate admin notification from NovaSoft — it comes from novasoft.com and references a specific app grant with limited, named permissions.",
+      "tells": [
+        "Sent from admin@novasoft.com — the software provider's official domain",
+        "Lists the specific app (Zoom for Business), specific permissions (calendar only), and who granted it",
+        "Directs to admin.novasoft.com for review — the official admin portal",
+        "Does not ask you to click anything in the email — just informs and tells you where to review"
+      ],
+      "safe_move": "Verify the grant matches an action taken by your admin. Review app permissions at admin.novasoft.com if needed.",
+      "consequence": "No risk from this email. If the grant was unexpected, revoke the app at admin.novasoft.com.",
+      "behavioral_reinforcement": "Legitimate admin notifications are informational — they come from the provider's domain and direct you to the official portal, not an email link."
+    },
+    "tags": ["admin-notification", "app-permissions", "legit", "novasoft-365"]
+  },
+  {
+    "id": "email_government_impersonation_small_business_004",
+    "channel": "email",
+    "pattern_family": "government_impersonation",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "IRS — Business Tax Account",
+      "from_handle": "do-not-reply@irs.gov",
+      "subject": "CP2000 Notice — Discrepancy in reported income",
+      "body": "This is a notification that the IRS has mailed a CP2000 notice to your registered business address regarding a discrepancy in your 2022 business tax return. The notice was mailed February 12.\n\nYou do not need to take action in response to this email. Your mailed notice contains all details and response instructions.\n\nIRS.gov — Never share personal tax info by email."
+    },
+    "red_flags": [
+      { "id": "irs_email_notification", "label": "Email from the IRS" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate IRS notification email — it comes from irs.gov, asks for nothing, and says to wait for the mailed notice.",
+      "tells": [
+        "Sent from do-not-reply@irs.gov — the IRS's official domain",
+        "Explicitly says 'you do not need to take action in response to this email' — no link, no payment, no call",
+        "Notifies you a physical letter was mailed — consistent with how the IRS actually operates",
+        "Includes a reminder not to share personal tax info by email — a legitimate IRS safety message"
+      ],
+      "safe_move": "Watch for the mailed CP2000 notice and consult a tax professional about the discrepancy.",
+      "consequence": "No risk from this email. The CP2000 is a common correspondence notice, not an audit.",
+      "behavioral_reinforcement": "The IRS emails you only to notify — never to collect. All action items from the IRS come by mail, not by email."
+    },
+    "tags": ["irs", "cp2000", "government", "legit", "tax-notice"]
+  },
+  {
+    "id": "email_malware_attachment_small_business_002",
+    "channel": "email",
+    "pattern_family": "malware_attachment",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Vendor Inquiry",
+      "from_handle": "procurement@globalvendors-co.net",
+      "subject": "Request for Quotation — see attached PO",
+      "body": "Dear Supplier,\n\nWe are interested in placing a large order with your company. Please review the attached purchase order and provide pricing. The document requires macros to be enabled to display our full specifications.\n\nWe look forward to your response.\n\nGlobalVendors Procurement"
+    },
+    "red_flags": [
+      { "id": "enable_macros_to_view", "label": "'Enable macros' to view purchase order" },
+      { "id": "unsolicited_rfq_from_unknown", "label": "Unsolicited RFQ from unknown company" },
+      { "id": "generic_no_product_specifics", "label": "No specific products mentioned" },
+      { "id": "lookalike_domain", "label": "globalvendors-co.net — suspicious sender" }
+    ],
+    "correct_red_flag_ids": ["enable_macros_to_view", "unsolicited_rfq_from_unknown"],
+    "explanation": {
+      "short": "Fake RFQ (request for quotation) emails are a common malware delivery vector targeting small businesses — the attachment is the payload.",
+      "tells": [
+        "No legitimate purchase order requires macros to be enabled — real POs are PDFs or plain spreadsheets",
+        "An RFQ with no product specifics is a mass-sent phishing attempt — real buyers specify what they need",
+        "The .net domain and generic company name are inconsistent with a real procurement department",
+        "Enabling macros installs malware immediately on your business network"
+      ],
+      "safe_move": "Delete the email. Do not open the attachment. If a legitimate buyer wants to work with you, they can submit inquiries through your website.",
+      "consequence": "Enabling macros delivers ransomware or a remote access tool to your business network.",
+      "behavioral_reinforcement": "Unsolicited RFQs requiring macro-enabled documents are malware — real procurement teams use PDFs and don't require macros."
+    },
+    "tags": ["malware", "macros", "rfq-scam", "vendor-targeting"]
+  },
+  {
+    "id": "email_invoice_vendor_small_business_009",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "TrustPay Escrow",
+      "from_handle": "transactions@trustpay.com",
+      "subject": "Escrow funds released — Project Completion Confirmed",
+      "body": "This confirms that escrow funds of $8,500 for the Website Redesign project (Contract #TP-20240214) have been released to DevStudio LLC per your approval on February 26.\n\nThe transaction reference is TXN-884412. View details at trustpay.com/transactions.\n\nTrustPay Escrow Services"
+    },
+    "red_flags": [
+      { "id": "large_payment_released", "label": "Large payment released from escrow" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate escrow release confirmation — from trustpay.com, referencing a specific contract and transaction you authorized.",
+      "tells": [
+        "Sent from transactions@trustpay.com — the escrow service's official domain",
+        "References a specific contract number (TP-20240214) and transaction ID (TXN-884412)",
+        "Confirms your approval as the trigger for the release — consistent with how escrow works",
+        "Directs to trustpay.com/transactions for verification — the service's own portal"
+      ],
+      "safe_move": "Verify the transaction at trustpay.com/transactions matches the project completion you approved.",
+      "consequence": "No risk from this email if you authorized the release.",
+      "behavioral_reinforcement": "Legitimate escrow confirmations reference specific contract numbers and your prior approval — verify details match your records."
+    },
+    "tags": ["escrow", "payment-release", "legit", "contract-payment"]
+  },
+  {
+    "id": "email_subscription_renewal_small_business_002",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaSoft Billing",
+      "from_handle": "billing@novasoft.com",
+      "subject": "Your NovaSoft 365 Business subscription renews March 15",
+      "body": "Your NovaSoft 365 Business (10 users) subscription renews on March 15 for $1,200.00/year. This will be charged to the credit card ending in 8812.\n\nTo update payment info or cancel, visit novasoft.com/billing before March 10.\n\nNovaSoft Billing Team"
+    },
+    "red_flags": [
+      { "id": "large_annual_charge_upcoming", "label": "Large upcoming charge" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate renewal notice from NovaSoft — from their official domain, showing your card's last 4 digits, with 30+ days' notice.",
+      "tells": [
+        "Sent from billing@novasoft.com — the vendor's official domain",
+        "Shows the last 4 digits of the card on file — confirming you're a known customer",
+        "30-day advance notice with a deadline to make changes — standard business subscription practice",
+        "Directs to novasoft.com/billing for changes — the vendor's own portal"
+      ],
+      "safe_move": "No action needed if the subscription is expected. Update payment or cancel at novasoft.com/billing if needed.",
+      "consequence": "No risk from this email.",
+      "behavioral_reinforcement": "Legitimate software renewals show your card's last 4 digits and give advance notice with a self-service portal — no call-to-cancel urgency."
+    },
+    "tags": ["software-renewal", "business-subscription", "legit", "novasoft"]
+  }
+]
