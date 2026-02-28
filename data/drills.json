@@ -1,0 +1,2616 @@
+[
+  {
+    "id": "sms_toll_scam_001",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "SunPass",
+      "from_handle": "+1 (786) 555-0193",
+      "subject": null,
+      "body": "Your toll invoice is overdue. Pay within 30 minutes to avoid suspension: http://sunpass-billing-pay.com"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "urgency_timer", "label": "Unrealistic urgency (30 min)" },
+      { "id": "threat_of_penalty", "label": "Threat of suspension" },
+      { "id": "unknown_number", "label": "Unknown phone number" }
+    ],
+    "correct_red_flag_ids": ["url_lookalike_domain", "urgency_timer", "threat_of_penalty", "unknown_number"],
+    "explanation": {
+      "short": "Government toll services don't demand payment in 30 minutes via random links.",
+      "tells": [
+        "Domain 'sunpass-billing-pay.com' doesn't match official sunpass.com",
+        "30-minute urgency is a classic pressure tactic",
+        "Real SunPass contacts you from a short code, not a random 10-digit number",
+        "Threats of immediate suspension are designed to bypass rational thinking"
+      ],
+      "safe_move": "Open sunpass.com directly in your browser. Check your balance there. Never click links in unsolicited texts.",
+      "consequence": "This link leads to a credential-harvesting page mimicking SunPass. Entering your info hands the attacker your login and any saved payment method."
+    },
+    "tags": ["link", "payments", "authority_impersonation", "urgency"]
+  },
+  {
+    "id": "sms_toll_legit_001",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "USPS",
+      "from_handle": "28777",
+      "subject": null,
+      "body": "USPS: Your package 9400111899223767680091 is out for delivery today. Track at usps.com/track"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "urgency_timer", "label": "Unrealistic urgency" },
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "requests_payment", "label": "Requests payment" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate USPS tracking notification. The short code, official domain, and tracking format are all consistent with real USPS alerts.",
+      "tells": [
+        "Short code 28777 is the official USPS notification number",
+        "Links only to usps.com — not a lookalike",
+        "No payment request, no urgency pressure",
+        "Tracking number format matches real USPS codes"
+      ],
+      "safe_move": "Safe to tap the link, or go to usps.com/track directly and enter the tracking number.",
+      "consequence": "Ignoring legitimate shipping notifications can mean a missed delivery or unclaimed package."
+    },
+    "tags": ["shipping", "tracking", "legitimate"]
+  },
+  {
+    "id": "sms_delivery_scam_001",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "FedEx",
+      "from_handle": "+1 (332) 867-5309",
+      "subject": null,
+      "body": "FedEx: Your package has been held. Pay $2.99 redelivery fee to release it: fedex-redelivery-fee.net/pay"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "unexpected_fee", "label": "Unexpected fee demand" },
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "non_official_tld", "label": "Non-official domain (.net not .com)" }
+    ],
+    "correct_red_flag_ids": ["url_lookalike_domain", "unexpected_fee", "unknown_number", "non_official_tld"],
+    "explanation": {
+      "short": "FedEx never texts you asking for redelivery fees via random links. This is a classic package-held scam.",
+      "tells": [
+        "FedEx communicates via short codes, not random 10-digit numbers",
+        "FedEx never charges redelivery fees via text link",
+        "Domain uses .net and a hyphenated name — fedex.com is the only official domain",
+        "Small dollar amounts ($2.99) are designed to seem harmless but capture your card details"
+      ],
+      "safe_move": "Go to fedex.com directly and enter your tracking number. Call FedEx at 1-800-463-3339 if you have concerns.",
+      "consequence": "Your payment card details go directly to scammers. The $2.99 is bait — they'll charge much more once they have your card."
+    },
+    "tags": ["delivery", "fee", "link", "payments"]
+  },
+  {
+    "id": "sms_bank_scam_001",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Chase",
+      "from_handle": "+1 (929) 555-0182",
+      "subject": null,
+      "body": "CHASE ALERT: Suspicious activity detected. Your account will be locked in 24 hours. Verify now: chase-secure-verify.com"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "urgency_timer", "label": "24-hour deadline pressure" },
+      { "id": "unknown_number", "label": "Unknown phone number (not Chase short code)" },
+      { "id": "account_lock_threat", "label": "Threat of account lockout" }
+    ],
+    "correct_red_flag_ids": ["url_lookalike_domain", "urgency_timer", "unknown_number", "account_lock_threat"],
+    "explanation": {
+      "short": "Chase contacts customers via official short codes, not random numbers. The domain is a lookalike.",
+      "tells": [
+        "Real Chase alerts come from short code 24273, not a 10-digit number",
+        "chase-secure-verify.com is not chase.com",
+        "Account lockout threats in 24 hours are pressure tactics",
+        "Chase's real fraud alerts ask you to call the number on your card — not click links"
+      ],
+      "safe_move": "Call the number on the back of your Chase card. Log in at chase.com directly (never via a text link).",
+      "consequence": "The lookalike site captures your Chase username, password, and potentially your 2FA code, giving the attacker full account access."
+    },
+    "tags": ["banking", "link", "authority_impersonation", "urgency"]
+  },
+  {
+    "id": "sms_bank_legit_001",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Chase",
+      "from_handle": "24273",
+      "subject": null,
+      "body": "Chase Fraud: Did you attempt a $432.19 purchase at BEST BUY on 2/26? Reply YES or NO. Do NOT click any links."
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unrecognized sender number" },
+      { "id": "urgency_timer", "label": "Urgency pressure" },
+      { "id": "requests_personal_info", "label": "Asks for personal information" },
+      { "id": "contains_link", "label": "Contains a suspicious link" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Chase fraud alert. Short codes, no links, reply-only — all consistent with legitimate bank fraud detection.",
+      "tells": [
+        "Short code 24273 is Chase's official fraud alert number",
+        "Explicitly says 'Do NOT click any links'",
+        "Only asks YES/NO — no passwords, SSN, or account numbers",
+        "References specific merchant and amount (real alerts do this)"
+      ],
+      "safe_move": "Reply YES or NO. If in doubt, call the number on the back of your Chase card before replying.",
+      "consequence": "Ignoring this delays fraud detection. A YES or NO helps Chase protect your account in real time."
+    },
+    "tags": ["banking", "fraud_alert", "legitimate"]
+  },
+  {
+    "id": "email_bank_scam_001",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Wells Fargo Security",
+      "from_handle": "security@wellsfargo-alerts.com",
+      "subject": "Action Required: Unusual Sign-In Activity Detected",
+      "body": "Dear Valued Customer,\n\nWe have detected unusual sign-in activity on your Wells Fargo account from a new device.\n\nTo protect your account, we have temporarily limited access. Please verify your identity within 48 hours to restore full access.\n\n[Verify My Account]\n\nIf you do not verify, your account will be permanently suspended.\n\nWells Fargo Customer Security Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "generic_greeting", "label": "Generic greeting ('Valued Customer')" },
+      { "id": "account_lock_threat", "label": "Permanent suspension threat" },
+      { "id": "urgency_timer", "label": "48-hour deadline" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "generic_greeting", "account_lock_threat", "urgency_timer"],
+    "explanation": {
+      "short": "Wells Fargo emails come from @wellsfargo.com. 'wellsfargo-alerts.com' is a scammer-owned lookalike domain.",
+      "tells": [
+        "Official domain is wellsfargo.com — not wellsfargo-alerts.com",
+        "Real Wells Fargo emails use your actual name, not 'Valued Customer'",
+        "Permanent suspension threats are coercion — banks don't work this way",
+        "48-hour pressure windows are designed to short-circuit rational thinking"
+      ],
+      "safe_move": "Call Wells Fargo at 1-800-869-3557. Log into wellsfargo.com directly from your browser.",
+      "consequence": "Clicking 'Verify My Account' leads to a phishing page that captures your username, password, and security questions — full account takeover."
+    },
+    "tags": ["email", "banking", "phishing", "domain_spoofing"]
+  },
+  {
+    "id": "email_acct_verify_scam_001",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Apple ID",
+      "from_handle": "no-reply@apple-id-verify.com",
+      "subject": "Your Apple ID has been locked",
+      "body": "Your Apple ID has been locked due to suspicious activity.\n\nClick below to unlock your account and verify your identity. Failure to do so within 24 hours will result in permanent account deletion.\n\n[Unlock Apple ID]\n\nApple Support"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "account_deletion_threat", "label": "Permanent account deletion threat" },
+      { "id": "urgency_timer", "label": "24-hour deadline" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "account_deletion_threat", "urgency_timer"],
+    "explanation": {
+      "short": "Apple only sends emails from @apple.com or @id.apple.com. 'apple-id-verify.com' is attacker-owned.",
+      "tells": [
+        "apple-id-verify.com is not apple.com",
+        "Apple never threatens permanent deletion via email — they lock accounts temporarily",
+        "24-hour ultimatums are pressure tactics to bypass your skepticism"
+      ],
+      "safe_move": "Go to appleid.apple.com directly and check your account status. If locked, reset via Apple's official flow.",
+      "consequence": "The phishing page captures your Apple ID and password. With that, the attacker accesses iCloud, Photos, contacts, and any apps signed in with Apple ID."
+    },
+    "tags": ["email", "apple", "account_takeover", "domain_spoofing"]
+  },
+  {
+    "id": "email_acct_verify_legit_001",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Google",
+      "from_handle": "no-reply@accounts.google.com",
+      "subject": "New sign-in to your Google Account",
+      "body": "Hi Kevin,\n\nYour Google Account was just signed in to from a new Windows device.\n\nTime: Thursday, February 26, 2026, 3:42 PM EST\nLocation: New York, NY\n\nIf this was you, you don't need to do anything.\n\nIf you didn't sign in, go to your Google Account to secure it.\n\nThe Google Accounts Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Urgency pressure" },
+      { "id": "contains_link", "label": "Contains a suspicious link" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Google security notification. Sent from accounts.google.com, personalizes your name, provides specific time and location, and doesn't pressure you to click anything.",
+      "tells": [
+        "accounts.google.com is Google's official authentication domain",
+        "Uses your actual name (not 'Valued User')",
+        "Includes specific device, time, and location information",
+        "Explicitly says 'if this was you, you don't need to do anything' — no pressure"
+      ],
+      "safe_move": "If it was you, no action needed. If it wasn't you, go to myaccount.google.com directly (not via the email link) and check recent activity.",
+      "consequence": "Dismissing a real security alert when you didn't sign in means an attacker may have your account."
+    },
+    "tags": ["email", "google", "account_security", "legitimate"]
+  },
+  {
+    "id": "sms_tech_support_scam_001",
+    "channel": "sms",
+    "pattern_family": "tech_support",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Microsoft",
+      "from_handle": "+1 (646) 555-0147",
+      "subject": null,
+      "body": "MICROSOFT ALERT: Virus detected on your device! Your data is at risk. Call us immediately: 1-888-555-0192 to remove the threat."
+    },
+    "red_flags": [
+      { "id": "unsolicited_alert", "label": "Unsolicited virus alert" },
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "call_now_pressure", "label": "Urgent call-now pressure" },
+      { "id": "microsoft_never_texts", "label": "Microsoft doesn't text customers" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_alert", "unknown_number", "call_now_pressure", "microsoft_never_texts"],
+    "explanation": {
+      "short": "Microsoft does not send unsolicited texts about viruses. This is a tech support scam designed to get you to call a fake support line.",
+      "tells": [
+        "Microsoft never contacts customers via random text messages",
+        "Legitimate antivirus alerts appear on your device screen — not via SMS",
+        "Calling the number connects you to scammers who will ask for remote access to your computer",
+        "\"Immediate\" call pressure is a hallmark of tech support fraud"
+      ],
+      "safe_move": "Delete the message. Run your device's built-in security scan if concerned. Call Microsoft directly at 1-800-642-7676 if you need support.",
+      "consequence": "Calling the number connects you to scammers who guide you through granting them remote access to your computer, then steal files, install malware, and demand payment."
+    },
+    "tags": ["tech_support", "phone", "remote_access", "microsoft"]
+  },
+  {
+    "id": "email_tech_support_scam_001",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Norton Security",
+      "from_handle": "billing@norton-renewal-center.com",
+      "subject": "Your Norton subscription has been renewed - $349.99 charged",
+      "body": "Dear Customer,\n\nThank you for your continued trust in Norton. Your subscription has been automatically renewed.\n\nAmount charged: $349.99\nTransaction ID: NRT-2026-8847291\n\nIf you did NOT authorize this charge, call our billing team within 24 hours to cancel and receive a full refund:\n\n1-888-555-0247\n\nNorton Billing Department"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "fake_charge", "label": "Unexpected large charge you don't recognize" },
+      { "id": "urgency_timer", "label": "24-hour refund window pressure" },
+      { "id": "call_now_pressure", "label": "Call this number immediately" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "fake_charge", "urgency_timer", "call_now_pressure"],
+    "explanation": {
+      "short": "This is a fake refund scam. The charge never happened. Calling the number connects you to scammers who steal banking info while 'processing the refund.'",
+      "tells": [
+        "norton-renewal-center.com is not norton.com",
+        "The charge doesn't appear on your actual credit card statement",
+        "Real Norton renewal emails link to your Norton account — they don't give you a phone number",
+        "24-hour pressure to call is designed to prevent you from checking your actual bank statement first"
+      ],
+      "safe_move": "Check your actual credit card statement — the charge won't be there. Check your Norton account at norton.com directly.",
+      "consequence": "Calling the number leads to 'tech support' who ask to remotely access your computer to 'process the refund,' then install malware or directly transfer money from your bank."
+    },
+    "tags": ["tech_support", "fake_invoice", "phone", "refund_scam"]
+  },
+  {
+    "id": "email_job_scam_001",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Sarah Chen - LinkedIn Recruiter",
+      "from_handle": "sarah.chen@talent-hire-network.com",
+      "subject": "Exciting remote opportunity - $85/hr - immediate start",
+      "body": "Hi there,\n\nI came across your profile and think you'd be a perfect fit for a remote Data Entry Specialist role.\n\nCompensation: $85/hr, 20 hrs/week (work from home)\nStart date: Immediately\nRequirement: Must purchase a home office setup ($450) — fully reimbursed in first paycheck.\n\nInterested? Reply with your full name, phone, address, and best time to call.\n\nBest,\nSarah Chen\nTalent Hire Network"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "upfront_payment_required", "label": "Requires upfront purchase" },
+      { "id": "too_good_to_be_true", "label": "Pay seems too high for the role" },
+      { "id": "requests_personal_info", "label": "Asks for personal address immediately" }
+    ],
+    "correct_red_flag_ids": ["upfront_payment_required", "too_good_to_be_true", "requests_personal_info"],
+    "explanation": {
+      "short": "Legitimate employers never ask you to pay for equipment upfront. This is a classic advance-fee job scam.",
+      "tells": [
+        "No legitimate employer requires you to buy your own setup before starting",
+        "$85/hr for data entry is unrealistically high",
+        "Asking for home address in a cold recruiting email is a red flag",
+        "Vague company name, non-corporate email domain, no mention of company website"
+      ],
+      "safe_move": "Never pay for a job. Search the company name + 'scam' online. Verify the recruiter on LinkedIn using their actual LinkedIn URL, not info in the email.",
+      "consequence": "You send $450 for 'equipment' that never arrives. The check they send you for 'reimbursement' bounces — after you've already transferred funds. You're out the full amount."
+    },
+    "tags": ["job", "advance_fee", "fake_recruiter", "personal_info"]
+  },
+  {
+    "id": "email_job_legit_001",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Maya Patel",
+      "from_handle": "maya.patel@stripe.com",
+      "subject": "Following up on your application - Software Engineer role at Stripe",
+      "body": "Hi Kevin,\n\nThanks for applying to the Software Engineer position at Stripe. I'm a recruiter on the engineering team here.\n\nI'd love to set up a 30-minute intro call to tell you more about the role and learn about your background.\n\nAre you available this week? You can book a time here: calendly.com/maya-stripe\n\nLooking forward to connecting!\n\nMaya Patel\nTechnical Recruiter, Stripe\nstripe.com | LinkedIn: linkedin.com/in/maya-patel-stripe"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "upfront_payment_required", "label": "Requires upfront purchase" },
+      { "id": "too_good_to_be_true", "label": "Pay seems too high for the role" },
+      { "id": "unsolicited_contact", "label": "You didn't apply for this" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate recruiter follow-up. Sent from stripe.com, references your application, asks for a call with no strings attached, and includes verifiable contact details.",
+      "tells": [
+        "Email from @stripe.com — the official company domain",
+        "References your actual application — you applied first",
+        "No requests for money, equipment purchases, or personal info",
+        "LinkedIn profile and Calendly links are verifiable"
+      ],
+      "safe_move": "Verify maya.patel on LinkedIn before the call. Calendly.com/maya-stripe is a legitimate scheduling link. Proceed with the call.",
+      "consequence": "Missing a real recruiter follow-up could cost you a job opportunity."
+    },
+    "tags": ["job", "recruiting", "legitimate"]
+  },
+  {
+    "id": "email_invoice_scam_001",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "David Reyes - Accounts",
+      "from_handle": "david.reyes@acme-corp-invoicing.com",
+      "subject": "URGENT: Updated banking details for invoice #INV-2026-0892",
+      "body": "Hi,\n\nPlease note that our banking details have changed effective immediately. All outstanding payments must be directed to our new account.\n\nBank: First National Bank\nRouting: 021000089\nAccount: 7734829104\n\nThis applies to invoice #INV-2026-0892 ($14,750) due this Friday.\n\nPlease confirm receipt of this email.\n\nDavid Reyes\nAccounts Receivable\nAcme Corp"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgent_bank_change", "label": "Sudden bank account change" },
+      { "id": "urgency_timer", "label": "Friday deadline pressure" },
+      { "id": "high_dollar_amount", "label": "Large dollar amount" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "urgent_bank_change"],
+    "explanation": {
+      "short": "This is a Business Email Compromise (BEC) scam. Attackers impersonate vendors and redirect payments to their own accounts.",
+      "tells": [
+        "acme-corp-invoicing.com is not acme.com — a lookalike domain set up by the attacker",
+        "Legitimate vendors almost never change banking details via a single email",
+        "You should always verify bank account changes by calling the vendor at a number you already have on file — not one in the email"
+      ],
+      "safe_move": "Call David Reyes directly using the phone number from your existing records (not from this email). Verify the change verbally before any payment.",
+      "consequence": "$14,750 is wired to the attacker's account. Wire transfers are nearly impossible to reverse once sent. This is one of the most costly scam types for businesses."
+    },
+    "tags": ["email", "bec", "wire_fraud", "vendor_impersonation"]
+  },
+  {
+    "id": "email_invoice_legit_001",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "QuickBooks Payments",
+      "from_handle": "invoicing@quickbooks.intuit.com",
+      "subject": "Invoice #1047 from Greenleaf Design Co. - $2,400.00 due Mar 1",
+      "body": "You have a new invoice from Greenleaf Design Co.\n\nInvoice #1047\nAmount due: $2,400.00\nDue date: March 1, 2026\nDescription: Website redesign — Phase 2 completion\n\nPay securely at: qbo.intuit.com/pay/...\n\nQuestions? Contact Greenleaf Design at hello@greenleafdesign.com or (415) 555-0132.\n\nQuickBooks Payments"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email not from vendor directly" },
+      { "id": "contains_link", "label": "Contains a payment link" },
+      { "id": "urgency_timer", "label": "Payment deadline" },
+      { "id": "high_dollar_amount", "label": "Large dollar amount" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate QuickBooks payment request. Sent from intuit.com, the payment link goes to qbo.intuit.com, and vendor contact details are verifiable.",
+      "tells": [
+        "invoicing@quickbooks.intuit.com is Intuit's official invoicing domain",
+        "Payment link goes to qbo.intuit.com — Intuit's secure platform",
+        "Provides vendor's independent contact info to verify",
+        "References a real project you agreed to ('Website redesign — Phase 2')"
+      ],
+      "safe_move": "Verify the amount with Greenleaf Design directly if needed. Safe to pay via the QuickBooks link — it's Intuit's own infrastructure.",
+      "consequence": "Delaying a legitimate vendor invoice can damage business relationships."
+    },
+    "tags": ["email", "invoice", "payments", "legitimate"]
+  },
+  {
+    "id": "dm_romance_scam_001",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Emma_J",
+      "from_handle": "@emma_j_official",
+      "subject": null,
+      "body": "Hey! I know this is random but I saw your profile and couldn't scroll past 😊 I'm Emma — I'm actually a financial advisor and I've been doing really well in crypto lately. Would love to chat more and maybe share some tips? I could help you make some serious returns. No pressure! Just thought I might as well reach out ❤️"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited contact from stranger" },
+      { "id": "too_good_to_be_true", "label": "Promises of investment returns" },
+      { "id": "rapid_trust_building", "label": "Immediate personal connection attempt" },
+      { "id": "crypto_mention", "label": "Crypto investment mentioned early" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_contact", "too_good_to_be_true", "crypto_mention"],
+    "explanation": {
+      "short": "This is a pig-butchering scam opener. The 'financial advisor' narrative followed by crypto tips is a textbook setup for investment fraud.",
+      "tells": [
+        "Unsolicited compliments + investment pitch in the same message is a pig-butchering scam pattern",
+        "Real financial advisors don't cold DM strangers with investment tips",
+        "Crypto investment platforms in these scams are fake — you see fake gains, but can never withdraw"
+      ],
+      "safe_move": "Don't reply. Block and report the account. Romantic interest + investment talk is almost always a pig-butchering scam.",
+      "consequence": "Engagement leads to a months-long relationship where trust is built before you're asked to invest on a platform they control. Victims typically lose $5,000–$500,000+ before realizing the fraud."
+    },
+    "tags": ["dm", "romance", "crypto", "pig_butchering"]
+  },
+  {
+    "id": "dm_social_legit_001",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Sarah Kim",
+      "from_handle": "@sarahkim_ux",
+      "subject": null,
+      "body": "Hey! We met at the ProductCon meetup last week — I was the one demoing the Figma plugin. Loved chatting about design systems. Would love to continue the conversation if you're open to it! Also happy to share the plugin link if you wanted to try it."
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited contact" },
+      { "id": "contains_link", "label": "Offers to share a link" },
+      { "id": "rapid_trust_building", "label": "Immediate personal connection" },
+      { "id": "too_good_to_be_true", "label": "Offer seems too good" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate follow-up from a real networking event. Specific context (ProductCon, Figma plugin, design systems) makes fabrication unlikely.",
+      "tells": [
+        "References a specific shared experience — hard to fake without knowing you",
+        "No investment pitch, no urgency, no financial angle",
+        "The link offer is to a product, not a financial platform",
+        "Profile handle is consistent with the name — @sarahkim_ux not @emma_j_official123"
+      ],
+      "safe_move": "If you did attend ProductCon and match the context, safe to reply. Verify the Figma plugin link by searching for it independently rather than using her link.",
+      "consequence": "Ignoring legitimate networking contacts unnecessarily limits professional opportunities."
+    },
+    "tags": ["dm", "networking", "legitimate"]
+  },
+  {
+    "id": "sms_qr_scam_001",
+    "channel": "sms",
+    "pattern_family": "qr_code",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "ParkNow",
+      "from_handle": "+1 (917) 555-0173",
+      "subject": null,
+      "body": "ParkNow: Your parking session at Lot B has expired. Avoid a $75 fine — extend your session now: [QR Code image] or bit.ly/parknow-extend"
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "url_shortener", "label": "Uses URL shortener (bit.ly)" },
+      { "id": "urgency_fine_threat", "label": "Threat of a fine" },
+      { "id": "qr_in_sms", "label": "QR code in SMS message" }
+    ],
+    "correct_red_flag_ids": ["unknown_number", "url_shortener", "urgency_fine_threat"],
+    "explanation": {
+      "short": "Legitimate parking apps contact you through their own app, not random texts with shortlinks. This is a fake parking scam.",
+      "tells": [
+        "Legitimate parking apps send notifications through the app, not random SMS",
+        "URL shorteners (bit.ly) hide the destination — red flag in payment contexts",
+        "The fine threat ($75) is designed to make the small payment feel worth avoiding",
+        "Real parking meters don't have your phone number unless you registered with an official app"
+      ],
+      "safe_move": "Open your parking app directly to check your session. Use only the app's built-in payment flow.",
+      "consequence": "The link or QR leads to a payment page that captures your card details. The 'parking fine' is fake — the card charge is very real."
+    },
+    "tags": ["qr", "parking", "payments", "url_shortener"]
+  },
+  {
+    "id": "email_qr_scam_001",
+    "channel": "email",
+    "pattern_family": "qr_code",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "IT Help Desk",
+      "from_handle": "helpdesk@company-it-support.net",
+      "subject": "Action Required: Multi-Factor Authentication Update",
+      "body": "Dear Employee,\n\nOur systems are upgrading to a new MFA platform. All employees must re-register their authenticator app within 48 hours to maintain access.\n\nPlease scan the QR code below to complete registration:\n\n[QR Code Image]\n\nThis QR will expire in 48 hours. Do not share this code with anyone.\n\nIT Security Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email not from company domain" },
+      { "id": "urgency_timer", "label": "48-hour deadline" },
+      { "id": "qr_for_auth", "label": "QR code for authentication setup" },
+      { "id": "unsolicited_mfa_change", "label": "Unsolicited MFA change request" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "urgency_timer", "unsolicited_mfa_change"],
+    "explanation": {
+      "short": "Real IT departments send MFA updates from your company's official domain, not external .net addresses. Scanning this QR could hand attackers your login.",
+      "tells": [
+        "company-it-support.net is not your employer's domain — attackers register these to look credible",
+        "Real IT MFA changes come through official IT ticketing systems or company email",
+        "QR codes in phishing emails can initiate OAuth flows that grant attackers account access",
+        "48-hour deadline discourages verification through proper channels"
+      ],
+      "safe_move": "Contact your IT department directly through your internal directory (Slack, Teams, or the company phone number) — not by replying to this email.",
+      "consequence": "Scanning the QR code triggers an OAuth authentication flow that grants the attacker full access to your work account — email, files, and internal systems."
+    },
+    "tags": ["email", "qr", "mfa", "corporate", "oauth"]
+  },
+  {
+    "id": "email_qr_legit_001",
+    "channel": "email",
+    "pattern_family": "qr_code",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Eventbrite",
+      "from_handle": "order@eventbrite.com",
+      "subject": "Your ticket for UX Summit 2026 - March 15",
+      "body": "Hi Kevin,\n\nYou're registered for UX Summit 2026!\n\nEvent: UX Summit 2026\nDate: Saturday, March 15\nVenue: Javits Center, New York\n\nYour ticket QR code is attached. Show this at the door for entry.\n\nManage your registration at eventbrite.com/mytickets\n\nSee you there!\nThe Eventbrite Team"
+    },
+    "red_flags": [
+      { "id": "qr_for_auth", "label": "QR code in email" },
+      { "id": "contains_link", "label": "Contains links" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate event ticket confirmation. Sent from eventbrite.com, the QR is your entry ticket (not an auth flow), and you registered for this event.",
+      "tells": [
+        "order@eventbrite.com is Eventbrite's official transactional email domain",
+        "You initiated this — you registered for the event",
+        "QR code is for event entry, not authentication — no account access is granted",
+        "Links go to eventbrite.com/mytickets — Eventbrite's own platform"
+      ],
+      "safe_move": "Safe to save your ticket. Verify the event at eventbrite.com if uncertain.",
+      "consequence": "Ignoring a legitimate ticket email means you might not have your QR code ready at the door."
+    },
+    "tags": ["email", "qr", "event", "legitimate"]
+  },
+  {
+    "id": "sms_zelle_scam_001",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Bank of America",
+      "from_handle": "692-6328",
+      "subject": null,
+      "body": "BofA: Did you send $987 via Zelle to Mike Johnson? Reply YES or NO. If NO, call 1-800-555-0192 immediately."
+    },
+    "red_flags": [
+      { "id": "unfamiliar_short_code", "label": "Unfamiliar short code" },
+      { "id": "call_now_pressure", "label": "Call this number immediately" },
+      { "id": "zelle_transaction", "label": "Zelle transaction you don't recognize" }
+    ],
+    "correct_red_flag_ids": ["call_now_pressure"],
+    "explanation": {
+      "short": "The question itself may be real (Bank of America does ask this), but the phone number is wrong. Always call the number on your card — never the number in a text.",
+      "tells": [
+        "Bank of America's official fraud short code is 900-00 — not 692-6328",
+        "The text format is consistent with real fraud alerts, making this a harder call",
+        "The danger is the callback number: scammers intercept by providing their own 'bank' number",
+        "If you reply NO and call the number in the text, you reach a scammer posing as BofA"
+      ],
+      "safe_move": "Reply NO to the text. Then call the number on the BACK OF YOUR CARD — not the number provided. Never use a phone number given to you in a message you didn't initiate.",
+      "consequence": "Calling the provided number connects you to a scammer posing as Bank of America. They walk you through 'securing' your account while actually transferring funds out."
+    },
+    "tags": ["sms", "zelle", "banking", "vishing"]
+  },
+  {
+    "id": "email_tech_support_legit_001",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Apple Support",
+      "from_handle": "no-reply@email.apple.com",
+      "subject": "Your Apple ID was used to sign in on a new device",
+      "body": "Your Apple ID (kevin@example.com) was used to sign in to iCloud via a web browser.\n\nDate and Time: February 26, 2026, 3:14 PM EST\nBrowser: Chrome on Windows\n\nIf you recently signed in, you can disregard this email.\n\nIf you didn't sign in, your account may be compromised. Go to your Apple ID account page at appleid.apple.com.\n\nApple Support"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Urgency pressure" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate Apple security notification. Apple sends these from email.apple.com, includes specific device and time details, and doesn't pressure you to click anything.",
+      "tells": [
+        "email.apple.com is Apple's official transactional email subdomain",
+        "Includes your actual Apple ID email address",
+        "Provides specific browser, platform, time, and timezone",
+        "No pressure — says 'disregard if this was you'"
+      ],
+      "safe_move": "If the sign-in was you, no action needed. If not, go to appleid.apple.com directly — not via any link in the email.",
+      "consequence": "Ignoring a real Apple security alert when you didn't sign in means someone may have access to your iCloud, Photos, and connected apps."
+    },
+    "tags": ["email", "apple", "account_security", "legitimate"]
+  },
+  {
+    "id": "dm_job_scam_001",
+    "channel": "dm",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "LinkedIn Jobs",
+      "from_handle": "@LinkedlnJobs",
+      "subject": null,
+      "body": "Hello! We found your profile impressive. We have a remote work opportunity paying $50-80/hr — data review work, flexible hours, no experience needed. To apply, please send your name, address, SSN, and a photo of your ID to verify eligibility. Reply here to start immediately!"
+    },
+    "red_flags": [
+      { "id": "requests_ssn", "label": "Requests Social Security Number" },
+      { "id": "requests_id_photo", "label": "Requests photo ID immediately" },
+      { "id": "impersonation", "label": "Handle mimics real company (LinkedlN vs LinkedIn)" },
+      { "id": "too_good_to_be_true", "label": "High pay, no experience needed" }
+    ],
+    "correct_red_flag_ids": ["requests_ssn", "requests_id_photo", "impersonation", "too_good_to_be_true"],
+    "explanation": {
+      "short": "LinkedIn Jobs (@LinkedlnJobs) has a lowercase 'L' instead of uppercase 'I' — classic impersonation. No legitimate employer asks for SSN via DM before an interview.",
+      "tells": [
+        "Handle is @LinkedlnJobs (ln) not @LinkedInJobs (In) — a lookalike username",
+        "SSN + photo ID in a DM before any interview is immediate identity theft",
+        "$50-80/hr for 'data review, no experience needed' is unrealistically high",
+        "LinkedIn's own job notifications don't work this way"
+      ],
+      "safe_move": "Never provide SSN or government ID via social media DMs. Report the account. Verify jobs at linkedin.com directly.",
+      "consequence": "Your SSN and photo ID enable full identity theft: new credit accounts, tax fraud, and synthetic identity fraud in your name."
+    },
+    "tags": ["dm", "job", "identity_theft", "impersonation"]
+  },
+
+  {
+    "id": "sms_delivery_scam_002",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "UPS",
+      "from_handle": "+1 (404) 555-0127",
+      "subject": null,
+      "body": "UPS: We attempted delivery but nobody was home. Pay a $3.50 rescheduling fee to release your package: ups-reschedule-delivery.com/pay"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "unexpected_fee", "label": "Unexpected rescheduling fee" },
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "non_official_domain", "label": "Domain is not ups.com" }
+    ],
+    "correct_red_flag_ids": ["url_lookalike_domain", "unexpected_fee", "unknown_number"],
+    "explanation": {
+      "short": "UPS does not charge rescheduling fees via text. Small fees are bait to capture your card details.",
+      "tells": [
+        "UPS uses short code 69877, not a 10-digit number",
+        "ups-reschedule-delivery.com is not ups.com",
+        "UPS never charges redelivery or rescheduling fees",
+        "Tiny dollar amounts ($3.50) are designed to seem harmless but capture your card"
+      ],
+      "safe_move": "Go to ups.com directly and enter your tracking number. Call UPS at 1-800-742-5877 if you have questions.",
+      "consequence": "Entering card details on the fake site gives scammers your full card number and CVV. They charge far larger amounts once they confirm the card is active."
+    },
+    "tags": ["delivery", "fee", "link", "payments"]
+  },
+
+  {
+    "id": "email_delivery_legit_001",
+    "channel": "email",
+    "pattern_family": "delivery_toll",
+    "difficulty": 1,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Amazon",
+      "from_handle": "shipment-tracking@amazon.com",
+      "subject": "Your package has shipped — arriving tomorrow",
+      "body": "Hello Kevin,\n\nYour order has shipped and is on its way!\n\nOrder: #114-7829043-2938471\nItem: Anker USB-C Hub (7-in-1)\nEstimated delivery: Thursday, February 27\nCarrier: UPS | Tracking: 1Z999AA10123456784\n\nTrack your package at amazon.com/orders\n\nAmazon Customer Service"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "requests_payment", "label": "Requests payment" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate Amazon shipment notification. Official domain, real order format, real tracking number, no payment requested.",
+      "tells": [
+        "shipment-tracking@amazon.com is Amazon's official transactional email domain",
+        "Order ID format matches real Amazon order numbers",
+        "UPS tracking number format (1Z...) is standard and verifiable",
+        "No payment request, no urgency, no threats"
+      ],
+      "safe_move": "Safe to track at amazon.com/orders. Enter the tracking number on ups.com directly if you prefer.",
+      "consequence": "Ignoring shipment notifications can mean a missed delivery or unclaimed package."
+    },
+    "tags": ["shipping", "amazon", "tracking", "legitimate"]
+  },
+
+  {
+    "id": "email_delivery_scam_001",
+    "channel": "email",
+    "pattern_family": "delivery_toll",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "DHL Express",
+      "from_handle": "noreply@dhl-customs-clearance.com",
+      "subject": "Customs Hold: Action Required for Package CW8847291",
+      "body": "Dear Recipient,\n\nYour international shipment (Tracking: CW8847291) is being held by customs. A customs clearance fee of $19.99 must be paid within 72 hours to release your package.\n\nFailure to pay will result in the package being returned to sender or destroyed.\n\n[Pay Customs Fee Now]\n\nDHL Customs Services"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "unexpected_fee", "label": "Unexpected customs clearance fee" },
+      { "id": "urgency_timer", "label": "72-hour deadline" },
+      { "id": "generic_greeting", "label": "Generic greeting ('Dear Recipient')" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "unexpected_fee", "urgency_timer"],
+    "explanation": {
+      "short": "DHL's official domain is dhl.com. dhl-customs-clearance.com is attacker-owned. Real customs fees are handled through official government customs agencies, not email links.",
+      "tells": [
+        "dhl-customs-clearance.com is not dhl.com — a scammer-registered lookalike",
+        "Real customs fees are assessed by CBP (U.S. Customs), not the shipping carrier via email",
+        "DHL emails address you by name, not 'Dear Recipient'",
+        "72-hour deadlines with destruction threats are pressure tactics"
+      ],
+      "safe_move": "Go to dhl.com and enter your tracking number to see the real status. Contact DHL directly at 1-800-225-5345.",
+      "consequence": "Clicking the payment link leads to a page capturing your card and personal details. The 'customs fee' is fabricated — no such hold exists."
+    },
+    "tags": ["delivery", "customs", "email", "fee", "phishing"]
+  },
+
+  {
+    "id": "sms_delivery_legit_001",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "UPS",
+      "from_handle": "69877",
+      "subject": null,
+      "body": "UPS: Your pkg 1Z999AA10123456784 is out for delivery today by 7pm. No action needed. Track: ups.com/track"
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unrecognized sender" },
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "urgency_timer", "label": "Time pressure (by 7pm)" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real UPS delivery notification. Short code 69877 is UPS's official SMS number, the link goes to ups.com, and no payment or action is requested.",
+      "tells": [
+        "69877 is UPS's official short code for delivery alerts",
+        "Link goes to ups.com — the official domain",
+        "Tracking number format (1Z...) is standard UPS format",
+        "'No action needed' — no payment, no click required"
+      ],
+      "safe_move": "Safe to track on ups.com/track. No action needed unless you want to redirect delivery.",
+      "consequence": "Ignoring a real delivery notification may result in a missed delivery or package held at a facility."
+    },
+    "tags": ["delivery", "ups", "tracking", "legitimate"]
+  },
+
+  {
+    "id": "sms_toll_scam_002",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "E-ZPass",
+      "from_handle": "+1 (201) 555-0164",
+      "subject": null,
+      "body": "E-ZPass NJ: Your account balance is low and a toll transaction of $2.15 on 2/25 was not collected. Add funds within 48 hours to avoid a $50 penalty: ezpass-nj-account.com"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "urgency_timer", "label": "48-hour deadline" },
+      { "id": "threat_of_penalty", "label": "Threat of $50 penalty" }
+    ],
+    "correct_red_flag_ids": ["url_lookalike_domain", "unknown_number", "urgency_timer", "threat_of_penalty"],
+    "explanation": {
+      "short": "E-ZPass NJ communicates via official short codes, not random numbers. ezpass-nj-account.com is not the official domain (ezpassnj.com).",
+      "tells": [
+        "E-ZPass NJ uses short codes and the MyAccount portal — not random 10-digit numbers",
+        "ezpass-nj-account.com is not ezpassnj.com or e-zpassny.com",
+        "Disproportionate penalty ($50 for $2.15 toll) is designed to trigger urgency",
+        "Real E-ZPass low-balance alerts go through the registered app or portal"
+      ],
+      "safe_move": "Log into your E-ZPass account directly at ezpassnj.com or the official app. Verify any balance issues there.",
+      "consequence": "The fake site captures your E-ZPass credentials and payment card. Attackers drain the linked card and may lock you out of your account."
+    },
+    "tags": ["toll", "link", "urgency", "payments"]
+  },
+
+  {
+    "id": "sms_delivery_legit_002",
+    "channel": "sms",
+    "pattern_family": "delivery_toll",
+    "difficulty": 1,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "FedEx",
+      "from_handle": "FedEx",
+      "subject": null,
+      "body": "FedEx: Package delivered to front door at 2:14 PM. Tracking: 789120987654321. Questions? fedex.com/track"
+    },
+    "red_flags": [
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "unknown_number", "label": "Unknown sender" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "requests_payment", "label": "Requests payment" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real FedEx delivery confirmation. Sent from the FedEx sender ID, links to fedex.com, no payment requested.",
+      "tells": [
+        "Sender ID 'FedEx' is FedEx's registered alphanumeric sender",
+        "Link goes to fedex.com — the official domain",
+        "Delivery confirmation with specific time and location is standard FedEx format",
+        "No payment request, no urgency, no threatening language"
+      ],
+      "safe_move": "Safe. Your package is delivered. Visit fedex.com/track to confirm details if needed.",
+      "consequence": "No risk from this message. You can ignore it once you've confirmed your package arrived."
+    },
+    "tags": ["delivery", "fedex", "confirmation", "legitimate"]
+  },
+
+  {
+    "id": "email_delivery_scam_002",
+    "channel": "email",
+    "pattern_family": "delivery_toll",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "USPS Delivery",
+      "from_handle": "delivery@usps-mail-center.com",
+      "subject": "Your mail is being held — confirm your address",
+      "body": "Dear Customer,\n\nUSPS attempted to deliver a piece of certified mail to your address but was unable to complete delivery. To reschedule delivery and confirm your address, please verify your information at the link below.\n\n[Confirm Delivery Address]\n\nNote: Unconfirmed mail will be returned to sender after 10 days.\n\nUSPS Mail Services"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "requests_personal_info", "label": "Asks you to confirm personal information" },
+      { "id": "urgency_timer", "label": "10-day return deadline" },
+      { "id": "vague_reference", "label": "No tracking number or specific mail details" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "requests_personal_info", "vague_reference"],
+    "explanation": {
+      "short": "USPS sends email notifications from usps.com, not usps-mail-center.com. The vague reference and address confirmation request are phishing hallmarks.",
+      "tells": [
+        "USPS official email domain is usps.com — not usps-mail-center.com",
+        "No tracking number provided — real USPS missed-delivery notices always include one",
+        "USPS never asks you to 'confirm your address' via an email link",
+        "Real USPS notices are left physically at the delivery address, not emailed"
+      ],
+      "safe_move": "Check your physical mailbox for a USPS Form 3849 notice. Track any expected packages at usps.com/track directly.",
+      "consequence": "The 'confirm address' link collects your name, address, and potentially payment details for 'redelivery fees.' Your data is sold or used for identity fraud."
+    },
+    "tags": ["delivery", "usps", "phishing", "personal_info"]
+  },
+
+  {
+    "id": "email_bank_legit_001",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Capital One",
+      "from_handle": "no-reply@capitalone.com",
+      "subject": "New sign-in to your Capital One account",
+      "body": "Hi Kevin,\n\nWe noticed a new sign-in to your Capital One account.\n\nWhen: February 26, 2026 at 4:11 PM ET\nDevice: iPhone\nLocation: New York, NY\n\nIf this was you, no action is needed.\n\nIf you don't recognize this activity, please call the number on the back of your card or visit capitalone.com immediately.\n\nCapital One"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "urgency_timer", "label": "Urgency pressure" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Capital One security notification. Sent from capitalone.com, personalized with your name, includes specific device/location, and instructs you to call the back-of-card number — not a link.",
+      "tells": [
+        "capitalone.com is Capital One's official domain",
+        "Uses your first name — not 'Dear Customer'",
+        "Includes specific device type and location information",
+        "Directs you to call the card's back number — the safe response to fraud"
+      ],
+      "safe_move": "If you signed in, no action needed. If not, call the number on the back of your Capital One card immediately.",
+      "consequence": "Ignoring this alert when you didn't sign in means an attacker may have your account."
+    },
+    "tags": ["banking", "capital_one", "account_security", "legitimate"]
+  },
+
+  {
+    "id": "sms_bank_scam_002",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Venmo",
+      "from_handle": "900-09",
+      "subject": null,
+      "body": "Venmo: Suspicious login detected on your account. To secure your account, verify now: venmo-account-secure.com/verify"
+    },
+    "red_flags": [
+      { "id": "unfamiliar_short_code", "label": "Unfamiliar short code" },
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "unsolicited_alert", "label": "Unsolicited security alert" },
+      { "id": "account_lock_threat", "label": "Implied account lockout" }
+    ],
+    "correct_red_flag_ids": ["unfamiliar_short_code", "url_lookalike_domain"],
+    "explanation": {
+      "short": "Venmo's official SMS short code is 86753. Short code 900-09 is not Venmo. The link goes to a lookalike domain, not venmo.com.",
+      "tells": [
+        "Venmo's real short code is 86753 — 900-09 is not affiliated with Venmo",
+        "venmo-account-secure.com is not venmo.com",
+        "Real Venmo security alerts link to venmo.com and never use hyphenated domains",
+        "The message is vague — no transaction details, no specific device mentioned"
+      ],
+      "safe_move": "Open the Venmo app directly and check for any security notifications there. Call Venmo support at 1-855-812-4430 if concerned.",
+      "consequence": "The link harvests your Venmo login credentials. With access, attackers drain your balance or linked bank account via immediate transfers."
+    },
+    "tags": ["venmo", "banking", "link", "domain_spoofing"]
+  },
+
+  {
+    "id": "email_bank_scam_002",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "PayPal",
+      "from_handle": "service@paypal-account-alert.com",
+      "subject": "Your PayPal account has been limited",
+      "body": "Dear Customer,\n\nYour PayPal account access has been limited due to unusual activity. To restore full access, you must verify your identity within 48 hours.\n\n[Restore My Account]\n\nIf you do not complete verification, your account will be permanently suspended and any funds will be held for 180 days.\n\nPayPal Account Services"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "generic_greeting", "label": "Generic greeting ('Dear Customer')" },
+      { "id": "urgency_timer", "label": "48-hour verification deadline" },
+      { "id": "account_lock_threat", "label": "Permanent suspension threat" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "generic_greeting", "account_lock_threat", "urgency_timer"],
+    "explanation": {
+      "short": "PayPal only emails from @paypal.com. paypal-account-alert.com is a scammer-owned lookalike domain.",
+      "tells": [
+        "PayPal's official email domain is @paypal.com — not paypal-account-alert.com",
+        "PayPal addresses you by your full name — never 'Dear Customer'",
+        "180-day fund-hold threat is fabricated — PayPal doesn't operate this way",
+        "Real PayPal limitation notices link only to paypal.com and include a case ID"
+      ],
+      "safe_move": "Log into paypal.com directly (not via any link) and check the Resolution Center for any real limitations.",
+      "consequence": "The link leads to a PayPal login clone. Entering credentials gives attackers full account access to drain your balance and linked bank accounts."
+    },
+    "tags": ["paypal", "banking", "phishing", "domain_spoofing"]
+  },
+
+  {
+    "id": "sms_bank_legit_002",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Wells Fargo",
+      "from_handle": "93557",
+      "subject": null,
+      "body": "Wells Fargo: Your one-time access code is 847291. Valid for 10 minutes. Don't share this code with anyone, including Wells Fargo employees."
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unrecognized sender number" },
+      { "id": "requests_personal_info", "label": "Sending a code (could be used in scam)" },
+      { "id": "urgency_timer", "label": "10-minute expiry" },
+      { "id": "unsolicited_contact", "label": "You didn't request this code" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Wells Fargo 2FA code. Short code 93557 is Wells Fargo's official OTP number, and the message explicitly warns not to share the code.",
+      "tells": [
+        "93557 is Wells Fargo's registered OTP short code",
+        "OTP messages are initiated by your own login attempt — you requested this",
+        "Explicitly says 'don't share with anyone, including Wells Fargo employees' — a legitimate security warning",
+        "No links, no payment requests, no urgency beyond the 10-minute window"
+      ],
+      "safe_move": "Enter the code on the Wells Fargo page you're already on. Never read this code aloud to anyone who calls you.",
+      "consequence": "If someone calls you and asks for this code, they're a scammer using social engineering to bypass 2FA and take over your account."
+    },
+    "tags": ["banking", "wells_fargo", "2fa", "legitimate"]
+  },
+
+  {
+    "id": "email_bank_scam_003",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Citibank",
+      "from_handle": "secure@citi-online-update.com",
+      "subject": "Important: Your Citi account requires an update",
+      "body": "Dear Valued Citi Customer,\n\nAs part of our ongoing security improvements, we are updating our customer verification system. Your account requires re-verification to maintain uninterrupted access.\n\nPlease log in to complete your profile update by March 2, 2026.\n\n[Update My Citi Account]\n\nThank you for being a Citi customer.\n\nCiti Online Banking"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "generic_greeting", "label": "Generic greeting" },
+      { "id": "urgency_timer", "label": "Deadline date pressure" },
+      { "id": "vague_reference", "label": "Vague reason for update" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "generic_greeting", "vague_reference"],
+    "explanation": {
+      "short": "Citi's official email domain is @citi.com or @citibank.com. citi-online-update.com is a phishing domain. Real account updates appear after you log in — not via unsolicited email.",
+      "tells": [
+        "citi-online-update.com is not citi.com",
+        "Real Citi emails use your full name — not 'Valued Citi Customer'",
+        "No specific reason given for the 'update' — vague language is a hallmark of phishing",
+        "Real system updates never require you to click an emailed link to maintain account access"
+      ],
+      "safe_move": "Log into citibank.com directly from your browser. If a real update is needed, it will be shown after login.",
+      "consequence": "Clicking 'Update My Citi Account' takes you to a credential-harvesting page styled like Citi's real login portal."
+    },
+    "tags": ["banking", "citibank", "phishing", "domain_spoofing"]
+  },
+
+  {
+    "id": "sms_bank_scam_003",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Apple Pay",
+      "from_handle": "+1 (512) 555-0189",
+      "subject": null,
+      "body": "Apple Pay: A payment of $299.00 to TECH-STORE-NYC was declined due to suspicious activity. To appeal this decision, call: 1-888-555-0201"
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "call_now_pressure", "label": "Call this number to resolve" },
+      { "id": "microsoft_never_texts", "label": "Apple Pay doesn't text from random numbers" },
+      { "id": "unfamiliar_merchant", "label": "Unrecognized merchant name" }
+    ],
+    "correct_red_flag_ids": ["unknown_number", "call_now_pressure"],
+    "explanation": {
+      "short": "Apple Pay notifications come through the Wallet app — not from random 10-digit phone numbers. The callback number goes to scammers posing as Apple.",
+      "tells": [
+        "Apple Pay alerts appear in the Wallet app and on your lock screen — never via SMS from a 10-digit number",
+        "Calling the provided number connects you to a fake Apple support center",
+        "TECH-STORE-NYC is a vague merchant name designed to seem real",
+        "Apple's real support number is 1-800-275-2273 — always verify before calling"
+      ],
+      "safe_move": "Check your Wallet app directly for any transaction history. If concerned, call Apple Support at 1-800-275-2273.",
+      "consequence": "Calling the number connects you to scammers who ask for your Apple ID and payment card details to 'reverse the transaction' — then use them to make real charges."
+    },
+    "tags": ["apple_pay", "banking", "vishing", "callback_scam"]
+  },
+
+  {
+    "id": "email_bank_legit_002",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "American Express",
+      "from_handle": "fraud-alerts@americanexpress.com",
+      "subject": "Fraud Alert: Unusual activity on your Card ending 4009",
+      "body": "Dear Kevin,\n\nWe noticed a purchase attempt that seems unusual for your account.\n\nMerchant: ELECTRONICS MART\nAmount: $1,247.00\nDate: February 26, 2026\nCard ending: 4009\n\nWas this you? Log in at americanexpress.com to confirm or deny this transaction.\n\nIf you didn't make this purchase, your card has been temporarily frozen as a precaution.\n\nAmerican Express Fraud Prevention"
+    },
+    "red_flags": [
+      { "id": "urgency_timer", "label": "Urgency pressure" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "account_lock_threat", "label": "Card frozen threat" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real American Express fraud alert. Sent from americanexpress.com, personalized with your name and last 4 card digits, directs you to the official site — not an external link.",
+      "tells": [
+        "fraud-alerts@americanexpress.com is Amex's official fraud notification domain",
+        "Uses your actual first name and last 4 card digits",
+        "Directs you to americanexpress.com — the official site",
+        "Proactively froze the card as a precaution — standard legitimate fraud response"
+      ],
+      "safe_move": "Log into americanexpress.com directly (type it in your browser) and confirm or deny the transaction in the fraud center.",
+      "consequence": "Ignoring this alert on a real unauthorized charge means the attacker may continue making purchases on your card."
+    },
+    "tags": ["banking", "amex", "fraud_alert", "legitimate"]
+  },
+
+  {
+    "id": "email_acct_verify_scam_002",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Netflix",
+      "from_handle": "billing@netflix-account-center.com",
+      "subject": "Your Netflix membership has been suspended",
+      "body": "Hi,\n\nWe were unable to process your payment. Your Netflix membership has been suspended.\n\nTo continue enjoying Netflix, please update your payment information within 24 hours.\n\n[Update Payment Method]\n\nIf you don't update your information, your account will be closed and you'll lose access to all your content.\n\nNetflix Billing Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "24-hour deadline" },
+      { "id": "generic_greeting", "label": "Generic greeting (no name)" },
+      { "id": "account_lock_threat", "label": "Account closure threat" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "generic_greeting", "urgency_timer", "account_lock_threat"],
+    "explanation": {
+      "short": "Netflix only emails from @netflix.com. netflix-account-center.com is a phishing domain designed to steal your payment card.",
+      "tells": [
+        "netflix-account-center.com is not netflix.com",
+        "Netflix emails address you by your account name — never 'Hi,' with no name",
+        "Real billing issues are shown when you log into the Netflix app or website directly",
+        "Netflix never threatens to delete your viewing history or content access immediately"
+      ],
+      "safe_move": "Go to netflix.com directly and log in. Any real billing issue will be visible in your account settings.",
+      "consequence": "Entering your card details on the fake billing page sends them directly to attackers. The card is then used for fraudulent purchases."
+    },
+    "tags": ["netflix", "billing", "phishing", "domain_spoofing"]
+  },
+
+  {
+    "id": "email_acct_verify_scam_003",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Amazon Security",
+      "from_handle": "security-update@amazon-security-alert.net",
+      "subject": "Unusual sign-in activity on your Amazon account",
+      "body": "Hello Kevin,\n\nWe noticed a sign-in attempt to your Amazon account from an unrecognized device.\n\nLocation: Lagos, Nigeria\nDevice: Windows PC\nTime: Feb 26, 2026 — 11:47 PM EST\n\nIf this wasn't you, your account may be compromised. Secure your account now:\n\n[Secure My Account]\n\nAmazon Security Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Urgency pressure" },
+      { "id": "foreign_location", "label": "Login from suspicious country" },
+      { "id": "contains_link", "label": "Contains a suspicious link" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch"],
+    "explanation": {
+      "short": "Amazon emails come from @amazon.com only. amazon-security-alert.net is a phishing domain. The specific location detail makes this harder to spot — but the domain gives it away.",
+      "tells": [
+        "amazon-security-alert.net is not amazon.com — attacker-owned with .net TLD",
+        "Amazon's real security emails come from @amazon.com or @amazon.co.uk",
+        "The specific foreign location and time are added to make the threat feel real",
+        "Amazon's real sign-in notification would link only to amazon.com"
+      ],
+      "safe_move": "Go to amazon.com directly and check Your Account > Login & Security for any real alerts.",
+      "consequence": "Clicking 'Secure My Account' takes you to a convincing Amazon login clone. Your credentials go directly to attackers who take over your account and saved payment methods."
+    },
+    "tags": ["amazon", "phishing", "account_takeover", "domain_spoofing"]
+  },
+
+  {
+    "id": "email_acct_verify_legit_002",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Facebook",
+      "from_handle": "security@facebookmail.com",
+      "subject": "We noticed a new login to your Facebook account",
+      "body": "Hi Kevin,\n\nWe noticed a new login to your Facebook account from a device we don't recognize.\n\nBrowser: Chrome on Windows\nLocation: New York, NY\nDate: Feb 26, 2026 at 3:02 PM\n\nWas this you? If so, you don't need to do anything.\n\nIf this wasn't you, go to facebook.com/hacked to secure your account.\n\nThe Facebook Security Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email not from facebook.com" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "urgency_timer", "label": "Urgency pressure" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "facebookmail.com is Facebook's legitimate email domain for notifications. This is a real security alert with specific device and location details, directing you to facebook.com — not an external domain.",
+      "tells": [
+        "facebookmail.com is Facebook's official transactional email domain (distinct from facebook.com by design)",
+        "Includes specific browser, OS, location, and timestamp",
+        "Uses your actual name — not 'Dear User'",
+        "Directs you to facebook.com/hacked — Facebook's own help page"
+      ],
+      "safe_move": "If you made this login, no action needed. If not, go to facebook.com/hacked directly (type it in your browser) to begin account recovery.",
+      "consequence": "Ignoring this alert when you didn't log in may mean an attacker has access to your account and contacts."
+    },
+    "tags": ["facebook", "account_security", "legitimate"]
+  },
+
+  {
+    "id": "email_acct_verify_scam_004",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "PayPal",
+      "from_handle": "noreply@paypal-resolution-center.com",
+      "subject": "Your PayPal account has been temporarily limited",
+      "body": "Dear PayPal User,\n\nYour account has been temporarily limited after we noticed unusual activity.\n\nYou won't be able to:\n• Send or receive money\n• Withdraw funds\n• Use PayPal for purchases\n\nTo restore your account, complete the steps at the link below:\n\n[Restore Account Access]\n\nPayPal Resolution Center"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "generic_greeting", "label": "Generic greeting ('Dear PayPal User')" },
+      { "id": "account_lock_threat", "label": "Account limitation threat" },
+      { "id": "contains_link", "label": "Contains a suspicious link" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "generic_greeting"],
+    "explanation": {
+      "short": "PayPal's only official email domain is @paypal.com. paypal-resolution-center.com is attacker-owned and designed to look official.",
+      "tells": [
+        "paypal-resolution-center.com is not paypal.com",
+        "PayPal emails use your full name — never 'Dear PayPal User'",
+        "Real PayPal limitations are visible when you log in at paypal.com directly",
+        "PayPal's real Resolution Center is at paypal.com/disputes — accessible only after login"
+      ],
+      "safe_move": "Log into paypal.com directly from your browser and check your account status and Resolution Center there.",
+      "consequence": "The link captures your PayPal login. Attackers then transfer your balance and drain any linked bank account."
+    },
+    "tags": ["paypal", "phishing", "account_takeover", "domain_spoofing"]
+  },
+
+  {
+    "id": "sms_acct_verify_legit_001",
+    "channel": "sms",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Instagram",
+      "from_handle": "32665",
+      "subject": null,
+      "body": "Your Instagram code is 847-291. Don't share it."
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unrecognized sender number" },
+      { "id": "requests_personal_info", "label": "Shares a code (could be used in scam)" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "urgency_timer", "label": "Urgency implied" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Instagram 2FA code. Short code 32665 (FBOOK on a keypad) is Meta's official SMS sender for Instagram and Facebook codes.",
+      "tells": [
+        "32665 is Meta's official OTP short code for Instagram and Facebook",
+        "You triggered this by attempting to log in — this is a response to your action",
+        "Message says 'Don't share it' — a legitimate security instruction",
+        "No links, no URLs, no payment requests"
+      ],
+      "safe_move": "Enter the code on the Instagram login screen you have open. Never read this code to anyone who calls you.",
+      "consequence": "If someone calls asking for this code, they're using a stolen password and need your 2FA code to complete the account takeover."
+    },
+    "tags": ["instagram", "2fa", "otp", "legitimate"]
+  },
+
+  {
+    "id": "email_acct_verify_scam_005",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Microsoft Account Team",
+      "from_handle": "account-security@microsoft-account-alert.com",
+      "subject": "Unusual sign-in activity detected on your Microsoft account",
+      "body": "Dear Kevin,\n\nWe detected a sign-in to your Microsoft account from a location we don't recognize.\n\nCountry: Russia\nIP Address: 185.220.101.42\nTime: Feb 26, 2026, 8:14 PM UTC\n\nIf this wasn't you, click below immediately to secure your account.\n\n[Secure My Account]\n\nMicrosoft Account Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "foreign_location", "label": "Login from suspicious country" },
+      { "id": "urgency_timer", "label": "Urgency ('immediately')" },
+      { "id": "contains_link", "label": "Suspicious link" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch"],
+    "explanation": {
+      "short": "Microsoft account emails come only from @microsoft.com or @account.microsoft.com. microsoft-account-alert.com is a phishing domain. The foreign IP detail is designed to provoke panic.",
+      "tells": [
+        "microsoft-account-alert.com is not microsoft.com",
+        "The Russian IP and urgent framing are designed to bypass careful thinking",
+        "Real Microsoft security alerts come from accountprotection@microsoft.com or security@microsoft.com",
+        "Microsoft's real alerts let you review activity at account.live.com/activity"
+      ],
+      "safe_move": "Go to account.microsoft.com directly and check Recent Activity. Change your password if you see unfamiliar sign-ins.",
+      "consequence": "Clicking 'Secure My Account' takes you to a Microsoft login clone. Entering credentials gives attackers access to Outlook, OneDrive, Teams, and any connected services."
+    },
+    "tags": ["microsoft", "phishing", "account_takeover", "domain_spoofing"]
+  },
+
+  {
+    "id": "email_acct_verify_legit_003",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Dropbox",
+      "from_handle": "no-reply@dropbox.com",
+      "subject": "New sign-in to Dropbox",
+      "body": "Hi Kevin,\n\nA new device just signed in to your Dropbox account.\n\nDevice: Chrome on Windows\nTime: February 26, 2026, 3:30 PM EST\nLocation: New York, NY\n\nIf this was you, you're all set. If not, visit dropbox.com/account/security to review your sessions and sign out remotely.\n\nThe Dropbox Team"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Urgency pressure" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Dropbox security notification. Sent from dropbox.com, personalized, includes specific device and location, and directs you to dropbox.com — not an external domain.",
+      "tells": [
+        "no-reply@dropbox.com is Dropbox's official notification email",
+        "Uses your actual name — not 'Dear User'",
+        "Directs you to dropbox.com/account/security — Dropbox's real security page",
+        "No pressure or threats — simply informs you of the activity"
+      ],
+      "safe_move": "If this was your login, no action needed. If not, go to dropbox.com/account/security to review and terminate unknown sessions.",
+      "consequence": "Ignoring this alert when you didn't log in means an attacker may be accessing your stored files."
+    },
+    "tags": ["dropbox", "account_security", "legitimate"]
+  },
+
+  {
+    "id": "email_acct_verify_scam_006",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Steam Support",
+      "from_handle": "noreply@steam-account-support.com",
+      "subject": "Your Steam account has been flagged for a VAC violation",
+      "body": "Dear Steam User,\n\nYour account has been flagged by our anti-cheat system (VAC) for possible violations. To dispute this and prevent a permanent ban, you must verify your account within 48 hours.\n\n[Dispute VAC Violation]\n\nFailing to respond will result in a permanent account ban, losing access to all games and items in your account.\n\nSteam Account Services"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "account_deletion_threat", "label": "Permanent ban threat" },
+      { "id": "urgency_timer", "label": "48-hour deadline" },
+      { "id": "generic_greeting", "label": "Generic greeting ('Dear Steam User')" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "account_deletion_threat", "urgency_timer", "generic_greeting"],
+    "explanation": {
+      "short": "Steam only communicates via @steampowered.com or @valvesoftware.com. steam-account-support.com is a phishing domain. VAC bans are never reversed via email links.",
+      "tells": [
+        "steam-account-support.com is not steampowered.com or valvesoftware.com",
+        "Real Steam communications address you by your Steam username",
+        "VAC bans are notified through the Steam client itself, not email links",
+        "The threat of losing all games is designed to provoke immediate panic action"
+      ],
+      "safe_move": "Log into steam directly at steampowered.com and check any notifications in the Steam client. Contact Steam support via store.steampowered.com/support.",
+      "consequence": "Clicking the link leads to a Steam login clone. Attackers steal your account to sell rare in-game items, which can be worth thousands of dollars."
+    },
+    "tags": ["steam", "gaming", "phishing", "account_takeover"]
+  },
+
+  {
+    "id": "email_tech_support_scam_002",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "McAfee Billing",
+      "from_handle": "billing@mcafee-renewals.net",
+      "subject": "Your McAfee subscription has been renewed — $379.98 charged",
+      "body": "Dear Customer,\n\nYour annual McAfee Total Protection subscription has been automatically renewed.\n\nAmount: $379.98\nTransaction ID: MCF-2026-4481993\nDate: February 26, 2026\n\nIf you did NOT authorize this renewal, you have 48 hours to cancel and receive a full refund.\n\nTo cancel, call our billing support team: 1-888-555-0312\n\nMcAfee Billing Department"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "fake_charge", "label": "Unexpected charge you don't recognize" },
+      { "id": "call_now_pressure", "label": "Call this number to cancel" },
+      { "id": "urgency_timer", "label": "48-hour cancellation window" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "fake_charge", "call_now_pressure", "urgency_timer"],
+    "explanation": {
+      "short": "This is a fake refund scam. The charge never happened. Calling the number connects you to scammers who will ask for remote access to 'process your refund.'",
+      "tells": [
+        "mcafee-renewals.net is not mcafee.com",
+        "Check your actual bank/credit card statement — the $379.98 charge won't exist",
+        "Real McAfee renewal emails link to your account on mcafee.com — not a phone number",
+        "The goal is to get you to call and then grant remote computer access"
+      ],
+      "safe_move": "Check your bank statement — the charge won't be there. If you have McAfee, check your subscription status at mcafee.com directly.",
+      "consequence": "Calling the number leads to scammers who instruct you to install remote-access software. Once connected, they access banking apps, steal files, and may hold your computer hostage."
+    },
+    "tags": ["tech_support", "fake_invoice", "refund_scam", "remote_access"]
+  },
+
+  {
+    "id": "email_tech_support_scam_003",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Best Buy Geek Squad",
+      "from_handle": "invoice@geeksquad-auto-renewal.com",
+      "subject": "Geek Squad Annual Protection Plan — $299.00 Renewed",
+      "body": "Dear Member,\n\nYour Geek Squad Total Home Protection plan has been automatically renewed for another year.\n\nMembership: Total Home Protection\nCharge: $299.00\nTransaction Date: 02/26/2026\nTransaction Ref: GS-2026-1182774\n\nTo cancel within 48 hours and receive a full refund, call:\n1-888-555-0178\n\nGeek Squad Billing"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "fake_charge", "label": "Unexpected auto-renewal charge" },
+      { "id": "call_now_pressure", "label": "Call to cancel" },
+      { "id": "urgency_timer", "label": "48-hour cancellation deadline" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "fake_charge", "call_now_pressure", "urgency_timer"],
+    "explanation": {
+      "short": "Geek Squad emails come from @bestbuy.com. geeksquad-auto-renewal.com is a fake domain. This is one of the most common tech support scams, targeting people who fear phantom charges.",
+      "tells": [
+        "geeksquad-auto-renewal.com is not bestbuy.com",
+        "Geek Squad membership costs are visible in your Best Buy account — check there",
+        "Real Best Buy receipts come from orders@bestbuy.com and link to bestbuy.com",
+        "This exact scam template is sent to millions of email addresses"
+      ],
+      "safe_move": "Check your actual credit card or bank statement. If you have a Geek Squad plan, verify it at bestbuy.com/geeksquad after logging in.",
+      "consequence": "Calling the number leads to a fake 'Geek Squad agent' who requests remote access to 'process the refund' — then uses that access to steal financial information."
+    },
+    "tags": ["geek_squad", "tech_support", "fake_invoice", "refund_scam"]
+  },
+
+  {
+    "id": "email_tech_support_legit_002",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "IT Help Desk",
+      "from_handle": "helpdesk@yourcompany.com",
+      "subject": "Ticket #47821 Resolved — VPN access restored",
+      "body": "Hi Kevin,\n\nYour IT support ticket (#47821) has been resolved.\n\nIssue: VPN client failing to connect after Windows update\nResolution: Updated VPN client to v4.2.1 — please download from internal portal: it.yourcompany.com/downloads\n\nIf the issue persists, reply to this ticket or contact IT at ext. 4200.\n\nIT Help Desk\nyourcompany.com"
+    },
+    "red_flags": [
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "requests_action", "label": "Asks you to download something" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate IT helpdesk ticket resolution. Sent from your company's own domain, references your specific ticket number, and links to an internal company portal.",
+      "tells": [
+        "Email comes from @yourcompany.com — your own employer's domain",
+        "References a specific ticket number you opened (#47821)",
+        "Download link goes to it.yourcompany.com — an internal portal, not an external site",
+        "Contact info is an internal extension (ext. 4200) — not a random phone number"
+      ],
+      "safe_move": "Safe to follow up on the resolution. Verify the ticket number matches what you submitted. Download only from the internal portal link.",
+      "consequence": "Missing a resolved IT ticket may mean your VPN or system issue remains unresolved, blocking your work."
+    },
+    "tags": ["tech_support", "it_helpdesk", "corporate", "legitimate"]
+  },
+
+  {
+    "id": "email_tech_support_scam_004",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Microsoft 365",
+      "from_handle": "billing@microsoft365-renewalcenter.com",
+      "subject": "Your Microsoft 365 subscription expires in 3 days",
+      "body": "Dear Kevin,\n\nYour Microsoft 365 Personal subscription will expire on March 1, 2026.\n\nTo avoid interruption to your Office apps, OneDrive, and email, renew your subscription now at our discounted rate:\n\n$49.99/year (down from $99.99)\n\n[Renew Microsoft 365 Now]\n\nThis offer expires in 3 days.\n\nMicrosoft 365 Billing"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "too_good_to_be_true", "label": "Suspicious 50% discount" },
+      { "id": "urgency_timer", "label": "3-day expiry deadline" },
+      { "id": "contains_link", "label": "Contains a payment link" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "too_good_to_be_true"],
+    "explanation": {
+      "short": "Microsoft 365 billing emails come from @microsoft.com. microsoft365-renewalcenter.com is a phishing domain. The 50% discount is bait to get you to pay a fake renewal.",
+      "tells": [
+        "microsoft365-renewalcenter.com is not microsoft.com",
+        "Microsoft 365 Personal costs $99.99/year — it's never offered at 50% off via email",
+        "Real Microsoft billing emails come from microsoft-noreply@microsoft.com",
+        "Subscription status is verifiable at account.microsoft.com — always check there first"
+      ],
+      "safe_move": "Log into account.microsoft.com directly to check your actual subscription status and renewal date.",
+      "consequence": "Clicking the link takes you to a fake payment page. Your card is charged $49.99 (or more) and your card details are stolen for future fraud."
+    },
+    "tags": ["microsoft", "subscription", "phishing", "fake_renewal"]
+  },
+
+  {
+    "id": "sms_tech_support_legit_001",
+    "channel": "sms",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Amazon",
+      "from_handle": "262966",
+      "subject": null,
+      "body": "Amazon: Your Prime membership has been renewed for $139.00. Your next renewal date is 2/26/2027. Manage at amazon.com/primerenew"
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unrecognized sender number" },
+      { "id": "fake_charge", "label": "Unexpected charge" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "urgency_timer", "label": "Urgency pressure" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate Amazon Prime renewal notification. Short code 262966 is Amazon's official SMS number, the amount matches Prime's current pricing, and the link goes to amazon.com.",
+      "tells": [
+        "262966 is Amazon's registered SMS short code",
+        "$139.00 is the correct Amazon Prime annual price for 2026",
+        "Link goes to amazon.com/primerenew — the official management page",
+        "No phone number to call, no urgency to dispute — just an informational notice"
+      ],
+      "safe_move": "If you have Prime, this is expected. Log into amazon.com to review your membership and renewal history if needed.",
+      "consequence": "If you cancelled Prime before this date, contact Amazon support via amazon.com to request a refund — but verify the charge on your bank statement first."
+    },
+    "tags": ["amazon", "subscription", "legitimate"]
+  },
+
+  {
+    "id": "email_tech_support_scam_005",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Windows Security",
+      "from_handle": "alert@windows-security-center.net",
+      "subject": "CRITICAL: Virus detected on your PC — immediate action required",
+      "body": "WARNING: Our system has detected a dangerous virus (Trojan.GenericKD) on your Windows computer.\n\nYour personal data, passwords, and banking information are at risk.\n\nDo NOT shut down your computer. Call Microsoft Certified Support immediately:\n\n1-888-555-0291\n\nFAILURE TO ACT WITHIN 1 HOUR MAY RESULT IN PERMANENT DATA LOSS.\n\nWindows Security Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "unsolicited_alert", "label": "Unsolicited virus warning" },
+      { "id": "call_now_pressure", "label": "Call now — extreme urgency" },
+      { "id": "microsoft_never_texts", "label": "Microsoft never sends unsolicited virus warnings" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "unsolicited_alert", "call_now_pressure", "microsoft_never_texts"],
+    "explanation": {
+      "short": "Microsoft never sends unsolicited virus alerts via email. This is a classic tech support scam using fear to get you to call a fake support line.",
+      "tells": [
+        "windows-security-center.net is not microsoft.com",
+        "Microsoft cannot detect viruses on your device remotely and unsolicited",
+        "All-caps warnings and 1-hour deadlines are panic-inducing pressure tactics",
+        "Real Windows Defender alerts appear only on your own screen, not in email"
+      ],
+      "safe_move": "Delete this email. Run Windows Defender (built-in) from your Start menu if you want to scan for threats. Never call numbers in unsolicited alerts.",
+      "consequence": "Calling connects you to scammers who walk you through installing remote-access software. They then stage a fake 'virus removal' while stealing banking credentials and demanding payment."
+    },
+    "tags": ["tech_support", "fake_alert", "remote_access", "microsoft"]
+  },
+
+  {
+    "id": "email_tech_support_legit_003",
+    "channel": "email",
+    "pattern_family": "tech_support",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Zoom",
+      "from_handle": "no-reply@zoom.us",
+      "subject": "Your Zoom account was signed in from a new device",
+      "body": "Hi Kevin,\n\nYour Zoom account was signed in from a new device.\n\nDevice: Windows PC\nLocation: New York, NY\nTime: February 26, 2026 at 3:47 PM ET\n\nIf this was you, no action is needed.\n\nIf you don't recognize this activity, secure your account at zoom.us/profile.\n\nZoom Security Team"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Urgency pressure" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Zoom security notification. Sent from zoom.us, personalized with your name, specific device and location, and directs you to zoom.us — not an external domain.",
+      "tells": [
+        "no-reply@zoom.us is Zoom's official notification domain",
+        "Uses your actual name — not 'Dear User'",
+        "Directs you to zoom.us/profile — Zoom's own security settings page",
+        "No pressure or threats — gives you the option to do nothing if it was you"
+      ],
+      "safe_move": "If you logged into Zoom recently, no action needed. If not, go to zoom.us/profile directly and change your password.",
+      "consequence": "Ignoring a real Zoom security alert when you didn't sign in may allow an attacker to access your meetings and recorded sessions."
+    },
+    "tags": ["zoom", "account_security", "legitimate"]
+  },
+
+  {
+    "id": "email_job_scam_002",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Remote Work Hiring",
+      "from_handle": "hiring@remote-work-opportunities-usa.com",
+      "subject": "You're hired — $750/week, work from home immediately",
+      "body": "Congratulations!\n\nYou have been selected for our Remote Package Handler position. No experience required. You will receive packages at your home address, inspect them, and reship to our warehouse.\n\nPay: $750/week, paid via check\nStart date: Immediately\n\nPlease confirm your home address and we will begin the onboarding process.\n\nRemote Staffing Division"
+    },
+    "red_flags": [
+      { "id": "unsolicited_job_offer", "label": "Unsolicited job offer" },
+      { "id": "requests_home_address", "label": "Requests home address immediately" },
+      { "id": "too_good_to_be_true", "label": "High pay, no experience needed" },
+      { "id": "reshipping_scam", "label": "Asks you to reship packages from home" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_job_offer", "requests_home_address", "reshipping_scam"],
+    "explanation": {
+      "short": "This is a reshipping (money mule) scam. You'd be receiving stolen goods at your home and reshipping them, making you legally liable for receiving stolen property.",
+      "tells": [
+        "Reshipping jobs are a well-known scam — you become the last link in a stolen goods chain",
+        "No legitimate employer mails goods to employees' personal homes to reship",
+        "The check used to pay you will bounce after you've already reshipped the packages",
+        "Providing your home address to unknown parties is also a personal safety risk"
+      ],
+      "safe_move": "Do not respond. Report to the FTC at reportfraud.ftc.gov. Reshipping scams are a federal crime for participants, even unknowing ones.",
+      "consequence": "You receive stolen merchandise, reship it overseas, receive a fraudulent check that bounces — you're out the shipping costs and may face law enforcement scrutiny for handling stolen goods."
+    },
+    "tags": ["job", "reshipping", "money_mule", "advance_fee"]
+  },
+
+  {
+    "id": "email_job_scam_003",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "National Consumer Panel",
+      "from_handle": "jobs@mystery-shopper-nationwide.com",
+      "subject": "Mystery Shopper opportunity near you — $300/day",
+      "body": "Hi,\n\nYou've been selected as a mystery shopper in your area! Assignments pay $300/day.\n\nYour first assignment: Purchase $200 in Walmart gift cards from any Walmart location. Rate the service. We will reimburse you $200 + pay your $300 fee by check, mailed immediately.\n\nReply with your name and mailing address to get started.\n\nNational Consumer Research Team"
+    },
+    "red_flags": [
+      { "id": "unsolicited_job_offer", "label": "Unsolicited 'you've been selected'" },
+      { "id": "gift_card_request", "label": "Asks you to buy gift cards" },
+      { "id": "too_good_to_be_true", "label": "$300/day for shopping" },
+      { "id": "requests_home_address", "label": "Requests mailing address" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_job_offer", "gift_card_request", "too_good_to_be_true"],
+    "explanation": {
+      "short": "Gift cards are the #1 payment method used in scams. No legitimate mystery shopping job requires you to front cash for gift cards. The check will bounce.",
+      "tells": [
+        "No legitimate mystery shopping firm asks you to buy gift cards as an 'assignment'",
+        "The mailed check will be fraudulent — it clears initially then bounces days later",
+        "By then you've handed over $200 in gift card codes which are instantly cashed out",
+        "Real mystery shopping companies are verified by the MSPA — check mspa-americas.org"
+      ],
+      "safe_move": "Delete and report. Legitimate mystery shopping opportunities are found through MSPA-verified companies — never via cold email.",
+      "consequence": "You buy $200 in gift cards and share the codes. The reimbursement check bounces a week later. You're out $200 and your bank may charge you a returned check fee."
+    },
+    "tags": ["job", "gift_card", "mystery_shopper", "advance_fee"]
+  },
+
+  {
+    "id": "dm_job_scam_002",
+    "channel": "dm",
+    "pattern_family": "job_seeker",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Alex Trading",
+      "from_handle": "@alex_trading_pro",
+      "subject": null,
+      "body": "Hey! I noticed you follow finance accounts and wanted to reach out. I'm a crypto trader and I'm looking to bring on a few part-time 'trade assistants' — you'd help execute trades using our platform and keep 20% of the profits. No experience needed, I'll train you. Minimum $500 starting deposit on our platform to begin. Interested?"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited DM from stranger" },
+      { "id": "upfront_payment_required", "label": "Requires $500 deposit" },
+      { "id": "crypto_mention", "label": "Cryptocurrency trading involved" },
+      { "id": "too_good_to_be_true", "label": "20% profit share, no experience needed" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_contact", "upfront_payment_required", "crypto_mention"],
+    "explanation": {
+      "short": "Requiring a deposit to start a 'job' is a textbook advance-fee scam. No legitimate employer charges you to begin working for them.",
+      "tells": [
+        "Legitimate jobs never require an upfront deposit to start working",
+        "The 'trading platform' is fake — you'll see fake profits but can never withdraw",
+        "The 20% profit promise is bait — once you deposit, the platform goes silent or demands more",
+        "This is a pig-butchering variant using a job framing instead of romance"
+      ],
+      "safe_move": "Never deposit money to start a job. Block and report the account.",
+      "consequence": "The $500 'deposit' goes directly to the scammer. The platform will show fake profits to encourage more deposits before ultimately disappearing with everything you've sent."
+    },
+    "tags": ["dm", "job", "crypto", "advance_fee"]
+  },
+
+  {
+    "id": "email_job_legit_002",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Priya Sharma",
+      "from_handle": "priya.sharma@notion.so",
+      "subject": "Offer letter — Product Designer, Notion",
+      "body": "Hi Kevin,\n\nCongratulations! We're excited to extend a formal offer for the Product Designer position at Notion.\n\nStart date: March 17, 2026\nCompensation: $145,000/year + equity\nReporting to: Jason Kim, Head of Design\n\nPlease review the attached offer letter and sign via our DocuSign link. Benefits and onboarding details will follow from our People team at people@notion.so.\n\nWelcome to Notion!\n\nPriya Sharma\nHead of Talent, Notion\nnotion.so | linkedin.com/in/priya-sharma-notion"
+    },
+    "red_flags": [
+      { "id": "too_good_to_be_true", "label": "Compensation seems high" },
+      { "id": "contains_link", "label": "Contains a link (DocuSign)" },
+      { "id": "upfront_payment_required", "label": "Requires upfront action" },
+      { "id": "email_domain_mismatch", "label": "Email from non-company domain" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate job offer from Notion. Sent from @notion.so, includes specific details (role, salary, manager name), and uses DocuSign for official signing — a standard enterprise practice.",
+      "tells": [
+        "Email comes from @notion.so — Notion's official company domain",
+        "Includes specific reporting structure, start date, and comp details from the interview process",
+        "DocuSign is a legitimate e-signature platform widely used by employers",
+        "Secondary contact (people@notion.so) is verifiable and on the company's own domain"
+      ],
+      "safe_move": "Verify Priya Sharma on LinkedIn before signing. Confirm the DocuSign email comes from docusign.com. Safe to proceed.",
+      "consequence": "Missing a legitimate offer letter means potentially losing a job opportunity. Respond promptly to confirm your start date."
+    },
+    "tags": ["job", "offer_letter", "recruiting", "legitimate"]
+  },
+
+  {
+    "id": "email_job_scam_004",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "US Federal Careers",
+      "from_handle": "careers@us-federal-jobs-hiring.com",
+      "subject": "You qualify for a federal government position — $72,000/year",
+      "body": "Dear Applicant,\n\nBased on your online profile, you qualify for a GS-9 federal position. These positions offer strong benefits, job security, and competitive pay starting at $72,000.\n\nTo complete your application and expedite processing, a one-time administrative fee of $75 is required for background check processing.\n\nPay securely: federalcareers-application.com/apply\n\nUS Government Hiring Division"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-government domain" },
+      { "id": "upfront_payment_required", "label": "Requires $75 application fee" },
+      { "id": "too_good_to_be_true", "label": "Guaranteed federal job offer" },
+      { "id": "unsolicited_job_offer", "label": "Unsolicited offer based on 'online profile'" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "upfront_payment_required", "unsolicited_job_offer"],
+    "explanation": {
+      "short": "US government job listings are only posted at USAJobs.gov. Federal hiring never charges application or background check fees.",
+      "tells": [
+        "All federal job postings are on USAJobs.gov — no other site can guarantee government positions",
+        "The US government never charges application or background check fees",
+        ".gov domains are required for official government sites — .com is a red flag",
+        "Federal hiring is a competitive, documented process — not selected from 'online profiles'"
+      ],
+      "safe_move": "All legitimate federal job openings are at USAJobs.gov. Never pay fees to apply for government jobs.",
+      "consequence": "You pay $75 which goes to scammers. The 'federal job' does not exist. Background check fees, if real, are always paid by the agency — never the applicant."
+    },
+    "tags": ["job", "government", "advance_fee", "impersonation"]
+  },
+
+  {
+    "id": "email_job_scam_005",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Global Internship Program",
+      "from_handle": "admissions@global-internship-network.org",
+      "subject": "Congratulations — Your internship application has been accepted",
+      "body": "Dear Kevin,\n\nWe are pleased to inform you that your application for our Summer 2026 International Marketing Internship has been accepted.\n\nTo secure your placement, a refundable program registration fee of $350 is required within 5 business days.\n\nBank transfer details:\nBank: Chase\nAccount: 7749201038\nRouting: 021000021\n\nThis fee is fully refundable upon completion of the program.\n\nGlobal Internship Programs"
+    },
+    "red_flags": [
+      { "id": "upfront_payment_required", "label": "Requires $350 registration fee" },
+      { "id": "bank_transfer_request", "label": "Requests bank transfer to personal account" },
+      { "id": "vague_reference", "label": "No specific company or institution named" },
+      { "id": "unsolicited_acceptance", "label": "Accepted without a real interview" }
+    ],
+    "correct_red_flag_ids": ["upfront_payment_required", "bank_transfer_request", "unsolicited_acceptance"],
+    "explanation": {
+      "short": "Legitimate internships never require upfront registration fees via bank transfer. Any fee paid is gone — there is no program and no refund.",
+      "tells": [
+        "No real internship program collects fees via personal bank account transfer",
+        "Vague organization name with no verifiable company website or university affiliation",
+        "No mention of the company, team, or supervisor you'd be working with",
+        "Accepted 'immediately' without a proper interview process"
+      ],
+      "safe_move": "Never pay internship fees via bank transfer. Legitimate programs are found through university career centers or verified platforms like LinkedIn, Handshake, or Glassdoor.",
+      "consequence": "The $350 is wired directly to scammers. There is no internship. Bank transfers are nearly impossible to reverse once sent."
+    },
+    "tags": ["job", "internship", "advance_fee", "wire_fraud"]
+  },
+
+  {
+    "id": "email_job_legit_003",
+    "channel": "email",
+    "pattern_family": "job_seeker",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Columbia Career Education",
+      "from_handle": "career@columbia.edu",
+      "subject": "New job match: UX Researcher at Figma",
+      "body": "Hi Kevin,\n\nBased on your profile preferences, we found a new match for you:\n\nRole: UX Researcher\nCompany: Figma\nType: Full-time, Remote\nSalary: $95,000–$115,000\n\nApply directly on Figma's careers page: figma.com/careers\n\nQuestions? Contact Career Education at career@columbia.edu or visit our office at Wien Hall.\n\nColumbia Career Education"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "You didn't request this" },
+      { "id": "too_good_to_be_true", "label": "Compensation seems high" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "upfront_payment_required", "label": "Requires upfront action" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate job match alert from Columbia University's career office. Sent from columbia.edu, it points you to figma.com/careers — the company's own job portal.",
+      "tells": [
+        "career@columbia.edu is Columbia University's official career services email",
+        "Directs you to figma.com/careers — Figma's own site, not an external recruiter",
+        "No payment requested, no personal info collected via email",
+        "Contact info and campus office location are verifiable"
+      ],
+      "safe_move": "Safe to apply at figma.com/careers. Verify the role is listed there before applying.",
+      "consequence": "Missing legitimate job alerts from career services means fewer opportunities in your search."
+    },
+    "tags": ["job", "university", "career_services", "legitimate"]
+  },
+
+  {
+    "id": "email_invoice_scam_002",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "PayPal",
+      "from_handle": "service@paypal.com",
+      "subject": "You have a money request from TechParts Wholesale ($847.50)",
+      "body": "Hi Kevin,\n\nTechParts Wholesale has sent you a money request for $847.50.\n\nNote from sender: 'Payment for hardware order #TP-7741 — due today'\n\n[Pay Now]\n\nIf you don't recognize this request, you can decline it.\n\nPayPal"
+    },
+    "red_flags": [
+      { "id": "unrecognized_vendor", "label": "Vendor you don't recognize" },
+      { "id": "high_dollar_amount", "label": "Large unexpected payment" },
+      { "id": "urgency_timer", "label": "Due today" },
+      { "id": "contains_link", "label": "Contains a payment link" }
+    ],
+    "correct_red_flag_ids": ["unrecognized_vendor", "high_dollar_amount"],
+    "explanation": {
+      "short": "This is a real PayPal money request — but from an unknown vendor. PayPal money requests can be sent by anyone. The right move is to decline if you don't recognize the order.",
+      "tells": [
+        "service@paypal.com is PayPal's legitimate email — this email itself is real",
+        "PayPal money requests are initiated by anyone with your email — the scam is the request, not the email",
+        "If you don't have a relationship with TechParts Wholesale, this is unsolicited",
+        "Declining a PayPal request costs you nothing — safe to click Decline"
+      ],
+      "safe_move": "Log into paypal.com directly and review the request. If you don't recognize the vendor or order, decline the request. Never pay an invoice you didn't initiate.",
+      "consequence": "If paid, the money goes to a scammer impersonating a vendor. PayPal payments to goods/services accounts may be harder to recover — contact PayPal immediately."
+    },
+    "tags": ["paypal", "invoice", "social_engineering", "legitimate_channel"]
+  },
+
+  {
+    "id": "email_invoice_scam_003",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Jennifer Walsh - HR",
+      "from_handle": "jennifer.walsh@yourcompany-hr.com",
+      "subject": "Action Required: Submit your updated W-2 information",
+      "body": "Hi Kevin,\n\nOur payroll provider is requiring updated tax withholding information for all employees before the March 1st deadline.\n\nPlease complete your W-2 update using the secure form below:\n\n[Update W-2 Information]\n\nThis must be completed by March 1st to ensure your paycheck is not delayed.\n\nJennifer Walsh\nHR & Payroll\nyourcompany.com"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-company domain" },
+      { "id": "urgency_timer", "label": "March 1st deadline" },
+      { "id": "requests_tax_info", "label": "Requests tax/W-2 information via link" },
+      { "id": "payroll_threat", "label": "Paycheck delay threat" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "requests_tax_info"],
+    "explanation": {
+      "short": "HR and payroll updates are handled through official internal systems — never via links in external emails. yourcompany-hr.com is not your employer's domain.",
+      "tells": [
+        "yourcompany-hr.com is not your employer's actual domain",
+        "Payroll providers update W-2 info through the official HR portal (ADP, Workday, etc.) — never a link in an email",
+        "Real HR communications about payroll come from @yourcompany.com accounts",
+        "Paycheck delay threats create pressure to act before verifying"
+      ],
+      "safe_move": "Contact HR directly using the phone number or email from your company directory. Log into your official HR portal (Workday, ADP, etc.) to update any tax information.",
+      "consequence": "W-2 information can be used to file fraudulent tax returns in your name, claiming your refund before you file. Tax identity theft can take 12–18 months to resolve."
+    },
+    "tags": ["hr", "tax", "w2", "corporate", "phishing"]
+  },
+
+  {
+    "id": "email_invoice_legit_002",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Amazon Web Services",
+      "from_handle": "billing@amazon.com",
+      "subject": "Your AWS bill for February 2026 — $312.47",
+      "body": "Hello Kevin,\n\nYour AWS bill for February 2026 is ready.\n\nAccount ID: 123456789012\nTotal amount due: $312.47\nPayment date: March 3, 2026\nPayment method: Visa ending in 4892\n\nView your detailed invoice at: console.aws.amazon.com/billing\n\nAWS Billing Team"
+    },
+    "red_flags": [
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "urgency_timer", "label": "Payment due date" },
+      { "id": "high_dollar_amount", "label": "Large charge" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real AWS billing notification. AWS billing emails come from @amazon.com, include your actual account ID, and link to console.aws.amazon.com — the official AWS portal.",
+      "tells": [
+        "billing@amazon.com is AWS's official billing notification address",
+        "Includes your real AWS Account ID — verifiable in your AWS console",
+        "Links to console.aws.amazon.com — Amazon's official cloud management portal",
+        "Shows the actual card on file — you can verify the last 4 digits"
+      ],
+      "safe_move": "Log into console.aws.amazon.com directly to verify the bill details and confirm the charge is expected.",
+      "consequence": "Ignoring a real AWS bill may lead to your account being suspended for non-payment, disrupting any services you're running."
+    },
+    "tags": ["aws", "billing", "cloud", "legitimate"]
+  },
+
+  {
+    "id": "email_invoice_scam_004",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Michael Torres - CEO",
+      "from_handle": "michael.torres@yourcompany.co",
+      "subject": "Confidential — wire transfer needed today",
+      "body": "Kevin,\n\nI need you to process an urgent wire transfer today for a confidential acquisition deal we're closing. I'm in meetings and can't discuss over the phone right now.\n\nAmount: $47,500\nBank: First National Bank\nRouting: 021000021\nAccount: 5567341029\nMemo: Consulting Services\n\nPlease process this immediately and confirm via email. Do not discuss with others — this is confidential and time-sensitive.\n\nThanks,\nMichael"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from similar but different domain" },
+      { "id": "urgency_timer", "label": "Must be done today" },
+      { "id": "secrecy_demand", "label": "Told not to discuss with others" },
+      { "id": "wire_transfer_request", "label": "Unusual wire transfer request" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "secrecy_demand", "wire_transfer_request"],
+    "explanation": {
+      "short": "This is a CEO fraud / Business Email Compromise (BEC) attack. The domain yourcompany.co mimics yourcompany.com. No legitimate executive requests wire transfers via email with a secrecy demand.",
+      "tells": [
+        "yourcompany.co is not yourcompany.com — attackers register lookalike TLDs (.co vs .com)",
+        "Any secrecy demand ('don't discuss with others') is a major red flag — designed to prevent verification",
+        "Legitimate executives never request wire transfers via email alone — always verify verbally",
+        "Real acquisition deals have legal and finance teams involved — not solo email instructions"
+      ],
+      "safe_move": "Call the CEO directly using the number you have on file — not from this email. Verify any wire transfer request in person or by known phone before acting.",
+      "consequence": "$47,500 is wired to an attacker's account. Wire transfers are nearly impossible to reverse. This scam costs businesses over $2 billion annually."
+    },
+    "tags": ["bec", "ceo_fraud", "wire_fraud", "corporate"]
+  },
+
+  {
+    "id": "email_invoice_legit_003",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Stripe",
+      "from_handle": "support@stripe.com",
+      "subject": "Your Stripe payout of $1,847.00 is on its way",
+      "body": "Hi Kevin,\n\nYour scheduled payout has been initiated.\n\nAmount: $1,847.00\nDestination: Chase Bank account ending in 6201\nArrival: February 28, 2026 (2 business days)\n\nView payout details at: dashboard.stripe.com/payouts\n\nStripe Support"
+    },
+    "red_flags": [
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "high_dollar_amount", "label": "Large payout amount" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Urgency pressure" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate Stripe payout notification. Sent from stripe.com, links to dashboard.stripe.com, and includes the specific bank account receiving the funds.",
+      "tells": [
+        "support@stripe.com is Stripe's official email domain",
+        "Links to dashboard.stripe.com — Stripe's official merchant dashboard",
+        "Shows the last 4 digits of the bank account on file — verifiable",
+        "Payout timing (2 business days) is consistent with standard Stripe processing"
+      ],
+      "safe_move": "Log into dashboard.stripe.com directly to confirm the payout details. No other action needed.",
+      "consequence": "Ignoring a real payout notification is low risk — the money will arrive in your bank account regardless."
+    },
+    "tags": ["stripe", "payout", "fintech", "legitimate"]
+  },
+
+  {
+    "id": "email_invoice_scam_005",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "DMCA Enforcement Office",
+      "from_handle": "notice@dmca-copyright-enforcement.com",
+      "subject": "Copyright Infringement Notice — Action Required Within 72 Hours",
+      "body": "Dear Website Owner,\n\nThis notice is to inform you that copyrighted material owned by our client has been identified on your website or social media profile.\n\nViolation Case: DMCA-2026-78812\nInfringement Type: Unauthorized image use\n\nTo avoid legal proceedings and statutory damages of up to $150,000, you must either:\n1. Remove the content immediately, OR\n2. Pay a licensing settlement fee of $650 at the link below.\n\n[Resolve This Claim]\n\nFailure to respond within 72 hours will result in legal escalation.\n\nDMCA Enforcement Office"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from unofficial domain" },
+      { "id": "legal_threat", "label": "Threat of $150,000 in damages" },
+      { "id": "urgency_timer", "label": "72-hour deadline" },
+      { "id": "vague_reference", "label": "No specific content or URL identified" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "legal_threat", "vague_reference"],
+    "explanation": {
+      "short": "Legitimate DMCA notices name specific URLs and content. This notice is vague and demands payment via a non-official website — a hallmark of copyright extortion scams.",
+      "tells": [
+        "dmca-copyright-enforcement.com is not an official DMCA authority — DMCA notices come from actual copyright holders",
+        "No specific content, URL, or image is identified — real DMCA notices are precise",
+        "Legitimate copyright holders pursue takedowns through official channels, not settlement payment links",
+        "$150,000 statutory damages apply only after federal court proceedings — not via an email link"
+      ],
+      "safe_move": "Ignore the payment link. If there's a real concern, consult an attorney or search the DMCA database at dmca.com. Report the extortion attempt to the FTC.",
+      "consequence": "Paying the $650 confirms you as a target. Scammers will return with larger demands, knowing you'll pay to avoid perceived legal trouble."
+    },
+    "tags": ["dmca", "legal_threat", "extortion", "fake_authority"]
+  },
+
+  {
+    "id": "email_invoice_scam_006",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "HR Solutions Inc.",
+      "from_handle": "payments@hr-solutions-staffing.net",
+      "subject": "RE: Overpayment on Invoice #HR-2026-0441 — Return Required",
+      "body": "Hi Kevin,\n\nWe recently processed a payment for your consulting invoice but accidentally overpaid by $2,300.\n\nWe have already issued a corrected check. Please deposit the check you receive, deduct your original invoice amount, and return the $2,300 difference via Zelle to: payments@hr-solutions-staffing.net\n\nWe apologize for the error. Please process the return within 5 business days.\n\nHR Solutions Payroll Team"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from unofficial domain" },
+      { "id": "overpayment_claim", "label": "Claims they overpaid you" },
+      { "id": "wire_transfer_request", "label": "Asks you to return money via Zelle" },
+      { "id": "vague_reference", "label": "No specific invoice details provided" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "overpayment_claim", "wire_transfer_request"],
+    "explanation": {
+      "short": "This is the classic overpayment scam. The check they send is fraudulent. Once deposited, your bank holds you liable — and the 'return' you send via Zelle is real money going to scammers.",
+      "tells": [
+        "hr-solutions-staffing.net does not match a company you have an existing relationship with",
+        "The check will be counterfeit — it clears initially but reverses in 5–10 days, after you've already sent $2,300 via Zelle",
+        "Legitimate companies correct overpayments through accounting, not Zelle transfers",
+        "No specific invoice number, project, or contract details are referenced"
+      ],
+      "safe_move": "Do not deposit any check from unknown parties. Contact your actual client via their known contact information to verify. Report to the FTC.",
+      "consequence": "You deposit a fake check, send $2,300 via Zelle (irreversible), and the check bounces. You're out $2,300 and may owe your bank a returned check fee."
+    },
+    "tags": ["overpayment", "check_fraud", "invoice", "wire_fraud"]
+  },
+
+  {
+    "id": "email_invoice_legit_004",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "DocuSign",
+      "from_handle": "dse@docusign.net",
+      "subject": "Please DocuSign: Service Agreement — Greenfield Marketing LLC",
+      "body": "Kevin Smith,\n\nGreenfield Marketing LLC has requested your signature on the attached document.\n\nDocument: Master Service Agreement 2026\nSender: Lisa Chen (lisa.chen@greenfield-marketing.com)\nExpires: March 5, 2026\n\nPlease review and sign the document at: docusign.com/review\n\nQuestions? Contact Lisa Chen directly at lisa.chen@greenfield-marketing.com\n\nDocuSign, Inc. | docusign.com"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email not from main docusign.com domain" },
+      { "id": "contains_link", "label": "Contains a link to sign document" },
+      { "id": "urgency_timer", "label": "Expiry date pressure" },
+      { "id": "unsolicited_contact", "label": "You didn't initiate this" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "dse@docusign.net is DocuSign's official notification sender. This is a legitimate contract signing request — but you should verify the sender (Lisa Chen) before signing.",
+      "tells": [
+        "dse@docusign.net is DocuSign's registered email domain for notifications (distinct from docusign.com by design)",
+        "Links to docusign.com — the official signing platform",
+        "Includes the actual sender's name and verifiable corporate email",
+        "You can contact Lisa Chen at greenfield-marketing.com to confirm she sent this before signing"
+      ],
+      "safe_move": "Before signing, verify with Lisa Chen via a separate channel (phone or email to lisa.chen@greenfield-marketing.com) that she sent this document. Then sign at docusign.com.",
+      "consequence": "Signing a legitimate contract without reading it may bind you to terms you didn't intend. Always read what you're signing — even real documents."
+    },
+    "tags": ["docusign", "contract", "vendor", "legitimate"]
+  },
+
+  {
+    "id": "dm_romance_scam_002",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Col. James Harrington",
+      "from_handle": "@col.james.harrington",
+      "subject": null,
+      "body": "Hello, I apologize for reaching out unexpectedly. I'm Colonel James Harrington, currently deployed in Syria. I came across your profile and found you to be a person of great character. I've been through a painful divorce and am looking for genuine connection. I have significant assets I need help transferring out of the region. I hope we might get to know each other better. God bless."
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited contact from stranger" },
+      { "id": "military_romance_pattern", "label": "Military deployed overseas pattern" },
+      { "id": "asset_transfer_mention", "label": "Mentions assets to transfer" },
+      { "id": "rapid_trust_building", "label": "Immediate personal connection attempt" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_contact", "military_romance_pattern", "asset_transfer_mention"],
+    "explanation": {
+      "short": "Military romance scams follow a well-documented pattern: deployed officer, painful backstory, rapid emotional connection, and eventually a financial request or 'asset transfer.'",
+      "tells": [
+        "Deployed military officers cannot be reached by strangers on social media — accounts are either unofficial or fake",
+        "'Significant assets to transfer' is an advance-fee setup — you'll eventually be asked to help move money",
+        "Profile pictures of military officers are often stolen from real soldiers' public photos",
+        "The combination of loneliness appeal + financial angle is a classic long con opener"
+      ],
+      "safe_move": "Reverse image search the profile photo using Google Images or TinEye. Block and report the account. Do not engage further.",
+      "consequence": "After weeks or months of emotional investment, the 'colonel' will need emergency money — medical bills, a flight home, a legal fee. Victims lose an average of $10,000+ before realizing the fraud."
+    },
+    "tags": ["romance", "military", "advance_fee", "impersonation"]
+  },
+
+  {
+    "id": "dm_romance_scam_003",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Emma_J",
+      "from_handle": "@emma_j_official",
+      "subject": null,
+      "body": "Hey! I know you were a bit skeptical when we first talked but I really think you should try the platform I mentioned. I've been withdrawing profits every week and my account is at $34,000 now. I only started with $1,000 six months ago. I just want to share this with someone I trust. The minimum to start is $500. I can walk you through setup — it's really easy. Here's the link: crypto-wealth-platform.io/join?ref=emma"
+    },
+    "red_flags": [
+      { "id": "crypto_mention", "label": "Crypto investment platform" },
+      { "id": "too_good_to_be_true", "label": "34x returns in 6 months" },
+      { "id": "referral_link", "label": "Referral link with personal ID" },
+      { "id": "upfront_payment_required", "label": "$500 minimum deposit required" }
+    ],
+    "correct_red_flag_ids": ["crypto_mention", "too_good_to_be_true", "referral_link", "upfront_payment_required"],
+    "explanation": {
+      "short": "This is a pig-butchering follow-up. The platform is controlled by scammers. You'll see fake gains, but withdrawals will always be blocked by 'fees' or 'taxes' that must be paid upfront.",
+      "tells": [
+        "34x returns in 6 months ($1K to $34K) are fabricated — the platform shows fake balances",
+        "Referral links benefit the scammer — they earn a commission on your deposit",
+        "Attempts to withdraw will trigger additional 'tax' or 'verification' fees",
+        "The emotional relationship is engineered — you're being groomed to trust the financial recommendation"
+      ],
+      "safe_move": "Do not deposit any money. Block the account. Report to the FTC and the FBI's IC3 (ic3.gov).",
+      "consequence": "Once you deposit, the platform shows impressive fake gains to encourage more investment. Withdrawal requests trigger new fees. Eventually the platform disappears with your money."
+    },
+    "tags": ["romance", "crypto", "pig_butchering", "investment_fraud"]
+  },
+
+  {
+    "id": "dm_social_legit_002",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "David Park",
+      "from_handle": "@davidpark_dev",
+      "subject": null,
+      "body": "Hey Kevin! I watched your talk on API design at API World last October — really thought-provoking stuff on versioning strategy. I'm a backend engineer working on similar problems and would love to compare notes. Would you be up for a 30-min call sometime? No agenda other than swapping ideas."
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited contact from stranger" },
+      { "id": "too_good_to_be_true", "label": "Offer seems suspicious" },
+      { "id": "rapid_trust_building", "label": "Quick personal connection" },
+      { "id": "contains_link", "label": "Contains a link" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate professional networking message. References a specific public event (API World) and specific topic from your talk — hard to fabricate without actually watching it.",
+      "tells": [
+        "References a specific conference and specific topic — indicates genuine familiarity with your work",
+        "No investment pitch, no financial angle, no urgency",
+        "Simply asks for a peer conversation — no strings attached",
+        "Handle @davidpark_dev is consistent with a developer identity"
+      ],
+      "safe_move": "Verify @davidpark_dev on LinkedIn before agreeing to a call. A 30-minute peer conversation from a real attendee is a normal professional interaction.",
+      "consequence": "Declining all professional outreach unnecessarily limits your network. Verify the person, then decide."
+    },
+    "tags": ["networking", "professional", "legitimate"]
+  },
+
+  {
+    "id": "dm_romance_scam_004",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 1,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "National Lottery Commission",
+      "from_handle": "@nationallotterycommission_official",
+      "subject": null,
+      "body": "CONGRATULATIONS! Your mobile number was randomly selected in our international lottery sweep. You have won $750,000 USD. To claim your prize, please send a processing fee of $250 via wire transfer and provide your full name, address, and bank details to begin the transfer. This offer expires in 72 hours."
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "You didn't enter any lottery" },
+      { "id": "upfront_payment_required", "label": "Requires $250 fee to claim prize" },
+      { "id": "too_good_to_be_true", "label": "$750,000 prize from unknown lottery" },
+      { "id": "requests_bank_details", "label": "Requests bank account details" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_contact", "upfront_payment_required", "too_good_to_be_true", "requests_bank_details"],
+    "explanation": {
+      "short": "You cannot win a lottery you didn't enter. Any prize that requires an upfront fee is a scam — by definition, winning means you receive money, not pay it.",
+      "tells": [
+        "No legitimate lottery selects winners who didn't purchase a ticket or enter",
+        "Requiring a fee to collect winnings is the defining characteristic of advance-fee fraud",
+        "Asking for bank account details before sending any money is how identity theft and account takeover begin",
+        "72-hour expiry is a pressure tactic to prevent you from thinking clearly"
+      ],
+      "safe_move": "Delete and block. This is one of the oldest and most common scam formats. Report to ic3.gov.",
+      "consequence": "You pay $250, then face additional 'taxes' or 'legal fees' demanded before the prize can be sent. The prize never arrives. Bank details provided may be used to drain your account."
+    },
+    "tags": ["lottery", "advance_fee", "too_good_to_be_true"]
+  },
+
+  {
+    "id": "dm_romance_scam_005",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Barrister Emmanuel Adeyemi",
+      "from_handle": "@barrister.adeyemi.law",
+      "subject": null,
+      "body": "Dear Friend, I am Barrister Emmanuel Adeyemi, a legal practitioner in Lagos, Nigeria. My late client, who shares your surname, passed without a next of kin. His estate amounts to $4.7 million USD. With your assistance in claiming these funds as his relative, you will receive 40% ($1,880,000). This is completely legal and secure. Please reply with your full name and contact details to proceed."
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited contact from stranger" },
+      { "id": "inheritance_claim", "label": "Inheritance from unknown deceased relative" },
+      { "id": "too_good_to_be_true", "label": "$1.88M for doing nothing" },
+      { "id": "requests_personal_info", "label": "Requests personal contact details" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_contact", "inheritance_claim", "too_good_to_be_true"],
+    "explanation": {
+      "short": "This is the classic 'Nigerian prince' advance-fee fraud. After initial contact, you'll be asked to pay legal fees, taxes, or bribes before the 'inheritance' can be released — which never happens.",
+      "tells": [
+        "Legitimate inheritance claims go through official legal channels — not social media DMs",
+        "Estates without next of kin go to the government in the jurisdiction of death — not to online strangers",
+        "The 40% share for 'doing nothing' creates greed that overrides skepticism — a deliberate manipulation",
+        "Providing your personal details begins a relationship that will eventually demand wire transfers"
+      ],
+      "safe_move": "Delete and block. This format has been in use since the 1980s (originally by fax). Report to ic3.gov.",
+      "consequence": "After initial contact, you'll be asked to pay escalating 'legal fees' and 'release taxes' — thousands of dollars — before the inheritance can be transferred. It never is."
+    },
+    "tags": ["advance_fee", "inheritance", "nigerian_prince", "romance"]
+  },
+
+  {
+    "id": "dm_social_legit_003",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 3,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Marcus Webb",
+      "from_handle": "@marcuswebb83",
+      "subject": null,
+      "body": "Hey Kevin! It's Marcus — we went to NYU together, I was in your Intro to CS class with Prof. Hernandez. I lost your number after changing phones a few years ago. Found you on here. I'm in NYC next week — would love to grab coffee and catch up if you're around?"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited contact" },
+      { "id": "rapid_trust_building", "label": "Claims past relationship" },
+      { "id": "requests_meeting", "label": "Requests in-person meeting" },
+      { "id": "too_good_to_be_true", "label": "Offer seems suspicious" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a plausible legitimate reconnection. The message references specific shared context (NYU, Prof. Hernandez, Intro to CS) and makes a low-stakes request (coffee).",
+      "tells": [
+        "References specific, verifiable shared context — class, professor name, institution",
+        "No financial angle, no urgency, no requests for personal information",
+        "A coffee meeting in public is a low-risk interaction to verify identity in person",
+        "Handle @marcuswebb83 with a birth year suggests a real personal account"
+      ],
+      "safe_move": "If the context rings true, safe to reply. You can verify shared memories in conversation before agreeing to meet. Meet in a public place.",
+      "consequence": "Blocking all reconnection attempts from real people can unnecessarily sever genuine relationships."
+    },
+    "tags": ["social", "reconnect", "networking", "legitimate"]
+  },
+
+  {
+    "id": "dm_romance_scam_006",
+    "channel": "dm",
+    "pattern_family": "romance_social",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Sarah Milligan",
+      "from_handle": "@sarah_milligan_2024",
+      "subject": null,
+      "body": "I'm so sorry to bother you. I'm a single mom and my daughter was just diagnosed with leukemia. We are uninsured and the hospital is demanding $800 for her first treatment or they won't proceed. I'm reaching out to kind strangers because I have nowhere left to turn. Any amount would help. Please, her life depends on it. CashApp: $sarahmilligan24"
+    },
+    "red_flags": [
+      { "id": "unsolicited_contact", "label": "Unsolicited contact from stranger" },
+      { "id": "emotional_manipulation", "label": "Extreme emotional appeal (sick child)" },
+      { "id": "direct_payment_request", "label": "Requests immediate CashApp payment" },
+      { "id": "urgency_timer", "label": "Life-or-death urgency" }
+    ],
+    "correct_red_flag_ids": ["unsolicited_contact", "emotional_manipulation", "direct_payment_request"],
+    "explanation": {
+      "short": "Medical emergency appeals from strangers on social media are a common scam. Hospitals in the US are legally required to provide emergency care regardless of payment.",
+      "tells": [
+        "EMTALA requires all US hospitals with emergency departments to provide stabilizing care regardless of ability to pay",
+        "Legitimate medical crowdfunding goes through verified platforms like GoFundMe — not stranger DMs",
+        "Unsolicited DMs asking for money from strangers, no matter how emotional, are nearly always fraudulent",
+        "Account handle with a recent year (@sarah_milligan_2024) suggests a freshly created account"
+      ],
+      "safe_move": "Do not send money. If you want to help with medical causes, donate to established charities like St. Jude's or through verified GoFundMe campaigns with documentation.",
+      "consequence": "Money sent via CashApp to strangers is not recoverable. This is a common script used by fraud rings — your payment goes to a professional scammer, not a sick child."
+    },
+    "tags": ["romance", "emotional_manipulation", "cashapp", "charity_fraud"]
+  },
+
+  {
+    "id": "sms_qr_scam_002",
+    "channel": "sms",
+    "pattern_family": "qr_code",
+    "difficulty": 2,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "USPS",
+      "from_handle": "+1 (718) 555-0142",
+      "subject": null,
+      "body": "USPS: Delivery failed — address issue. Scan the QR code to update your delivery address and reschedule: [QR Code] or usps-redelivery-update.com"
+    },
+    "red_flags": [
+      { "id": "unknown_number", "label": "Unknown phone number" },
+      { "id": "url_lookalike_domain", "label": "Lookalike domain" },
+      { "id": "qr_in_sms", "label": "QR code in SMS" },
+      { "id": "requests_personal_info", "label": "Asks you to update address" }
+    ],
+    "correct_red_flag_ids": ["unknown_number", "url_lookalike_domain", "requests_personal_info"],
+    "explanation": {
+      "short": "USPS uses short code 28777 for SMS notifications — not 10-digit numbers. usps-redelivery-update.com is a phishing domain designed to collect your address and payment details.",
+      "tells": [
+        "USPS official SMS short code is 28777 — not a 10-digit number",
+        "usps-redelivery-update.com is not usps.com",
+        "Real USPS delivery failures result in Form 3849 left at the door — not a QR code by text",
+        "Updating a delivery address via a texted QR code is not how USPS operates"
+      ],
+      "safe_move": "Visit usps.com directly and enter your tracking number. Call USPS at 1-800-275-8777 for delivery issues.",
+      "consequence": "The QR or link leads to a fake USPS portal that collects your name, address, and a redelivery 'fee' — your card details and home address go to scammers."
+    },
+    "tags": ["qr", "usps", "delivery", "phishing"]
+  },
+
+  {
+    "id": "email_qr_legit_002",
+    "channel": "email",
+    "pattern_family": "qr_code",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Delta Air Lines",
+      "from_handle": "noreply@delta.com",
+      "subject": "Your boarding pass — Delta Flight DL 447 to LAX",
+      "body": "Hi Kevin,\n\nYour boarding pass is ready for Flight DL 447 on February 28, 2026.\n\nGate: B22 | Departs: 9:15 AM | Seat: 14C\nConfirmation: GTRXPL\n\nScan the QR code below at the gate or in the Delta app.\n\nManage your trip at delta.com/mytrips\n\nDelta Air Lines"
+    },
+    "red_flags": [
+      { "id": "qr_for_auth", "label": "QR code in email" },
+      { "id": "contains_link", "label": "Contains a link" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Time-sensitive (departure)" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Delta boarding pass email. Sent from delta.com, the QR is a gate scanner (not authentication), and includes your actual confirmation code and seat.",
+      "tells": [
+        "noreply@delta.com is Delta's official transactional email domain",
+        "QR codes on boarding passes encode flight data for airport scanners — they don't grant account access",
+        "Includes verifiable details: confirmation code GTRXPL, seat 14C, gate B22",
+        "Links only to delta.com/mytrips — Delta's own trip management page"
+      ],
+      "safe_move": "Safe to use this boarding pass at the gate. Save it to your phone's Wallet app or print it. Also available in the Delta app using your confirmation code.",
+      "consequence": "Losing or deleting your boarding pass before the flight may require a reprint at the airport counter — allow extra time."
+    },
+    "tags": ["qr", "airline", "boarding_pass", "legitimate"]
+  },
+
+  {
+    "id": "email_qr_scam_002",
+    "channel": "email",
+    "pattern_family": "qr_code",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "NYC Health Department",
+      "from_handle": "noreply@nyc-health-verification.org",
+      "subject": "COVID-19 Test Result Verification — Action Required",
+      "body": "Dear New York Resident,\n\nThe NYC Department of Health requires all residents to verify their COVID-19 vaccination or test records in our updated database.\n\nScan the QR code below to access the verification portal and upload your documentation.\n\n[QR Code Image]\n\nFailure to complete by March 5, 2026 may affect your access to city services.\n\nNYC Health Dept."
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "March 5 deadline" },
+      { "id": "government_impersonation", "label": "Impersonates government health agency" },
+      { "id": "qr_for_auth", "label": "QR code for government verification" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "government_impersonation", "urgency_timer"],
+    "explanation": {
+      "short": "NYC government emails come from @health.nyc.gov — not nyc-health-verification.org. No city health department requires QR-based document uploads via unsolicited email.",
+      "tells": [
+        "NYC government domains end in .nyc.gov — not .org domains registered by third parties",
+        "No current NYC requirement mandates vaccine or test verification for city services",
+        "Government health communications go through official portals, not unsolicited email QR codes",
+        "The vague threat about 'city services' is designed to provoke compliance without verification"
+      ],
+      "safe_move": "Contact the NYC Health Department directly via nyc.gov/health or call 311 to verify any real requirement.",
+      "consequence": "Scanning the QR code takes you to a fake government portal that collects your personal information and potentially payment details for 'verification fees.'"
+    },
+    "tags": ["qr", "government", "health", "phishing", "impersonation"]
+  },
+
+  {
+    "id": "dm_qr_scam_001",
+    "channel": "dm",
+    "pattern_family": "qr_code",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "Instagram Verified",
+      "from_handle": "@instagram.support.team",
+      "subject": null,
+      "body": "Hello! Your account has been selected for Instagram's new Verified Badge program. To complete verification, scan the QR code below within 24 hours. This is a limited program and spots are filling fast. [QR Code]"
+    },
+    "red_flags": [
+      { "id": "impersonation", "label": "Handle mimics Instagram's real account" },
+      { "id": "urgency_timer", "label": "24-hour deadline, limited spots" },
+      { "id": "qr_for_auth", "label": "QR code for account verification" },
+      { "id": "unsolicited_contact", "label": "You didn't request verification" }
+    ],
+    "correct_red_flag_ids": ["impersonation", "urgency_timer", "qr_for_auth"],
+    "explanation": {
+      "short": "Instagram's real verification handle is @instagram (verified with a blue checkmark). @instagram.support.team is an impersonator account. Scanning the QR initiates an account takeover OAuth flow.",
+      "tells": [
+        "Instagram's official account is @instagram — not @instagram.support.team",
+        "Instagram verification requests are managed at instagram.com/accounts/request_verification — not via DMs",
+        "QR codes in this context trigger OAuth authorization flows that grant account access to attackers",
+        "Urgency + limited spots are pressure tactics to prevent you from verifying the sender"
+      ],
+      "safe_move": "Apply for verification through instagram.com/accounts/request_verification directly. Never scan QR codes sent via unsolicited DMs.",
+      "consequence": "Scanning the QR code logs you into an attacker-controlled app with full access to your Instagram account — posts, DMs, and follower base."
+    },
+    "tags": ["qr", "instagram", "oauth", "impersonation", "account_takeover"]
+  },
+
+  {
+    "id": "email_qr_legit_003",
+    "channel": "email",
+    "pattern_family": "qr_code",
+    "difficulty": 2,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Marriott Hotels",
+      "from_handle": "noreply@marriott.com",
+      "subject": "Your digital room key is ready — Marriott NYC, March 1",
+      "body": "Hi Kevin,\n\nYour room is ready for mobile check-in.\n\nReservation: #MRR-4421897\nProperty: New York Marriott Marquis\nCheck-in: March 1, 2026 | Room 1804\n\nScan the QR code below to activate your digital room key via the Marriott Bonvoy app, or use your confirmation number to check in at the front desk.\n\nMarriott Bonvoy"
+    },
+    "red_flags": [
+      { "id": "qr_for_auth", "label": "QR code for room access" },
+      { "id": "contains_link", "label": "References an app" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "urgency_timer", "label": "Time pressure (check-in date)" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a legitimate Marriott digital room key confirmation. Sent from marriott.com, includes your reservation number, and the QR works only within the Marriott Bonvoy app.",
+      "tells": [
+        "noreply@marriott.com is Marriott's official transactional email domain",
+        "Includes a real reservation number (MRR-4421897) matching your booking",
+        "QR code activates a hotel room key via Marriott's own app — not a login or payment flow",
+        "Provides the front desk as an alternative — no pressure to use the digital key"
+      ],
+      "safe_move": "Safe to use. Download the Marriott Bonvoy app and scan the QR to use mobile check-in. Alternatively, use your confirmation number at the front desk.",
+      "consequence": "No risk from this notification. Ignoring it just means you check in at the front desk instead."
+    },
+    "tags": ["qr", "hotel", "marriott", "legitimate"]
+  },
+
+  {
+    "id": "email_qr_scam_003",
+    "channel": "email",
+    "pattern_family": "qr_code",
+    "difficulty": 3,
+    "ground_truth": "scam",
+    "message": {
+      "from_name": "NYC Parking Violations Bureau",
+      "from_handle": "notice@nyc-parking-violations.net",
+      "subject": "Unpaid Parking Violation — $115 Fine — Final Notice",
+      "body": "Dear Vehicle Owner,\n\nOur records indicate you have an unpaid parking violation associated with a vehicle registered to your address.\n\nViolation #: PVB-2026-448821\nFine Amount: $115.00\nFinal payment deadline: March 3, 2026\n\nScan the QR code below to pay and avoid additional penalties of $75.\n\n[QR Code]\n\nNYC Parking Violations Bureau"
+    },
+    "red_flags": [
+      { "id": "email_domain_mismatch", "label": "Email from non-government domain" },
+      { "id": "urgency_fine_threat", "label": "Additional $75 penalty threat" },
+      { "id": "qr_for_payment", "label": "QR code for payment" },
+      { "id": "government_impersonation", "label": "Impersonates government agency" }
+    ],
+    "correct_red_flag_ids": ["email_domain_mismatch", "government_impersonation"],
+    "explanation": {
+      "short": "NYC Parking Violations Bureau emails come from @finance.nyc.gov — not nyc-parking-violations.net. All real parking violations are searchable at nyc.gov/finance.",
+      "tells": [
+        "Official NYC PVB emails come from @finance.nyc.gov — .net domains are not government",
+        "All NYC parking violations can be looked up at nyc.gov/finance with the ticket number",
+        "Real notices are mailed to the vehicle's registered address — not emailed",
+        "QR codes for government payments should only be trusted if you initiated contact"
+      ],
+      "safe_move": "Check for real violations at nyc.gov/finance directly. If you have a violation, pay only through the official portal.",
+      "consequence": "Scanning the QR takes you to a fake payment portal. Your card details and home address are captured — real parking fine scams target vehicle registration data."
+    },
+    "tags": ["qr", "parking", "government", "phishing", "impersonation"]
+  },
+
+  {
+    "id": "email_qr_legit_004",
+    "channel": "email",
+    "pattern_family": "qr_code",
+    "difficulty": 1,
+    "ground_truth": "legit",
+    "message": {
+      "from_name": "Ticketmaster",
+      "from_handle": "noreply@ticketmaster.com",
+      "subject": "Your tickets for The Weeknd — March 8, Madison Square Garden",
+      "body": "Hi Kevin,\n\nYour tickets are confirmed!\n\nEvent: The Weeknd — After Hours Til Dawn Tour\nDate: Saturday, March 8, 2026\nVenue: Madison Square Garden, New York\nSection: 104 | Row 12 | Seats 7–8\n\nShow your QR code at the gate. Access your tickets anytime in the Ticketmaster app.\n\nTicketmaster"
+    },
+    "red_flags": [
+      { "id": "qr_for_auth", "label": "QR code in email" },
+      { "id": "contains_link", "label": "References an app" },
+      { "id": "email_domain_mismatch", "label": "Email from non-official domain" },
+      { "id": "unsolicited_contact", "label": "You didn't request this" }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This is a real Ticketmaster ticket confirmation. Sent from ticketmaster.com, includes specific event details and seat numbers matching your purchase.",
+      "tells": [
+        "noreply@ticketmaster.com is Ticketmaster's official notification email domain",
+        "You bought these tickets — this confirmation matches your purchase",
+        "QR codes on event tickets are entry scanners, not authentication flows",
+        "Specific section, row, and seat numbers match what you selected at purchase"
+      ],
+      "safe_move": "Safe to use. Add to your Wallet app via the Ticketmaster app. Screenshot as backup. Show QR at the gate.",
+      "consequence": "Losing ticket access before an event can mean being turned away at the gate. Keep the QR accessible offline."
+    },
+    "tags": ["qr", "concert", "ticketmaster", "legitimate"]
+  }
+]
