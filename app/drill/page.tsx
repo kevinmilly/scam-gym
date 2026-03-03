@@ -8,6 +8,9 @@ import MessageCard from "@/components/MessageCard";
 import { brierScore, redFlagRecall, calibrationVerdict } from "@/lib/scoring";
 import { saveAttempt } from "@/lib/db";
 import type { Verdict, BehaviorChoice } from "@/lib/types";
+import { tap } from "@/lib/haptics";
+import { computePostDrillReward } from "@/lib/progression";
+import { allDrills } from "@/lib/DrillContext";
 
 const CONFIDENCE_OPTIONS = [50, 60, 70, 85, 95];
 
@@ -21,7 +24,7 @@ const BEHAVIOR_OPTIONS: { value: BehaviorChoice; label: string }[] = [
 
 export default function DrillPage() {
   const router = useRouter();
-  const { currentDrill, advance, recordAttempt, poolExhausted } = useDrillContext();
+  const { currentDrill, advance, recordAttempt, poolExhausted, attempts: contextAttempts } = useDrillContext();
 
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
@@ -74,10 +77,15 @@ export default function DrillPage() {
     await saveAttempt(attempt);
     recordAttempt(attempt);
 
+    // Compute post-drill reward (before/after comparison)
+    const allAttempts = [...contextAttempts, attempt];
+    const reward = computePostDrillReward(allAttempts, allDrills);
+
     // Store in sessionStorage for result page
     sessionStorage.setItem("lastAttempt", JSON.stringify(attempt));
     sessionStorage.setItem("lastDrill", JSON.stringify(currentDrill));
     sessionStorage.setItem("calVerdict", calVerdict);
+    sessionStorage.setItem("lastReward", JSON.stringify(reward));
 
     // Advance drill queue (prefetch next)
     advance();
@@ -100,7 +108,7 @@ export default function DrillPage() {
         style={{ borderColor: "var(--border)" }}
       >
         <button
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/?from=drill")}
           className="min-h-[44px] px-3 flex items-center text-sm"
           style={{ color: "var(--text-muted)" }}
         >
@@ -148,7 +156,7 @@ export default function DrillPage() {
               return (
                 <button
                   key={v}
-                  onClick={() => setVerdict(v)}
+                  onClick={() => { tap(); setVerdict(v); }}
                   className="py-4 rounded-2xl font-bold text-lg border-2 transition-all active:scale-95"
                   style={{
                     borderColor: selected
@@ -180,7 +188,7 @@ export default function DrillPage() {
               return (
                 <button
                   key={c}
-                  onClick={() => setConfidence(c)}
+                  onClick={() => { tap(); setConfidence(c); }}
                   className="flex-1 min-w-[48px] py-3 rounded-xl font-semibold text-sm border-2 transition-all active:scale-95"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
@@ -210,7 +218,7 @@ export default function DrillPage() {
               return (
                 <button
                   key={value}
-                  onClick={() => setBehaviorChoice(selected ? null : value)}
+                  onClick={() => { tap(); setBehaviorChoice(selected ? null : value); }}
                   className="py-2 px-3 rounded-xl text-sm border-2 transition-all active:scale-95"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
@@ -235,7 +243,7 @@ export default function DrillPage() {
         }}
       >
         <button
-          onClick={handleSubmit}
+          onClick={() => { tap(); handleSubmit(); }}
           disabled={!canSubmit || submitting}
           className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
           style={{

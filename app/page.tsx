@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useDrillContext } from "@/lib/DrillContext";
 import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
 import type { UserContext } from "@/lib/types";
+import { tap } from "@/lib/haptics";
 
 const ONBOARDED_KEY = "scamgym_onboarded";
 
@@ -35,7 +36,16 @@ const VALUE_PROPS = [
 ];
 
 export default function HomePage() {
+  return (
+    <Suspense>
+      <HomePageInner />
+    </Suspense>
+  );
+}
+
+function HomePageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { selectedContext, setSelectedContext } = useDrillContext();
   const [checked, setChecked] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -44,7 +54,8 @@ export default function HomePage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const onboarded = localStorage.getItem(ONBOARDED_KEY);
-      if (onboarded && selectedContext) {
+      const fromDrill = searchParams.get("from") === "drill";
+      if (onboarded && selectedContext && !fromDrill) {
         router.replace("/drill");
       } else {
         setChecked(true);
@@ -54,7 +65,7 @@ export default function HomePage() {
         }
       }
     }
-  }, [router, selectedContext]);
+  }, [router, selectedContext, searchParams]);
 
   function handleContextSelect(ctx: UserContext) {
     setSelectedContext(ctx);
@@ -130,12 +141,15 @@ export default function HomePage() {
 
           {/* CTA */}
           <button
-            onClick={() => { setShowOnboarding(false); setShowContextPicker(true); }}
+            onClick={() => { tap(); setShowOnboarding(false); setShowContextPicker(true); }}
             className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
             style={{ background: "var(--accent)", color: "#fff" }}
           >
             Get Started — It&apos;s Free
           </button>
+          <p className="text-xs text-center mt-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>
+            For educational use only. Scenarios use fictional companies and cover common scam patterns — not every scam type. When in doubt, verify directly through official channels.
+          </p>
         </>
       ) : showContextPicker ? (
         /* ── Context Selection Screen ── */
@@ -181,7 +195,7 @@ export default function HomePage() {
 
           <div className="mt-8">
             <button
-              onClick={handleStart}
+              onClick={() => { tap(); handleStart(); }}
               disabled={!selectedContext}
               className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
               style={{
@@ -249,7 +263,7 @@ export default function HomePage() {
           {/* CTA */}
           <div className="mt-auto space-y-3">
             <button
-              onClick={handleStart}
+              onClick={() => { tap(); handleStart(); }}
               className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
               style={{ background: "var(--accent)", color: "#fff" }}
             >

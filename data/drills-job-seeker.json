@@ -14,12 +14,28 @@
       "body": "Hi! We reviewed your profile and you're a great fit for our Remote Data Entry Specialist role. Starting pay is $85/hr, fully remote, flexible hours. No experience necessary — we provide full training. Reply with your full name, address, and date of birth to begin the onboarding process."
     },
     "red_flags": [
-      { "id": "too_high_pay_no_experience", "label": "$85/hr with no experience required" },
-      { "id": "pii_request_in_email", "label": "Requests full name, address, DOB upfront" },
-      { "id": "lookalike_domain", "label": "Lookalike domain (not talenthub.com)" },
-      { "id": "no_interview_required", "label": "Hired without any interview" }
+      {
+        "id": "too_high_pay_no_experience",
+        "label": "$85/hr with no experience required"
+      },
+      {
+        "id": "pii_request_in_email",
+        "label": "Requests full name, address, DOB upfront"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not talenthub.com)"
+      },
+      {
+        "id": "no_interview_required",
+        "label": "Hired without any interview"
+      }
     ],
-    "correct_red_flag_ids": ["too_high_pay_no_experience", "pii_request_in_email", "no_interview_required"],
+    "correct_red_flag_ids": [
+      "too_high_pay_no_experience",
+      "pii_request_in_email",
+      "no_interview_required"
+    ],
     "explanation": {
       "short": "No legitimate employer pays $85/hr for no-experience data entry — and real jobs never request your date of birth over email.",
       "tells": [
@@ -32,7 +48,12 @@
       "consequence": "Your PII (name, address, DOB) is used for identity theft, or you'll receive a fraudulent check as part of a check overpayment scam.",
       "behavioral_reinforcement": "Unsolicited job offers with high pay and no interview are bait — real employers post jobs and hold interviews."
     },
-    "tags": ["job-scam", "data-entry", "pii-theft", "fake-offer"]
+    "tags": [
+      "job-scam",
+      "data-entry",
+      "pii-theft",
+      "fake-offer"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_002",
@@ -49,12 +70,28 @@
       "body": "Congratulations on joining our remote bookkeeping team! Your signing bonus of $3,800 is attached as a check. Please deposit it and use $2,200 to purchase office supplies from our approved vendor (we'll send the link). Keep the remaining $1,600 as your first week's advance. Let us know once deposited!"
     },
     "red_flags": [
-      { "id": "check_to_purchase_supplies", "label": "Deposit check and buy supplies — classic check scam" },
-      { "id": "keep_the_remainder", "label": "Told to keep part of the check" },
-      { "id": "approved_vendor_link_incoming", "label": "Supplies from 'approved vendor' link" },
-      { "id": "no_w2_or_hr_portal", "label": "No official onboarding portal" }
+      {
+        "id": "check_to_purchase_supplies",
+        "label": "Deposit check and buy supplies — classic check scam"
+      },
+      {
+        "id": "keep_the_remainder",
+        "label": "Told to keep part of the check"
+      },
+      {
+        "id": "approved_vendor_link_incoming",
+        "label": "Supplies from 'approved vendor' link"
+      },
+      {
+        "id": "no_w2_or_hr_portal",
+        "label": "No official onboarding portal"
+      }
     ],
-    "correct_red_flag_ids": ["check_to_purchase_supplies", "keep_the_remainder", "approved_vendor_link_incoming"],
+    "correct_red_flag_ids": [
+      "check_to_purchase_supplies",
+      "keep_the_remainder",
+      "approved_vendor_link_incoming"
+    ],
     "explanation": {
       "short": "This is a check overpayment scam — the check will bounce after you've already spent $2,200 on fake 'supplies.'",
       "tells": [
@@ -67,7 +104,12 @@
       "consequence": "You deposit, spend $2,200, then the check bounces. Your bank holds you responsible for the negative balance.",
       "behavioral_reinforcement": "Any job that mails you a check before you start and asks you to send part of it elsewhere is always a scam."
     },
-    "tags": ["check-scam", "overpayment", "bookkeeping", "remote-work"]
+    "tags": [
+      "check-scam",
+      "overpayment",
+      "bookkeeping",
+      "remote-work"
+    ]
   },
   {
     "id": "dm_job_seeker_job_seeker_001",
@@ -81,15 +123,31 @@
       "from_name": "Sarah Chen — Talent Partner at Apex",
       "from_handle": "@sarah.chen.apex.recruit",
       "subject": null,
-      "body": "Hi! I came across your profile and think you'd be a great fit for a Senior UX Role at Apex Technologies ($130k+, remote). We're moving fast on this — can you hop on a quick Google Meet today? I'll send a link. Just need a soft copy of your resume to share with the hiring manager first."
+      "body": "Hi! I came across your profile and think you'd be a great fit for a Senior UX Role at Apex Technologies ($130k+, remote). We're moving fast on this — can you hop on a quick GlobalMeet today? I'll send a link. Just need a soft copy of your resume to share with the hiring manager first."
     },
     "red_flags": [
-      { "id": "dm_not_official_recruiter_channel", "label": "Recruiter contacting via personal DM handle" },
-      { "id": "moving_fast_pressure", "label": "'Moving fast' — pressure to decide quickly" },
-      { "id": "resume_via_dm", "label": "Resume requested via social DM" },
-      { "id": "unverifiable_recruiter_identity", "label": "Recruiter identity hard to verify" }
+      {
+        "id": "dm_not_official_recruiter_channel",
+        "label": "Recruiter contacting via personal DM handle"
+      },
+      {
+        "id": "moving_fast_pressure",
+        "label": "'Moving fast' — pressure to decide quickly"
+      },
+      {
+        "id": "resume_via_dm",
+        "label": "Resume requested via social DM"
+      },
+      {
+        "id": "unverifiable_recruiter_identity",
+        "label": "Recruiter identity hard to verify"
+      }
     ],
-    "correct_red_flag_ids": ["dm_not_official_recruiter_channel", "moving_fast_pressure", "resume_via_dm"],
+    "correct_red_flag_ids": [
+      "dm_not_official_recruiter_channel",
+      "moving_fast_pressure",
+      "resume_via_dm"
+    ],
     "explanation": {
       "short": "Legitimate corporate recruiters contact candidates through verified company accounts or official platforms — not personal-looking DM handles.",
       "tells": [
@@ -102,7 +160,12 @@
       "consequence": "Your resume contains your home address, phone, and work history — valuable for identity theft or targeted spear phishing.",
       "behavioral_reinforcement": "Verify recruiter identity through the company's official website before sharing any documents."
     },
-    "tags": ["recruiter", "linkedin-style", "resume-theft", "social-engineering"]
+    "tags": [
+      "recruiter",
+      "linkedin-style",
+      "resume-theft",
+      "social-engineering"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_003",
@@ -119,12 +182,28 @@
       "body": "Welcome to BrightPath! Before your start date, you'll need to purchase your home office equipment through our certified supplier. Total cost: $847. You'll be fully reimbursed on your first paycheck. Purchase link: brightpath-equip.com/order\n\nPlease complete this within 48 hours to hold your position."
     },
     "red_flags": [
-      { "id": "upfront_equipment_purchase", "label": "Must buy equipment before starting" },
-      { "id": "reimbursed_on_first_check_promise", "label": "Reimbursement promised on first paycheck" },
-      { "id": "third_party_supplier_link", "label": "Equipment from a separate third-party link" },
-      { "id": "lose_position_urgency", "label": "'Hold your position' 48-hour threat" }
+      {
+        "id": "upfront_equipment_purchase",
+        "label": "Must buy equipment before starting"
+      },
+      {
+        "id": "reimbursed_on_first_check_promise",
+        "label": "Reimbursement promised on first paycheck"
+      },
+      {
+        "id": "third_party_supplier_link",
+        "label": "Equipment from a separate third-party link"
+      },
+      {
+        "id": "lose_position_urgency",
+        "label": "'Hold your position' 48-hour threat"
+      }
     ],
-    "correct_red_flag_ids": ["upfront_equipment_purchase", "reimbursed_on_first_check_promise", "third_party_supplier_link"],
+    "correct_red_flag_ids": [
+      "upfront_equipment_purchase",
+      "reimbursed_on_first_check_promise",
+      "third_party_supplier_link"
+    ],
     "explanation": {
       "short": "Legitimate remote employers ship equipment to you or reimburse through official expense systems — they never ask new hires to buy from a third-party link.",
       "tells": [
@@ -133,11 +212,16 @@
         "The equipment link (brightpath-equip.com) is a separate domain from the employer — a fake vendor",
         ".co domains are cheap and commonly used for job scams"
       ],
-      "safe_move": "Do not purchase anything. Verify the company exists at brightpathsolutions.com or LinkedIn. Contact them through an independently verified number.",
+      "safe_move": "Do not purchase anything. Verify the company exists at brightpathsolutions.com or ConnectPro. Contact them through an independently verified number.",
       "consequence": "You pay $847, the equipment never arrives, and the 'company' disappears. The money is unrecoverable.",
       "behavioral_reinforcement": "Any job that asks you to pay for equipment before starting — with a reimbursement promise — is a scam."
     },
-    "tags": ["equipment-scam", "onboarding", "remote-work", "upfront-payment"]
+    "tags": [
+      "equipment-scam",
+      "onboarding",
+      "remote-work",
+      "upfront-payment"
+    ]
   },
   {
     "id": "email_credential_phishing_job_seeker_001",
@@ -154,12 +238,28 @@
       "body": "Great news! 3 recruiters viewed your JobBridge profile in the last 24 hours. Log in to see who's interested and send them a message before they move on. Your profile visibility expires in 12 hours without verification.\n\nVerify and see who viewed you: jobbridge-verify.com/profile"
     },
     "red_flags": [
-      { "id": "lookalike_domain", "label": "Lookalike domain (not jobbridge.com)" },
-      { "id": "urgency_profile_expires", "label": "Profile 'expires' in 12 hours" },
-      { "id": "verify_to_see_link", "label": "Must verify via link to see results" },
-      { "id": "curiosity_bait", "label": "Who viewed you — curiosity hook" }
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not jobbridge.com)"
+      },
+      {
+        "id": "urgency_profile_expires",
+        "label": "Profile 'expires' in 12 hours"
+      },
+      {
+        "id": "verify_to_see_link",
+        "label": "Must verify via link to see results"
+      },
+      {
+        "id": "curiosity_bait",
+        "label": "Who viewed you — curiosity hook"
+      }
     ],
-    "correct_red_flag_ids": ["lookalike_domain", "urgency_profile_expires", "verify_to_see_link"],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "urgency_profile_expires",
+      "verify_to_see_link"
+    ],
     "explanation": {
       "short": "The domain is a lookalike — the real JobBridge sends alerts from jobbridge.com, not jobbridge-notifications.com.",
       "tells": [
@@ -172,7 +272,12 @@
       "consequence": "The fake login page captures your JobBridge username and password — the scammer can then access your profile and apply to jobs as you.",
       "behavioral_reinforcement": "When a job platform 'notification' asks you to verify, always go directly to the site — never through the email link."
     },
-    "tags": ["phishing", "job-platform", "credential-theft", "fake-login"]
+    "tags": [
+      "phishing",
+      "job-platform",
+      "credential-theft",
+      "fake-login"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_004",
@@ -189,12 +294,28 @@
       "body": "We are looking for motivated individuals to earn $500–$800 weekly stuffing envelopes at home. No experience needed. Start immediately. There is a small $25 registration/materials fee to receive your starter kit. Pay at the link below and we'll ship your kit within 3 days.\n\nearnathhome-register.com/start"
     },
     "red_flags": [
-      { "id": "envelope_stuffing_not_real_job", "label": "Envelope stuffing is not a real paid job" },
-      { "id": "upfront_registration_fee", "label": "Must pay $25 to 'start'" },
-      { "id": "unprofessional_domain", "label": "Domain (workfromhome-earnmore.biz) not a real company" },
-      { "id": "no_company_name", "label": "No verifiable company name" }
+      {
+        "id": "envelope_stuffing_not_real_job",
+        "label": "Envelope stuffing is not a real paid job"
+      },
+      {
+        "id": "upfront_registration_fee",
+        "label": "Must pay $25 to 'start'"
+      },
+      {
+        "id": "unprofessional_domain",
+        "label": "Domain (workfromhome-earnmore.biz) not a real company"
+      },
+      {
+        "id": "no_company_name",
+        "label": "No verifiable company name"
+      }
     ],
-    "correct_red_flag_ids": ["envelope_stuffing_not_real_job", "upfront_registration_fee", "unprofessional_domain"],
+    "correct_red_flag_ids": [
+      "envelope_stuffing_not_real_job",
+      "upfront_registration_fee",
+      "unprofessional_domain"
+    ],
     "explanation": {
       "short": "Envelope stuffing jobs have been a well-known scam for decades — no one pays $800/week for this, and any job requiring a fee to start is a scam.",
       "tells": [
@@ -207,7 +328,12 @@
       "consequence": "You pay $25, receive worthless 'materials' or nothing at all, and the 'company' is unreachable.",
       "behavioral_reinforcement": "Any job requiring you to pay a fee to get started — however small — is a scam. Legitimate employers pay you, not the reverse."
     },
-    "tags": ["envelope-stuffing", "work-from-home", "fee-to-start", "classic-scam"]
+    "tags": [
+      "envelope-stuffing",
+      "work-from-home",
+      "fee-to-start",
+      "classic-scam"
+    ]
   },
   {
     "id": "dm_job_seeker_job_seeker_002",
@@ -224,12 +350,28 @@
       "body": "Hey! I manage social media for several brands and I'm looking for brand ambassadors. You'd post 2–3 times a week about products and earn $300–$500/week. Just need to buy a starter product bundle at a discount ($129) to get familiar with the line. DM me 'INTERESTED' to start!"
     },
     "red_flags": [
-      { "id": "buy_product_to_work", "label": "Must buy products to become an ambassador" },
-      { "id": "unsolicited_brand_ambassador_dm", "label": "Unsolicited DM job offer" },
-      { "id": "personal_account_not_brand", "label": "Offer comes from personal account, not brand" },
-      { "id": "mlm_pattern", "label": "Pay to participate structure" }
+      {
+        "id": "buy_product_to_work",
+        "label": "Must buy products to become an ambassador"
+      },
+      {
+        "id": "unsolicited_brand_ambassador_dm",
+        "label": "Unsolicited DM job offer"
+      },
+      {
+        "id": "personal_account_not_brand",
+        "label": "Offer comes from personal account, not brand"
+      },
+      {
+        "id": "mlm_pattern",
+        "label": "Pay to participate structure"
+      }
     ],
-    "correct_red_flag_ids": ["buy_product_to_work", "unsolicited_brand_ambassador_dm", "mlm_pattern"],
+    "correct_red_flag_ids": [
+      "buy_product_to_work",
+      "unsolicited_brand_ambassador_dm",
+      "mlm_pattern"
+    ],
     "explanation": {
       "short": "Real brand ambassadors are not required to purchase products upfront — any arrangement requiring payment to work is an MLM or scam.",
       "tells": [
@@ -242,7 +384,12 @@
       "consequence": "You pay $129 for products you may not be able to sell, and the promised income never materializes.",
       "behavioral_reinforcement": "Any job offer that requires you to buy something first is either a scam or an MLM — neither are reliable income."
     },
-    "tags": ["brand-ambassador", "mlm", "upfront-payment", "social-media"]
+    "tags": [
+      "brand-ambassador",
+      "mlm",
+      "upfront-payment",
+      "social-media"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_005",
@@ -256,15 +403,31 @@
       "from_name": "OperationsHire",
       "from_handle": "noreply@operationshire.co",
       "subject": "You are hired as a Mystery Shopper — check enclosed",
-      "body": "Congratulations! You have been selected as a Mystery Shopper for our national retail audit program. Your assignment kit and $2,950 check will arrive by FedEx within 3 days. Deposit the check, keep $350 as your fee, and use the remainder to evaluate MoneyGram services at Walmart. Send the evaluation via the included form."
+      "body": "Congratulations! You have been selected as a Mystery Shopper for our national retail audit program. Your assignment kit and $2,950 check will arrive by courier within 3 days. Deposit the check, keep $350 as your fee, and use the remainder to evaluate MoneyGram services at Walmart. Send the evaluation via the included form."
     },
     "red_flags": [
-      { "id": "check_scam_pattern", "label": "Deposit check and wire money elsewhere" },
-      { "id": "selected_without_applying", "label": "Hired without applying or interviewing" },
-      { "id": "evaluate_money_transfer_service", "label": "Job involves wiring money via MoneyGram" },
-      { "id": "keep_fee_from_check", "label": "Keep a cut from the check" }
+      {
+        "id": "check_scam_pattern",
+        "label": "Deposit check and wire money elsewhere"
+      },
+      {
+        "id": "selected_without_applying",
+        "label": "Hired without applying or interviewing"
+      },
+      {
+        "id": "evaluate_money_transfer_service",
+        "label": "Job involves wiring money via MoneyGram"
+      },
+      {
+        "id": "keep_fee_from_check",
+        "label": "Keep a cut from the check"
+      }
     ],
-    "correct_red_flag_ids": ["check_scam_pattern", "selected_without_applying", "evaluate_money_transfer_service"],
+    "correct_red_flag_ids": [
+      "check_scam_pattern",
+      "selected_without_applying",
+      "evaluate_money_transfer_service"
+    ],
     "explanation": {
       "short": "Mystery shopper check scams are one of the most common job frauds — the check bounces after you've already wired $2,600.",
       "tells": [
@@ -277,7 +440,12 @@
       "consequence": "You send $2,600 via MoneyGram before the check bounces. That money is gone permanently.",
       "behavioral_reinforcement": "Mystery shopping jobs that mail you a check and ask you to wire money are always scams — 100% of the time."
     },
-    "tags": ["mystery-shopper", "check-scam", "wire-transfer", "classic-fraud"]
+    "tags": [
+      "mystery-shopper",
+      "check-scam",
+      "wire-transfer",
+      "classic-fraud"
+    ]
   },
   {
     "id": "email_malware_attachment_job_seeker_001",
@@ -294,12 +462,28 @@
       "body": "Please find attached your employment agreement for the Remote Project Coordinator role. Review the document, enable macros if prompted to view the full contract, and reply with your signed copy.\n\nStart date: March 1. We look forward to welcoming you to the team!"
     },
     "red_flags": [
-      { "id": "enable_macros_instruction", "label": "'Enable macros' to view document" },
-      { "id": "lookalike_domain", "label": ".co domain, not an established company" },
-      { "id": "contract_without_interview_process", "label": "Contract sent without prior interview contact" },
-      { "id": "attachment_from_unknown_sender", "label": "Attachment from unverified sender" }
+      {
+        "id": "enable_macros_instruction",
+        "label": "'Enable macros' to view document"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain, not an established company"
+      },
+      {
+        "id": "contract_without_interview_process",
+        "label": "Contract sent without prior interview contact"
+      },
+      {
+        "id": "attachment_from_unknown_sender",
+        "label": "Attachment from unverified sender"
+      }
     ],
-    "correct_red_flag_ids": ["enable_macros_instruction", "lookalike_domain", "attachment_from_unknown_sender"],
+    "correct_red_flag_ids": [
+      "enable_macros_instruction",
+      "lookalike_domain",
+      "attachment_from_unknown_sender"
+    ],
     "explanation": {
       "short": "Enabling macros in a Word document from an unknown sender is one of the most common ways malware is installed.",
       "tells": [
@@ -312,7 +496,12 @@
       "consequence": "Enabling macros runs hidden code that installs a keylogger or remote access tool on your computer.",
       "behavioral_reinforcement": "Never enable macros in an Office document you received unexpectedly — this is almost always malware delivery."
     },
-    "tags": ["malware", "macros", "fake-contract", "attachment"]
+    "tags": [
+      "malware",
+      "macros",
+      "fake-contract",
+      "attachment"
+    ]
   },
   {
     "id": "sms_job_seeker_job_seeker_001",
@@ -329,12 +518,28 @@
       "body": "CareerLink: Your application has been reviewed and you've been shortlisted for a remote role paying $72/hr. Complete your profile at: careerlink-apply.net/shortlist?ref=7829"
     },
     "red_flags": [
-      { "id": "lookalike_domain", "label": "Lookalike domain (not careerlink.com)" },
-      { "id": "unknown_number", "label": "Not a CareerLink short code" },
-      { "id": "shortlisted_without_recent_application", "label": "May not have applied to this" },
-      { "id": "high_rate_generic_offer", "label": "Vague $72/hr role with no details" }
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike domain (not careerlink.com)"
+      },
+      {
+        "id": "unknown_number",
+        "label": "Not a CareerLink short code"
+      },
+      {
+        "id": "shortlisted_without_recent_application",
+        "label": "May not have applied to this"
+      },
+      {
+        "id": "high_rate_generic_offer",
+        "label": "Vague $72/hr role with no details"
+      }
     ],
-    "correct_red_flag_ids": ["lookalike_domain", "unknown_number", "high_rate_generic_offer"],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "unknown_number",
+      "high_rate_generic_offer"
+    ],
     "explanation": {
       "short": "A $72/hr shortlisting text from a random number pointing to a lookalike domain is credential harvesting, not a job offer.",
       "tells": [
@@ -347,7 +552,12 @@
       "consequence": "The link leads to a fake login page — your credentials are captured and your job platform account is taken over.",
       "behavioral_reinforcement": "Job platform notifications should always be verified by logging in to the platform directly, never through a link in a text."
     },
-    "tags": ["job-platform", "credential-phishing", "shortlist-bait", "sms"]
+    "tags": [
+      "job-platform",
+      "credential-phishing",
+      "shortlist-bait",
+      "sms"
+    ]
   },
   {
     "id": "email_oauth_consent_job_seeker_001",
@@ -364,11 +574,24 @@
       "body": "To complete your application for the Data Analyst role, please authorize our HireNow portal to access your CloudSync account. This is required to verify your work history documents.\n\nAuthorize: hirenow-portal.co/oauth/cloudsync\n\nThis process takes under 2 minutes."
     },
     "red_flags": [
-      { "id": "third_party_cloud_access_for_job", "label": "Job application requires cloud account access" },
-      { "id": "lookalike_domain", "label": ".co domain for 'official' job portal" },
-      { "id": "cloud_access_to_verify_work_history", "label": "Odd reason for cloud access" }
+      {
+        "id": "third_party_cloud_access_for_job",
+        "label": "Job application requires cloud account access"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain for 'official' job portal"
+      },
+      {
+        "id": "cloud_access_to_verify_work_history",
+        "label": "Odd reason for cloud access"
+      }
     ],
-    "correct_red_flag_ids": ["third_party_cloud_access_for_job", "lookalike_domain", "cloud_access_to_verify_work_history"],
+    "correct_red_flag_ids": [
+      "third_party_cloud_access_for_job",
+      "lookalike_domain",
+      "cloud_access_to_verify_work_history"
+    ],
     "explanation": {
       "short": "No legitimate job portal requires access to your cloud storage account — this is an OAuth token theft attempt.",
       "tells": [
@@ -381,7 +604,12 @@
       "consequence": "The OAuth grant gives attackers access to your entire cloud account — files, emails, and anything synced.",
       "behavioral_reinforcement": "Never authorize third-party apps to access your accounts during a job application — no legitimate employer requires this."
     },
-    "tags": ["oauth", "cloud-access", "token-theft", "job-application"]
+    "tags": [
+      "oauth",
+      "cloud-access",
+      "token-theft",
+      "job-application"
+    ]
   },
   {
     "id": "dm_romance_social_job_seeker_001",
@@ -398,12 +626,28 @@
       "body": "Hey! I saw you're in finance too — small world! I've been doing freelance consulting while also investing. My mentor taught me a crypto strategy that's been life-changing. I was skeptical too but I've made $18k this month. Happy to show you how it works over a call sometime if you're curious? No pressure at all!"
     },
     "red_flags": [
-      { "id": "strangers_investment_opportunity_dm", "label": "Stranger offering investment advice via DM" },
-      { "id": "mentor_framework", "label": "Mentor who taught a 'strategy'" },
-      { "id": "life_changing_returns", "label": "$18k in a month — unverifiable claim" },
-      { "id": "no_pressure_framing", "label": "'No pressure' designed to lower guard" }
+      {
+        "id": "strangers_investment_opportunity_dm",
+        "label": "Stranger offering investment advice via DM"
+      },
+      {
+        "id": "mentor_framework",
+        "label": "Mentor who taught a 'strategy'"
+      },
+      {
+        "id": "life_changing_returns",
+        "label": "$18k in a month — unverifiable claim"
+      },
+      {
+        "id": "no_pressure_framing",
+        "label": "'No pressure' designed to lower guard"
+      }
     ],
-    "correct_red_flag_ids": ["strangers_investment_opportunity_dm", "mentor_framework", "life_changing_returns"],
+    "correct_red_flag_ids": [
+      "strangers_investment_opportunity_dm",
+      "mentor_framework",
+      "life_changing_returns"
+    ],
     "explanation": {
       "short": "This is the opening move of a pig-butchering scam — build trust over weeks, then introduce a 'mentor' and a fake crypto platform.",
       "tells": [
@@ -416,7 +660,12 @@
       "consequence": "Engaging leads to a weeks-long relationship that ends with you investing on a fake exchange where your funds are unwithdrawable.",
       "behavioral_reinforcement": "Strangers who mention crypto gains and offer to teach you their 'strategy' are running pig-butchering scams — 100% of the time."
     },
-    "tags": ["pig-butchering", "crypto", "romance-investment", "pig-butchering"]
+    "tags": [
+      "pig-butchering",
+      "crypto",
+      "romance-investment",
+      "pig-butchering"
+    ]
   },
   {
     "id": "email_credential_phishing_job_seeker_002",
@@ -433,12 +682,28 @@
       "body": "A recent review you posted may violate our community guidelines. To prevent account suspension, please verify your identity at the link below within 48 hours.\n\nVerify: glassdoor-jobs.net/verify-account\n\nFailure to verify will result in removal of your profile and reviews."
     },
     "red_flags": [
-      { "id": "lookalike_domain", "label": "glassdoor-jobs.net, not glassdoor.com" },
-      { "id": "account_suspension_threat", "label": "Threat to remove profile and reviews" },
-      { "id": "urgency_48_hours", "label": "48-hour verification window" },
-      { "id": "verify_identity_link", "label": "Link to 'verify identity'" }
+      {
+        "id": "lookalike_domain",
+        "label": "glassdoor-jobs.net, not glassdoor.com"
+      },
+      {
+        "id": "account_suspension_threat",
+        "label": "Threat to remove profile and reviews"
+      },
+      {
+        "id": "urgency_48_hours",
+        "label": "48-hour verification window"
+      },
+      {
+        "id": "verify_identity_link",
+        "label": "Link to 'verify identity'"
+      }
     ],
-    "correct_red_flag_ids": ["lookalike_domain", "account_suspension_threat", "verify_identity_link"],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "account_suspension_threat",
+      "verify_identity_link"
+    ],
     "explanation": {
       "short": "glassdoor-jobs.net is not glassdoor.com — this is a credential phishing page designed to steal your Glassdoor login.",
       "tells": [
@@ -451,7 +716,12 @@
       "consequence": "The fake login captures your Glassdoor credentials — and if you reuse passwords, many other accounts too.",
       "behavioral_reinforcement": "Account violation notices are always verifiable by logging into the platform directly — never act on email links alone."
     },
-    "tags": ["phishing", "glassdoor", "credential-theft", "job-platform"]
+    "tags": [
+      "phishing",
+      "glassdoor",
+      "credential-theft",
+      "job-platform"
+    ]
   },
   {
     "id": "email_otp_sim_swap_job_seeker_001",
@@ -468,11 +738,24 @@
       "body": "Hi! To complete your payroll setup, we need to verify your phone number for direct deposit. We'll send a 6-digit code to your phone. Please reply to this email with the code once you receive it so we can finalize your account."
     },
     "red_flags": [
-      { "id": "email_reply_with_otp_code", "label": "Asked to email back a code sent to your phone" },
-      { "id": "lookalike_domain", "label": ".co domain for HR (not vertex-corp.com)" },
-      { "id": "direct_deposit_setup_via_email", "label": "Payroll setup via email reply, not HR portal" }
+      {
+        "id": "email_reply_with_otp_code",
+        "label": "Asked to email back a code sent to your phone"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": ".co domain for HR (not vertex-corp.com)"
+      },
+      {
+        "id": "direct_deposit_setup_via_email",
+        "label": "Payroll setup via email reply, not HR portal"
+      }
     ],
-    "correct_red_flag_ids": ["email_reply_with_otp_code", "lookalike_domain", "direct_deposit_setup_via_email"],
+    "correct_red_flag_ids": [
+      "email_reply_with_otp_code",
+      "lookalike_domain",
+      "direct_deposit_setup_via_email"
+    ],
     "explanation": {
       "short": "Legitimate payroll departments use secure HR portals — asking you to reply to an email with an SMS code is account takeover.",
       "tells": [
@@ -485,7 +768,12 @@
       "consequence": "The code hands them access to whatever account it was issued for — likely your bank or email.",
       "behavioral_reinforcement": "Payroll setup never requires you to share a code that was texted to you — that is account takeover, not onboarding."
     },
-    "tags": ["otp", "payroll-scam", "account-takeover", "onboarding"]
+    "tags": [
+      "otp",
+      "payroll-scam",
+      "account-takeover",
+      "onboarding"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_006",
@@ -502,12 +790,28 @@
       "body": "Your free Zoomify Pro trial for job seekers expires in 24 hours. To continue using Zoomify for your upcoming interviews without interruption, renew at $14.99/month. Act now to avoid reverting to basic — which disables video in interviews.\n\nRenew: zoomify-business.net/renew"
     },
     "red_flags": [
-      { "id": "lookalike_video_platform", "label": "Lookalike of real video platform (not zoomify.com)" },
-      { "id": "job_seeker_specific_bait", "label": "Targeted at job seekers — interview disruption fear" },
-      { "id": "urgency_24_hours", "label": "24-hour expiry with interview threat" },
-      { "id": "payment_link_in_email", "label": "Renewal link in email body" }
+      {
+        "id": "lookalike_video_platform",
+        "label": "Lookalike of real video platform (not zoomify.com)"
+      },
+      {
+        "id": "job_seeker_specific_bait",
+        "label": "Targeted at job seekers — interview disruption fear"
+      },
+      {
+        "id": "urgency_24_hours",
+        "label": "24-hour expiry with interview threat"
+      },
+      {
+        "id": "payment_link_in_email",
+        "label": "Renewal link in email body"
+      }
     ],
-    "correct_red_flag_ids": ["lookalike_video_platform", "job_seeker_specific_bait", "payment_link_in_email"],
+    "correct_red_flag_ids": [
+      "lookalike_video_platform",
+      "job_seeker_specific_bait",
+      "payment_link_in_email"
+    ],
     "explanation": {
       "short": "zoomify-business.net is a fake — this phishing email exploits job seekers' anxiety about interview tools to steal payment info.",
       "tells": [
@@ -520,7 +824,12 @@
       "consequence": "Your payment card details are captured by the fake renewal page — no subscription is actually renewed.",
       "behavioral_reinforcement": "Manage all software subscriptions through the official app or website — never through a renewal link in an email."
     },
-    "tags": ["subscription-scam", "video-conference", "job-seeker-bait", "payment-phishing"]
+    "tags": [
+      "subscription-scam",
+      "video-conference",
+      "job-seeker-bait",
+      "payment-phishing"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_007",
@@ -537,7 +846,10 @@
       "body": "Hi Alex,\n\nThank you for applying to the Data Analyst position at Meridian Analytics. After careful review, we've decided to move forward with other candidates whose experience more closely matches the role.\n\nWe'll keep your profile on file and encourage you to apply to future openings.\n\nBest,\nTalentHub Recruiting"
     },
     "red_flags": [
-      { "id": "rejection_you_didnt_expect", "label": "Application rejection you don't remember" }
+      {
+        "id": "rejection_you_didnt_expect",
+        "label": "Application rejection you don't remember"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
@@ -552,7 +864,12 @@
       "consequence": "No risk — this is a routine rejection notice.",
       "behavioral_reinforcement": "Legitimate rejection emails come from the platform's domain, reference your specific application, and ask for nothing."
     },
-    "tags": ["rejection", "job-application", "legit", "talenthub"]
+    "tags": [
+      "rejection",
+      "job-application",
+      "legit",
+      "talenthub"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_008",
@@ -566,17 +883,20 @@
       "from_name": "Veritas HR — Tara Simmons",
       "from_handle": "tsimmons@veritashr.com",
       "subject": "Interview Confirmation — Thursday Feb 27 at 2pm EST",
-      "body": "Hi Jordan,\n\nThis is a confirmation for your video interview on Thursday, February 27 at 2:00 PM EST for the Product Manager role at Veritas.\n\nInterview link: meet.google.com/xyz-abc-def (Google Meet)\nDuration: 45 minutes\nInterviewers: Tara Simmons (HR), Devon Park (Hiring Manager)\n\nPlease bring a copy of your resume. Let me know if you need to reschedule.\n\nTara Simmons | HR Business Partner | Veritas HR"
+      "body": "Hi Jordan,\n\nThis is a confirmation for your video interview on Thursday, February 27 at 2:00 PM EST for the Product Manager role at Veritas.\n\nInterview link: meet.nexus.com/xyz-abc-def (GlobalMeet)\nDuration: 45 minutes\nInterviewers: Tara Simmons (HR), Devon Park (Hiring Manager)\n\nPlease bring a copy of your resume. Let me know if you need to reschedule.\n\nTara Simmons | HR Business Partner | Veritas HR"
     },
     "red_flags": [
-      { "id": "interview_link_in_email", "label": "Video call link in email" }
+      {
+        "id": "interview_link_in_email",
+        "label": "Video call link in email"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
       "short": "This is a legitimate interview confirmation — it comes from the company's real domain and contains specific, consistent details.",
       "tells": [
         "Sent from tsimmons@veritashr.com — a corporate email at the company's domain",
-        "Contains specific interviewer names, a real-looking Google Meet link, and matches a role you presumably applied for",
+        "Contains specific interviewer names, a real-looking GlobalMeet link, and matches a role you presumably applied for",
         "No payment, no credential request, no urgency beyond normal scheduling",
         "Provides a reschedule option — a normal professional courtesy"
       ],
@@ -584,7 +904,12 @@
       "consequence": "No risk — this is a routine interview confirmation.",
       "behavioral_reinforcement": "Interview confirmations from company domains with specific names and a rescheduling option are legitimate — scams don't offer to reschedule."
     },
-    "tags": ["interview", "confirmation", "legit", "job-application"]
+    "tags": [
+      "interview",
+      "confirmation",
+      "legit",
+      "job-application"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_009",
@@ -601,9 +926,18 @@
       "body": "Apex Technologies has requested a background check as part of your pre-employment process. Please complete the form at sterlingcheck.com/candidate to submit your information securely.\n\nThis authorization expires in 7 days. If you have not applied to Apex Technologies, disregard this email."
     },
     "red_flags": [
-      { "id": "third_party_requesting_pii", "label": "Third party asking for personal info" },
-      { "id": "form_link_in_email", "label": "Link to external form" },
-      { "id": "7_day_deadline", "label": "7-day deadline" }
+      {
+        "id": "third_party_requesting_pii",
+        "label": "Third party asking for personal info"
+      },
+      {
+        "id": "form_link_in_email",
+        "label": "Link to external form"
+      },
+      {
+        "id": "7_day_deadline",
+        "label": "7-day deadline"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
@@ -618,7 +952,12 @@
       "consequence": "No risk. If unexpected, verify with your Apex Technologies contact first.",
       "behavioral_reinforcement": "Background checks from known services like Sterling are legitimate — verify the link goes to the screener's official domain."
     },
-    "tags": ["background-check", "pre-employment", "legit", "third-party"]
+    "tags": [
+      "background-check",
+      "pre-employment",
+      "legit",
+      "third-party"
+    ]
   },
   {
     "id": "email_job_seeker_job_seeker_010",
@@ -635,8 +974,14 @@
       "body": "Hi Jordan,\n\nPlease find attached your offer letter for the Product Manager position at Veritas. Start date: March 10. Salary: $95,000/year plus benefits.\n\nWe use Workday for onboarding — you'll receive a separate invite from workday.com within 24 hours to complete your forms.\n\nPlease sign via DocuSign (a separate email will follow from docusign.com) and return by February 28.\n\nCongratulations!\nDerek Walsh | VP of HR | Veritas"
     },
     "red_flags": [
-      { "id": "attachment_in_offer_email", "label": "Attachment in offer email" },
-      { "id": "multiple_platforms_mentioned", "label": "Multiple third-party platforms referenced" }
+      {
+        "id": "attachment_in_offer_email",
+        "label": "Attachment in offer email"
+      },
+      {
+        "id": "multiple_platforms_mentioned",
+        "label": "Multiple third-party platforms referenced"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
@@ -651,7 +996,12 @@
       "consequence": "No risk from this email. Verify the DocuSign and Workday emails also come from their official domains.",
       "behavioral_reinforcement": "A real offer letter from a company's domain referencing established HR platforms is legitimate — verify each platform invite separately."
     },
-    "tags": ["offer-letter", "onboarding", "legit", "job-application"]
+    "tags": [
+      "offer-letter",
+      "onboarding",
+      "legit",
+      "job-application"
+    ]
   },
   {
     "id": "dm_job_seeker_job_seeker_003",
@@ -668,7 +1018,10 @@
       "body": "Hi! A recruiter at Apex Technologies viewed your profile and saved it to their candidate list. Log in at talenthub.com to see your profile activity and message them directly if you're interested."
     },
     "red_flags": [
-      { "id": "platform_dm_with_link", "label": "Platform DM with link to site" }
+      {
+        "id": "platform_dm_with_link",
+        "label": "Platform DM with link to site"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
@@ -683,7 +1036,12 @@
       "consequence": "No risk — routine job platform activity notification.",
       "behavioral_reinforcement": "Legitimate job platform notifications come from verified accounts and direct you only to the platform's official domain."
     },
-    "tags": ["job-platform", "profile-view", "legit", "recruiter"]
+    "tags": [
+      "job-platform",
+      "profile-view",
+      "legit",
+      "recruiter"
+    ]
   },
   {
     "id": "email_bank_fraud_alert_job_seeker_001",
@@ -700,7 +1058,10 @@
       "body": "Hi Jordan,\n\nWe noticed a direct deposit of $3,800 from PINNACLE-STAFFING was posted to your account today — which is outside your usual deposit history.\n\nIf this was expected (e.g., a new employer or freelance payment), no action is needed.\n\nIf this is unexpected, please call the number on the back of your debit card immediately.\n\nBluePeak Security Team"
     },
     "red_flags": [
-      { "id": "unexpected_large_deposit", "label": "Unexpected large deposit from unknown source" }
+      {
+        "id": "unexpected_large_deposit",
+        "label": "Unexpected large deposit from unknown source"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
@@ -715,7 +1076,12 @@
       "consequence": "No risk from this email. An unexpected deposit could indicate a check scam setup — if uncertain, call your bank.",
       "behavioral_reinforcement": "Legitimate bank security emails direct you to your card's back number — they do not include emergency call-now links."
     },
-    "tags": ["bank", "direct-deposit", "fraud-alert", "legit"]
+    "tags": [
+      "bank",
+      "direct-deposit",
+      "fraud-alert",
+      "legit"
+    ]
   },
   {
     "id": "email_account_verification_job_seeker_001",
@@ -732,8 +1098,14 @@
       "body": "We received a request to reset the password for your JobBridge account (jordan@email.com). If you requested this, click the link below within 1 hour:\n\njobbridge.com/reset?token=a9f2c...\n\nIf you did not request this, no action is needed — your current password remains unchanged."
     },
     "red_flags": [
-      { "id": "password_reset_you_might_not_have_requested", "label": "Password reset you didn't initiate" },
-      { "id": "link_with_token", "label": "Link with token parameter" }
+      {
+        "id": "password_reset_you_might_not_have_requested",
+        "label": "Password reset you didn't initiate"
+      },
+      {
+        "id": "link_with_token",
+        "label": "Link with token parameter"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
@@ -748,7 +1120,12 @@
       "consequence": "No risk. If you didn't request a reset, someone may be trying your email on the platform — consider enabling two-factor authentication.",
       "behavioral_reinforcement": "Legitimate password reset emails offer a clear 'if you didn't do this, ignore it' option — phishing emails create panic instead."
     },
-    "tags": ["password-reset", "account-security", "legit", "job-platform"]
+    "tags": [
+      "password-reset",
+      "account-security",
+      "legit",
+      "job-platform"
+    ]
   },
   {
     "id": "email_subscription_renewal_job_seeker_001",
@@ -765,12 +1142,27 @@
       "body": "Your CareerBoost Pro annual subscription will renew for $189 today. If you did not authorize this charge, call our cancellation team at 1-866-555-0412 within 6 hours to receive a refund."
     },
     "red_flags": [
-      { "id": "lookalike_domain", "label": "careerboost-renewals.net, not careerboost.com" },
-      { "id": "surprise_charge_to_call", "label": "Surprise charge — must call to cancel" },
-      { "id": "job_seeker_targeted_tool", "label": "Exploits job seeker fear of missing a paid tool" },
-      { "id": "short_window_6_hours", "label": "6-hour cancellation window" }
+      {
+        "id": "lookalike_domain",
+        "label": "careerboost-renewals.net, not careerboost.com"
+      },
+      {
+        "id": "surprise_charge_to_call",
+        "label": "Surprise charge — must call to cancel"
+      },
+      {
+        "id": "job_seeker_targeted_tool",
+        "label": "Exploits job seeker fear of missing a paid tool"
+      },
+      {
+        "id": "short_window_6_hours",
+        "label": "6-hour cancellation window"
+      }
     ],
-    "correct_red_flag_ids": ["lookalike_domain", "surprise_charge_to_call"],
+    "correct_red_flag_ids": [
+      "lookalike_domain",
+      "surprise_charge_to_call"
+    ],
     "explanation": {
       "short": "This fake billing notice targets job seekers who may have trialed resume tools — the phone number is the trap.",
       "tells": [
@@ -783,7 +1175,12 @@
       "consequence": "Calling leads to a refund scam where they ask for remote computer access and steal banking credentials.",
       "behavioral_reinforcement": "Never call a number in a billing email about an unexpected charge — verify all billing through the company's official website."
     },
-    "tags": ["subscription-scam", "resume-tool", "job-seeker-bait", "fake-billing"]
+    "tags": [
+      "subscription-scam",
+      "resume-tool",
+      "job-seeker-bait",
+      "fake-billing"
+    ]
   },
   {
     "id": "email_government_impersonation_job_seeker_001",
@@ -800,12 +1197,28 @@
       "body": "Your employer has initiated an I-9 verification with USCIS. You are required to complete your electronic I-9 form within 3 business days or your employment authorization will be placed on hold. Complete at: uscis-employment-verify.com/i9"
     },
     "red_flags": [
-      { "id": "gov_agency_using_dot_com", "label": "USCIS using .com not .gov" },
-      { "id": "lookalike_domain", "label": "uscis-employment-verify.com is not uscis.gov" },
-      { "id": "employment_hold_threat", "label": "Employment authorization threatened" },
-      { "id": "urgent_3_day_window", "label": "3-day deadline for government form" }
+      {
+        "id": "gov_agency_using_dot_com",
+        "label": "USCIS using .com not .gov"
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "uscis-employment-verify.com is not uscis.gov"
+      },
+      {
+        "id": "employment_hold_threat",
+        "label": "Employment authorization threatened"
+      },
+      {
+        "id": "urgent_3_day_window",
+        "label": "3-day deadline for government form"
+      }
     ],
-    "correct_red_flag_ids": ["gov_agency_using_dot_com", "lookalike_domain", "employment_hold_threat"],
+    "correct_red_flag_ids": [
+      "gov_agency_using_dot_com",
+      "lookalike_domain",
+      "employment_hold_threat"
+    ],
     "explanation": {
       "short": "USCIS is a U.S. government agency — all official communications come from .gov domains, never .com.",
       "tells": [
@@ -818,7 +1231,12 @@
       "consequence": "The fake I-9 form captures your Social Security number, ID documents, and other identity information.",
       "behavioral_reinforcement": "All USCIS and government employment forms use .gov domains — any .com claiming to be a government agency is fake."
     },
-    "tags": ["uscis", "i-9", "government-impersonation", "new-hire-target"]
+    "tags": [
+      "uscis",
+      "i-9",
+      "government-impersonation",
+      "new-hire-target"
+    ]
   },
   {
     "id": "email_delivery_toll_job_seeker_001",
@@ -835,7 +1253,10 @@
       "body": "Hi Jordan,\n\nYour order from WorkGear Supply (Order #SW-98812) has shipped and is estimated to arrive Thursday, Feb 27.\n\nTracking: SW8819922 — Track at swiftship.com/track\n\nIf you did not place this order, contact WorkGear Supply at workgear.com/support.\n\nSwiftShip"
     },
     "red_flags": [
-      { "id": "order_you_may_not_recognize", "label": "Package from unfamiliar sender" }
+      {
+        "id": "order_you_may_not_recognize",
+        "label": "Package from unfamiliar sender"
+      }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
@@ -850,6 +1271,11 @@
       "consequence": "No risk from this email.",
       "behavioral_reinforcement": "Legitimate shipping emails come from the carrier's official domain and include specific order numbers — no fees or login required."
     },
-    "tags": ["delivery", "legit", "shipping-notification", "home-office"]
+    "tags": [
+      "delivery",
+      "legit",
+      "shipping-notification",
+      "home-office"
+    ]
   }
 ]

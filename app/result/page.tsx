@@ -6,6 +6,13 @@ import type { Attempt, Drill, CalibrationVerdict } from "@/lib/types";
 import { accuracyScore, redFlagRecall } from "@/lib/scoring";
 import { saveAttempt, saveContentFlag } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
+import { tap } from "@/lib/haptics";
+import type { PostDrillReward } from "@/lib/progression";
+import { computeXpForAttempt } from "@/lib/xp";
+import type { XpBreakdown } from "@/lib/xp";
+import XpBar from "@/components/XpBar";
+import MedalToast from "@/components/MedalToast";
+import LevelUpOverlay from "@/components/LevelUpOverlay";
 
 type VerdictConfig = {
   label: string;
@@ -62,6 +69,10 @@ export default function ResultPage() {
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState<ContentFlag["reason"] | null>(null);
   const [reportSubmitted, setReportSubmitted] = useState(false);
+  const [reward, setReward] = useState<PostDrillReward | null>(null);
+  const [xpBreakdown, setXpBreakdown] = useState<XpBreakdown | null>(null);
+  const [showMedalToast, setShowMedalToast] = useState(false);
+  const [showLevelUp, setShowLevelUp] = useState(false);
 
   type ContentFlag = {
     reason: "answer_wrong" | "question_unclear" | "red_flags_wrong" | "other";
@@ -78,6 +89,17 @@ export default function ResultPage() {
     setAttempt(JSON.parse(a));
     setDrill(JSON.parse(d));
     setCalVerdict(cv as CalibrationVerdict);
+
+    const r = sessionStorage.getItem("lastReward");
+    if (r) {
+      const parsed = JSON.parse(r) as PostDrillReward;
+      setReward(parsed);
+      setXpBreakdown(parsed.xpBreakdown);
+      // Show medal toast after 500ms delay
+      if (parsed.newMedals.length > 0) {
+        setTimeout(() => setShowMedalToast(true), 500);
+      }
+    }
   }, [router]);
 
   function toggleFlag(id: string) {
@@ -95,7 +117,12 @@ export default function ResultPage() {
     const recall = redFlagRecall(flagIds, drill.correct_red_flag_ids);
     const updated = { ...attempt, selectedRedFlagIds: flagIds, redFlagRecall: recall };
     await saveAttempt(updated);
+    setAttempt(updated);
     setRevealed(true);
+
+    // Recompute XP breakdown now that redFlagRecall is populated
+    const newBreakdown = computeXpForAttempt(updated, drill);
+    setXpBreakdown(newBreakdown);
   }
 
   const handleReport = useCallback(async () => {
@@ -159,6 +186,28 @@ export default function ResultPage() {
 
   return (
     <div className="flex flex-col min-h-dvh pb-8">
+      {/* Medal Toast */}
+      {showMedalToast && reward && reward.newMedals.length > 0 && (
+        <MedalToast
+          medals={reward.newMedals}
+          onDone={() => {
+            setShowMedalToast(false);
+            if (reward.leveledUp) {
+              setShowLevelUp(true);
+            }
+          }}
+        />
+      )}
+
+      {/* Level Up Overlay */}
+      {showLevelUp && reward && (
+        <LevelUpOverlay
+          previousLevel={reward.previousLevel}
+          newLevel={reward.levelInfo.level}
+          onDismiss={() => setShowLevelUp(false)}
+        />
+      )}
+
       {/* Header */}
       <div
         className="flex items-center justify-between px-4 py-3 border-b"
@@ -195,6 +244,41 @@ export default function ResultPage() {
         <p className="text-sm" style={{ color: "var(--text-muted)" }}>
           {summaryText}
         </p>
+
+        {/* XP Breakdown */}
+        {xpBreakdown && (
+          <div className="space-y-2">
+            <div className="flex flex-wrap gap-1.5">
+              <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}>
+                +{xpBreakdown.base} base
+              </span>
+              {xpBreakdown.correct > 0 && (
+                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
+                  +{xpBreakdown.correct} correct
+                </span>
+              )}
+              {xpBreakdown.calibration > 0 && (
+                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
+                  +{xpBreakdown.calibration} calibrated
+                </span>
+              )}
+              {xpBreakdown.redFlags > 0 && (
+                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
+                  +{xpBreakdown.redFlags} flags
+                </span>
+              )}
+              {xpBreakdown.safeBehavior > 0 && (
+                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
+                  +{xpBreakdown.safeBehavior} safe
+                </span>
+              )}
+              <span className="px-2 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(124,106,247,0.25)", color: "var(--accent)" }}>
+                = {xpBreakdown.total} XP
+              </span>
+            </div>
+            {reward && <XpBar levelInfo={reward.levelInfo} animate />}
+          </div>
+        )}
 
         {/* Consequence */}
         <div
@@ -242,8 +326,8 @@ export default function ResultPage() {
           </div>
         )}
 
-        {/* Red flag selection (Phase 1) */}
-        {!revealed && drill.red_flags.length > 0 && (
+        {/* Red flag selection (Phase 1) — only for scam drills */}
+        {!revealed && drill.ground_truth === "scam" && drill.red_flags.length > 0 && (
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--text-muted)" }}>
               Which of these did you spot?
@@ -504,7 +588,7 @@ export default function ResultPage() {
       >
         {revealed ? (
           <button
-            onClick={() => router.push("/drill")}
+            onClick={() => { tap(); router.push("/drill"); }}
             className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
             style={{ background: "var(--accent)", color: "#fff" }}
           >
@@ -513,7 +597,7 @@ export default function ResultPage() {
         ) : (
           <div className="flex gap-3">
             <button
-              onClick={handleReveal}
+              onClick={() => { tap(); handleReveal(); }}
               className="flex-1 py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
               style={{ background: "var(--accent)", color: "#fff" }}
             >

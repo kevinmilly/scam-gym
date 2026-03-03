@@ -6,6 +6,7 @@ import { exportData, importData, resetAllData } from "@/lib/db";
 import { useDrillContext } from "@/lib/DrillContext";
 import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
 import type { UserContext } from "@/lib/types";
+import { tap } from "@/lib/haptics";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -143,7 +144,7 @@ export default function SettingsPage() {
               </p>
             </div>
             <button
-              onClick={toggleSlowMode}
+              onClick={() => { tap(); toggleSlowMode(); }}
               className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
               style={{
                 borderColor: slowMode ? "var(--accent)" : "var(--border)",
@@ -242,6 +243,17 @@ export default function SettingsPage() {
             Scam Gym is a personal training tool — not a security product.
             It won&apos;t stop real scams, but it will sharpen your instincts.
           </p>
+          <div
+            className="mt-3 pt-3 border-t"
+            style={{ borderColor: "var(--border)" }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--text-muted)" }}>
+              Disclaimer
+            </p>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              Scam Gym is for educational purposes only. All scenarios use fictional companies and brands — any resemblance to real organizations is coincidental. Drills cover common, high-frequency scam patterns and do not represent every type of fraud. Always verify suspicious messages directly through official channels.
+            </p>
+          </div>
           <p className="text-xs mt-3" style={{ color: "var(--text-muted)" }}>
             MVP v0.1
           </p>

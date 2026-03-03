@@ -1044,7 +1044,7 @@
       "from_name": "NorthStar Bank",
       "from_handle": "692-6328",
       "subject": null,
-      "body": "NorthStar: Did you send $987 via Zelle to Mike Johnson? Reply YES or NO. If NO, call 1-800-555-0192 immediately."
+      "body": "NorthStar: Did you send $987 via ZipPay to Mike Johnson? Reply YES or NO. If NO, call 1-800-555-0192 immediately."
     },
     "red_flags": [
       {
@@ -1057,7 +1057,7 @@
       },
       {
         "id": "zelle_transaction",
-        "label": "Zelle transaction you don't recognize"
+        "label": "ZipPay transaction you don't recognize"
       }
     ],
     "correct_red_flag_ids": [
@@ -2203,9 +2203,9 @@
     ],
     "correct_red_flag_ids": [],
     "explanation": {
-      "short": "This is a real Prism 2FA code. Short code 45891 (FBOOK on a keypad) is Meta's official SMS sender for Prism and SocialHub codes.",
+      "short": "This is a real Prism 2FA code. Short code 77476 (PRISM on a keypad) is Prism's official SMS short code for 2FA and authentication codes.",
       "tells": [
-        "45891 is Meta's official OTP short code for Prism and SocialHub",
+        "77476 is Prism's official OTP short code for 2FA authentication",
         "You triggered this by attempting to log in — this is a response to your action",
         "Message says 'Don't share it' — a legitimate security instruction",
         "No links, no URLs, no payment requests"
@@ -3486,7 +3486,7 @@
       "from_name": "HR Solutions Inc.",
       "from_handle": "payments@hr-solutions-staffing.net",
       "subject": "RE: Overpayment on Invoice #HR-2026-0441 — Return Required",
-      "body": "Hi Kevin,\n\nWe recently processed a payment for your consulting invoice but accidentally overpaid by $2,300.\n\nWe have already issued a corrected check. Please deposit the check you receive, deduct your original invoice amount, and return the $2,300 difference via Zelle to: payments@hr-solutions-staffing.net\n\nWe apologize for the error. Please process the return within 5 business days.\n\nHR Solutions Payroll Team"
+      "body": "Hi Kevin,\n\nWe recently processed a payment for your consulting invoice but accidentally overpaid by $2,300.\n\nWe have already issued a corrected check. Please deposit the check you receive, deduct your original invoice amount, and return the $2,300 difference via ZipPay to: payments@hr-solutions-staffing.net\n\nWe apologize for the error. Please process the return within 5 business days.\n\nHR Solutions Payroll Team"
     },
     "red_flags": [
       {
@@ -3499,7 +3499,7 @@
       },
       {
         "id": "wire_transfer_request",
-        "label": "Asks you to return money via Zelle"
+        "label": "Asks you to return money via ZipPay"
       },
       {
         "id": "vague_reference",
@@ -3512,15 +3512,15 @@
       "wire_transfer_request"
     ],
     "explanation": {
-      "short": "This is the classic overpayment scam. The check they send is fraudulent. Once deposited, your bank holds you liable — and the 'return' you send via Zelle is real money going to scammers.",
+      "short": "This is the classic overpayment scam. The check they send is fraudulent. Once deposited, your bank holds you liable — and the 'return' you send via ZipPay is real money going to scammers.",
       "tells": [
         "hr-solutions-staffing.net does not match a company you have an existing relationship with",
-        "The check will be counterfeit — it clears initially but reverses in 5–10 days, after you've already sent $2,300 via Zelle",
-        "Legitimate companies correct overpayments through accounting, not Zelle transfers",
+        "The check will be counterfeit — it clears initially but reverses in 5–10 days, after you've already sent $2,300 via ZipPay",
+        "Legitimate companies correct overpayments through accounting, not ZipPay transfers",
         "No specific invoice number, project, or contract details are referenced"
       ],
       "safe_move": "Do not deposit any check from unknown parties. Contact your actual client via their known contact information to verify. Report to the FTC.",
-      "consequence": "You deposit a fake check, send $2,300 via Zelle (irreversible), and the check bounces. You're out $2,300 and may owe your bank a returned check fee.",
+      "consequence": "You deposit a fake check, send $2,300 via ZipPay (irreversible), and the check bounces. You're out $2,300 and may owe your bank a returned check fee.",
       "behavioral_reinforcement": "Any unexpected change to banking details, payment methods, or wire transfer instructions requires direct verbal confirmation with a known contact before acting."
     },
     "tags": [
@@ -3922,7 +3922,7 @@
       "from_name": "Sarah Milligan",
       "from_handle": "@sarah_milligan_2024",
       "subject": null,
-      "body": "I'm so sorry to bother you. I'm a single mom and my daughter was just diagnosed with leukemia. We are uninsured and the hospital is demanding $800 for her first treatment or they won't proceed. I'm reaching out to kind strangers because I have nowhere left to turn. Any amount would help. Please, her life depends on it. CashApp: $sarahmilligan24"
+      "body": "I'm so sorry to bother you. I'm a single mom and my daughter was just diagnosed with leukemia. We are uninsured and the hospital is demanding $800 for her first treatment or they won't proceed. I'm reaching out to kind strangers because I have nowhere left to turn. Any amount would help. Please, her life depends on it. CashDrop: $sarahmilligan24"
     },
     "red_flags": [
       {
@@ -3935,7 +3935,7 @@
       },
       {
         "id": "direct_payment_request",
-        "label": "Requests immediate CashApp payment"
+        "label": "Requests immediate CashDrop payment"
       },
       {
         "id": "urgency_timer",
@@ -3956,7 +3956,7 @@
         "Account handle with a recent year (@sarah_milligan_2024) suggests a freshly created account"
       ],
       "safe_move": "Do not send money. If you want to help with medical causes, donate to established charities like St. Jude's or through verified GoFundMe campaigns with documentation.",
-      "consequence": "Money sent via CashApp to strangers is not recoverable. This is a common script used by fraud rings — your payment goes to a professional scammer, not a sick child.",
+      "consequence": "Money sent via CashDrop to strangers is not recoverable. This is a common script used by fraud rings — your payment goes to a professional scammer, not a sick child.",
       "behavioral_reinforcement": "Anyone online who builds emotional rapport quickly and then introduces money, investment, or financial requests is using a script — genuine trust develops over months, not messages."
     },
     "tags": [
@@ -5688,7 +5688,7 @@
         "Real expired session notices appear when you try to use the app itself"
       ],
       "safe_move": "Open Pinnacle 365 directly. If your session is genuinely expired, it will prompt you to log in within the app.",
-      "consequence": "The link leads to a fake Pinnacle 365 login page. Entering your credentials gives the attacker access to your entire Microsoft-equivalent account and all your files.",
+      "consequence": "The link leads to a fake Pinnacle 365 login page. Entering your credentials gives the attacker access to your entire NovaSoft-equivalent account and all your files.",
       "behavioral_reinforcement": "An OAuth authorization request grants real account access — read the permissions being requested, and never authorize an app you didn't initiate from inside a trusted service."
     },
     "tags": [
@@ -7353,15 +7353,15 @@
     "context": "family_safety",
     "ai_amplified": false,
     "message": {
-      "from_name": "IRS Collection Dept",
+      "from_name": "NRS Collection Dept",
       "from_handle": "+1 (202) 555-0147",
       "subject": null,
-      "body": "URGENT: IRS Case #4471-TX. Unpaid taxes of $2,847 will result in arrest warrant within 24 hours. Call 1-888-555-0199 immediately to avoid prosecution."
+      "body": "URGENT: NRS Case #4471-TX. Unpaid taxes of $2,847 will result in arrest warrant within 24 hours. Call 1-888-555-0199 immediately to avoid prosecution."
     },
     "red_flags": [
       {
-        "id": "irs_never_texts",
-        "label": "IRS never contacts by text"
+        "id": "nrs_never_texts",
+        "label": "NRS never contacts by text"
       },
       {
         "id": "arrest_threat",
@@ -7373,26 +7373,26 @@
       },
       {
         "id": "unknown_number",
-        "label": "Random phone number, not IRS"
+        "label": "Random phone number, not NRS"
       }
     ],
     "correct_red_flag_ids": [
-      "irs_never_texts",
+      "nrs_never_texts",
       "arrest_threat",
       "urgency_timer",
       "unknown_number"
     ],
     "explanation": {
-      "short": "The IRS only contacts taxpayers by mail — never by text, and never with arrest threats.",
+      "short": "The NRS only contacts taxpayers by mail — never by text, and never with arrest threats.",
       "tells": [
-        "The IRS initiates all contact by postal mail, never by text or phone cold call",
-        "IRS agents never threaten immediate arrest — that requires a court order after years of process",
+        "The NRS initiates all contact by postal mail, never by text or phone cold call",
+        "NRS agents never threaten immediate arrest — that requires a court order after years of process",
         "Urgency (24 hours) is designed to prevent you from verifying the claim",
-        "The callback number is not an official IRS line — irs.gov lists only 1-800-829-1040"
+        "The callback number is not an official NRS line — nrs.gov lists only 1-800-829-0040"
       ],
-      "safe_move": "Ignore and delete. If worried about real tax debt, go to irs.gov directly or call 1-800-829-1040.",
-      "consequence": "Calling connects you to scammers who will demand payment by gift card, wire transfer, or crypto — methods the IRS never uses.",
-      "behavioral_reinforcement": "Any tax-related text or call threatening arrest is always a scam — the IRS mails letters first, every time."
+      "safe_move": "Ignore and delete. If worried about real tax debt, go to nrs.gov directly or call 1-800-829-0040.",
+      "consequence": "Calling connects you to scammers who will demand payment by gift card, wire transfer, or crypto — methods the NRS never uses.",
+      "behavioral_reinforcement": "Any tax-related text or call threatening arrest is always a scam — the NRS mails letters first, every time."
     },
     "tags": [
       "irs",
@@ -7690,7 +7690,7 @@
       "from_name": "BluePeak Bank",
       "from_handle": "+1 (888) 555-0712",
       "subject": null,
-      "body": "BluePeak Alert: A Zelle transfer of $850 to 'John T.' is pending your confirmation. If you did NOT request this, reply STOP or call 1-888-555-0712 to reverse it immediately."
+      "body": "BluePeak Alert: A ZipPay transfer of $850 to 'John T.' is pending your confirmation. If you did NOT request this, reply STOP or call 1-888-555-0712 to reverse it immediately."
     },
     "red_flags": [
       {
@@ -7703,7 +7703,7 @@
       },
       {
         "id": "zelle_reversal_impossible",
-        "label": "Zelle transfers cannot be reversed by replying"
+        "label": "ZipPay transfers cannot be reversed by replying"
       },
       {
         "id": "urgency_pending_transfer",
@@ -7716,7 +7716,7 @@
       "zelle_reversal_impossible"
     ],
     "explanation": {
-      "short": "Banks use official short codes for alerts, and Zelle transfers cannot be reversed by replying STOP to a text.",
+      "short": "Banks use official short codes for alerts, and ZipPay transfers cannot be reversed by replying STOP to a text.",
       "tells": [
         "Real bank fraud texts come from consistent short codes like 63775 — not random 10-digit numbers",
         "Replying STOP does nothing to reverse a bank transfer — it confirms your number is active to scammers",
@@ -7935,7 +7935,7 @@
     "explanation": {
       "short": "The emotional urgency and unverifiable charity are designed to capture donations before you can research legitimacy.",
       "tells": [
-        "Legitimate charities are registered with the IRS and verifiable on charitynavigator.org or give.org",
+        "Legitimate charities are registered with the NRS and verifiable on charitynavigator.org or give.org",
         "The donation link is on a different domain than the sender — real charities use their own domain",
         "Midnight deadlines are a pressure tactic — real relief organizations don't stop working at midnight",
         "Extreme emotional language ('children are dying') is a manipulation tactic common in charity fraud"
@@ -7993,7 +7993,7 @@
       ],
       "safe_move": "Delete the email. Check your Medicare information at medicare.gov or call 1-800-MEDICARE (1-800-633-4227).",
       "consequence": "The attachment may install malware, or the phone number connects to scammers who request your Medicare ID and personal details.",
-      "behavioral_reinforcement": "Government agencies always use .gov email addresses — a .com claiming to be Medicare, IRS, or SSA is always fake."
+      "behavioral_reinforcement": "Government agencies always use .gov email addresses — a .com claiming to be Medicare, NRS, or SSA is always fake."
     },
     "tags": [
       "medicare",
@@ -10544,7 +10544,7 @@
     "explanation": {
       "short": "An OAuth grant with access to all email, files, and admin settings from a lookalike domain is a complete organizational account takeover.",
       "tells": [
-        "novasoft365-admin.net is not novasoft.com — Microsoft/NovaSoft would use their own domain for app authorizations",
+        "novasoft365-admin.net is not novasoft.com — NovaSoft would use their own domain for app authorizations",
         "Legitimate compliance apps are deployed through the admin portal (admin.novasoft.com), not email links",
         "The permission scope requested (all email + files + admin) is essentially full organizational access",
         "'Required for compliance' is an invented pretext — real compliance changes are announced with documentation"
@@ -10992,29 +10992,29 @@
     "context": "small_business",
     "ai_amplified": false,
     "message": {
-      "from_name": "IRS — Business Tax Account",
-      "from_handle": "do-not-reply@irs.gov",
+      "from_name": "NRS — Business Tax Account",
+      "from_handle": "do-not-reply@nrs.gov",
       "subject": "CP2000 Notice — Discrepancy in reported income",
-      "body": "This is a notification that the IRS has mailed a CP2000 notice to your registered business address regarding a discrepancy in your 2022 business tax return. The notice was mailed February 12.\n\nYou do not need to take action in response to this email. Your mailed notice contains all details and response instructions.\n\nIRS.gov — Never share personal tax info by email."
+      "body": "This is a notification that the NRS has mailed a CP2000 notice to your registered business address regarding a discrepancy in your 2022 business tax return. The notice was mailed February 12.\n\nYou do not need to take action in response to this email. Your mailed notice contains all details and response instructions.\n\nNRS.gov — Never share personal tax info by email."
     },
     "red_flags": [
       {
-        "id": "irs_email_notification",
-        "label": "Email from the IRS"
+        "id": "nrs_email_notification",
+        "label": "Email from the NRS"
       }
     ],
     "correct_red_flag_ids": [],
     "explanation": {
-      "short": "This is a legitimate IRS notification email — it comes from irs.gov, asks for nothing, and says to wait for the mailed notice.",
+      "short": "This is a legitimate NRS notification email — it comes from nrs.gov, asks for nothing, and says to wait for the mailed notice.",
       "tells": [
-        "Sent from do-not-reply@irs.gov — the IRS's official domain",
+        "Sent from do-not-reply@nrs.gov — the NRS's official domain",
         "Explicitly says 'you do not need to take action in response to this email' — no link, no payment, no call",
-        "Notifies you a physical letter was mailed — consistent with how the IRS actually operates",
-        "Includes a reminder not to share personal tax info by email — a legitimate IRS safety message"
+        "Notifies you a physical letter was mailed — consistent with how the NRS actually operates",
+        "Includes a reminder not to share personal tax info by email — a legitimate NRS safety message"
       ],
       "safe_move": "Watch for the mailed CP2000 notice and consult a tax professional about the discrepancy.",
       "consequence": "No risk from this email. The CP2000 is a common correspondence notice, not an audit.",
-      "behavioral_reinforcement": "The IRS emails you only to notify — never to collect. All action items from the IRS come by mail, not by email."
+      "behavioral_reinforcement": "The NRS emails you only to notify — never to collect. All action items from the NRS come by mail, not by email."
     },
     "tags": [
       "irs",

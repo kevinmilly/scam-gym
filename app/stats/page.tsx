@@ -7,17 +7,69 @@ import { computeStats, familyLabel } from "@/lib/stats";
 import type { StatsResult } from "@/lib/stats";
 import type { Attempt } from "@/lib/types";
 import { allDrills as drills } from "@/lib/DrillContext";
+import { tap } from "@/lib/haptics";
+import { accuracyScore, calibrationVerdict } from "@/lib/scoring";
+import { computeProgression } from "@/lib/progression";
+import type { ProgressionState } from "@/lib/progression";
+import LevelBadge from "@/components/LevelBadge";
+import MedalGallery from "@/components/MedalGallery";
 
 export default function StatsPage() {
   const router = useRouter();
   const [stats, setStats] = useState<StatsResult | null>(null);
   const [recent, setRecent] = useState<Attempt[]>([]);
   const [loading, setLoading] = useState(true);
+  const [shareToast, setShareToast] = useState<string | null>(null);
+  const [progression, setProgression] = useState<ProgressionState | null>(null);
+
+  async function shareText(text: string) {
+    if (navigator.share) {
+      try {
+        await navigator.share({ text });
+        return;
+      } catch {
+        // User cancelled or share failed — fall through to clipboard
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      setShareToast("Copied!");
+      setTimeout(() => setShareToast(null), 2000);
+    } catch {
+      // Clipboard not available
+    }
+  }
+
+  function shareStats() {
+    if (!stats) return;
+    tap();
+    const accuracy = Math.round(stats.overallAccuracy * 100);
+    const levelText = progression ? `Level ${progression.levelInfo.level} ${progression.levelInfo.title} · ` : "";
+    const medalCount = progression ? ` · ${progression.earnedMedals.length} medals` : "";
+    const insights = stats.insightSummary.length > 0
+      ? "\n" + stats.insightSummary.map((l) => `→ ${l}`).join("\n") + "\n"
+      : "";
+    const text = `I'm training my scam detection on Scam Gym!\n${levelText}${stats.totalAttempts} drills · ${accuracy}% accuracy${medalCount}${insights}\nTry it yourself: ${window.location.origin}`;
+    shareText(text);
+  }
+
+  function shareLastResult() {
+    if (!recent[0]) return;
+    tap();
+    const a = recent[0];
+    const drill = drills.find((d) => d.id === a.drillId);
+    const score = accuracyScore(a.brierScore);
+    const calVerdict = calibrationVerdict(a.confidence, a.isCorrect);
+    const verdictLabel = calVerdict === "well-calibrated" ? "Well-calibrated" : calVerdict === "overconfident" ? "Overconfident" : "Underconfident";
+    const text = `I just completed a scam drill on Scam Gym!\nResult: ${a.isCorrect ? "Correct" : "Incorrect"} · ${a.confidence}% confidence · Score: ${score}/100\n${verdictLabel}${drill ? `\nPattern: ${drill.pattern_family.replace(/_/g, " ")}` : ""}\n\nTry it yourself: ${window.location.origin}`;
+    shareText(text);
+  }
 
   useEffect(() => {
     getAllAttempts().then((attempts) => {
       setStats(computeStats(attempts, drills));
       setRecent(attempts.slice(-10).reverse());
+      setProgression(computeProgression(attempts, drills));
       setLoading(false);
     });
   }, []);
@@ -70,10 +122,38 @@ export default function StatsPage() {
       </div>
 
       <div className="px-4 py-5 space-y-6 overflow-y-auto flex-1">
+        {/* Level Badge */}
+        {progression && <LevelBadge levelInfo={progression.levelInfo} />}
+
         {/* Total drills */}
         <p className="text-xs" style={{ color: "var(--text-muted)" }}>
           {stats.totalAttempts} drills completed · {Math.round(stats.overallAccuracy * 100)}% overall accuracy
         </p>
+
+        {/* Share section */}
+        <div className="flex gap-2 items-center">
+          <button
+            onClick={shareStats}
+            className="px-3 py-2 rounded-xl text-xs font-semibold border transition-all active:scale-95"
+            style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--text-muted)" }}
+          >
+            📤 Share My Progress
+          </button>
+          {recent.length > 0 && (
+            <button
+              onClick={shareLastResult}
+              className="px-3 py-2 rounded-xl text-xs font-semibold border transition-all active:scale-95"
+              style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--text-muted)" }}
+            >
+              📤 Share Last Result
+            </button>
+          )}
+          {shareToast && (
+            <span className="text-xs font-semibold animate-pulse" style={{ color: "var(--accent)" }}>
+              {shareToast}
+            </span>
+          )}
+        </div>
 
         {/* Insight summary */}
         {stats.insightSummary.length > 0 && (
@@ -90,6 +170,14 @@ export default function StatsPage() {
               </p>
             ))}
           </div>
+        )}
+
+        {/* Medal Gallery */}
+        {progression && (
+          <MedalGallery
+            earnedMedals={progression.earnedMedals}
+            allMedals={progression.allMedals}
+          />
         )}
 
         {/* Vulnerabilities */}
@@ -285,7 +373,7 @@ export default function StatsPage() {
         style={{ background: "var(--background)", borderColor: "var(--border)" }}
       >
         <button
-          onClick={() => router.push("/drill")}
+          onClick={() => { tap(); router.push("/drill"); }}
           className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
           style={{ background: "var(--accent)", color: "#fff" }}
         >
