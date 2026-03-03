@@ -24,12 +24,16 @@ const BEHAVIOR_OPTIONS: { value: BehaviorChoice; label: string }[] = [
 
 export default function DrillPage() {
   const router = useRouter();
-  const { currentDrill, advance, recordAttempt, poolExhausted, attempts: contextAttempts } = useDrillContext();
+  const { currentDrill, advance, recordAttempt, poolExhausted, attempts: contextAttempts, focusLabel, focusFamilies, setFocusFamilies, setFocusLabel } = useDrillContext();
 
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
   const [behaviorChoice, setBehaviorChoice] = useState<BehaviorChoice | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [bannerExpanded, setBannerExpanded] = useState(false);
+
+  const completedCount = contextAttempts.length;
+  const bannerCompact = completedCount >= 5;
 
   // Reset state when drill changes
   useEffect(() => {
@@ -37,6 +41,7 @@ export default function DrillPage() {
     setConfidence(null);
     setBehaviorChoice(null);
     setSubmitting(false);
+    setBannerExpanded(false);
   }, [currentDrill?.id]);
 
   if (!currentDrill) {
@@ -115,7 +120,12 @@ export default function DrillPage() {
           ← Home
         </button>
         <div className="flex items-center gap-2">
-          {poolExhausted && (
+          {focusLabel && (
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}>
+              {focusLabel}
+            </span>
+          )}
+          {poolExhausted && !focusLabel && (
             <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--surface-2)", color: "var(--text-muted)" }}>
               Retention mode
             </span>
@@ -127,19 +137,42 @@ export default function DrillPage() {
             {channelLabel}
           </span>
         </div>
-        <div className="w-16" />
+        <div className="flex items-center">
+          {focusFamilies.length > 0 && (
+            <button
+              onClick={() => { setFocusFamilies([]); setFocusLabel(null); }}
+              className="text-xs px-2 py-1"
+              style={{ color: "var(--text-muted)" }}
+            >
+              Normal
+            </button>
+          )}
+          <div className="w-4" />
+        </div>
       </div>
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-36 space-y-6">
         {/* Training banner */}
-        <div
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
-          style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
-        >
-          <span>🔒</span>
-          <span>Simulated training message — never use any links or numbers shown</span>
-        </div>
+        {bannerCompact && !bannerExpanded ? (
+          <button
+            onClick={() => setBannerExpanded(true)}
+            className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
+            style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
+          >
+            <span>🔒</span>
+          </button>
+        ) : (
+          <div
+            onClick={bannerCompact ? () => setBannerExpanded(false) : undefined}
+            role={bannerCompact ? "button" : undefined}
+            className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
+            style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)", cursor: bannerCompact ? "pointer" : undefined }}
+          >
+            <span>🔒</span>
+            <span>Simulated training message — never use any links or numbers shown</span>
+          </div>
+        )}
 
         {/* Message */}
         <MessageCard drill={currentDrill} />

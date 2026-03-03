@@ -13,6 +13,9 @@ import type { XpBreakdown } from "@/lib/xp";
 import XpBar from "@/components/XpBar";
 import MedalToast from "@/components/MedalToast";
 import LevelUpOverlay from "@/components/LevelUpOverlay";
+import { updateStreak } from "@/lib/streak";
+import { isBookmarked, toggleBookmark } from "@/lib/bookmarks";
+import { isPremium } from "@/lib/premium";
 
 type VerdictConfig = {
   label: string;
@@ -56,7 +59,7 @@ const BEHAVIOR_LABELS: Record<string, string> = {
 
 const BEHAVIOR_SAFETY: Record<string, Record<string, string>> = {
   scam:  { ignore: "safe", verify: "safe", respond: "risky", click: "risky", call: "risky" },
-  legit: { ignore: "cautious", verify: "safe", respond: "safe", click: "safe", call: "safe" },
+  legit: { ignore: "safe", verify: "safe", respond: "safe", click: "safe", call: "safe" },
 };
 
 export default function ResultPage() {
@@ -73,6 +76,7 @@ export default function ResultPage() {
   const [xpBreakdown, setXpBreakdown] = useState<XpBreakdown | null>(null);
   const [showMedalToast, setShowMedalToast] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
 
   type ContentFlag = {
     reason: "answer_wrong" | "question_unclear" | "red_flags_wrong" | "other";
@@ -86,9 +90,14 @@ export default function ResultPage() {
       router.replace("/drill");
       return;
     }
+    const parsedDrill = JSON.parse(d);
     setAttempt(JSON.parse(a));
-    setDrill(JSON.parse(d));
+    setDrill(parsedDrill);
     setCalVerdict(cv as CalibrationVerdict);
+    setBookmarked(isBookmarked(parsedDrill.id));
+
+    // Update streak (runs for all users so data is ready if they upgrade)
+    updateStreak();
 
     const r = sessionStorage.getItem("lastReward");
     if (r) {
@@ -220,13 +229,28 @@ export default function ResultPage() {
         >
           ← Drill
         </button>
-        <button
-          onClick={() => router.push("/stats")}
-          className="min-h-[44px] px-3 flex items-center text-sm"
-          style={{ color: "var(--text-muted)" }}
-        >
-          Stats
-        </button>
+        <div className="flex items-center gap-1">
+          {isPremium() && drill && (
+            <button
+              onClick={() => {
+                tap();
+                const result = toggleBookmark(drill.id);
+                setBookmarked(result);
+              }}
+              className="min-h-[44px] px-2 flex items-center text-lg"
+              title={bookmarked ? "Remove bookmark" : "Bookmark this drill"}
+            >
+              {bookmarked ? "🔖" : "📄"}
+            </button>
+          )}
+          <button
+            onClick={() => router.push("/stats")}
+            className="min-h-[44px] px-3 flex items-center text-sm"
+            style={{ color: "var(--text-muted)" }}
+          >
+            Stats
+          </button>
+        </div>
       </div>
 
       <div className="px-4 py-5 space-y-5 overflow-y-auto flex-1">
@@ -440,8 +464,8 @@ export default function ResultPage() {
               </ul>
             </div>
 
-            {/* Red flags review */}
-            {drill.red_flags.length > 0 && (
+            {/* Red flags review — only for scam drills */}
+            {drill.ground_truth === "scam" && drill.red_flags.length > 0 && (
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
                   Red Flags Review

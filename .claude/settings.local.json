@@ -6,7 +6,10 @@
       "Bash(node:*)",
       "Bash(npx tsx:*)",
       "Bash(grep:*)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Bash(npx sharp-cli:*)"
     ]
   }
 }

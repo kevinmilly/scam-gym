@@ -3,10 +3,14 @@
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useDrillContext } from "@/lib/DrillContext";
+import { useDrillContext, allDrills } from "@/lib/DrillContext";
+import { computeStats } from "@/lib/stats";
 import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
 import type { UserContext } from "@/lib/types";
 import { tap } from "@/lib/haptics";
+import { unlockPremium, isPremium } from "@/lib/premium";
+import { getStreak } from "@/lib/streak";
+import PremiumGate from "@/components/PremiumGate";
 
 const ONBOARDED_KEY = "scamgym_onboarded";
 
@@ -46,10 +50,21 @@ export default function HomePage() {
 function HomePageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { selectedContext, setSelectedContext } = useDrillContext();
+  const { selectedContext, setSelectedContext, attempts, setFocusFamilies, setFocusLabel } = useDrillContext();
   const [checked, setChecked] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showContextPicker, setShowContextPicker] = useState(false);
+  const [premiumJustActivated, setPremiumJustActivated] = useState(false);
+
+  // Handle premium activation via URL param (Stripe redirect)
+  useEffect(() => {
+    if (searchParams.get("premium") === "1" && !isPremium()) {
+      unlockPremium();
+      setPremiumJustActivated(true);
+      // Clean URL
+      window.history.replaceState({}, "", "/");
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -211,57 +226,95 @@ function HomePageInner() {
       ) : (
         /* ── Returning User Screen ── */
         <>
-          <h1 className="text-3xl font-bold leading-tight mb-4" style={{ color: "var(--text)" }}>
-            Train your scam detection.
-          </h1>
-          <p className="text-lg mb-10" style={{ color: "var(--text-muted)" }}>
-            Real message drills. Instant feedback. Track where you&apos;re vulnerable.
-          </p>
+          <div className="pb-40">
+            {/* Premium activation confirmation */}
+            {premiumJustActivated && (
+              <div
+                className="rounded-2xl p-4 mb-6 border"
+                style={{ background: "rgba(34,197,94,0.1)", borderColor: "rgba(34,197,94,0.3)" }}
+              >
+                <p className="text-sm font-bold mb-1" style={{ color: "#22c55e" }}>
+                  ✨ Premium Unlocked!
+                </p>
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                  All premium features are now active. Thank you for supporting Scam Gym!
+                </p>
+              </div>
+            )}
 
-          {/* Calibration explainer */}
-          <div
-            className="rounded-2xl p-5 mb-8 border"
-            style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
-              How this works
+            <h1 className="text-3xl font-bold leading-tight mb-4" style={{ color: "var(--text)" }}>
+              Train your scam detection.
+            </h1>
+
+            {/* Streak badge (premium) */}
+            <PremiumGate hideWhenLocked>
+              {(() => {
+                const streak = getStreak();
+                if (streak.current === 0) return null;
+                return (
+                  <div
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full mb-4 text-sm font-semibold"
+                    style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
+                  >
+                    <span>🔥</span>
+                    <span>{streak.current} day streak</span>
+                  </div>
+                );
+              })()}
+            </PremiumGate>
+
+            <p className="text-lg mb-10" style={{ color: "var(--text-muted)" }}>
+              Real message drills. Instant feedback. Track where you&apos;re vulnerable.
             </p>
-            <p className="font-semibold mb-2" style={{ color: "var(--text)" }}>
-              Being wrong isn&apos;t the only danger. Being confident and wrong is.
-            </p>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
-              Scam Gym tracks not just whether you got it right — it tracks how sure you were.
-              Clicking a phishing link while 95% confident is far more dangerous than pausing and saying &quot;I&apos;m not sure.&quot;
-            </p>
-            <div className="grid grid-cols-3 gap-2 text-center">
-              {[
-                { label: "Overconfident", color: "#ef4444", desc: "Wrong + sure = danger zone" },
-                { label: "Well-calibrated", color: "#22c55e", desc: "Confidence matches reality" },
-                { label: "Underconfident", color: "#3b82f6", desc: "Right but uncertain" },
-              ].map((v) => (
-                <div key={v.label} className="rounded-xl p-3" style={{ background: "var(--surface-2)" }}>
-                  <div className="text-xs font-bold mb-1" style={{ color: v.color }}>{v.label}</div>
-                  <div className="text-xs" style={{ color: "var(--text-muted)" }}>{v.desc}</div>
-                </div>
-              ))}
+
+            {/* Calibration explainer */}
+            <div
+              className="rounded-2xl p-5 mb-8 border"
+              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
+                How this works
+              </p>
+              <p className="font-semibold mb-2" style={{ color: "var(--text)" }}>
+                Being wrong isn&apos;t the only danger. Being confident and wrong is.
+              </p>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
+                Scam Gym tracks not just whether you got it right — it tracks how sure you were.
+                Clicking a phishing link while 95% confident is far more dangerous than pausing and saying &quot;I&apos;m not sure.&quot;
+              </p>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                {[
+                  { label: "Overconfident", color: "#ef4444", desc: "Wrong + sure = danger zone" },
+                  { label: "Well-calibrated", color: "#22c55e", desc: "Confidence matches reality" },
+                  { label: "Underconfident", color: "#3b82f6", desc: "Right but uncertain" },
+                ].map((v) => (
+                  <div key={v.label} className="rounded-xl p-3" style={{ background: "var(--surface-2)" }}>
+                    <div className="text-xs font-bold mb-1" style={{ color: v.color }}>{v.label}</div>
+                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>{v.desc}</div>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Current context badge */}
+            {selectedContext && (
+              <button
+                onClick={() => setShowContextPicker(true)}
+                className="flex items-center gap-2 mb-6 px-4 py-2 rounded-xl border text-sm"
+                style={{ background: "var(--surface)", borderColor: "var(--border)", color: "var(--text-muted)" }}
+              >
+                <span>{CONTEXT_ICONS[selectedContext]}</span>
+                <span>Mode: <strong style={{ color: "var(--text)" }}>{CONTEXT_LABELS[selectedContext]}</strong></span>
+                <span className="ml-auto text-xs">Change</span>
+              </button>
+            )}
           </div>
 
-          {/* Current context badge */}
-          {selectedContext && (
-            <button
-              onClick={() => setShowContextPicker(true)}
-              className="flex items-center gap-2 mb-6 px-4 py-2 rounded-xl border text-sm"
-              style={{ background: "var(--surface)", borderColor: "var(--border)", color: "var(--text-muted)" }}
-            >
-              <span>{CONTEXT_ICONS[selectedContext]}</span>
-              <span>Mode: <strong style={{ color: "var(--text)" }}>{CONTEXT_LABELS[selectedContext]}</strong></span>
-              <span className="ml-auto text-xs">Change</span>
-            </button>
-          )}
-
-          {/* CTA */}
-          <div className="mt-auto space-y-3">
+          {/* Sticky CTA */}
+          <div
+            className="sticky bottom-0 -mx-6 px-6 pt-6 pb-6 space-y-3"
+            style={{ background: "linear-gradient(to bottom, transparent 0%, var(--bg) 25%)" }}
+          >
             <button
               onClick={() => { tap(); handleStart(); }}
               className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
@@ -269,6 +322,45 @@ function HomePageInner() {
             >
               Continue Training
             </button>
+
+            {/* Premium buttons */}
+            <PremiumGate hideWhenLocked>
+              <div className="space-y-2">
+                {/* Weakness Autopilot */}
+                <button
+                  onClick={() => {
+                    tap();
+                    const stats = computeStats(attempts, allDrills);
+                    const weakFamilies = stats.topVulnerabilities
+                      .filter((f) => f.totalAttempts >= 2)
+                      .slice(0, 3)
+                      .map((f) => f.family);
+                    if (weakFamilies.length > 0) {
+                      setFocusFamilies(weakFamilies);
+                      setFocusLabel("Autopilot: Weak Spots");
+                      localStorage.setItem("scamgym_onboarded", "1");
+                      router.push("/drill");
+                    } else {
+                      handleStart();
+                    }
+                  }}
+                  className="w-full py-3 rounded-2xl font-semibold text-sm border transition-all active:scale-95"
+                  style={{ borderColor: "var(--accent)", background: "rgba(124,106,247,0.1)", color: "var(--accent)" }}
+                >
+                  🤖 Train My Weak Spots
+                </button>
+
+                {/* Session Mode */}
+                <button
+                  onClick={() => { tap(); router.push("/session"); }}
+                  className="w-full py-3 rounded-2xl font-semibold text-sm border transition-all active:scale-95"
+                  style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--text)" }}
+                >
+                  🏃 Start 10-Drill Session
+                </button>
+              </div>
+            </PremiumGate>
+
             <div className="flex justify-center gap-6 pt-1">
               <Link href="/stats" className="text-sm" style={{ color: "var(--text-muted)" }}>
                 My Stats

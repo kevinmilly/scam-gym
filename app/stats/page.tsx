@@ -13,14 +13,22 @@ import { computeProgression } from "@/lib/progression";
 import type { ProgressionState } from "@/lib/progression";
 import LevelBadge from "@/components/LevelBadge";
 import MedalGallery from "@/components/MedalGallery";
+import PremiumGate from "@/components/PremiumGate";
+import { isPremium } from "@/lib/premium";
+import { getStreak } from "@/lib/streak";
+import { getBookmarks } from "@/lib/bookmarks";
+import TrendChart from "@/components/TrendChart";
+import AttemptHistory from "@/components/AttemptHistory";
 
 export default function StatsPage() {
   const router = useRouter();
   const [stats, setStats] = useState<StatsResult | null>(null);
+  const [allAttempts, setAllAttempts] = useState<Attempt[]>([]);
   const [recent, setRecent] = useState<Attempt[]>([]);
   const [loading, setLoading] = useState(true);
   const [shareToast, setShareToast] = useState<string | null>(null);
   const [progression, setProgression] = useState<ProgressionState | null>(null);
+  const [expandedFamily, setExpandedFamily] = useState<string | null>(null);
 
   async function shareText(text: string) {
     if (navigator.share) {
@@ -67,6 +75,7 @@ export default function StatsPage() {
 
   useEffect(() => {
     getAllAttempts().then((attempts) => {
+      setAllAttempts(attempts);
       setStats(computeStats(attempts, drills));
       setRecent(attempts.slice(-10).reverse());
       setProgression(computeProgression(attempts, drills));
@@ -125,6 +134,23 @@ export default function StatsPage() {
         {/* Level Badge */}
         {progression && <LevelBadge levelInfo={progression.levelInfo} />}
 
+        {/* Streak badge (premium) */}
+        <PremiumGate hideWhenLocked>
+          {(() => {
+            const streak = getStreak();
+            if (streak.current === 0) return null;
+            return (
+              <div
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
+                style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
+              >
+                <span>🔥</span>
+                <span>{streak.current} day streak</span>
+              </div>
+            );
+          })()}
+        </PremiumGate>
+
         {/* Total drills */}
         <p className="text-xs" style={{ color: "var(--text-muted)" }}>
           {stats.totalAttempts} drills completed · {Math.round(stats.overallAccuracy * 100)}% overall accuracy
@@ -154,6 +180,24 @@ export default function StatsPage() {
             </span>
           )}
         </div>
+
+        {/* Accuracy Trend (premium) */}
+        <PremiumGate label="Your Progress" pitch="See your rolling accuracy trend over your last 30 drills.">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+              Your Progress
+            </p>
+            <div
+              className="rounded-2xl p-3 border"
+              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <TrendChart attempts={allAttempts} />
+            </div>
+            <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+              Rolling accuracy over your last 30 drills (5-drill window)
+            </p>
+          </div>
+        </PremiumGate>
 
         {/* Insight summary */}
         {stats.insightSummary.length > 0 && (
@@ -187,28 +231,99 @@ export default function StatsPage() {
               Where you&apos;re most vulnerable
             </p>
             <div className="space-y-2">
-              {stats.topVulnerabilities.map((f) => (
-                <div
-                  key={f.family}
-                  className="flex items-center justify-between rounded-xl px-4 py-3 border"
-                  style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-                >
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: "var(--text)" }}>
-                      {familyLabel(f.family)}
-                    </div>
-                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>
-                      {f.totalAttempts} attempts
-                    </div>
+              {stats.topVulnerabilities.map((f) => {
+                const isExpanded = expandedFamily === f.family;
+                const familyAttempts = allAttempts.filter((a) => {
+                  const drill = drills.find((d) => d.id === a.drillId);
+                  return drill?.pattern_family === f.family;
+                });
+                const wrongAttempts = familyAttempts.filter((a) => !a.isCorrect);
+                const avgConfOnWrong = wrongAttempts.length > 0
+                  ? Math.round(wrongAttempts.reduce((sum, a) => sum + a.confidence, 0) / wrongAttempts.length)
+                  : 0;
+
+                return (
+                  <div key={f.family}>
+                    <button
+                      onClick={() => {
+                        if (isPremium()) {
+                          setExpandedFamily(isExpanded ? null : f.family);
+                        }
+                      }}
+                      className="w-full flex items-center justify-between rounded-xl px-4 py-3 border transition-all"
+                      style={{ background: "var(--surface)", borderColor: isExpanded ? "var(--accent)" : "var(--border)" }}
+                    >
+                      <div className="text-left">
+                        <div className="text-sm font-semibold" style={{ color: "var(--text)" }}>
+                          {familyLabel(f.family)}
+                        </div>
+                        <div className="text-xs" style={{ color: "var(--text-muted)" }}>
+                          {f.totalAttempts} attempts
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold" style={{ color: "#ef4444" }}>
+                          {Math.round(f.accuracy * 100)}%
+                        </div>
+                        <div className="text-xs" style={{ color: "var(--text-muted)" }}>accuracy</div>
+                      </div>
+                    </button>
+
+                    {/* Per-family deep dive (premium) */}
+                    {isExpanded && isPremium() && (
+                      <div
+                        className="mt-1 rounded-xl px-4 py-3 border space-y-3"
+                        style={{ background: "var(--surface-2)", borderColor: "var(--border)" }}
+                      >
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div>
+                            <div className="text-lg font-bold" style={{ color: "var(--text)" }}>
+                              {familyAttempts.length}
+                            </div>
+                            <div className="text-xs" style={{ color: "var(--text-muted)" }}>Total</div>
+                          </div>
+                          <div>
+                            <div className="text-lg font-bold" style={{ color: "#ef4444" }}>
+                              {wrongAttempts.length}
+                            </div>
+                            <div className="text-xs" style={{ color: "var(--text-muted)" }}>Wrong</div>
+                          </div>
+                          <div>
+                            <div className="text-lg font-bold" style={{ color: "#f59e0b" }}>
+                              {avgConfOnWrong}%
+                            </div>
+                            <div className="text-xs" style={{ color: "var(--text-muted)" }}>Avg conf when wrong</div>
+                          </div>
+                        </div>
+
+                        {/* Mini trend for this family */}
+                        <TrendChart attempts={familyAttempts} windowSize={3} />
+
+                        {/* Drills that tripped you up */}
+                        {wrongAttempts.length > 0 && (
+                          <div>
+                            <p className="text-xs font-semibold mb-2" style={{ color: "var(--text-muted)" }}>
+                              Drills that tripped you up
+                            </p>
+                            <div className="space-y-1.5">
+                              {wrongAttempts.slice(-5).reverse().map((a) => {
+                                const drill = drills.find((d) => d.id === a.drillId);
+                                if (!drill) return null;
+                                return (
+                                  <div key={a.id} className="text-xs" style={{ color: "var(--text)" }}>
+                                    <span style={{ color: "#ef4444" }}>✗</span>{" "}
+                                    {drill.message.body.slice(0, 60)}… ({a.confidence}% conf)
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <div className="text-right">
-                    <div className="font-bold" style={{ color: "#ef4444" }}>
-                      {Math.round(f.accuracy * 100)}%
-                    </div>
-                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>accuracy</div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
@@ -365,6 +480,75 @@ export default function StatsPage() {
             </div>
           </div>
         )}
+
+        {/* Attempt History (premium) */}
+        <PremiumGate label="Attempt History" pitch="Browse and filter every drill you've attempted with full details.">
+          <AttemptHistory attempts={allAttempts} drills={drills} />
+        </PremiumGate>
+
+        {/* Saved Drills (premium) */}
+        <PremiumGate label="Saved Drills" pitch="Bookmark drills on the result page to save them here for later review.">
+          {(() => {
+            const bookmarkIds = getBookmarks();
+            if (bookmarkIds.length === 0) {
+              return (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+                    Saved Drills
+                  </p>
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    No bookmarks yet. Tap the bookmark icon on any result page to save a drill.
+                  </p>
+                </div>
+              );
+            }
+            const bookmarkedDrills = bookmarkIds
+              .map((id) => drills.find((d) => d.id === id))
+              .filter(Boolean);
+            return (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+                  Saved Drills ({bookmarkedDrills.length})
+                </p>
+                <div className="space-y-2">
+                  {bookmarkedDrills.map((drill) => {
+                    if (!drill) return null;
+                    return (
+                      <div
+                        key={drill.id}
+                        className="rounded-xl px-4 py-3 border"
+                        style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span
+                            className="text-xs px-2 py-0.5 rounded-full"
+                            style={{ background: "var(--surface-2)", color: "var(--text-muted)" }}
+                          >
+                            {drill.channel.toUpperCase()}
+                          </span>
+                          <span
+                            className="text-xs px-2 py-0.5 rounded-full"
+                            style={{
+                              color: drill.ground_truth === "scam" ? "#ef4444" : "#22c55e",
+                            }}
+                          >
+                            {drill.ground_truth.toUpperCase()}
+                          </span>
+                        </div>
+                        <p className="text-sm truncate" style={{ color: "var(--text)" }}>
+                          {drill.message.body.slice(0, 80)}…
+                        </p>
+                        <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+                          {drill.pattern_family.replace(/_/g, " ")}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
+        </PremiumGate>
       </div>
 
       {/* CTA */}
