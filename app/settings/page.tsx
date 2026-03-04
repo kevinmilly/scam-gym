@@ -22,6 +22,8 @@ const PREMIUM_FEATURES = [
   { icon: "🔖", label: "Drill bookmarks" },
   { icon: "🔥", label: "Streak tracking" },
   { icon: "☀️", label: "Light theme" },
+  { icon: "💬", label: "50+ reply scripts" },
+  { icon: "📇", label: "Unlimited contacts" },
 ];
 
 export default function SettingsPage() {

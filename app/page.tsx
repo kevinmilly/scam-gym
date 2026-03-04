@@ -101,8 +101,7 @@ function HomePageInner() {
   return (
     <div className="flex flex-col min-h-dvh px-6 py-10">
       {/* Logo */}
-      <div className="inline-flex items-center gap-2 mb-12">
-        <span className="text-2xl">🏋️</span>
+      <div className="mb-12">
         <span className="font-bold text-xl tracking-tight" style={{ color: "var(--text)" }}>
           Scam Gym
         </span>
@@ -308,6 +307,24 @@ function HomePageInner() {
                 <span className="ml-auto text-xs">Change</span>
               </button>
             )}
+
+            {/* Panic button — Help Me Right Now */}
+            <Link
+              href="/help"
+              className="flex items-center gap-3 rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
+              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <span className="text-2xl">🚨</span>
+              <div className="flex-1">
+                <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+                  I got a suspicious message
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                  Get instant guidance — what to do right now
+                </p>
+              </div>
+              <span className="text-sm" style={{ color: "var(--text-muted)" }}>→</span>
+            </Link>
           </div>
 
           {/* Sticky CTA */}

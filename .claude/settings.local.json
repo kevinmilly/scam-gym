@@ -9,7 +9,10 @@
       "Bash(npx next:*)",
       "Bash(ls:*)",
       "Bash(cp:*)",
-      "Bash(npx sharp-cli:*)"
+      "Bash(npx sharp-cli:*)",
+      "Bash(curl:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(npx:*)"
     ]
   }
 }

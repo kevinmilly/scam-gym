@@ -15,7 +15,7 @@ import MedalToast from "@/components/MedalToast";
 import LevelUpOverlay from "@/components/LevelUpOverlay";
 import { updateStreak } from "@/lib/streak";
 import { isBookmarked, toggleBookmark } from "@/lib/bookmarks";
-import { isPremium } from "@/lib/premium";
+import { isPremium, STRIPE_PAYMENT_URL, PREMIUM_PRICE } from "@/lib/premium";
 
 type VerdictConfig = {
   label: string;
@@ -535,6 +535,33 @@ export default function ResultPage() {
               </p>
             </div>
 
+            {/* Contextual upsell for non-premium users */}
+            {!isPremium() && (
+              <div
+                className="rounded-2xl p-4 border"
+                style={{ background: "rgba(124,106,247,0.06)", borderColor: "rgba(124,106,247,0.2)" }}
+              >
+                <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
+                  Seen a message like this in real life?
+                </p>
+                <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+                  Get 45+ copy-paste reply scripts for {drill.pattern_family.replace(/_/g, " ")} and other scam types — plus a verified contacts vault and more.
+                </p>
+                <a
+                  href={STRIPE_PAYMENT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-2 rounded-xl text-sm font-bold transition-all active:scale-95"
+                  style={{ background: "var(--accent)", color: "#fff" }}
+                >
+                  Unlock for {PREMIUM_PRICE}
+                </a>
+                <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
+                  One-time purchase · No subscription
+                </p>
+              </div>
+            )}
+
             {/* Report issue */}
             {!reportSubmitted && (
               <div>
@@ -628,7 +655,7 @@ export default function ResultPage() {
               See Explanation →
             </button>
             <button
-              onClick={handleReveal}
+              onClick={() => { tap(); router.push("/drill"); }}
               className="py-4 px-5 rounded-2xl text-sm transition-all active:scale-95"
               style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
             >

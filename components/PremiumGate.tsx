@@ -11,6 +11,12 @@ type PremiumGateProps = {
   pitch?: string;
   /** If true, renders nothing when locked instead of the upsell card */
   hideWhenLocked?: boolean;
+  /** Shows "X of Y free used" with a progress bar */
+  usedOf?: { used: number; total: number };
+  /** Shows first ~80 chars of locked content as a blurred preview */
+  peekContent?: string;
+  /** Adds "One-time purchase · No subscription" trust text */
+  socialProof?: boolean;
 };
 
 export default function PremiumGate({
@@ -18,6 +24,9 @@ export default function PremiumGate({
   label,
   pitch,
   hideWhenLocked = false,
+  usedOf,
+  peekContent,
+  socialProof,
 }: PremiumGateProps) {
   const [premium, setPremium] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -31,11 +40,30 @@ export default function PremiumGate({
   if (premium) return <>{children}</>;
   if (hideWhenLocked) return null;
 
+  const atLimit = usedOf ? usedOf.used >= usedOf.total : false;
+
   return (
     <div
       className="rounded-2xl border px-4 py-4"
       style={{ background: "var(--surface)", borderColor: "var(--border)" }}
     >
+      {/* Blurred peek preview */}
+      {peekContent && (
+        <div
+          className="rounded-xl px-3 py-2 mb-3 text-sm leading-relaxed overflow-hidden"
+          style={{
+            background: "var(--surface-2)",
+            color: "var(--text-muted)",
+            filter: "blur(3px)",
+            WebkitFilter: "blur(3px)",
+            userSelect: "none",
+            maxHeight: 48,
+          }}
+        >
+          {peekContent.slice(0, 80)}{peekContent.length > 80 ? "…" : ""}
+        </div>
+      )}
+
       <div className="flex items-center gap-2 mb-2">
         <span className="text-sm">🔒</span>
         {label && (
@@ -49,6 +77,25 @@ export default function PremiumGate({
           {pitch}
         </p>
       )}
+
+      {/* Usage counter + progress bar */}
+      {usedOf && (
+        <div className="mb-3">
+          <p className="text-xs font-semibold mb-1.5" style={{ color: atLimit ? "#ef4444" : "var(--text-muted)" }}>
+            {usedOf.used} of {usedOf.total} free used
+          </p>
+          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--surface-2)" }}>
+            <div
+              className="h-full rounded-full transition-all"
+              style={{
+                width: `${Math.min((usedOf.used / usedOf.total) * 100, 100)}%`,
+                background: atLimit ? "#ef4444" : "var(--accent)",
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       <a
         href={STRIPE_PAYMENT_URL}
         target="_blank"
@@ -58,6 +105,12 @@ export default function PremiumGate({
       >
         Unlock for {PREMIUM_PRICE}
       </a>
+
+      {socialProof && (
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
+          One-time purchase · No subscription
+        </p>
+      )}
     </div>
   );
 }
