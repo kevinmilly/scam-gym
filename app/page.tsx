@@ -25,17 +25,17 @@ const VALUE_PROPS = [
   {
     icon: "🎯",
     title: "Real-world drills",
-    desc: "Practice on actual scam messages — phishing emails, fake invoices, job scams, and more.",
+    desc: "Practice spotting real scam messages: phishing emails, fake invoices, job offers, and more.",
   },
   {
     icon: "🧠",
-    title: "Confidence calibration",
-    desc: "We track how sure you are, not just whether you're right. Overconfidence is the real risk.",
+    title: "Confidence tracking",
+    desc: "See when you're guessing vs when you're truly certain. Overconfidence is the real danger.",
   },
   {
     icon: "📊",
-    title: "Know your weak spots",
-    desc: "Stats show exactly which scam types fool you most so you can focus your training.",
+    title: "Personal risk profile",
+    desc: "Discover which scam types you're most likely to fall for — and train those weak spots.",
   },
 ];
 
@@ -55,6 +55,7 @@ function HomePageInner() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showContextPicker, setShowContextPicker] = useState(false);
   const [premiumJustActivated, setPremiumJustActivated] = useState(false);
+  const [demoAnswer, setDemoAnswer] = useState<null | "scam" | "legit">(null);
 
   // Handle premium activation via URL param (Stripe redirect)
   useEffect(() => {
@@ -112,55 +113,129 @@ function HomePageInner() {
         <>
           <div className="flex-1 flex flex-col">
             {/* Hero */}
-            <div className="mb-10">
+            <div className="mb-6">
               <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
                 Free · No account needed
               </p>
               <h1 className="text-3xl font-bold leading-tight mb-4" style={{ color: "var(--text)" }}>
-                Train your brain to spot scams before they fool you.
+                Practice spotting scams before they hit you.
               </h1>
               <p className="text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                Scammers are getting better every day. Scam Gym gives you a safe place to practice — so real attacks don&apos;t catch you off guard.
+                Most people only learn about scams after they get fooled. Scam Gym lets you practice safely first.
               </p>
             </div>
 
+            {/* Proof stat (moved up) */}
+            <div
+              className="rounded-2xl px-4 py-3 mb-6 flex items-center gap-3"
+              style={{ background: "var(--surface-2)" }}
+            >
+              <span className="text-lg">📬</span>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                <strong style={{ color: "var(--text)" }}>140+ real-style drills</strong> across phishing, fake invoices, job scams, romance fraud, and more.
+              </p>
+            </div>
+
+            {/* CTA */}
+            <button
+              onClick={() => { tap(); setShowOnboarding(false); setShowContextPicker(true); }}
+              className="w-full py-4 min-h-[48px] rounded-2xl font-bold text-lg transition-all active:scale-95 mb-8"
+              style={{ background: "var(--accent)", color: "#fff" }}
+            >
+              Try Your First Drill — It&apos;s Free
+            </button>
+
+            {/* Mini-drill demo */}
+            <div
+              className="rounded-2xl border p-5 mb-6"
+              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <p className="font-bold text-base text-center mb-4" style={{ color: "var(--text)" }}>
+                Would you catch this?
+              </p>
+
+              {/* SMS-style bubble */}
+              <div
+                className="rounded-xl px-4 py-3 mb-4"
+                style={{ background: "var(--surface-2)" }}
+              >
+                <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>From: Amazon</p>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+                  &quot;Your account has been locked. Verify immediately: amaz0n-secure-login.com&quot;
+                </p>
+              </div>
+
+              {demoAnswer === null ? (
+                /* Verdict buttons */
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setDemoAnswer("scam")}
+                    className="flex-1 py-3 min-h-[48px] rounded-xl font-semibold text-sm transition-all active:scale-95 border"
+                    style={{ borderColor: "#ef4444", color: "#ef4444", background: "rgba(239,68,68,0.08)" }}
+                  >
+                    🚫 Scam
+                  </button>
+                  <button
+                    onClick={() => setDemoAnswer("legit")}
+                    className="flex-1 py-3 min-h-[48px] rounded-xl font-semibold text-sm transition-all active:scale-95 border"
+                    style={{ borderColor: "#22c55e", color: "#22c55e", background: "rgba(34,197,94,0.08)" }}
+                  >
+                    ✅ Legit
+                  </button>
+                </div>
+              ) : (
+                /* Reveal */
+                <div className="animate-fadeIn">
+                  <div
+                    className="rounded-xl px-4 py-2.5 mb-3 text-center font-bold text-sm"
+                    style={{
+                      background: demoAnswer === "scam" ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)",
+                      color: demoAnswer === "scam" ? "#22c55e" : "#ef4444",
+                    }}
+                  >
+                    {demoAnswer === "scam" ? "✓ Correct! This is a scam." : "✗ Not quite — this is a scam."}
+                  </div>
+                  <p className="text-xs font-semibold mb-2" style={{ color: "var(--text)" }}>Red flags:</p>
+                  <ul className="text-xs leading-relaxed mb-4 space-y-1" style={{ color: "var(--text-muted)" }}>
+                    <li>• Domain mismatch (amaz<strong style={{ color: "var(--text)" }}>0</strong>n vs amazon)</li>
+                    <li>• Urgent language (&quot;immediately&quot;)</li>
+                    <li>• No personalization (no name used)</li>
+                  </ul>
+                  <button
+                    onClick={() => { tap(); setShowOnboarding(false); setShowContextPicker(true); }}
+                    className="w-full py-3 min-h-[48px] rounded-xl font-semibold text-sm transition-all active:scale-95"
+                    style={{ background: "var(--accent)", color: "#fff" }}
+                  >
+                    Practice more drills →
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Psychology cue */}
+            <p className="text-sm italic text-center my-4" style={{ color: "var(--text-muted)" }}>
+              Most people are overconfident about spotting scams.
+            </p>
+
             {/* Value props */}
-            <div className="space-y-3 mb-10">
+            <div className="space-y-4 mb-10">
               {VALUE_PROPS.map((v) => (
                 <div
                   key={v.title}
-                  className="flex items-start gap-4 rounded-2xl px-4 py-4 border"
+                  className="flex items-start gap-4 rounded-2xl px-4 py-5 border"
                   style={{ background: "var(--surface)", borderColor: "var(--border)" }}
                 >
                   <span className="text-2xl mt-0.5">{v.icon}</span>
                   <div>
                     <p className="font-semibold text-sm mb-0.5" style={{ color: "var(--text)" }}>{v.title}</p>
-                    <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>{v.desc}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{v.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* Social proof strip */}
-            <div
-              className="rounded-2xl px-4 py-3 mb-8 flex items-center gap-3"
-              style={{ background: "var(--surface-2)" }}
-            >
-              <span className="text-lg">📬</span>
-              <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                <strong style={{ color: "var(--text)" }}>140+ real-style drills</strong> across phishing, fake invoices, job scams, romance fraud, and more.
-              </p>
-            </div>
           </div>
 
-          {/* CTA */}
-          <button
-            onClick={() => { tap(); setShowOnboarding(false); setShowContextPicker(true); }}
-            className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-            style={{ background: "var(--accent)", color: "#fff" }}
-          >
-            Get Started — It&apos;s Free
-          </button>
+          {/* Disclaimer */}
           <p className="text-xs text-center mt-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>
             For educational use only. Scenarios use fictional companies and cover common scam patterns — not every scam type. When in doubt, verify directly through official channels.
           </p>
