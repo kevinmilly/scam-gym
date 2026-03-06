@@ -9,6 +9,7 @@ import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
 import type { UserContext } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { unlockPremium, isPremium } from "@/lib/premium";
+import { track } from "@/lib/analytics";
 import { getStreak } from "@/lib/streak";
 import PremiumGate from "@/components/PremiumGate";
 
@@ -62,6 +63,7 @@ function HomePageInner() {
     if (searchParams.get("premium") === "1" && !isPremium()) {
       unlockPremium();
       setPremiumJustActivated(true);
+      track("purchase_success");
       // Clean URL
       window.history.replaceState({}, "", "/");
     }
@@ -78,6 +80,9 @@ function HomePageInner() {
         if (!selectedContext) {
           // Show welcome onboarding before context picker for brand-new users
           setShowOnboarding(true);
+          track("landing_viewed", { isOnboarded: false });
+        } else {
+          track("landing_viewed", { isOnboarded: true });
         }
       }
     }

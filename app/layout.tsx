@@ -3,6 +3,7 @@ import "./globals.css";
 import { DrillProvider } from "@/lib/DrillContext";
 import SlowModeInit from "@/lib/SlowModeInit";
 import ThemeInit from "@/lib/ThemeInit";
+import PostHogProvider from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
   title: "Scam Gym",
@@ -45,11 +46,13 @@ export default function RootLayout({
       <body className="antialiased">
         <SlowModeInit />
         <ThemeInit />
-        <DrillProvider>
-          <main className="min-h-dvh max-w-lg mx-auto">
-            {children}
-          </main>
-        </DrillProvider>
+        <PostHogProvider>
+          <DrillProvider>
+            <main className="min-h-dvh max-w-lg mx-auto">
+              {children}
+            </main>
+          </DrillProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

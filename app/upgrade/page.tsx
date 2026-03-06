@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { isPremium, unlockPremium, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
+import { track } from "@/lib/analytics";
 
 const PREMIUM_FEATURES = [
   { icon: "📈", label: "Accuracy trend chart" },
@@ -27,6 +28,7 @@ export default function UpgradePage() {
 
   useEffect(() => {
     setPremium(isPremium());
+    track("upgrade_screen_viewed");
   }, []);
 
   async function handleRestore() {
@@ -119,6 +121,7 @@ export default function UpgradePage() {
                 href={STRIPE_PAYMENT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track("purchase_started")}
                 className="block w-full text-center py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
                 style={{ background: "var(--accent)", color: "#fff" }}
               >

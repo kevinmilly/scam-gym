@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { isPremium } from "@/lib/premium";
+import { track } from "@/lib/analytics";
 
 type PremiumGateProps = {
   children: React.ReactNode;
@@ -30,9 +31,13 @@ export default function PremiumGate({
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    setPremium(isPremium());
+    const pro = isPremium();
+    setPremium(pro);
     setChecked(true);
-  }, []);
+    if (!pro && !hideWhenLocked && label) {
+      track("upgrade_prompt_shown", { label });
+    }
+  }, [hideWhenLocked, label]);
 
   if (!checked) return null;
   if (premium) return <>{children}</>;
@@ -96,6 +101,7 @@ export default function PremiumGate({
 
       <Link
         href="/upgrade"
+        onClick={() => track("upgrade_clicked", { label })}
         className="inline-block px-4 py-2 rounded-xl text-sm font-bold transition-all active:scale-95"
         style={{ background: "var(--accent)", color: "#fff" }}
       >

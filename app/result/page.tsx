@@ -17,6 +17,7 @@ import LevelUpOverlay from "@/components/LevelUpOverlay";
 import { updateStreak } from "@/lib/streak";
 import { isBookmarked, toggleBookmark } from "@/lib/bookmarks";
 import { isPremium } from "@/lib/premium";
+import { track } from "@/lib/analytics";
 
 type VerdictConfig = {
   label: string;
@@ -100,6 +101,12 @@ export default function ResultPage() {
 
     // Update streak (runs for all users so data is ready if they upgrade)
     updateStreak();
+
+    track("result_viewed", {
+      drillId: parsedDrill.id,
+      isCorrect: JSON.parse(a).isCorrect,
+      calVerdict: cv,
+    });
 
     // Check if this is the user's first drill for calibration explainer
     db.attempts.count().then((count) => {
@@ -242,6 +249,7 @@ export default function ResultPage() {
               onClick={() => {
                 tap();
                 const result = toggleBookmark(drill.id);
+                if (result) track("bookmark_added", { drillId: drill.id });
                 setBookmarked(result);
               }}
               className="min-h-[44px] px-2 flex items-center text-lg"

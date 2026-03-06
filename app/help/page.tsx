@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { tap } from "@/lib/haptics";
 import { isPremium } from "@/lib/premium";
+import { track } from "@/lib/analytics";
 import {
   resolveHelpOutput,
   CHANNEL_OPTIONS,
@@ -58,6 +59,7 @@ export default function HelpPage() {
     const result = resolveHelpOutput(channel, ask, theme ?? undefined, urg ?? undefined);
     setOutput(result);
     setStep("output");
+    track("panic_mode_used", { channel, ask, theme, urgency: urg });
   }
 
   function handleBack() {

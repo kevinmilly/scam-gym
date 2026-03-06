@@ -13,6 +13,7 @@ import { isPremium } from "@/lib/premium";
 import PremiumGate from "@/components/PremiumGate";
 import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
+import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -23,12 +24,14 @@ export default function SettingsPage() {
   const [premium, setPremium] = useState(false);
   const [theme, setThemeState] = useState<"dark" | "light">("dark");
   const [audio, setAudio] = useState(false);
+  const [analytics, setAnalytics] = useState(true);
 
   useEffect(() => {
     setSlowMode(localStorage.getItem("scamgym_slowmode") === "1");
     setPremium(isPremium());
     setThemeState(getTheme());
     setAudio(isAudioEnabled());
+    setAnalytics(isAnalyticsEnabled());
   }, []);
 
   function toggleSlowMode() {
@@ -305,6 +308,7 @@ export default function SettingsPage() {
                       setFocusFamilies(next);
                       if (next.length > 0) {
                         setFocusLabel(`Focus: ${next.map(familyLabel).join(", ")}`);
+                        track("focus_training_set", { families: next });
                       } else {
                         setFocusLabel(null);
                       }
@@ -406,6 +410,39 @@ export default function SettingsPage() {
           </div>
         </div>
 
+        {/* Analytics toggle */}
+        <div
+          className="rounded-2xl border px-4 py-4"
+          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+                Usage analytics
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                Help improve Scam Gym with anonymous usage data
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                tap();
+                const next = !analytics;
+                setAnalytics(next);
+                setAnalyticsEnabled(next);
+              }}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              style={{
+                borderColor: analytics ? "var(--accent)" : "var(--border)",
+                background: analytics ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
+                color: analytics ? "var(--accent)" : "var(--text-muted)",
+              }}
+            >
+              {analytics ? "ON" : "OFF"}
+            </button>
+          </div>
+        </div>
+
         {/* About */}
         <div
           className="rounded-2xl border px-4 py-4"
@@ -415,7 +452,7 @@ export default function SettingsPage() {
             About Scam Gym
           </p>
           <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
-            All data stays on your device. Nothing is sent to a server.
+            Your drill data stays on your device. We collect anonymous usage analytics to improve the app — no personal information is stored on our servers. You can opt out above.
             Scam Gym is a personal training tool — not a security product.
             It won&apos;t stop real scams, but it will sharpen your instincts.
           </p>

@@ -14,6 +14,7 @@ import type { SessionState } from "@/lib/session";
 import type { Drill, Verdict, BehaviorChoice, Attempt } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { playCorrect, playIncorrect } from "@/lib/audio";
+import { track } from "@/lib/analytics";
 import { isPremium } from "@/lib/premium";
 import { familyLabel } from "@/lib/stats";
 
@@ -82,6 +83,7 @@ export default function SessionPage() {
       setSessionDrills(drills);
       setCurrentDrill(drills[0] || null);
       saveSession(newSession);
+      track("session_started");
     }
   }, [router, selectedContext, contextAttempts]);
 
@@ -166,6 +168,12 @@ export default function SessionPage() {
         overconfident,
         underconfident,
         wellCalibrated,
+      });
+      track("session_completed", {
+        total: newSessionAttempts.length,
+        correct,
+        accuracy: correct / newSessionAttempts.length,
+        xpEarned,
       });
     } else {
       setSession(updatedSession);

@@ -10,6 +10,7 @@ import { saveAttempt } from "@/lib/db";
 import type { Verdict, BehaviorChoice } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { playCorrect, playIncorrect } from "@/lib/audio";
+import { track } from "@/lib/analytics";
 import { computePostDrillReward } from "@/lib/progression";
 import { allDrills } from "@/lib/DrillContext";
 
@@ -43,6 +44,9 @@ export default function DrillPage() {
     setBehaviorChoice(null);
     setSubmitting(false);
     setBannerExpanded(false);
+    if (currentDrill) {
+      track("drill_started", { drillId: currentDrill.id, patternFamily: currentDrill.pattern_family });
+    }
   }, [currentDrill?.id]);
 
   if (!currentDrill) {
@@ -79,7 +83,14 @@ export default function DrillPage() {
       behaviorChoice: behaviorChoice ?? undefined,
     };
 
-    // Play sound feedback
+    // Track + sound feedback
+    track("drill_completed", {
+      drillId: currentDrill!.id,
+      patternFamily: currentDrill!.pattern_family,
+      isCorrect,
+      confidence: confidence!,
+      calVerdict,
+    });
     if (isCorrect) playCorrect();
     else playIncorrect();
 
