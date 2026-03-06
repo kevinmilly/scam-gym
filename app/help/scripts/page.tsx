@@ -141,7 +141,7 @@ function ScriptsPageInner() {
           <PremiumGate
             label="Tone Filters"
             pitch="Unlock firm and block-level scripts for every scenario."
-            socialProof
+
           >
             <div />
           </PremiumGate>
@@ -185,7 +185,7 @@ function ScriptsPageInner() {
                   label={script.label}
                   pitch={`${script.channel.toUpperCase()} · ${script.tone} tone`}
                   peekContent={script.text}
-                  socialProof
+      
                 >
                   <div />
                 </PremiumGate>

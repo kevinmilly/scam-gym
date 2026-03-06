@@ -8,23 +8,11 @@ import { familyLabel } from "@/lib/stats";
 import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
 import type { UserContext } from "@/lib/types";
 import { tap } from "@/lib/haptics";
-import { isPremium, unlockPremium, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
+import Link from "next/link";
+import { isPremium } from "@/lib/premium";
 import PremiumGate from "@/components/PremiumGate";
 import { getTheme, setTheme } from "@/lib/ThemeInit";
-
-const PREMIUM_FEATURES = [
-  { icon: "📈", label: "Accuracy trend chart" },
-  { icon: "🔍", label: "Per-family deep dive" },
-  { icon: "🎯", label: "Custom drill focus" },
-  { icon: "🤖", label: "Weakness autopilot" },
-  { icon: "📋", label: "Full attempt history" },
-  { icon: "🏃", label: "10-drill sessions" },
-  { icon: "🔖", label: "Drill bookmarks" },
-  { icon: "🔥", label: "Streak tracking" },
-  { icon: "☀️", label: "Light theme" },
-  { icon: "💬", label: "50+ reply scripts" },
-  { icon: "📇", label: "Unlimited contacts" },
-];
+import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -33,16 +21,14 @@ export default function SettingsPage() {
   const [confirmReset, setConfirmReset] = useState(false);
   const [slowMode, setSlowMode] = useState(false);
   const [premium, setPremium] = useState(false);
-  const [restoreEmail, setRestoreEmail] = useState("");
-  const [restoreStatus, setRestoreStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [restoreMessage, setRestoreMessage] = useState("");
-  const [showRestore, setShowRestore] = useState(false);
   const [theme, setThemeState] = useState<"dark" | "light">("dark");
+  const [audio, setAudio] = useState(false);
 
   useEffect(() => {
     setSlowMode(localStorage.getItem("scamgym_slowmode") === "1");
     setPremium(isPremium());
     setThemeState(getTheme());
+    setAudio(isAudioEnabled());
   }, []);
 
   function toggleSlowMode() {
@@ -50,32 +36,6 @@ export default function SettingsPage() {
     setSlowMode(next);
     localStorage.setItem("scamgym_slowmode", next ? "1" : "0");
     document.documentElement.dataset.slowMode = next ? "true" : "false";
-  }
-
-  async function handleRestore() {
-    if (!restoreEmail.trim()) return;
-    setRestoreStatus("loading");
-    setRestoreMessage("");
-    try {
-      const res = await fetch("/api/verify-purchase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: restoreEmail.trim() }),
-      });
-      const data = await res.json();
-      if (data.verified) {
-        unlockPremium();
-        setPremium(true);
-        setRestoreStatus("success");
-        setRestoreMessage("Premium restored! All features are now unlocked.");
-      } else {
-        setRestoreStatus("error");
-        setRestoreMessage(data.message || data.error || "No purchase found for this email.");
-      }
-    } catch {
-      setRestoreStatus("error");
-      setRestoreMessage("Could not connect. Check your internet and try again.");
-    }
   }
 
   async function handleExport() {
@@ -133,112 +93,56 @@ export default function SettingsPage() {
         >
           ← Back
         </button>
-        <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-          Settings
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+            Settings
+          </span>
+          {premium && (
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}>
+              Pro
+            </span>
+          )}
+        </div>
         <div className="w-12" />
       </div>
 
       <div className="px-4 py-5 space-y-4">
         {/* Premium section */}
-        <div
-          className="rounded-2xl border px-4 py-4"
-          style={{
-            background: premium ? "rgba(124,106,247,0.06)" : "var(--surface)",
-            borderColor: premium ? "var(--accent)" : "var(--border)",
-          }}
-        >
-          {premium ? (
-            <>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-lg">✨</span>
-                <span className="font-bold text-sm" style={{ color: "var(--accent)" }}>
-                  Premium Unlocked
-                </span>
-              </div>
-              <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                All features are active. Thank you for supporting Scam Gym!
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="font-bold text-sm mb-1" style={{ color: "var(--text)" }}>
-                Upgrade to Premium
-              </p>
-              <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-                One-time {PREMIUM_PRICE} purchase. All training drills stay free — premium adds power-user tools:
-              </p>
-              <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 mb-4">
-                {PREMIUM_FEATURES.map((f) => (
-                  <div key={f.label} className="flex items-center gap-1.5">
-                    <span className="text-xs">{f.icon}</span>
-                    <span className="text-xs" style={{ color: "var(--text-muted)" }}>{f.label}</span>
-                  </div>
-                ))}
-              </div>
-              <a
-                href={STRIPE_PAYMENT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full text-center py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
-                style={{ background: "var(--accent)", color: "#fff" }}
-              >
-                Unlock All for {PREMIUM_PRICE}
-              </a>
-              <div className="mt-3 pt-3 border-t" style={{ borderColor: "var(--border)" }}>
-                {!showRestore ? (
-                  <button
-                    onClick={() => setShowRestore(true)}
-                    className="text-xs"
-                    style={{ color: "var(--text-muted)" }}
-                  >
-                    Already purchased? Restore here
-                  </button>
-                ) : (
-                  <div className="space-y-2">
-                    <p className="text-xs font-semibold" style={{ color: "var(--text)" }}>
-                      Restore your purchase
-                    </p>
-                    <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                      Enter the email you used when you paid. We&apos;ll verify your purchase with Stripe and re-activate premium on this device.
-                    </p>
-                    <input
-                      type="email"
-                      placeholder="your@email.com"
-                      value={restoreEmail}
-                      onChange={(e) => setRestoreEmail(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl text-sm border"
-                      style={{
-                        background: "var(--surface-2)",
-                        borderColor: "var(--border)",
-                        color: "var(--text)",
-                      }}
-                    />
-                    <button
-                      onClick={handleRestore}
-                      disabled={restoreStatus === "loading" || !restoreEmail.trim()}
-                      className="px-4 py-2 rounded-xl text-sm font-semibold transition-all active:scale-95"
-                      style={{
-                        background: restoreEmail.trim() ? "var(--accent)" : "var(--surface-2)",
-                        color: restoreEmail.trim() ? "#fff" : "var(--text-muted)",
-                      }}
-                    >
-                      {restoreStatus === "loading" ? "Checking..." : "Restore"}
-                    </button>
-                    {restoreMessage && (
-                      <p
-                        className="text-xs"
-                        style={{ color: restoreStatus === "success" ? "#22c55e" : "#ef4444" }}
-                      >
-                        {restoreMessage}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-        </div>
+        {premium ? (
+          <div
+            className="rounded-2xl border px-4 py-4"
+            style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-lg">✨</span>
+              <span className="font-bold text-sm" style={{ color: "var(--accent)" }}>
+                Pro Unlocked
+              </span>
+            </div>
+            <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+              All features are active. Thank you for supporting Scam Gym!
+            </p>
+          </div>
+        ) : (
+          <Link
+            href="/upgrade"
+            className="block rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
+            style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+          >
+            <p className="font-bold text-sm mb-1" style={{ color: "var(--text)" }}>
+              Upgrade to Pro
+            </p>
+            <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
+              Unlock power-user tools — trend charts, focus training, reply scripts, and more.
+            </p>
+            <span
+              className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
+              style={{ background: "var(--accent)", color: "#fff" }}
+            >
+              Upgrade to unlock
+            </span>
+          </Link>
+        )}
 
         {/* Context mode */}
         <div
@@ -309,40 +213,71 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Theme toggle (premium) */}
-        <PremiumGate label="Light Theme" pitch="Switch to a light color scheme for daytime use.">
-          <div
-            className="rounded-2xl border px-4 py-4"
-            style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-                  Theme
-                </p>
-                <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                  {theme === "dark" ? "Dark mode (default)" : "Light mode"}
-                </p>
-              </div>
-              <button
-                onClick={() => {
-                  tap();
-                  const next = theme === "dark" ? "light" : "dark";
-                  setThemeState(next);
-                  setTheme(next);
-                }}
-                className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
-                style={{
-                  borderColor: theme === "light" ? "var(--accent)" : "var(--border)",
-                  background: theme === "light" ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
-                  color: theme === "light" ? "var(--accent)" : "var(--text-muted)",
-                }}
-              >
-                {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-              </button>
+        {/* Sound effects */}
+        <div
+          className="rounded-2xl border px-4 py-4"
+          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+                Sound effects
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                Play a tone on correct or incorrect answers
+              </p>
             </div>
+            <button
+              onClick={() => {
+                tap();
+                const next = !audio;
+                setAudio(next);
+                setAudioEnabled(next);
+              }}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              style={{
+                borderColor: audio ? "var(--accent)" : "var(--border)",
+                background: audio ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
+                color: audio ? "var(--accent)" : "var(--text-muted)",
+              }}
+            >
+              {audio ? "ON" : "OFF"}
+            </button>
           </div>
-        </PremiumGate>
+        </div>
+
+        {/* Theme toggle (free for all users) */}
+        <div
+          className="rounded-2xl border px-4 py-4"
+          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
+                Theme
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                {theme === "dark" ? "Dark mode (default)" : "Light mode"}
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                tap();
+                const next = theme === "dark" ? "light" : "dark";
+                setThemeState(next);
+                setTheme(next);
+              }}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              style={{
+                borderColor: theme === "light" ? "var(--accent)" : "var(--border)",
+                background: theme === "light" ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
+                color: theme === "light" ? "var(--accent)" : "var(--text-muted)",
+              }}
+            >
+              {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+            </button>
+          </div>
+        </div>
 
         {/* Focus Training (premium) */}
         <PremiumGate label="Focus Training" pitch="Pick specific scam families to drill until you master them.">

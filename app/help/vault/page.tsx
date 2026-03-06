@@ -376,7 +376,7 @@ export default function VaultPage() {
               label="Unlimited Contacts"
               pitch="Save as many verified contacts as you need."
               usedOf={{ used: entries.length, total: FREE_LIMIT }}
-              socialProof
+
             >
               <div />
             </PremiumGate>

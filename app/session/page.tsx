@@ -13,6 +13,7 @@ import { buildSessionDrills, saveSession, getSession, clearSession } from "@/lib
 import type { SessionState } from "@/lib/session";
 import type { Drill, Verdict, BehaviorChoice, Attempt } from "@/lib/types";
 import { tap } from "@/lib/haptics";
+import { playCorrect, playIncorrect } from "@/lib/audio";
 import { isPremium } from "@/lib/premium";
 import { familyLabel } from "@/lib/stats";
 
@@ -114,6 +115,10 @@ export default function SessionPage() {
       syncedAt: null,
       behaviorChoice: behaviorChoice ?? undefined,
     };
+
+    // Play sound feedback
+    if (isCorrect) playCorrect();
+    else playIncorrect();
 
     await saveAttempt(attempt);
     recordAttempt(attempt);

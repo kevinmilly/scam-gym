@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { tap } from "@/lib/haptics";
 import { isPremium } from "@/lib/premium";
-import { STRIPE_PAYMENT_URL, PREMIUM_PRICE } from "@/lib/premium";
 import {
   resolveHelpOutput,
   CHANNEL_OPTIONS,
@@ -318,29 +317,24 @@ export default function HelpPage() {
 
             {/* Post-panic upsell for non-premium */}
             {!premium && (
-              <div
-                className="rounded-2xl p-4 border mt-4"
+              <Link
+                href="/upgrade"
+                className="block rounded-2xl p-4 border mt-4 transition-all active:scale-[0.98]"
                 style={{ background: "rgba(124,106,247,0.06)", borderColor: "rgba(124,106,247,0.2)" }}
               >
                 <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
                   Know exactly what to say next time
                 </p>
-                <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
-                  Get 45+ copy-paste reply scripts for every type of scam, unlimited verified contacts, and more.
+                <p className="text-xs leading-relaxed mb-2" style={{ color: "var(--text-muted)" }}>
+                  Get reply scripts, a verified contacts vault, and more with Pro.
                 </p>
-                <a
-                  href={STRIPE_PAYMENT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-4 py-2 rounded-xl text-sm font-bold transition-all active:scale-95"
+                <span
+                  className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
                   style={{ background: "var(--accent)", color: "#fff" }}
                 >
-                  Unlock for {PREMIUM_PRICE}
-                </a>
-                <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
-                  One-time purchase · No subscription
-                </p>
-              </div>
+                  Upgrade to unlock
+                </span>
+              </Link>
             )}
           </div>
         )}

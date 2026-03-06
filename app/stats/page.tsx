@@ -123,7 +123,7 @@ export default function StatsPage() {
           ← Drill
         </button>
         <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-          My Vulnerabilities
+          My Progress
         </span>
         <button onClick={() => router.push("/settings")} className="text-sm" style={{ color: "var(--text-muted)" }}>
           Settings

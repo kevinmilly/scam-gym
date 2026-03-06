@@ -9,6 +9,7 @@ import { brierScore, redFlagRecall, calibrationVerdict } from "@/lib/scoring";
 import { saveAttempt } from "@/lib/db";
 import type { Verdict, BehaviorChoice } from "@/lib/types";
 import { tap } from "@/lib/haptics";
+import { playCorrect, playIncorrect } from "@/lib/audio";
 import { computePostDrillReward } from "@/lib/progression";
 import { allDrills } from "@/lib/DrillContext";
 
@@ -77,6 +78,10 @@ export default function DrillPage() {
       syncedAt: null,
       behaviorChoice: behaviorChoice ?? undefined,
     };
+
+    // Play sound feedback
+    if (isCorrect) playCorrect();
+    else playIncorrect();
 
     // Persist
     await saveAttempt(attempt);

@@ -341,34 +341,40 @@ function HomePageInner() {
               Real message drills. Instant feedback. Track where you&apos;re vulnerable.
             </p>
 
-            {/* Calibration explainer */}
-            <div
-              className="rounded-2xl p-5 mb-8 border"
+            {/* Calibration explainer — collapsed for returning users */}
+            <details
+              className="rounded-2xl mb-8 border group"
               style={{ background: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
-                How this works
-              </p>
-              <p className="font-semibold mb-2" style={{ color: "var(--text)" }}>
-                Being wrong isn&apos;t the only danger. Being confident and wrong is.
-              </p>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
-                Scam Gym tracks not just whether you got it right — it tracks how sure you were.
-                Clicking a phishing link while 95% confident is far more dangerous than pausing and saying &quot;I&apos;m not sure.&quot;
-              </p>
-              <div className="grid grid-cols-3 gap-2 text-center">
-                {[
-                  { label: "Overconfident", color: "#ef4444", desc: "Wrong + sure = danger zone" },
-                  { label: "Well-calibrated", color: "#22c55e", desc: "Confidence matches reality" },
-                  { label: "Underconfident", color: "#3b82f6", desc: "Right but uncertain" },
-                ].map((v) => (
-                  <div key={v.label} className="rounded-xl p-3" style={{ background: "var(--surface-2)" }}>
-                    <div className="text-xs font-bold mb-1" style={{ color: v.color }}>{v.label}</div>
-                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>{v.desc}</div>
-                  </div>
-                ))}
+              <summary
+                className="px-5 py-4 cursor-pointer list-none flex items-center justify-between"
+                style={{ color: "var(--accent)" }}
+              >
+                <span className="text-sm font-semibold uppercase tracking-widest">How scoring works</span>
+                <span className="text-xs transition-transform group-open:rotate-180" style={{ color: "var(--text-muted)" }}>▼</span>
+              </summary>
+              <div className="px-5 pb-5">
+                <p className="font-semibold mb-2" style={{ color: "var(--text)" }}>
+                  Being wrong isn&apos;t the only danger. Being confident and wrong is.
+                </p>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
+                  Scam Gym tracks not just whether you got it right — it tracks how sure you were.
+                  Clicking a phishing link while 95% confident is far more dangerous than pausing and saying &quot;I&apos;m not sure.&quot;
+                </p>
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  {[
+                    { label: "Overconfident", color: "#ef4444", desc: "Wrong + sure = danger zone" },
+                    { label: "Well-calibrated", color: "#22c55e", desc: "Confidence matches reality" },
+                    { label: "Underconfident", color: "#3b82f6", desc: "Right but uncertain" },
+                  ].map((v) => (
+                    <div key={v.label} className="rounded-xl p-3" style={{ background: "var(--surface-2)" }}>
+                      <div className="text-xs font-bold mb-1" style={{ color: v.color }}>{v.label}</div>
+                      <div className="text-xs" style={{ color: "var(--text-muted)" }}>{v.desc}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            </details>
 
             {/* Current context badge */}
             {selectedContext && (

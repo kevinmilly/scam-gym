@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { isPremium, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
+import Link from "next/link";
+import { isPremium } from "@/lib/premium";
 
 type PremiumGateProps = {
   children: React.ReactNode;
@@ -15,8 +16,6 @@ type PremiumGateProps = {
   usedOf?: { used: number; total: number };
   /** Shows first ~80 chars of locked content as a blurred preview */
   peekContent?: string;
-  /** Adds "One-time purchase · No subscription" trust text */
-  socialProof?: boolean;
 };
 
 export default function PremiumGate({
@@ -26,7 +25,6 @@ export default function PremiumGate({
   hideWhenLocked = false,
   usedOf,
   peekContent,
-  socialProof,
 }: PremiumGateProps) {
   const [premium, setPremium] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -96,21 +94,13 @@ export default function PremiumGate({
         </div>
       )}
 
-      <a
-        href={STRIPE_PAYMENT_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href="/upgrade"
         className="inline-block px-4 py-2 rounded-xl text-sm font-bold transition-all active:scale-95"
         style={{ background: "var(--accent)", color: "#fff" }}
       >
-        Unlock for {PREMIUM_PRICE}
-      </a>
-
-      {socialProof && (
-        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
-          One-time purchase · No subscription
-        </p>
-      )}
+        Upgrade to unlock
+      </Link>
     </div>
   );
 }

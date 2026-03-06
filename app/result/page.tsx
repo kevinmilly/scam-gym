@@ -2,9 +2,10 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { Attempt, Drill, CalibrationVerdict } from "@/lib/types";
 import { accuracyScore, redFlagRecall } from "@/lib/scoring";
-import { saveAttempt, saveContentFlag } from "@/lib/db";
+import { saveAttempt, saveContentFlag, db } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
 import { tap } from "@/lib/haptics";
 import type { PostDrillReward } from "@/lib/progression";
@@ -15,7 +16,7 @@ import MedalToast from "@/components/MedalToast";
 import LevelUpOverlay from "@/components/LevelUpOverlay";
 import { updateStreak } from "@/lib/streak";
 import { isBookmarked, toggleBookmark } from "@/lib/bookmarks";
-import { isPremium, STRIPE_PAYMENT_URL, PREMIUM_PRICE } from "@/lib/premium";
+import { isPremium } from "@/lib/premium";
 
 type VerdictConfig = {
   label: string;
@@ -77,6 +78,7 @@ export default function ResultPage() {
   const [showMedalToast, setShowMedalToast] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
+  const [isFirstDrill, setIsFirstDrill] = useState(false);
 
   type ContentFlag = {
     reason: "answer_wrong" | "question_unclear" | "red_flags_wrong" | "other";
@@ -98,6 +100,11 @@ export default function ResultPage() {
 
     // Update streak (runs for all users so data is ready if they upgrade)
     updateStreak();
+
+    // Check if this is the user's first drill for calibration explainer
+    db.attempts.count().then((count) => {
+      if (count <= 1) setIsFirstDrill(true);
+    });
 
     const r = sessionStorage.getItem("lastReward");
     if (r) {
@@ -406,6 +413,36 @@ export default function ResultPage() {
               </div>
             </div>
 
+            {/* First-drill calibration explainer */}
+            {isFirstDrill && (
+              <div
+                className="rounded-2xl p-5 border"
+                style={{ background: "var(--surface)", borderColor: "var(--accent)" + "33" }}
+              >
+                <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
+                  How scoring works
+                </p>
+                <p className="text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
+                  Being wrong isn&apos;t the only danger. Being confident and wrong is.
+                </p>
+                <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+                  Scam Gym tracks not just whether you got it right — it tracks how sure you were.
+                </p>
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  {[
+                    { label: "Overconfident", color: "#ef4444", desc: "Wrong + sure" },
+                    { label: "Well-calibrated", color: "#22c55e", desc: "Confidence matches" },
+                    { label: "Underconfident", color: "#3b82f6", desc: "Right but unsure" },
+                  ].map((v) => (
+                    <div key={v.label} className="rounded-xl p-2.5" style={{ background: "var(--surface-2)" }}>
+                      <div className="text-xs font-bold mb-0.5" style={{ color: v.color }}>{v.label}</div>
+                      <div className="text-xs" style={{ color: "var(--text-muted)" }}>{v.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Underconfidence intervention */}
             {calVerdict === "underconfident" && attempt.isCorrect && (
               <div
@@ -537,29 +574,24 @@ export default function ResultPage() {
 
             {/* Contextual upsell for non-premium users */}
             {!isPremium() && (
-              <div
-                className="rounded-2xl p-4 border"
+              <Link
+                href="/upgrade"
+                className="block rounded-2xl p-4 border transition-all active:scale-[0.98]"
                 style={{ background: "rgba(124,106,247,0.06)", borderColor: "rgba(124,106,247,0.2)" }}
               >
                 <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
                   Seen a message like this in real life?
                 </p>
-                <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
-                  Get 45+ copy-paste reply scripts for {drill.pattern_family.replace(/_/g, " ")} and other scam types — plus a verified contacts vault and more.
+                <p className="text-xs leading-relaxed mb-2" style={{ color: "var(--text-muted)" }}>
+                  Get reply scripts, a verified contacts vault, and more with Pro.
                 </p>
-                <a
-                  href={STRIPE_PAYMENT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-4 py-2 rounded-xl text-sm font-bold transition-all active:scale-95"
+                <span
+                  className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
                   style={{ background: "var(--accent)", color: "#fff" }}
                 >
-                  Unlock for {PREMIUM_PRICE}
-                </a>
-                <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
-                  One-time purchase · No subscription
-                </p>
-              </div>
+                  Upgrade to unlock
+                </span>
+              </Link>
             )}
 
             {/* Report issue */}
