@@ -2,7 +2,8 @@ const AUDIO_KEY = "scamgym_audio";
 
 export function isAudioEnabled(): boolean {
   if (typeof window === "undefined") return false;
-  return localStorage.getItem(AUDIO_KEY) === "1";
+  const val = localStorage.getItem(AUDIO_KEY);
+  return val === null || val === "1"; // default ON if never set
 }
 
 export function setAudioEnabled(enabled: boolean): void {
