@@ -32,6 +32,7 @@ export type Drill = {
     body: string;
   };
   red_flags: RedFlag[];
+  green_flags?: RedFlag[];
   correct_red_flag_ids: string[];
   explanation: {
     short: string;

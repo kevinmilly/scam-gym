@@ -372,7 +372,7 @@ export default function ResultPage() {
               Which of these did you spot?
             </p>
             <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-              Optional — select any. For legit messages, select nothing.
+              Optional — select any you noticed.
             </p>
             <div className="flex flex-wrap gap-2">
               {drill.red_flags.map((flag) => {
@@ -508,6 +508,26 @@ export default function ResultPage() {
                 ))}
               </ul>
             </div>
+
+            {/* Green flags — only for legit drills */}
+            {drill.ground_truth === "legit" && drill.green_flags && drill.green_flags.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#22c55e" }}>
+                  Green Flags
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {drill.green_flags.map((flag) => (
+                    <span
+                      key={flag.id}
+                      className="px-3 py-1.5 rounded-xl text-sm border"
+                      style={{ borderColor: "#22c55e44", color: "#22c55e", background: "rgba(34,197,94,0.08)" }}
+                    >
+                      ✓ {flag.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Red flags review — only for scam drills */}
             {drill.ground_truth === "scam" && drill.red_flags.length > 0 && (

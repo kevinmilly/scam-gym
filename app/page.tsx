@@ -107,7 +107,17 @@ function HomePageInner() {
   return (
     <div className="flex flex-col min-h-dvh px-6 py-10">
       {/* Logo */}
-      <div className="mb-12">
+      <div className="mb-12 flex items-center gap-2">
+        <svg width="26" height="26" viewBox="0 0 512 512" aria-hidden="true">
+          <defs>
+            <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#7c6af7"/>
+              <stop offset="100%" stopColor="#5b4bd6"/>
+            </linearGradient>
+          </defs>
+          <path d="M256 28 L460 120 C460 120 468 320 256 484 C44 320 52 120 52 120 Z" fill="url(#sg)"/>
+          <path d="M192 260 L232 310 L328 200" fill="none" stroke="#fff" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
         <span className="font-bold text-xl tracking-tight" style={{ color: "var(--text)" }}>
           Scam Gym
         </span>

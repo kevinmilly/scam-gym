@@ -170,15 +170,7 @@ export default function DrillPage() {
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-36 space-y-6">
         {/* Training banner */}
-        {bannerCompact && !bannerExpanded ? (
-          <button
-            onClick={() => setBannerExpanded(true)}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
-            style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
-          >
-            <span>🔒</span>
-          </button>
-        ) : (
+        {bannerCompact && !bannerExpanded ? null : (
           <div
             onClick={bannerCompact ? () => setBannerExpanded(false) : undefined}
             role={bannerCompact ? "button" : undefined}

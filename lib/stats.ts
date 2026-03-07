@@ -81,6 +81,7 @@ export function computeStats(
   const qualified = familyStats.filter((f) => f.totalAttempts >= 2);
 
   const topVulnerabilities = [...qualified]
+    .filter((f) => f.accuracy < 1.0)
     .sort((a, b) => a.accuracy - b.accuracy)
     .slice(0, 3);
 
