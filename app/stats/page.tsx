@@ -182,7 +182,7 @@ export default function StatsPage() {
         </div>
 
         {/* Accuracy Trend (premium) */}
-        <PremiumGate label="Your Progress" pitch="See your rolling accuracy trend over your last 30 drills.">
+        <PremiumGate label="Your Progress" pitch="See if you're actually getting better — or just getting lucky.">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
               Your Progress
@@ -194,7 +194,7 @@ export default function StatsPage() {
               <TrendChart attempts={allAttempts} />
             </div>
             <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-              Rolling accuracy over your last 30 drills (5-drill window)
+              How your accuracy has shifted over your recent drills
             </p>
           </div>
         </PremiumGate>

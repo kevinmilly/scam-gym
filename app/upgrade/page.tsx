@@ -6,16 +6,16 @@ import { isPremium, unlockPremium, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/l
 import { track } from "@/lib/analytics";
 
 const PREMIUM_FEATURES = [
-  { icon: "📈", label: "Accuracy trend chart" },
-  { icon: "🔍", label: "Per-family deep dive" },
-  { icon: "🎯", label: "Custom drill focus" },
-  { icon: "🤖", label: "Weakness autopilot" },
-  { icon: "📋", label: "Full attempt history" },
-  { icon: "🏃", label: "10-drill sessions" },
-  { icon: "🔖", label: "Drill bookmarks" },
-  { icon: "🔥", label: "Streak tracking" },
-  { icon: "💬", label: "50+ reply scripts" },
-  { icon: "📇", label: "Unlimited contacts" },
+  { icon: "📈", label: "Progress tracking", desc: "See if you're actually improving — or just getting lucky" },
+  { icon: "🔍", label: "Weak spot breakdown", desc: "Find out which scam types fool you most often" },
+  { icon: "🎯", label: "Focused practice", desc: "Drill only the categories you want to get better at" },
+  { icon: "🤖", label: "Weakness autopilot", desc: "One tap sets your practice on your worst areas automatically" },
+  { icon: "📋", label: "Full drill history", desc: "Review every drill you've done and what you got wrong" },
+  { icon: "🏃", label: "Timed sessions", desc: "10-drill runs you can finish in under 5 minutes" },
+  { icon: "🔖", label: "Bookmarks", desc: "Save tricky drills to come back to later" },
+  { icon: "🔥", label: "Daily streak", desc: "Build the habit with a streak you actually want to protect" },
+  { icon: "💬", label: "Reply scripts", desc: "50+ copy-paste responses for shutting down scammers safely" },
+  { icon: "📇", label: "Unlimited contacts", desc: "Track everyone in your scam vault without hitting a cap" },
 ];
 
 export default function UpgradePage() {
@@ -102,18 +102,20 @@ export default function UpgradePage() {
               </p>
             </div>
 
-            <div
-              className="rounded-2xl border px-4 py-5"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              <div className="grid grid-cols-2 gap-x-3 gap-y-3">
-                {PREMIUM_FEATURES.map((f) => (
-                  <div key={f.label} className="flex items-center gap-2">
-                    <span className="text-base">{f.icon}</span>
-                    <span className="text-sm" style={{ color: "var(--text)" }}>{f.label}</span>
+            <div className="space-y-2">
+              {PREMIUM_FEATURES.map((f) => (
+                <div
+                  key={f.label}
+                  className="flex items-start gap-3 rounded-xl px-4 py-3"
+                  style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
+                >
+                  <span className="text-xl mt-0.5">{f.icon}</span>
+                  <div>
+                    <p className="text-sm font-semibold leading-tight" style={{ color: "var(--text)" }}>{f.label}</p>
+                    <p className="text-xs mt-0.5 leading-relaxed" style={{ color: "var(--text-muted)" }}>{f.desc}</p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
 
             <div className="space-y-3">
