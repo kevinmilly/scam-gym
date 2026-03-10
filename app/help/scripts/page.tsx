@@ -208,7 +208,7 @@ function ScriptsPageInner() {
         return (
           <div
             className="fixed inset-0 z-50 flex flex-col items-center justify-center px-8"
-            style={{ background: "var(--bg)" }}
+            style={{ background: "var(--background)" }}
           >
             <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: "var(--accent)" }}>
               Read This Aloud

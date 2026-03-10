@@ -1,0 +1,46 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Exit" [ref=e5] [cursor=pointer]
+        - generic [ref=e6]:
+          - generic [ref=e7]: 1/10
+          - generic [ref=e8]: DM
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - generic [ref=e13]: B
+            - generic [ref=e14]:
+              - generic [ref=e15]: Barrister Emmanuel Adeyemi
+              - generic [ref=e16]: "@barrister.adeyemi.law"
+            - generic [ref=e17]: DM
+          - paragraph [ref=e19]: Dear Friend, I am Barrister Emmanuel Adeyemi, a legal practitioner in Lagos, Nigeria. My late client, who shares your surname, passed without a next of kin. His estate amounts to $4.7 million USD. With your assistance in claiming these funds as his relative, you will receive 40% ($1,880,000). This is completely legal and secure. Please reply with your full name and contact details to proceed.
+        - generic [ref=e20]:
+          - paragraph [ref=e21]: Is this message…
+          - generic [ref=e22]:
+            - button "🚨 Scam" [ref=e23] [cursor=pointer]
+            - button "✅ Legit" [ref=e24] [cursor=pointer]
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: How confident are you?
+          - generic [ref=e27]:
+            - button "50%" [ref=e28] [cursor=pointer]
+            - button "60%" [ref=e29] [cursor=pointer]
+            - button "70%" [ref=e30] [cursor=pointer]
+            - button "85%" [ref=e31] [cursor=pointer]
+            - button "95%" [ref=e32] [cursor=pointer]
+        - generic [ref=e33]:
+          - paragraph [ref=e34]: What would you actually do?
+          - generic [ref=e35]:
+            - button "Ignore it" [ref=e36] [cursor=pointer]
+            - button "Verify first" [ref=e37] [cursor=pointer]
+            - button "Respond" [ref=e38] [cursor=pointer]
+            - button "Click the link" [ref=e39] [cursor=pointer]
+            - button "Call the number" [ref=e40] [cursor=pointer]
+      - button "Submit (1/10)" [disabled] [ref=e42]
+  - button "Open Next.js Dev Tools" [ref=e48] [cursor=pointer]:
+    - img [ref=e49]
+  - alert [ref=e52]
+```

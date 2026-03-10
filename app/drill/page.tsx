@@ -32,10 +32,8 @@ export default function DrillPage() {
   const [confidence, setConfidence] = useState<number | null>(null);
   const [behaviorChoice, setBehaviorChoice] = useState<BehaviorChoice | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [bannerExpanded, setBannerExpanded] = useState(false);
 
-  const completedCount = contextAttempts.length;
-  const bannerCompact = completedCount >= 5;
+  const bannerHidden = contextAttempts.length >= 5;
 
   // Reset state when drill changes
   useEffect(() => {
@@ -43,7 +41,6 @@ export default function DrillPage() {
     setConfidence(null);
     setBehaviorChoice(null);
     setSubmitting(false);
-    setBannerExpanded(false);
     if (currentDrill) {
       track("drill_started", { drillId: currentDrill.id, patternFamily: currentDrill.pattern_family });
     }
@@ -95,23 +92,29 @@ export default function DrillPage() {
     else playIncorrect();
 
     // Persist
-    await saveAttempt(attempt);
-    recordAttempt(attempt);
+    try {
+      await saveAttempt(attempt);
+      recordAttempt(attempt);
 
-    // Compute post-drill reward (before/after comparison)
-    const allAttempts = [...contextAttempts, attempt];
-    const reward = computePostDrillReward(allAttempts, allDrills);
+      // Compute post-drill reward (before/after comparison)
+      const allAttempts = [...contextAttempts, attempt];
+      const reward = computePostDrillReward(allAttempts, allDrills);
 
-    // Store in sessionStorage for result page
-    sessionStorage.setItem("lastAttempt", JSON.stringify(attempt));
-    sessionStorage.setItem("lastDrill", JSON.stringify(currentDrill));
-    sessionStorage.setItem("calVerdict", calVerdict);
-    sessionStorage.setItem("lastReward", JSON.stringify(reward));
+      // Store in sessionStorage for result page (clear streakUpdated so it fires once for this drill)
+      sessionStorage.removeItem("streakUpdated");
+      sessionStorage.setItem("lastAttempt", JSON.stringify(attempt));
+      sessionStorage.setItem("lastDrill", JSON.stringify(currentDrill));
+      sessionStorage.setItem("calVerdict", calVerdict);
+      sessionStorage.setItem("lastReward", JSON.stringify(reward));
 
-    // Advance drill queue (prefetch next)
-    advance();
+      // Advance drill queue (prefetch next)
+      advance();
 
-    router.push("/result");
+      router.push("/result");
+    } catch (err) {
+      console.error("Failed to save attempt:", err);
+      setSubmitting(false);
+    }
   }
 
   const channelLabel = currentDrill.channel.toUpperCase();
@@ -170,17 +173,23 @@ export default function DrillPage() {
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-36 space-y-6">
         {/* Training banner */}
-        {bannerCompact && !bannerExpanded ? null : (
+        {!bannerHidden && (
           <div
-            onClick={bannerCompact ? () => setBannerExpanded(false) : undefined}
-            role={bannerCompact ? "button" : undefined}
             className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
-            style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)", cursor: bannerCompact ? "pointer" : undefined }}
+            style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
           >
             <span>🔒</span>
             <span>Simulated training message — never use any links or numbers shown</span>
           </div>
         )}
+
+        {/* Scenario framing */}
+        <div
+          className="px-3 py-2 rounded-xl text-sm"
+          style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
+        >
+          📱 <span>Imagine this just arrived on your phone. How do you call it?</span>
+        </div>
 
         {/* Message */}
         <MessageCard drill={currentDrill} />

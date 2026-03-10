@@ -76,8 +76,17 @@ export default function SettingsPage() {
       return;
     }
     await resetAllData();
-    localStorage.removeItem("scamgym_onboarded");
-    localStorage.removeItem("scamgym_context");
+    [
+      "scamgym_onboarded",
+      "scamgym_context",
+      "scamgym_streak",
+      "scamgym_bookmarks",
+      "scamgym_focus_families",
+      "scamgym_slowmode",
+      "scamgym_theme",
+      "scamgym_sound_default",
+      "scamgym_analytics_enabled",
+    ].forEach((k) => localStorage.removeItem(k));
     setConfirmReset(false);
     setStatus("All data reset.");
   }

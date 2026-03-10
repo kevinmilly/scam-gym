@@ -1,0 +1,51 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Home" [ref=e5] [cursor=pointer]
+        - generic [ref=e7]: EMAIL
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]: 🔒
+          - generic [ref=e11]: Simulated training message — never use any links or numbers shown
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]:
+              - generic [ref=e15]: P
+              - generic [ref=e16]:
+                - generic [ref=e17]: PixelPlay Support
+                - generic [ref=e18]: noreply@pixelplay-account-support.com
+            - generic [ref=e19]: Your PixelPlay account has been flagged for a FairPlay violation
+          - paragraph [ref=e21]: Dear PixelPlay User, Your account has been flagged by our anti-cheat system (FairPlay) for possible violations. To dispute this and prevent a permanent ban, you must verify your account within 48 hours. [Dispute FairPlay Violation] Failing to respond will result in a permanent account ban, losing access to all games and items in your account. PixelPlay Account Services
+        - generic [ref=e22]:
+          - paragraph [ref=e23]: Is this message…
+          - generic [ref=e24]:
+            - button "🚨 Scam" [ref=e25] [cursor=pointer]
+            - button "✅ Legit" [ref=e26] [cursor=pointer]
+        - generic [ref=e27]:
+          - paragraph [ref=e28]: How confident are you?
+          - generic [ref=e29]:
+            - button "50%" [ref=e30] [cursor=pointer]
+            - button "60%" [ref=e31] [cursor=pointer]
+            - button "70%" [ref=e32] [cursor=pointer]
+            - button "85%" [ref=e33] [cursor=pointer]
+            - button "95%" [ref=e34] [cursor=pointer]
+          - generic [ref=e35]:
+            - generic [ref=e36]: Coin flip
+            - generic [ref=e37]: Dead certain
+        - generic [ref=e38]:
+          - paragraph [ref=e39]: What would you actually do?
+          - generic [ref=e40]:
+            - button "Ignore it" [ref=e41] [cursor=pointer]
+            - button "Verify first" [ref=e42] [cursor=pointer]
+            - button "Respond" [ref=e43] [cursor=pointer]
+            - button "Click the link" [ref=e44] [cursor=pointer]
+            - button "Call the number" [ref=e45] [cursor=pointer]
+      - button "Submit" [disabled] [ref=e47]
+  - button "Open Next.js Dev Tools" [ref=e53] [cursor=pointer]:
+    - img [ref=e54]
+  - alert [ref=e57]
+```

@@ -1,0 +1,45 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Exit" [ref=e5] [cursor=pointer]
+        - generic [ref=e6]:
+          - generic [ref=e7]: 1/10
+          - generic [ref=e8]: SMS
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - generic [ref=e13]: 📱
+            - generic [ref=e14]:
+              - generic [ref=e15]: QuickDeliver
+              - generic [ref=e16]: +1 (332) 555-0819
+          - generic [ref=e18]: "QuickDeliver: Your package requires a $3.50 customs clearance fee. Without payment your parcel will be returned. Pay now: quickdeliver-customs-fee.com/pay"
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: Is this message…
+          - generic [ref=e21]:
+            - button "🚨 Scam" [ref=e22] [cursor=pointer]
+            - button "✅ Legit" [ref=e23] [cursor=pointer]
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: How confident are you?
+          - generic [ref=e26]:
+            - button "50%" [ref=e27] [cursor=pointer]
+            - button "60%" [ref=e28] [cursor=pointer]
+            - button "70%" [ref=e29] [cursor=pointer]
+            - button "85%" [ref=e30] [cursor=pointer]
+            - button "95%" [ref=e31] [cursor=pointer]
+        - generic [ref=e32]:
+          - paragraph [ref=e33]: What would you actually do?
+          - generic [ref=e34]:
+            - button "Ignore it" [ref=e35] [cursor=pointer]
+            - button "Verify first" [ref=e36] [cursor=pointer]
+            - button "Respond" [ref=e37] [cursor=pointer]
+            - button "Click the link" [ref=e38] [cursor=pointer]
+            - button "Call the number" [ref=e39] [cursor=pointer]
+      - button "Submit (1/10)" [disabled] [ref=e41]
+  - button "Open Next.js Dev Tools" [ref=e47] [cursor=pointer]:
+    - img [ref=e48]
+  - alert [ref=e51]
+```

@@ -1,0 +1,49 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Home" [ref=e5] [cursor=pointer]
+        - generic [ref=e7]: SMS
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]: 🔒
+          - generic [ref=e11]: Simulated training message — never use any links or numbers shown
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: 📱
+            - generic [ref=e15]:
+              - generic [ref=e16]: Prism
+              - generic [ref=e17]: "45891"
+          - generic [ref=e19]: Your Prism code is 847-291. Don't share it.
+        - generic [ref=e20]:
+          - paragraph [ref=e21]: Is this message…
+          - generic [ref=e22]:
+            - button "🚨 Scam" [ref=e23] [cursor=pointer]
+            - button "✅ Legit" [ref=e24] [cursor=pointer]
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: How confident are you?
+          - generic [ref=e27]:
+            - button "50%" [ref=e28] [cursor=pointer]
+            - button "60%" [ref=e29] [cursor=pointer]
+            - button "70%" [ref=e30] [cursor=pointer]
+            - button "85%" [ref=e31] [cursor=pointer]
+            - button "95%" [ref=e32] [cursor=pointer]
+          - generic [ref=e33]:
+            - generic [ref=e34]: Coin flip
+            - generic [ref=e35]: Dead certain
+        - generic [ref=e36]:
+          - paragraph [ref=e37]: What would you actually do?
+          - generic [ref=e38]:
+            - button "Ignore it" [ref=e39] [cursor=pointer]
+            - button "Verify first" [ref=e40] [cursor=pointer]
+            - button "Respond" [ref=e41] [cursor=pointer]
+            - button "Click the link" [ref=e42] [cursor=pointer]
+            - button "Call the number" [ref=e43] [cursor=pointer]
+      - button "Submit" [disabled] [ref=e45]
+  - button "Open Next.js Dev Tools" [ref=e51] [cursor=pointer]:
+    - img [ref=e52]
+  - alert [ref=e55]
+```

@@ -1,0 +1,41 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - img [ref=e5]
+        - generic [ref=e8]: Scam Gym
+      - heading "Choose your training mode" [level=1] [ref=e9]
+      - paragraph [ref=e10]: This sets the mental frame for every drill. All 140 drills are available in every mode — this just changes how you approach them.
+      - generic [ref=e11]:
+        - button "📱 Personal Everyday messages on your personal phone or email." [ref=e12] [cursor=pointer]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: 📱
+            - generic [ref=e15]:
+              - paragraph [ref=e16]: Personal
+              - paragraph [ref=e17]: Everyday messages on your personal phone or email.
+        - button "🏪 Small Business You manage payments, vendors, and accounts for a small business." [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]:
+            - generic [ref=e20]: 🏪
+            - generic [ref=e21]:
+              - paragraph [ref=e22]: Small Business
+              - paragraph [ref=e23]: You manage payments, vendors, and accounts for a small business.
+        - button "💼 Job Seeker You're actively applying for jobs and networking online." [ref=e24] [cursor=pointer]:
+          - generic [ref=e25]:
+            - generic [ref=e26]: 💼
+            - generic [ref=e27]:
+              - paragraph [ref=e28]: Job Seeker
+              - paragraph [ref=e29]: You're actively applying for jobs and networking online.
+        - button "👨‍👩‍👧 Family Safety Train your eye to protect a less tech-savvy family member." [ref=e30] [cursor=pointer]:
+          - generic [ref=e31]:
+            - generic [ref=e32]: 👨‍👩‍👧
+            - generic [ref=e33]:
+              - paragraph [ref=e34]: Family Safety
+              - paragraph [ref=e35]: Train your eye to protect a less tech-savvy family member.
+      - button "Start Training" [disabled] [ref=e37]
+  - button "Open Next.js Dev Tools" [ref=e43] [cursor=pointer]:
+    - img [ref=e44]
+  - alert [ref=e47]
+```

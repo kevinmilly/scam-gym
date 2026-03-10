@@ -1,0 +1,50 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - img [ref=e5]
+        - generic [ref=e8]: Scam Gym
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - paragraph [ref=e11]: Free · No account needed
+          - heading "Practice spotting scams before they hit you." [level=1] [ref=e12]
+          - paragraph [ref=e13]: Most people only learn about scams after they get fooled. Scam Gym lets you practice safely first.
+        - generic [ref=e14]:
+          - generic [ref=e15]: 📬
+          - paragraph [ref=e16]:
+            - strong [ref=e17]: 140+ real-style drills
+            - text: across phishing, fake invoices, job scams, romance fraud, and more.
+        - button "Try Your First Drill — It's Free" [ref=e18] [cursor=pointer]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: Would you catch this?
+          - generic [ref=e21]:
+            - paragraph [ref=e22]: "From: Amazon"
+            - paragraph [ref=e23]: "\"Your account has been locked. Verify immediately: amaz0n-secure-login.com\""
+          - generic [ref=e24]:
+            - button "🚫 Scam" [ref=e25] [cursor=pointer]
+            - button "✅ Legit" [ref=e26] [cursor=pointer]
+        - paragraph [ref=e27]: Most people are overconfident about spotting scams.
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: 🎯
+            - generic [ref=e31]:
+              - paragraph [ref=e32]: Real-world drills
+              - paragraph [ref=e33]: "Practice spotting real scam messages: phishing emails, fake invoices, job offers, and more."
+          - generic [ref=e34]:
+            - generic [ref=e35]: 🧠
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: Confidence tracking
+              - paragraph [ref=e38]: See when you're guessing vs when you're truly certain. Overconfidence is the real danger.
+          - generic [ref=e39]:
+            - generic [ref=e40]: 📊
+            - generic [ref=e41]:
+              - paragraph [ref=e42]: Personal risk profile
+              - paragraph [ref=e43]: Discover which scam types you're most likely to fall for — and train those weak spots.
+      - paragraph [ref=e44]: For educational use only. Scenarios use fictional companies and cover common scam patterns — not every scam type. When in doubt, verify directly through official channels.
+  - button "Open Next.js Dev Tools" [ref=e50] [cursor=pointer]:
+    - img [ref=e51]
+  - alert [ref=e54]
+```

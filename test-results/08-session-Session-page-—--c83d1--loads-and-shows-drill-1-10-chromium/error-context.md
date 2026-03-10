@@ -1,0 +1,51 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Exit" [ref=e5] [cursor=pointer]
+        - generic [ref=e6]:
+          - generic [ref=e7]: 1/10
+          - generic [ref=e8]: DM
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - generic [ref=e13]: C
+            - generic [ref=e14]:
+              - generic [ref=e15]: Col. James Harrington
+              - generic [ref=e16]: "@col.james.harrington"
+            - generic [ref=e17]: DM
+          - paragraph [ref=e19]: Hello, I apologize for reaching out unexpectedly. I'm Colonel James Harrington, currently deployed in Syria. I came across your profile and found you to be a person of great character. I've been through a painful divorce and am looking for genuine connection. I have significant assets I need help transferring out of the region. I hope we might get to know each other better. God bless.
+        - generic [ref=e20]:
+          - paragraph [ref=e21]: Is this message…
+          - generic [ref=e22]:
+            - button "🚨 Scam" [ref=e23] [cursor=pointer]
+            - button "✅ Legit" [ref=e24] [cursor=pointer]
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: How confident are you?
+          - generic [ref=e27]:
+            - button "50%" [ref=e28] [cursor=pointer]
+            - button "60%" [ref=e29] [cursor=pointer]
+            - button "70%" [ref=e30] [cursor=pointer]
+            - button "85%" [ref=e31] [cursor=pointer]
+            - button "95%" [ref=e32] [cursor=pointer]
+        - generic [ref=e33]:
+          - paragraph [ref=e34]: What would you actually do?
+          - generic [ref=e35]:
+            - button "Ignore it" [ref=e36] [cursor=pointer]
+            - button "Verify first" [ref=e37] [cursor=pointer]
+            - button "Respond" [ref=e38] [cursor=pointer]
+            - button "Click the link" [ref=e39] [cursor=pointer]
+            - button "Call the number" [ref=e40] [cursor=pointer]
+      - button "Submit (1/10)" [disabled] [ref=e42]
+  - button "Open Next.js Dev Tools" [ref=e48] [cursor=pointer]:
+    - generic [ref=e51]:
+      - text: Compiling
+      - generic [ref=e52]:
+        - generic [ref=e53]: .
+        - generic [ref=e54]: .
+        - generic [ref=e55]: .
+  - alert [ref=e56]
+```

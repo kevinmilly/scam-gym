@@ -1,0 +1,90 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Drill" [ref=e5] [cursor=pointer]
+        - button "Stats" [ref=e7] [cursor=pointer]
+      - generic [ref=e8]:
+        - generic [ref=e10]: ✅ You were safe
+        - paragraph [ref=e11]: You said SCAM at 70% · Correct ✓
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: +10 base
+            - generic [ref=e15]: +10 correct
+            - generic [ref=e16]: +5 calibrated
+            - generic [ref=e17]: = 25 XP
+          - generic [ref=e18]:
+            - generic [ref=e19]:
+              - generic [ref=e20]: Newcomer
+              - generic [ref=e21]: Level 2
+            - generic [ref=e24]: 25 / 50 XP
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: 🛡️ You were right to be suspicious
+          - paragraph [ref=e27]: If you had engaged, after depositing, the group may disappear immediately, or you could receive 'signals' designed to inflate assets the scammer holds before they dump them on buyers like you.
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: 🎯
+            - generic [ref=e31]: Well-calibrated
+          - paragraph [ref=e32]: Your confidence matched your accuracy. That's the goal.
+          - generic [ref=e34]:
+            - generic [ref=e35]: Accuracy Score
+            - generic [ref=e36]: 91/100
+        - generic [ref=e37]:
+          - paragraph [ref=e38]: How scoring works
+          - paragraph [ref=e39]: Being wrong isn't the only danger. Being confident and wrong is.
+          - paragraph [ref=e40]: Scam Gym tracks not just whether you got it right — it tracks how sure you were.
+          - generic [ref=e41]:
+            - generic [ref=e42]:
+              - generic [ref=e43]: Overconfident
+              - generic [ref=e44]: Wrong + sure
+            - generic [ref=e45]:
+              - generic [ref=e46]: Well-calibrated
+              - generic [ref=e47]: Confidence matches
+            - generic [ref=e48]:
+              - generic [ref=e49]: Underconfident
+              - generic [ref=e50]: Right but unsure
+        - generic [ref=e51]:
+          - generic [ref=e52]: crypto wallet
+          - generic [ref=e53]: SCAM
+        - paragraph [ref=e55]: Legitimate trading communities don't charge crypto deposits — and no one is averaging +340% monthly returns.
+        - generic [ref=e56]:
+          - paragraph [ref=e57]: The Tells
+          - list [ref=e58]:
+            - listitem [ref=e59]:
+              - generic [ref=e60]: →
+              - generic [ref=e61]: Any group requiring an upfront crypto payment has no accountability or recourse if they take your funds and disappear
+            - listitem [ref=e62]:
+              - generic [ref=e63]: →
+              - generic [ref=e64]: +340% monthly returns would represent the most profitable trading operation in history — such claims are fiction used to manufacture urgency
+            - listitem [ref=e65]:
+              - generic [ref=e66]: →
+              - generic [ref=e67]: "'DM for deposit address' means no paper trail and no platform accountability"
+            - listitem [ref=e68]:
+              - generic [ref=e69]: →
+              - generic [ref=e70]: These groups typically exist solely to collect the entry fee and vanish, or to pump assets the organizers already hold before dumping them
+        - generic [ref=e71]:
+          - paragraph [ref=e72]: Red Flags Review
+          - generic [ref=e73]:
+            - generic [ref=e74]: Deposit required to access trading signals (missed)
+            - generic [ref=e75]: Specific guaranteed return claim (+340%) (missed)
+            - generic [ref=e76]: "'DM for deposit address' — unverifiable recipient"
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: Safe Move
+          - paragraph [ref=e79]: Block and report. Never pay crypto deposits to join investment or signal groups solicited via cold DMs.
+        - generic [ref=e80]:
+          - paragraph [ref=e81]: The Rule
+          - paragraph [ref=e82]: No exchange, wallet, or blockchain network ever contacts you about claiming rewards, rescuing funds, or fixing wallet errors — any unsolicited crypto contact is a theft attempt.
+        - link "Seen a message like this in real life? Get reply scripts, a verified contacts vault, and more with Pro. Upgrade to unlock" [ref=e83] [cursor=pointer]:
+          - /url: /upgrade
+          - paragraph [ref=e84]: Seen a message like this in real life?
+          - paragraph [ref=e85]: Get reply scripts, a verified contacts vault, and more with Pro.
+          - generic [ref=e86]: Upgrade to unlock
+        - button "Report an issue with this drill" [ref=e88] [cursor=pointer]
+      - button "Next Drill →" [ref=e90] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e96] [cursor=pointer]:
+    - img [ref=e97]
+  - alert [ref=e100]
+```

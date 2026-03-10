@@ -1,0 +1,47 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Exit" [ref=e5] [cursor=pointer]
+        - generic [ref=e6]:
+          - generic [ref=e7]: 2/10
+          - generic [ref=e8]: EMAIL
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]:
+              - generic [ref=e15]: S
+              - generic [ref=e16]:
+                - generic [ref=e17]: SwiftShip
+                - generic [ref=e18]: tracking@swiftship.com
+            - generic [ref=e19]: Your home office equipment has shipped
+          - paragraph [ref=e21]: "Hi Jordan, Your order from WorkGear Supply (Order #SW-98812) has shipped and is estimated to arrive Thursday, Feb 27. Tracking: SW8819922 — Track at swiftship.com/track If you did not place this order, contact WorkGear Supply at workgear.com/support. SwiftShip"
+        - generic [ref=e22]:
+          - paragraph [ref=e23]: Is this message…
+          - generic [ref=e24]:
+            - button "🚨 Scam" [ref=e25] [cursor=pointer]
+            - button "✅ Legit" [ref=e26] [cursor=pointer]
+        - generic [ref=e27]:
+          - paragraph [ref=e28]: How confident are you?
+          - generic [ref=e29]:
+            - button "50%" [ref=e30] [cursor=pointer]
+            - button "60%" [ref=e31] [cursor=pointer]
+            - button "70%" [ref=e32] [cursor=pointer]
+            - button "85%" [ref=e33] [cursor=pointer]
+            - button "95%" [ref=e34] [cursor=pointer]
+        - generic [ref=e35]:
+          - paragraph [ref=e36]: What would you actually do?
+          - generic [ref=e37]:
+            - button "Ignore it" [ref=e38] [cursor=pointer]
+            - button "Verify first" [ref=e39] [cursor=pointer]
+            - button "Respond" [ref=e40] [cursor=pointer]
+            - button "Click the link" [ref=e41] [cursor=pointer]
+            - button "Call the number" [ref=e42] [cursor=pointer]
+      - button "Submit (2/10)" [disabled] [ref=e44]
+  - button "Open Next.js Dev Tools" [ref=e50] [cursor=pointer]:
+    - img [ref=e51]
+  - alert [ref=e54]
+```

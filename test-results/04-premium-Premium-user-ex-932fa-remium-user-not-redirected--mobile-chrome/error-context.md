@@ -1,0 +1,46 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Exit" [ref=e5] [cursor=pointer]
+        - generic [ref=e6]:
+          - generic [ref=e7]: 1/10
+          - generic [ref=e8]: DM
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - generic [ref=e13]: P
+            - generic [ref=e14]:
+              - generic [ref=e15]: Prism Verified
+              - generic [ref=e16]: "@prism.support.team"
+            - generic [ref=e17]: DM
+          - paragraph [ref=e19]: Hello! Your account has been selected for Prism's new Verified Badge program. To complete verification, scan the QR code below within 24 hours. This is a limited program and spots are filling fast. [QR Code]
+        - generic [ref=e20]:
+          - paragraph [ref=e21]: Is this message…
+          - generic [ref=e22]:
+            - button "🚨 Scam" [ref=e23] [cursor=pointer]
+            - button "✅ Legit" [ref=e24] [cursor=pointer]
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: How confident are you?
+          - generic [ref=e27]:
+            - button "50%" [ref=e28] [cursor=pointer]
+            - button "60%" [ref=e29] [cursor=pointer]
+            - button "70%" [ref=e30] [cursor=pointer]
+            - button "85%" [ref=e31] [cursor=pointer]
+            - button "95%" [ref=e32] [cursor=pointer]
+        - generic [ref=e33]:
+          - paragraph [ref=e34]: What would you actually do?
+          - generic [ref=e35]:
+            - button "Ignore it" [ref=e36] [cursor=pointer]
+            - button "Verify first" [ref=e37] [cursor=pointer]
+            - button "Respond" [ref=e38] [cursor=pointer]
+            - button "Click the link" [ref=e39] [cursor=pointer]
+            - button "Call the number" [ref=e40] [cursor=pointer]
+      - button "Submit (1/10)" [disabled] [ref=e42]
+  - button "Open Next.js Dev Tools" [ref=e48] [cursor=pointer]:
+    - img [ref=e49]
+  - alert [ref=e52]
+```

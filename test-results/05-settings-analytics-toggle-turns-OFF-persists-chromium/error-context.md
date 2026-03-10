@@ -1,0 +1,88 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Back" [ref=e5] [cursor=pointer]
+        - generic [ref=e7]: Settings
+      - generic [ref=e8]:
+        - link "Upgrade to Pro Unlock power-user tools — trend charts, focus training, reply scripts, and more. Upgrade to unlock" [ref=e9] [cursor=pointer]:
+          - /url: /upgrade
+          - paragraph [ref=e10]: Upgrade to Pro
+          - paragraph [ref=e11]: Unlock power-user tools — trend charts, focus training, reply scripts, and more.
+          - generic [ref=e12]: Upgrade to unlock
+        - generic [ref=e13]:
+          - paragraph [ref=e14]: Training Mode
+          - paragraph [ref=e15]: Only drills matching your selected mode are shown.
+          - generic [ref=e16]:
+            - button "Personal Everyday messages on your personal phone or email. ✓" [ref=e17] [cursor=pointer]:
+              - generic [ref=e18]:
+                - generic [ref=e19]:
+                  - text: Personal
+                  - paragraph [ref=e20]: Everyday messages on your personal phone or email.
+                - generic [ref=e21]: ✓
+            - button "Small Business You manage payments, vendors, and accounts for a small business." [ref=e22] [cursor=pointer]:
+              - generic [ref=e24]:
+                - text: Small Business
+                - paragraph [ref=e25]: You manage payments, vendors, and accounts for a small business.
+            - button "Job Seeker You're actively applying for jobs and networking online." [ref=e26] [cursor=pointer]:
+              - generic [ref=e28]:
+                - text: Job Seeker
+                - paragraph [ref=e29]: You're actively applying for jobs and networking online.
+            - button "Family Safety Train your eye to protect a less tech-savvy family member." [ref=e30] [cursor=pointer]:
+              - generic [ref=e32]:
+                - text: Family Safety
+                - paragraph [ref=e33]: Train your eye to protect a less tech-savvy family member.
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - paragraph [ref=e37]: Larger text & spacing
+            - paragraph [ref=e38]: Increases font size and line spacing
+          - button "OFF" [ref=e39] [cursor=pointer]
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - paragraph [ref=e43]: Sound effects
+            - paragraph [ref=e44]: Play a tone on correct or incorrect answers
+          - button "ON" [ref=e45] [cursor=pointer]
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - paragraph [ref=e49]: Theme
+            - paragraph [ref=e50]: Dark mode (default)
+          - button "☀️ Light" [ref=e51] [cursor=pointer]
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - generic [ref=e54]: 🔒
+            - generic [ref=e55]: Focus Training
+          - paragraph [ref=e56]: Pick specific scam families to drill until you master them.
+          - link "Upgrade to unlock" [ref=e57] [cursor=pointer]:
+            - /url: /upgrade
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - paragraph [ref=e60]: Export Data
+            - paragraph [ref=e61]: Download all your attempts and flags as a JSON backup.
+            - button "Download backup" [ref=e62] [cursor=pointer]
+          - generic [ref=e63]:
+            - paragraph [ref=e64]: Import Data
+            - paragraph [ref=e65]: Restore from a previous backup file.
+            - generic [ref=e66] [cursor=pointer]: Choose file
+          - generic [ref=e67]:
+            - paragraph [ref=e68]: Reset All Data
+            - paragraph [ref=e69]: Permanently deletes all your attempts and flags. Cannot be undone.
+            - button "Reset data" [ref=e70] [cursor=pointer]
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - paragraph [ref=e74]: Usage analytics
+            - paragraph [ref=e75]: Help improve Scam Gym with anonymous usage data
+          - button "ON" [ref=e76] [cursor=pointer]
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: About Scam Gym
+          - paragraph [ref=e79]: Your drill data stays on your device. We collect anonymous usage analytics to improve the app — no personal information is stored on our servers. You can opt out above. Scam Gym is a personal training tool — not a security product. It won't stop real scams, but it will sharpen your instincts.
+          - generic [ref=e80]:
+            - paragraph [ref=e81]: Disclaimer
+            - paragraph [ref=e82]: Scam Gym is for educational purposes only. All scenarios use fictional companies and brands — any resemblance to real organizations is coincidental. Drills cover common, high-frequency scam patterns and do not represent every type of fraud. Always verify suspicious messages directly through official channels.
+          - paragraph [ref=e83]: MVP v0.1
+  - button "Open Next.js Dev Tools" [ref=e89] [cursor=pointer]:
+    - img [ref=e90]
+  - alert [ref=e93]
+```

@@ -1,0 +1,50 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Home" [ref=e5] [cursor=pointer]
+        - generic [ref=e7]: DM
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]: 🔒
+          - generic [ref=e11]: Simulated training message — never use any links or numbers shown
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: M
+            - generic [ref=e15]:
+              - generic [ref=e16]: Marcus Webb
+              - generic [ref=e17]: "@marcuswebb83"
+            - generic [ref=e18]: DM
+          - paragraph [ref=e20]: Hey Kevin! It's Marcus — we went to NYU together, I was in your Intro to CS class with Prof. Hernandez. I lost your number after changing phones a few years ago. Found you on here. I'm in NYC next week — would love to grab coffee and catch up if you're around?
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Is this message…
+          - generic [ref=e23]:
+            - button "🚨 Scam" [ref=e24] [cursor=pointer]
+            - button "✅ Legit" [ref=e25] [cursor=pointer]
+        - generic [ref=e26]:
+          - paragraph [ref=e27]: How confident are you?
+          - generic [ref=e28]:
+            - button "50%" [ref=e29] [cursor=pointer]
+            - button "60%" [ref=e30] [cursor=pointer]
+            - button "70%" [ref=e31] [cursor=pointer]
+            - button "85%" [ref=e32] [cursor=pointer]
+            - button "95%" [ref=e33] [cursor=pointer]
+          - generic [ref=e34]:
+            - generic [ref=e35]: Coin flip
+            - generic [ref=e36]: Dead certain
+        - generic [ref=e37]:
+          - paragraph [ref=e38]: What would you actually do?
+          - generic [ref=e39]:
+            - button "Ignore it" [ref=e40] [cursor=pointer]
+            - button "Verify first" [ref=e41] [cursor=pointer]
+            - button "Respond" [ref=e42] [cursor=pointer]
+            - button "Click the link" [ref=e43] [cursor=pointer]
+            - button "Call the number" [ref=e44] [cursor=pointer]
+      - button "Submit" [disabled] [ref=e46]
+  - button "Open Next.js Dev Tools" [ref=e52] [cursor=pointer]:
+    - img [ref=e53]
+  - alert [ref=e56]
+```

@@ -1,0 +1,45 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Exit" [ref=e5] [cursor=pointer]
+        - generic [ref=e6]:
+          - generic [ref=e7]: 2/10
+          - generic [ref=e8]: SMS
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: 📱
+            - generic [ref=e15]:
+              - generic [ref=e16]: Crestline Credit Union
+              - generic [ref=e17]: "82114"
+          - generic [ref=e19]: "Crestline Credit Union: Your one-time access code is 847291. Valid for 10 minutes. Don't share this code with anyone, including Crestline Credit Union employees."
+        - generic [ref=e20]:
+          - paragraph [ref=e21]: Is this message…
+          - generic [ref=e22]:
+            - button "🚨 Scam" [ref=e23] [cursor=pointer]
+            - button "✅ Legit" [ref=e24] [cursor=pointer]
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: How confident are you?
+          - generic [ref=e27]:
+            - button "50%" [ref=e28] [cursor=pointer]
+            - button "60%" [ref=e29] [cursor=pointer]
+            - button "70%" [ref=e30] [cursor=pointer]
+            - button "85%" [ref=e31] [cursor=pointer]
+            - button "95%" [ref=e32] [cursor=pointer]
+        - generic [ref=e33]:
+          - paragraph [ref=e34]: What would you actually do?
+          - generic [ref=e35]:
+            - button "Ignore it" [ref=e36] [cursor=pointer]
+            - button "Verify first" [ref=e37] [cursor=pointer]
+            - button "Respond" [ref=e38] [cursor=pointer]
+            - button "Click the link" [ref=e39] [cursor=pointer]
+            - button "Call the number" [ref=e40] [cursor=pointer]
+      - button "Submit (2/10)" [disabled] [ref=e42]
+  - button "Open Next.js Dev Tools" [ref=e48] [cursor=pointer]:
+    - img [ref=e49]
+  - alert [ref=e52]
+```

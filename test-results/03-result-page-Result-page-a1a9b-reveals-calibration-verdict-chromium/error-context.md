@@ -1,0 +1,89 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Drill" [ref=e5] [cursor=pointer]
+        - button "Stats" [ref=e7] [cursor=pointer]
+      - generic [ref=e8]:
+        - generic [ref=e10]: ⚡ You were at risk
+        - paragraph [ref=e11]: You said SCAM at 70% · Incorrect ✗
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: +10 base
+            - generic [ref=e15]: = 10 XP
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - generic [ref=e18]: Newcomer
+              - generic [ref=e19]: Level 2
+            - generic [ref=e22]: 10 / 50 XP
+        - generic [ref=e23]:
+          - paragraph [ref=e24]: ⚡ You flagged a safe message
+          - paragraph [ref=e25]: This is a legitimate 2FA message. Use the code if you initiated the login.
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]: ⚠️
+            - generic [ref=e29]: Overconfident
+          - paragraph [ref=e30]: You were confident — but wrong. This is the danger zone.
+          - generic [ref=e32]:
+            - generic [ref=e33]: Accuracy Score
+            - generic [ref=e34]: 51/100
+        - generic [ref=e35]:
+          - paragraph [ref=e36]: How scoring works
+          - paragraph [ref=e37]: Being wrong isn't the only danger. Being confident and wrong is.
+          - paragraph [ref=e38]: Scam Gym tracks not just whether you got it right — it tracks how sure you were.
+          - generic [ref=e39]:
+            - generic [ref=e40]:
+              - generic [ref=e41]: Overconfident
+              - generic [ref=e42]: Wrong + sure
+            - generic [ref=e43]:
+              - generic [ref=e44]: Well-calibrated
+              - generic [ref=e45]: Confidence matches
+            - generic [ref=e46]:
+              - generic [ref=e47]: Underconfident
+              - generic [ref=e48]: Right but unsure
+        - generic [ref=e49]:
+          - generic [ref=e50]: crypto wallet
+          - generic [ref=e51]: LEGIT
+        - paragraph [ref=e53]: A legitimate 2FA code from a registered short code — no links, no action required beyond using the code.
+        - generic [ref=e54]:
+          - paragraph [ref=e55]: The Tells
+          - list [ref=e56]:
+            - listitem [ref=e57]:
+              - generic [ref=e58]: →
+              - generic [ref=e59]: Legitimate platforms send 2FA codes via registered short codes, not random 10-digit numbers
+            - listitem [ref=e60]:
+              - generic [ref=e61]: →
+              - generic [ref=e62]: The message contains only the code and a standard warning not to share it
+            - listitem [ref=e63]:
+              - generic [ref=e64]: →
+              - generic [ref=e65]: No links, no 'click here,' no cancel buttons
+            - listitem [ref=e66]:
+              - generic [ref=e67]: →
+              - generic [ref=e68]: 10-minute expiry is standard practice for one-time passcodes
+        - generic [ref=e69]:
+          - paragraph [ref=e70]: Green Flags
+          - generic [ref=e71]:
+            - generic [ref=e72]: ✓ Sent from registered short code
+            - generic [ref=e73]: ✓ No links or URLs included
+            - generic [ref=e74]: ✓ No payment or fee requested
+            - generic [ref=e75]: ✓ Standard one-time passcode format with expiry warning
+        - generic [ref=e76]:
+          - paragraph [ref=e77]: Safe Move
+          - paragraph [ref=e78]: Use this code only to complete a login you just initiated. If you didn't initiate a login, go directly to the platform's official website to change your password — do not use any URL or contact number from the message itself.
+        - generic [ref=e79]:
+          - paragraph [ref=e80]: The Rule
+          - paragraph [ref=e81]: No exchange, wallet, or blockchain network ever contacts you about claiming rewards, rescuing funds, or fixing wallet errors — any unsolicited crypto contact is a theft attempt.
+        - link "Seen a message like this in real life? Get reply scripts, a verified contacts vault, and more with Pro. Upgrade to unlock" [ref=e82] [cursor=pointer]:
+          - /url: /upgrade
+          - paragraph [ref=e83]: Seen a message like this in real life?
+          - paragraph [ref=e84]: Get reply scripts, a verified contacts vault, and more with Pro.
+          - generic [ref=e85]: Upgrade to unlock
+        - button "Report an issue with this drill" [ref=e87] [cursor=pointer]
+      - button "Next Drill →" [ref=e89] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e95] [cursor=pointer]:
+    - img [ref=e96]
+  - alert [ref=e99]
+```

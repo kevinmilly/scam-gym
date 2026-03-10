@@ -1,0 +1,176 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Drill" [ref=e5] [cursor=pointer]
+        - generic [ref=e6]: My Progress
+        - button "Settings" [ref=e7] [cursor=pointer]
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - generic [ref=e11]: "1"
+            - generic [ref=e12]:
+              - generic [ref=e13]: Newcomer
+              - generic [ref=e14]: Level 1 · 25 XP
+          - generic [ref=e15]:
+            - generic [ref=e16]:
+              - generic [ref=e17]: Newcomer
+              - generic [ref=e18]: Level 2
+            - generic [ref=e21]: 25 / 50 XP
+        - paragraph [ref=e22]: 1 drills completed · 100% overall accuracy
+        - generic [ref=e23]:
+          - button "📤 Share My Progress" [ref=e24] [cursor=pointer]
+          - button "📤 Share Last Result" [ref=e25] [cursor=pointer]
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]: 🔒
+            - generic [ref=e29]: Your Progress
+          - paragraph [ref=e30]: See if you're actually getting better — or just getting lucky.
+          - link "Upgrade to unlock" [ref=e31] [cursor=pointer]:
+            - /url: /upgrade
+        - generic [ref=e32]:
+          - paragraph [ref=e33]: Medals · 2 / 33
+          - generic [ref=e34]:
+            - generic [ref=e35]:
+              - paragraph [ref=e36]: Core Skill
+              - generic [ref=e37]:
+                - generic [ref=e38]:
+                  - generic [ref=e39]: 🧠
+                  - generic [ref=e40]: First Instinct
+                - generic [ref=e41]:
+                  - generic [ref=e42]: 👁️
+                  - generic [ref=e43]: Sharp Eye
+                - generic [ref=e44]:
+                  - generic [ref=e45]: 📡
+                  - generic [ref=e46]: Scam Radar
+                - generic [ref=e47]:
+                  - generic [ref=e48]: 🛡️
+                  - generic [ref=e49]: Untouchable
+            - generic [ref=e50]:
+              - paragraph [ref=e51]: Calibration
+              - generic [ref=e52]:
+                - generic [ref=e53]:
+                  - generic [ref=e54]: 🎯
+                  - generic [ref=e55]: Honest Call
+                - generic [ref=e56]:
+                  - generic [ref=e57]: 📻
+                  - generic [ref=e58]: Tuned In
+                - generic [ref=e59]:
+                  - generic [ref=e60]: 🪞
+                  - generic [ref=e61]: Reality Check
+                - generic [ref=e62]:
+                  - generic [ref=e63]: 🤔
+                  - generic [ref=e64]: Gut Check
+            - generic [ref=e65]:
+              - paragraph [ref=e66]: Volume
+              - generic [ref=e67]:
+                - generic [ref=e68]:
+                  - generic [ref=e69]: 🔥
+                  - generic [ref=e70]: Warming Up
+                - generic [ref=e71]:
+                  - generic [ref=e72]: 💪
+                  - generic [ref=e73]: In Training
+                - generic [ref=e74]:
+                  - generic [ref=e75]: ⚔️
+                  - generic [ref=e76]: Battle Tested
+                - generic [ref=e77]:
+                  - generic [ref=e78]: 🏋️
+                  - generic [ref=e79]: Scam Gym Regular
+            - generic [ref=e80]:
+              - paragraph [ref=e81]: Pattern Mastery
+              - generic [ref=e82]:
+                - generic [ref=e83]:
+                  - generic [ref=e84]: 📦
+                  - generic [ref=e85]: Delivery Toll Master
+                - generic [ref=e86]:
+                  - generic [ref=e87]: 🏦
+                  - generic [ref=e88]: Bank Fraud Alert Master
+                - generic [ref=e89]:
+                  - generic [ref=e90]: 🔑
+                  - generic [ref=e91]: Account Verification Master
+                - generic [ref=e92]:
+                  - generic [ref=e93]: 🖥️
+                  - generic [ref=e94]: Tech Support Master
+                - generic [ref=e95]:
+                  - generic [ref=e96]: 💼
+                  - generic [ref=e97]: Job Seeker Master
+                - generic [ref=e98]:
+                  - generic [ref=e99]: 🧾
+                  - generic [ref=e100]: Invoice Vendor Master
+                - generic [ref=e101]:
+                  - generic [ref=e102]: 💕
+                  - generic [ref=e103]: Romance Social Master
+                - generic [ref=e104]:
+                  - generic [ref=e105]: 📱
+                  - generic [ref=e106]: Qr Code Master
+                - generic [ref=e107]:
+                  - generic [ref=e108]: 🛒
+                  - generic [ref=e109]: Marketplace Master
+                - generic [ref=e110]:
+                  - generic [ref=e111]: 🔐
+                  - generic [ref=e112]: Oauth Consent Master
+                - generic [ref=e113]:
+                  - generic [ref=e114]: 🪙
+                  - generic [ref=e115]: Crypto Wallet Master
+                - generic [ref=e116]:
+                  - generic [ref=e117]: 🏛️
+                  - generic [ref=e118]: Government Impersonation Master
+                - generic [ref=e119]:
+                  - generic [ref=e120]: 🔄
+                  - generic [ref=e121]: Subscription Renewal Master
+                - generic [ref=e122]:
+                  - generic [ref=e123]: 📲
+                  - generic [ref=e124]: Otp Sim Swap Master
+                - generic [ref=e125]:
+                  - generic [ref=e126]: 🎣
+                  - generic [ref=e127]: Credential Phishing Master
+                - generic [ref=e128]:
+                  - generic [ref=e129]: 💝
+                  - generic [ref=e130]: Charity Fraud Master
+                - generic [ref=e131]:
+                  - generic [ref=e132]: 📎
+                  - generic [ref=e133]: Malware Attachment Master
+            - generic [ref=e134]:
+              - paragraph [ref=e135]: Special
+              - generic [ref=e136]:
+                - generic [ref=e137]:
+                  - generic [ref=e138]: 🔍
+                  - generic [ref=e139]: Skeptic's Eye
+                - generic [ref=e140]:
+                  - generic [ref=e141]: 🚩
+                  - generic [ref=e142]: Red Flag Hunter
+                - generic [ref=e143]:
+                  - generic [ref=e144]: 🦺
+                  - generic [ref=e145]: Safety First
+                - generic [ref=e146]:
+                  - generic [ref=e147]: 💎
+                  - generic [ref=e148]: Perfect Read
+        - generic [ref=e149]:
+          - paragraph [ref=e150]: Calibration by confidence level
+          - generic [ref=e152]:
+            - generic [ref=e153]:
+              - generic [ref=e154]: 70–79% confidence
+              - generic [ref=e155]: 100% accurate (1)
+            - generic [ref=e158]: "Expected: 75%"
+        - generic [ref=e159]:
+          - generic [ref=e160]:
+            - generic [ref=e161]: 🔒
+            - generic [ref=e162]: Attempt History
+          - paragraph [ref=e163]: Browse and filter every drill you've attempted with full details.
+          - link "Upgrade to unlock" [ref=e164] [cursor=pointer]:
+            - /url: /upgrade
+        - generic [ref=e165]:
+          - generic [ref=e166]:
+            - generic [ref=e167]: 🔒
+            - generic [ref=e168]: Saved Drills
+          - paragraph [ref=e169]: Bookmark drills on the result page to save them here for later review.
+          - link "Upgrade to unlock" [ref=e170] [cursor=pointer]:
+            - /url: /upgrade
+      - button "Keep Training" [ref=e172] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e178] [cursor=pointer]:
+    - img [ref=e179]
+  - alert [ref=e182]
+```

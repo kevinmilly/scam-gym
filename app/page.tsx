@@ -57,6 +57,7 @@ function HomePageInner() {
   const [showContextPicker, setShowContextPicker] = useState(false);
   const [premiumJustActivated, setPremiumJustActivated] = useState(false);
   const [demoAnswer, setDemoAnswer] = useState<null | "scam" | "legit">(null);
+  const [autopilotMsg, setAutopilotMsg] = useState<string | null>(null);
 
   // Handle premium activation via URL param (Stripe redirect)
   useEffect(() => {
@@ -73,7 +74,7 @@ function HomePageInner() {
     if (typeof window !== "undefined") {
       const onboarded = localStorage.getItem(ONBOARDED_KEY);
       const fromDrill = searchParams.get("from") === "drill";
-      if (onboarded && selectedContext && !fromDrill) {
+      if (onboarded && selectedContext && !fromDrill && searchParams.get("premium") !== "1") {
         router.replace("/drill");
       } else {
         setChecked(true);
@@ -102,7 +103,23 @@ function HomePageInner() {
     router.push("/drill");
   }
 
-  if (!checked) return null;
+  if (!checked) return (
+    <div className="flex flex-col min-h-dvh px-6 py-10">
+      <div className="mb-12 flex items-center gap-2">
+        <svg width="26" height="26" viewBox="0 0 512 512" aria-hidden="true">
+          <defs>
+            <linearGradient id="sg-s" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#7c6af7"/>
+              <stop offset="100%" stopColor="#5b4bd6"/>
+            </linearGradient>
+          </defs>
+          <path d="M256 28 L460 120 C460 120 468 320 256 484 C44 320 52 120 52 120 Z" fill="url(#sg-s)"/>
+          <path d="M192 260 L232 310 L328 200" fill="none" stroke="#fff" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        <span className="font-bold text-xl tracking-tight" style={{ color: "var(--text)" }}>Scam Gym</span>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-col min-h-dvh px-6 py-10">
@@ -426,8 +443,11 @@ function HomePageInner() {
           {/* Sticky CTA */}
           <div
             className="sticky bottom-0 -mx-6 px-6 pt-6 pb-6 space-y-3"
-            style={{ background: "linear-gradient(to bottom, transparent 0%, var(--bg) 25%)" }}
+            style={{ background: "linear-gradient(to bottom, transparent 0%, var(--background) 25%)" }}
           >
+            {autopilotMsg && (
+              <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>{autopilotMsg}</p>
+            )}
             <button
               onClick={() => { tap(); handleStart(); }}
               className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
@@ -454,6 +474,7 @@ function HomePageInner() {
                       localStorage.setItem("scamgym_onboarded", "1");
                       router.push("/drill");
                     } else {
+                      setAutopilotMsg("Do a few more drills first — we need more data to find your weak spots.");
                       handleStart();
                     }
                   }}

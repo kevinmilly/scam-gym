@@ -1,0 +1,41 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Drill" [ref=e5] [cursor=pointer]
+        - button "Stats" [ref=e7] [cursor=pointer]
+      - generic [ref=e8]:
+        - generic [ref=e10]: ✅ You were safe
+        - paragraph [ref=e11]: You said SCAM at 70% · Correct ✓
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: +10 base
+            - generic [ref=e15]: +10 correct
+            - generic [ref=e16]: +5 calibrated
+            - generic [ref=e17]: = 25 XP
+          - generic [ref=e18]:
+            - generic [ref=e19]:
+              - generic [ref=e20]: Newcomer
+              - generic [ref=e21]: Level 2
+            - generic [ref=e24]: 25 / 50 XP
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: 🛡️ You were right to be suspicious
+          - paragraph [ref=e27]: If you had engaged, calling this type of number could connect you to scammers who may instruct you to install remote-access software. They may then stage a fake virus removal while attempting to steal banking credentials and demand payment for fictitious services.
+        - generic [ref=e28]:
+          - paragraph [ref=e29]: Which of these did you spot?
+          - paragraph [ref=e30]: Optional — select any you noticed.
+          - generic [ref=e31]:
+            - button "Email from non-official domain" [ref=e32] [cursor=pointer]
+            - button "Unsolicited virus warning" [ref=e33] [cursor=pointer]
+            - button "Call now — extreme urgency" [ref=e34] [cursor=pointer]
+            - button "Pinnacle Software never sends unsolicited virus warnings" [ref=e35] [cursor=pointer]
+      - generic [ref=e37]:
+        - button "See Explanation →" [ref=e38] [cursor=pointer]
+        - button "Skip →" [ref=e39] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e45] [cursor=pointer]:
+    - img [ref=e46]
+  - alert [ref=e49]
+```

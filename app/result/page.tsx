@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Attempt, Drill, CalibrationVerdict } from "@/lib/types";
@@ -80,10 +80,21 @@ export default function ResultPage() {
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [isFirstDrill, setIsFirstDrill] = useState(false);
+  const revealedRef = useRef<HTMLDivElement>(null);
 
   type ContentFlag = {
     reason: "answer_wrong" | "question_unclear" | "red_flags_wrong" | "other";
   };
+
+  // Intercept browser back gesture — going back would land on a stale drill
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      router.push("/drill");
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [router]);
 
   useEffect(() => {
     const a = sessionStorage.getItem("lastAttempt");
@@ -99,8 +110,11 @@ export default function ResultPage() {
     setCalVerdict(cv as CalibrationVerdict);
     setBookmarked(isBookmarked(parsedDrill.id));
 
-    // Update streak (runs for all users so data is ready if they upgrade)
-    updateStreak();
+    // Update streak once per drill (guard against refresh replaying the update)
+    if (!sessionStorage.getItem("streakUpdated")) {
+      updateStreak();
+      sessionStorage.setItem("streakUpdated", "1");
+    }
 
     track("result_viewed", {
       drillId: parsedDrill.id,
@@ -142,6 +156,7 @@ export default function ResultPage() {
     await saveAttempt(updated);
     setAttempt(updated);
     setRevealed(true);
+    setTimeout(() => revealedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
 
     // Recompute XP breakdown now that redFlagRecall is populated
     const newBreakdown = computeXpForAttempt(updated, drill);
@@ -237,11 +252,11 @@ export default function ResultPage() {
         style={{ borderColor: "var(--border)" }}
       >
         <button
-          onClick={() => router.push("/drill")}
+          onClick={() => router.push("/?from=drill")}
           className="min-h-[44px] px-3 flex items-center text-sm"
           style={{ color: "var(--text-muted)" }}
         >
-          ← Drill
+          ← Home
         </button>
         <div className="flex items-center gap-1">
           {isPremium() && drill && (
@@ -330,6 +345,11 @@ export default function ResultPage() {
           <p className="text-sm leading-relaxed italic" style={{ color: "var(--text-muted)" }}>
             {consequenceText}
           </p>
+          {drill.ground_truth === "scam" && (
+            <p className="text-xs mt-3 leading-relaxed" style={{ color: "var(--text-muted)", opacity: 0.75 }}>
+              Scammers send this to thousands of people — betting some actually use the service. That&apos;s the trap. Even if it sounds plausible, verify through an official source before acting.
+            </p>
+          )}
         </div>
 
         {/* Behavior feedback */}
@@ -362,6 +382,22 @@ export default function ResultPage() {
             <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
               Polished language is no longer a safety signal. AI generates grammatically perfect, emotionally convincing scams at scale. Fluency means nothing.
             </p>
+          </div>
+        )}
+
+        {/* Scroll hint — visible before reveal */}
+        {!revealed && (
+          <div className="flex flex-col items-center gap-1 py-1" style={{ color: "var(--text-muted)" }}>
+            <span className="text-xs">scroll for more</span>
+            <span
+              className="text-base"
+              style={{
+                display: "inline-block",
+                animation: "bounce 1.4s infinite",
+              }}
+            >
+              ↓
+            </span>
           </div>
         )}
 
@@ -398,7 +434,7 @@ export default function ResultPage() {
 
         {/* Phase 2 — revealed content */}
         {revealed && (
-          <>
+          <div ref={revealedRef}>
             {/* Calibration verdict */}
             <div
               className="rounded-2xl p-5 border"
@@ -688,7 +724,7 @@ export default function ResultPage() {
                 Thanks for the report. We&apos;ll review it.
               </p>
             )}
-          </>
+          </div>
         )}
       </div>
 

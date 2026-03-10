@@ -1,0 +1,47 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "← Exit" [active] [ref=e5] [cursor=pointer]
+        - generic [ref=e6]:
+          - generic [ref=e7]: 1/10
+          - generic [ref=e8]: EMAIL
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - generic [ref=e13]:
+              - generic [ref=e14]: B
+              - generic [ref=e15]:
+                - generic [ref=e16]: BluePeak Bank
+                - generic [ref=e17]: alerts@bluepeak.com
+            - generic [ref=e18]: Unusual activity on your account — please review
+          - paragraph [ref=e20]: "Dear Helen, We noticed a transaction that may be unusual for your account: $214.00 — TechGadgets Online — Feb 12 If you recognize this transaction, no action is needed. If you don't, please call the number on the back of your debit card or log in at bluepeak.com to dispute it. Do not reply to this email. BluePeak Fraud Prevention"
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Is this message…
+          - generic [ref=e23]:
+            - button "🚨 Scam" [ref=e24] [cursor=pointer]
+            - button "✅ Legit" [ref=e25] [cursor=pointer]
+        - generic [ref=e26]:
+          - paragraph [ref=e27]: How confident are you?
+          - generic [ref=e28]:
+            - button "50%" [ref=e29] [cursor=pointer]
+            - button "60%" [ref=e30] [cursor=pointer]
+            - button "70%" [ref=e31] [cursor=pointer]
+            - button "85%" [ref=e32] [cursor=pointer]
+            - button "95%" [ref=e33] [cursor=pointer]
+        - generic [ref=e34]:
+          - paragraph [ref=e35]: What would you actually do?
+          - generic [ref=e36]:
+            - button "Ignore it" [ref=e37] [cursor=pointer]
+            - button "Verify first" [ref=e38] [cursor=pointer]
+            - button "Respond" [ref=e39] [cursor=pointer]
+            - button "Click the link" [ref=e40] [cursor=pointer]
+            - button "Call the number" [ref=e41] [cursor=pointer]
+      - button "Submit (1/10)" [disabled] [ref=e43]
+  - button "Open Next.js Dev Tools" [ref=e49] [cursor=pointer]:
+    - img [ref=e50]
+  - alert [ref=e53]
+```

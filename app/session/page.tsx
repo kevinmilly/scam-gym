@@ -52,6 +52,7 @@ export default function SessionPage() {
   const [summary, setSummary] = useState<SessionSummaryData | null>(null);
   const [sessionAttempts, setSessionAttempts] = useState<Attempt[]>([]);
   const [shareToast, setShareToast] = useState<string | null>(null);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // Initialize or restore session
   useEffect(() => {
@@ -321,12 +322,7 @@ export default function SessionPage() {
         style={{ borderColor: "var(--border)" }}
       >
         <button
-          onClick={() => {
-            if (confirm("Leave session? Progress will be lost.")) {
-              clearSession();
-              router.push("/?from=drill");
-            }
-          }}
+          onClick={() => setShowExitConfirm(true)}
           className="min-h-[44px] px-3 flex items-center text-sm"
           style={{ color: "var(--text-muted)" }}
         >
@@ -349,12 +345,38 @@ export default function SessionPage() {
         <div className="w-16" />
       </div>
 
+      {/* Exit confirm banner */}
+      {showExitConfirm && (
+        <div
+          className="px-4 py-3 flex items-center justify-between gap-3"
+          style={{ background: "rgba(239,68,68,0.1)", borderBottom: "1px solid rgba(239,68,68,0.3)" }}
+        >
+          <p className="text-sm" style={{ color: "var(--text)" }}>Leave session? Progress will be lost.</p>
+          <div className="flex gap-2 shrink-0">
+            <button
+              onClick={() => { clearSession(); router.push("/?from=drill"); }}
+              className="px-3 py-1.5 rounded-xl text-sm font-bold"
+              style={{ background: "#ef4444", color: "#fff" }}
+            >
+              Leave
+            </button>
+            <button
+              onClick={() => setShowExitConfirm(false)}
+              className="px-3 py-1.5 rounded-xl text-sm"
+              style={{ background: "var(--surface-2)", color: "var(--text-muted)" }}
+            >
+              Stay
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Progress bar */}
       <div className="h-1" style={{ background: "var(--surface-2)" }}>
         <div
           className="h-full transition-all"
           style={{
-            width: `${((session.currentIndex) / sessionDrills.length) * 100}%`,
+            width: `${((session.currentIndex + 1) / sessionDrills.length) * 100}%`,
             background: "var(--accent)",
           }}
         />

@@ -1,0 +1,4610 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\jamik\\kevinProjects\\scam-gym\\playwright.config.ts",
+    "rootDir": "C:/Users/jamik/kevinProjects/scam-gym/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/jamik/kevinProjects/scam-gym/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/jamik/kevinProjects/scam-gym/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 20000
+      },
+      {
+        "outputDir": "C:/Users/jamik/kevinProjects/scam-gym/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "C:/Users/jamik/kevinProjects/scam-gym/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 20000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright-report/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 8,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "01-onboarding.spec.ts",
+      "file": "01-onboarding.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "new user sees onboarding welcome screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-c2dbaf93b0c827cb16c3",
+          "file": "01-onboarding.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "CTA button text is visible and clickable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-4991c36591ecb22863d5",
+          "file": "01-onboarding.spec.ts",
+          "line": 23,
+          "column": 5
+        },
+        {
+          "title": "demo drill: scam answer shows correct feedback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-d744f58220d233941c5f",
+          "file": "01-onboarding.spec.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "demo drill: legit answer shows wrong feedback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-9178d37e40adb860bd93",
+          "file": "01-onboarding.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "demo drill: after reveal, CTA advances to context picker",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-1dbedb8c1d086bc112ba",
+          "file": "01-onboarding.spec.ts",
+          "line": 43,
+          "column": 5
+        },
+        {
+          "title": "context picker: all 4 modes are displayed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-94806743104a43a753e0",
+          "file": "01-onboarding.spec.ts",
+          "line": 49,
+          "column": 5
+        },
+        {
+          "title": "context picker: Start Training disabled until context selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-3b4c770eebdf0121375f",
+          "file": "01-onboarding.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "context picker: selecting a context enables Start Training",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-ba8c466842b4523b7c47",
+          "file": "01-onboarding.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "context picker: Start Training navigates to drill page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-56801450400eb57a851b",
+          "file": "01-onboarding.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "onboarded key is set in localStorage after start",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-d23eeacd11abbb8a3da8",
+          "file": "01-onboarding.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "new user sees onboarding welcome screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-dc35dfcb0718d7230fe9",
+          "file": "01-onboarding.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "CTA button text is visible and clickable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-74b00b9d8505e906e647",
+          "file": "01-onboarding.spec.ts",
+          "line": 23,
+          "column": 5
+        },
+        {
+          "title": "demo drill: scam answer shows correct feedback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-1d9cce1d039550df5f29",
+          "file": "01-onboarding.spec.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "demo drill: legit answer shows wrong feedback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-0588a6a1299cbb4b11ce",
+          "file": "01-onboarding.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "demo drill: after reveal, CTA advances to context picker",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-7267f7a103257b1f9f58",
+          "file": "01-onboarding.spec.ts",
+          "line": 43,
+          "column": 5
+        },
+        {
+          "title": "context picker: all 4 modes are displayed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-d72db7dabbb69f83f7b8",
+          "file": "01-onboarding.spec.ts",
+          "line": 49,
+          "column": 5
+        },
+        {
+          "title": "context picker: Start Training disabled until context selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-6b36fd0d60a2d6281a35",
+          "file": "01-onboarding.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "context picker: selecting a context enables Start Training",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-32c9fed60421a160c49f",
+          "file": "01-onboarding.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "context picker: Start Training navigates to drill page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-1373935a6e3771753deb",
+          "file": "01-onboarding.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "onboarded key is set in localStorage after start",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "dacac6177a7cb5257661-d0d7070fb0027da4d1d1",
+          "file": "01-onboarding.spec.ts",
+          "line": 77,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "02-drill-flow.spec.ts",
+      "file": "02-drill-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "drill page: message card is visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-c335e414be9998003d57",
+          "file": "02-drill-flow.spec.ts",
+          "line": 16,
+          "column": 5
+        },
+        {
+          "title": "drill page: verdict buttons are rendered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-7311cf95ce260a79a877",
+          "file": "02-drill-flow.spec.ts",
+          "line": 24,
+          "column": 5
+        },
+        {
+          "title": "drill page: confidence buttons are rendered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-e86a557a2ba84d68c272",
+          "file": "02-drill-flow.spec.ts",
+          "line": 29,
+          "column": 5
+        },
+        {
+          "title": "drill page: behavior options are rendered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-90e8f6f6f64e3bd5ccd0",
+          "file": "02-drill-flow.spec.ts",
+          "line": 36,
+          "column": 5
+        },
+        {
+          "title": "Submit button disabled before verdict is picked",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-4e9cf46bfc4ac0694825",
+          "file": "02-drill-flow.spec.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "Submit button disabled with verdict but no confidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-fdb17a588ff970d0a673",
+          "file": "02-drill-flow.spec.ts",
+          "line": 47,
+          "column": 5
+        },
+        {
+          "title": "Submit button disabled with confidence but no verdict",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-731b1b3ba9e3472a412a",
+          "file": "02-drill-flow.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "Submit button enabled when verdict AND confidence selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-283b25b52b05989b8fd8",
+          "file": "02-drill-flow.spec.ts",
+          "line": 59,
+          "column": 5
+        },
+        {
+          "title": "submitting navigates to result page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-24c0aaf6ae76e53a4b5d",
+          "file": "02-drill-flow.spec.ts",
+          "line": 66,
+          "column": 5
+        },
+        {
+          "title": "verdict selection is visually highlighted (selected border)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-cddd4049eae5f9c0d95d",
+          "file": "02-drill-flow.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "behavior choice is optional — submit works without it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-4137d54665bc9d21d09b",
+          "file": "02-drill-flow.spec.ts",
+          "line": 84,
+          "column": 5
+        },
+        {
+          "title": "behavior choice can be toggled off after selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-6c28ce491bcfe762f031",
+          "file": "02-drill-flow.spec.ts",
+          "line": 92,
+          "column": 5
+        },
+        {
+          "title": "Home button navigates to home with ?from=drill",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-9bb2bad91ae3855da7ed",
+          "file": "02-drill-flow.spec.ts",
+          "line": 103,
+          "column": 5
+        },
+        {
+          "title": "sessionStorage is populated after drill submission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-067709976bb5bd0e986c",
+          "file": "02-drill-flow.spec.ts",
+          "line": 108,
+          "column": 5
+        },
+        {
+          "title": "drill page: message card is visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-c792458ee79aa25d19fe",
+          "file": "02-drill-flow.spec.ts",
+          "line": 16,
+          "column": 5
+        },
+        {
+          "title": "drill page: verdict buttons are rendered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-c7b1f7b2cad2dfc36870",
+          "file": "02-drill-flow.spec.ts",
+          "line": 24,
+          "column": 5
+        },
+        {
+          "title": "drill page: confidence buttons are rendered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-ee4c7b717d231aeef410",
+          "file": "02-drill-flow.spec.ts",
+          "line": 29,
+          "column": 5
+        },
+        {
+          "title": "drill page: behavior options are rendered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-df52cd70b01c4e2eccbd",
+          "file": "02-drill-flow.spec.ts",
+          "line": 36,
+          "column": 5
+        },
+        {
+          "title": "Submit button disabled before verdict is picked",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-73bceb453a1a5117f7ba",
+          "file": "02-drill-flow.spec.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "Submit button disabled with verdict but no confidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-1f11a10d18321e52dafd",
+          "file": "02-drill-flow.spec.ts",
+          "line": 47,
+          "column": 5
+        },
+        {
+          "title": "Submit button disabled with confidence but no verdict",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-bbe381955ffdfc8648ae",
+          "file": "02-drill-flow.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "Submit button enabled when verdict AND confidence selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-f7ef9159de1fb89daeca",
+          "file": "02-drill-flow.spec.ts",
+          "line": 59,
+          "column": 5
+        },
+        {
+          "title": "submitting navigates to result page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-c353e2a6470811157b09",
+          "file": "02-drill-flow.spec.ts",
+          "line": 66,
+          "column": 5
+        },
+        {
+          "title": "verdict selection is visually highlighted (selected border)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-17407fabe8a328b8149a",
+          "file": "02-drill-flow.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "behavior choice is optional — submit works without it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-b163952bb0051e19119b",
+          "file": "02-drill-flow.spec.ts",
+          "line": 84,
+          "column": 5
+        },
+        {
+          "title": "behavior choice can be toggled off after selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-377c0171dacd60088d13",
+          "file": "02-drill-flow.spec.ts",
+          "line": 92,
+          "column": 5
+        },
+        {
+          "title": "Home button navigates to home with ?from=drill",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-cc97aa569a28075c8f9c",
+          "file": "02-drill-flow.spec.ts",
+          "line": 103,
+          "column": 5
+        },
+        {
+          "title": "sessionStorage is populated after drill submission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "403de301330665fd9ff7-e4528e21d68b5d48bde6",
+          "file": "02-drill-flow.spec.ts",
+          "line": 108,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "03-result-page.spec.ts",
+      "file": "03-result-page.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Result page — after completing a drill",
+          "file": "03-result-page.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "shows safe/risky banner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-3baa236579d79a4cbdf9",
+              "file": "03-result-page.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "shows summary line with verdict and confidence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-01f936e82b28fd0fa835",
+              "file": "03-result-page.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "shows XP earned breakdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-2fc3546ff5d93d9d3898",
+              "file": "03-result-page.spec.ts",
+              "line": 30,
+              "column": 7
+            },
+            {
+              "title": "shows consequence card",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-8f23341376f943c76307",
+              "file": "03-result-page.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "footer shows See Explanation and Skip buttons before reveal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-b05aaf848a81ec06ae98",
+              "file": "03-result-page.spec.ts",
+              "line": 43,
+              "column": 7
+            },
+            {
+              "title": "See Explanation reveals calibration verdict",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-5b071a5654d729f9f9af",
+              "file": "03-result-page.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "after reveal: shows pattern family tag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-b4935c11a4001486a0ee",
+              "file": "03-result-page.spec.ts",
+              "line": 62,
+              "column": 7
+            },
+            {
+              "title": "after reveal: shows Safe Move section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-45c4cfcdd46bbcf98041",
+              "file": "03-result-page.spec.ts",
+              "line": 70,
+              "column": 7
+            },
+            {
+              "title": "after reveal: shows The Rule section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-7d9f89df4a4fb9c645f9",
+              "file": "03-result-page.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "after reveal: footer shows Next Drill button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-aa8d1d3882489fc3f45d",
+              "file": "03-result-page.spec.ts",
+              "line": 80,
+              "column": 7
+            },
+            {
+              "title": "Next Drill navigates back to drill page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-f82db6610ba38877ab77",
+              "file": "03-result-page.spec.ts",
+              "line": 87,
+              "column": 7
+            },
+            {
+              "title": "Skip button navigates to drill without revealing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-30187ce89da1495f7489",
+              "file": "03-result-page.spec.ts",
+              "line": 93,
+              "column": 7
+            },
+            {
+              "title": "report issue form: opens, selects reason, and submits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-8f88f6186b00a8663d3a",
+              "file": "03-result-page.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "report issue: Submit disabled until reason selected",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-51345963ade8c7f5ffa5",
+              "file": "03-result-page.spec.ts",
+              "line": 115,
+              "column": 7
+            },
+            {
+              "title": "shows safe/risky banner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-38f4420357eb37a5599a",
+              "file": "03-result-page.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "shows summary line with verdict and confidence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-9024b18e874157dbbda3",
+              "file": "03-result-page.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "shows XP earned breakdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-0bc9d0878c32f91b0ef1",
+              "file": "03-result-page.spec.ts",
+              "line": 30,
+              "column": 7
+            },
+            {
+              "title": "shows consequence card",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-9b15a95608c221d78269",
+              "file": "03-result-page.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "footer shows See Explanation and Skip buttons before reveal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-6e29806bf7013b64bf4d",
+              "file": "03-result-page.spec.ts",
+              "line": 43,
+              "column": 7
+            },
+            {
+              "title": "See Explanation reveals calibration verdict",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-c6f2dcad00692660487d",
+              "file": "03-result-page.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "after reveal: shows pattern family tag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-5a8da9bef5de49b78c85",
+              "file": "03-result-page.spec.ts",
+              "line": 62,
+              "column": 7
+            },
+            {
+              "title": "after reveal: shows Safe Move section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-87885d845a0c9fe0c048",
+              "file": "03-result-page.spec.ts",
+              "line": 70,
+              "column": 7
+            },
+            {
+              "title": "after reveal: shows The Rule section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-65e905690b1deed2615c",
+              "file": "03-result-page.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "after reveal: footer shows Next Drill button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-09e950735b014b657037",
+              "file": "03-result-page.spec.ts",
+              "line": 80,
+              "column": 7
+            },
+            {
+              "title": "Next Drill navigates back to drill page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-efa520ece85e6caedffd",
+              "file": "03-result-page.spec.ts",
+              "line": 87,
+              "column": 7
+            },
+            {
+              "title": "Skip button navigates to drill without revealing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-04dca2726dacb046fe7d",
+              "file": "03-result-page.spec.ts",
+              "line": 93,
+              "column": 7
+            },
+            {
+              "title": "report issue form: opens, selects reason, and submits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-2ad2f656cb8ee7add92a",
+              "file": "03-result-page.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "report issue: Submit disabled until reason selected",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-fbe37f22167708e3a59e",
+              "file": "03-result-page.spec.ts",
+              "line": 115,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Result page — edge cases",
+          "file": "03-result-page.spec.ts",
+          "line": 128,
+          "column": 6,
+          "specs": [
+            {
+              "title": "navigating directly to /result redirects to /drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-6f0be8d439426057eaa9",
+              "file": "03-result-page.spec.ts",
+              "line": 129,
+              "column": 7
+            },
+            {
+              "title": "after completing 2 drills, each result is distinct",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-5f4d44983f8b9a42f18a",
+              "file": "03-result-page.spec.ts",
+              "line": 139,
+              "column": 7
+            },
+            {
+              "title": "navigating directly to /result redirects to /drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-fe2ed6e486f721b29620",
+              "file": "03-result-page.spec.ts",
+              "line": 129,
+              "column": 7
+            },
+            {
+              "title": "after completing 2 drills, each result is distinct",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d56e5d373dc204517b-0d68f00d92118c59dd93",
+              "file": "03-result-page.spec.ts",
+              "line": 139,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "04-premium.spec.ts",
+      "file": "04-premium.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Free user experience",
+          "file": "04-premium.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "home page does NOT show Train My Weak Spots for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-27a6e396dfb1dbb74da5",
+              "file": "04-premium.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "home page does NOT show Start 10-Drill Session for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-4ffdfe727e7ec1b17cbf",
+              "file": "04-premium.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "streak badge is hidden for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-9290bd2e14758ca9ba5f",
+              "file": "04-premium.spec.ts",
+              "line": 32,
+              "column": 7
+            },
+            {
+              "title": "settings page shows Upgrade to Pro card for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-194e28a3bfd5d3934ef1",
+              "file": "04-premium.spec.ts",
+              "line": 36,
+              "column": 7
+            },
+            {
+              "title": "settings page header does NOT show Pro badge for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-c196f3645d6db3dae49f",
+              "file": "04-premium.spec.ts",
+              "line": 45,
+              "column": 7
+            },
+            {
+              "title": "result page shows upsell card for free user (after reveal)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-7e2d613c9530173b8a32",
+              "file": "04-premium.spec.ts",
+              "line": 53,
+              "column": 7
+            },
+            {
+              "title": "result page does NOT show bookmark button for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-98c2b3910a62210449bd",
+              "file": "04-premium.spec.ts",
+              "line": 68,
+              "column": 7
+            },
+            {
+              "title": "navigating to /session redirects free user to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-6da96672250d85637c4f",
+              "file": "04-premium.spec.ts",
+              "line": 84,
+              "column": 7
+            },
+            {
+              "title": "home page does NOT show Train My Weak Spots for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-fce0fded44433181fc01",
+              "file": "04-premium.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "home page does NOT show Start 10-Drill Session for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-7cebf9d6fd5c5e18e7d8",
+              "file": "04-premium.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "streak badge is hidden for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-3096db2be1f29117af21",
+              "file": "04-premium.spec.ts",
+              "line": 32,
+              "column": 7
+            },
+            {
+              "title": "settings page shows Upgrade to Pro card for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-719b11532a90e3fe60bb",
+              "file": "04-premium.spec.ts",
+              "line": 36,
+              "column": 7
+            },
+            {
+              "title": "settings page header does NOT show Pro badge for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-2dce62e2f8f8f5c64e93",
+              "file": "04-premium.spec.ts",
+              "line": 45,
+              "column": 7
+            },
+            {
+              "title": "result page shows upsell card for free user (after reveal)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-a4528d56221b0f447894",
+              "file": "04-premium.spec.ts",
+              "line": 53,
+              "column": 7
+            },
+            {
+              "title": "result page does NOT show bookmark button for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-cbc1a95aa1baca00724a",
+              "file": "04-premium.spec.ts",
+              "line": 68,
+              "column": 7
+            },
+            {
+              "title": "navigating to /session redirects free user to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-a17408e72c0eaeb4b50a",
+              "file": "04-premium.spec.ts",
+              "line": 84,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Premium activation via URL",
+          "file": "04-premium.spec.ts",
+          "line": 92,
+          "column": 6,
+          "specs": [
+            {
+              "title": "?premium=1 param unlocks premium and shows toast",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-1a9f02f338fea743b1db",
+              "file": "04-premium.spec.ts",
+              "line": 99,
+              "column": 7
+            },
+            {
+              "title": "?premium=1 sets scamgym_premium in localStorage",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-b7ef32983cffcc14488c",
+              "file": "04-premium.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "?premium=1 cleans URL (replaceState removes param)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-acd98cb63d62f60de790",
+              "file": "04-premium.spec.ts",
+              "line": 112,
+              "column": 7
+            },
+            {
+              "title": "?premium=1 does not re-unlock if already premium",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-828973087e1e83ddf778",
+              "file": "04-premium.spec.ts",
+              "line": 124,
+              "column": 7
+            },
+            {
+              "title": "?premium=1 param unlocks premium and shows toast",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-8d0760819b7883feeb62",
+              "file": "04-premium.spec.ts",
+              "line": 99,
+              "column": 7
+            },
+            {
+              "title": "?premium=1 sets scamgym_premium in localStorage",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-cd26e59a9b412ed66cd7",
+              "file": "04-premium.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "?premium=1 cleans URL (replaceState removes param)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-c7f24c1c7912fc7454ca",
+              "file": "04-premium.spec.ts",
+              "line": 112,
+              "column": 7
+            },
+            {
+              "title": "?premium=1 does not re-unlock if already premium",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-b2604add175e94cac65e",
+              "file": "04-premium.spec.ts",
+              "line": 124,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Premium user experience",
+          "file": "04-premium.spec.ts",
+          "line": 132,
+          "column": 6,
+          "specs": [
+            {
+              "title": "home page shows Train My Weak Spots for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-d34921bf5275513bdb06",
+              "file": "04-premium.spec.ts",
+              "line": 141,
+              "column": 7
+            },
+            {
+              "title": "home page shows Start 10-Drill Session for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-d6a15ba72a4406fd421d",
+              "file": "04-premium.spec.ts",
+              "line": 149,
+              "column": 7
+            },
+            {
+              "title": "settings page shows Pro Unlocked for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-18478e61159e649cd55d",
+              "file": "04-premium.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "settings page header shows Pro badge for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-f634de21a2515b735dfa",
+              "file": "04-premium.spec.ts",
+              "line": 164,
+              "column": 7
+            },
+            {
+              "title": "session page loads for premium user (not redirected)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-4b9158bf205068b2e3a9",
+              "file": "04-premium.spec.ts",
+              "line": 179,
+              "column": 7
+            },
+            {
+              "title": "home page shows Train My Weak Spots for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-31c93cdfeddaf30730de",
+              "file": "04-premium.spec.ts",
+              "line": 141,
+              "column": 7
+            },
+            {
+              "title": "home page shows Start 10-Drill Session for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-00d9601fd5ce79d3bd4f",
+              "file": "04-premium.spec.ts",
+              "line": 149,
+              "column": 7
+            },
+            {
+              "title": "settings page shows Pro Unlocked for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-2d654b91b7c4c06aab6e",
+              "file": "04-premium.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "settings page header shows Pro badge for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-1c362f468fa9185249e3",
+              "file": "04-premium.spec.ts",
+              "line": 164,
+              "column": 7
+            },
+            {
+              "title": "session page loads for premium user (not redirected)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7df64baefde3f3c21135-7f5954fd6ce23e229d28",
+              "file": "04-premium.spec.ts",
+              "line": 179,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "05-settings.spec.ts",
+      "file": "05-settings.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "settings page renders all sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-7de7d4cc10e7f989338b",
+          "file": "05-settings.spec.ts",
+          "line": 15,
+          "column": 5
+        },
+        {
+          "title": "slow mode toggle: OFF by default, turns ON, persists",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-d43c4e1c84c4a7b56ae7",
+          "file": "05-settings.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "theme toggle: starts dark, switches to light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-38744b51ad187c425d94",
+          "file": "05-settings.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "training mode: can switch between contexts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-018496d546d998cb9786",
+          "file": "05-settings.spec.ts",
+          "line": 72,
+          "column": 5
+        },
+        {
+          "title": "analytics toggle: turns OFF, persists",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-b5dca16d1e6e70068e9d",
+          "file": "05-settings.spec.ts",
+          "line": 83,
+          "column": 5
+        },
+        {
+          "title": "reset data: shows confirm step on first click",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-acc60e86f144f3412758",
+          "file": "05-settings.spec.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "reset data: cancel hides the confirm step",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-4a1712f443e0b548c037",
+          "file": "05-settings.spec.ts",
+          "line": 111,
+          "column": 5
+        },
+        {
+          "title": "reset data: confirming clears onboarded and context",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-5c2e144c0169a0d65d8a",
+          "file": "05-settings.spec.ts",
+          "line": 122,
+          "column": 5
+        },
+        {
+          "title": "reset data: REGRESSION — streak localStorage key remains after reset (known issue)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-f953294c7ec5a7f8804b",
+          "file": "05-settings.spec.ts",
+          "line": 140,
+          "column": 5
+        },
+        {
+          "title": "back button navigates away from settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-c788c6981c9bcdc9478a",
+          "file": "05-settings.spec.ts",
+          "line": 162,
+          "column": 5
+        },
+        {
+          "title": "settings page renders all sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-d71af8efbb0d9a8992e6",
+          "file": "05-settings.spec.ts",
+          "line": 15,
+          "column": 5
+        },
+        {
+          "title": "slow mode toggle: OFF by default, turns ON, persists",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-7ea8888fac023c2f5b78",
+          "file": "05-settings.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "theme toggle: starts dark, switches to light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-2d26508b0c87bfdbe565",
+          "file": "05-settings.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "training mode: can switch between contexts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-fde7916ce186e14ab1f1",
+          "file": "05-settings.spec.ts",
+          "line": 72,
+          "column": 5
+        },
+        {
+          "title": "analytics toggle: turns OFF, persists",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-cee239b754a8652875e2",
+          "file": "05-settings.spec.ts",
+          "line": 83,
+          "column": 5
+        },
+        {
+          "title": "reset data: shows confirm step on first click",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-239f01b05045f26a6ec9",
+          "file": "05-settings.spec.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "reset data: cancel hides the confirm step",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-a80edbd6e299855ca8bb",
+          "file": "05-settings.spec.ts",
+          "line": 111,
+          "column": 5
+        },
+        {
+          "title": "reset data: confirming clears onboarded and context",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-a3996483c9f1dd965939",
+          "file": "05-settings.spec.ts",
+          "line": 122,
+          "column": 5
+        },
+        {
+          "title": "reset data: REGRESSION — streak localStorage key remains after reset (known issue)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-87f0ac99b43e0ac79c4f",
+          "file": "05-settings.spec.ts",
+          "line": 140,
+          "column": 5
+        },
+        {
+          "title": "back button navigates away from settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c779a39932beb0ea163e-b86d682feaaf09a68b17",
+          "file": "05-settings.spec.ts",
+          "line": 162,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "06-help-wizard.spec.ts",
+      "file": "06-help-wizard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "help page shows step 1: channel selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-696218da920d2d6267c8",
+          "file": "06-help-wizard.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "step 1: all 3 channel options are visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-4a98b72b17c8a9dd5225",
+          "file": "06-help-wizard.spec.ts",
+          "line": 19,
+          "column": 5
+        },
+        {
+          "title": "step 1 → step 2: selecting SMS channel advances",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-e2abc7aa8f43090f049f",
+          "file": "06-help-wizard.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "step 1 → step 2: selecting EMAIL channel advances",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-f94108a0ba8d0f046ac9",
+          "file": "06-help-wizard.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "step 2: ask options are rendered (multiple choices)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-f72063218f6f91ffc02c",
+          "file": "06-help-wizard.spec.ts",
+          "line": 36,
+          "column": 5
+        },
+        {
+          "title": "step 2 → step 3: selecting an ask option advances",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-ec9348a3e8427b1c5f23",
+          "file": "06-help-wizard.spec.ts",
+          "line": 43,
+          "column": 5
+        },
+        {
+          "title": "skip buttons advance the wizard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-610a2c22a8d4300b32ea",
+          "file": "06-help-wizard.spec.ts",
+          "line": 54,
+          "column": 5
+        },
+        {
+          "title": "output screen shows Safe Move, How to Verify, Never Do This",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-323a2db6523ec6a4eecc",
+          "file": "06-help-wizard.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "Home button on step 1 returns to home page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-212de417c511cdbf47f8",
+          "file": "06-help-wizard.spec.ts",
+          "line": 75,
+          "column": 5
+        },
+        {
+          "title": "Back button on step 2 returns to step 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-e4c8cca5496efb95763c",
+          "file": "06-help-wizard.spec.ts",
+          "line": 81,
+          "column": 5
+        },
+        {
+          "title": "refreshing the help page restarts wizard at step 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-c1f47b4ebfd8880c6895",
+          "file": "06-help-wizard.spec.ts",
+          "line": 88,
+          "column": 5
+        },
+        {
+          "title": "help page shows step 1: channel selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-65af6e8f1ddb41801937",
+          "file": "06-help-wizard.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "step 1: all 3 channel options are visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-1d86ac29f09bd4eb5c43",
+          "file": "06-help-wizard.spec.ts",
+          "line": 19,
+          "column": 5
+        },
+        {
+          "title": "step 1 → step 2: selecting SMS channel advances",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-f7d56309d9a319b834cf",
+          "file": "06-help-wizard.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "step 1 → step 2: selecting EMAIL channel advances",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-37d3b18803211f8e775d",
+          "file": "06-help-wizard.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "step 2: ask options are rendered (multiple choices)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-cb86d6d3d62ed0a41716",
+          "file": "06-help-wizard.spec.ts",
+          "line": 36,
+          "column": 5
+        },
+        {
+          "title": "step 2 → step 3: selecting an ask option advances",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-c92cdb035b3ee3b279d0",
+          "file": "06-help-wizard.spec.ts",
+          "line": 43,
+          "column": 5
+        },
+        {
+          "title": "skip buttons advance the wizard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-af31ab5ad04a79348db3",
+          "file": "06-help-wizard.spec.ts",
+          "line": 54,
+          "column": 5
+        },
+        {
+          "title": "output screen shows Safe Move, How to Verify, Never Do This",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-49107ae157f160cd0dd7",
+          "file": "06-help-wizard.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "Home button on step 1 returns to home page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-9737e218b7ef52393c42",
+          "file": "06-help-wizard.spec.ts",
+          "line": 75,
+          "column": 5
+        },
+        {
+          "title": "Back button on step 2 returns to step 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-07301a80b1a2135cca33",
+          "file": "06-help-wizard.spec.ts",
+          "line": 81,
+          "column": 5
+        },
+        {
+          "title": "refreshing the help page restarts wizard at step 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "551d3448ced58a14413c-5b40e43818724ce72694",
+          "file": "06-help-wizard.spec.ts",
+          "line": 88,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "07-navigation.spec.ts",
+      "file": "07-navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Home page routing",
+          "file": "07-navigation.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "onboarded user auto-redirects to /drill on home load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-4ae9aa7bddef5bc4a5fd",
+              "file": "07-navigation.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "?from=drill prevents auto-redirect — shows returning user screen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-d47913c6f52882d36ffc",
+              "file": "07-navigation.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Continue Training from home goes to /drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-4da040af4d6ddd79b19f",
+              "file": "07-navigation.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "My Stats link from home goes to /stats",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-e9357abb7149508f58c4",
+              "file": "07-navigation.spec.ts",
+              "line": 40,
+              "column": 7
+            },
+            {
+              "title": "Settings link from home goes to /settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-a693e566144141baeb95",
+              "file": "07-navigation.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "Panic button from home goes to /help",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-f15e5b20aeb92d63744f",
+              "file": "07-navigation.spec.ts",
+              "line": 58,
+              "column": 7
+            },
+            {
+              "title": "onboarded user auto-redirects to /drill on home load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-9efe3be9c835555be0ad",
+              "file": "07-navigation.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "?from=drill prevents auto-redirect — shows returning user screen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-de56fd91260635373077",
+              "file": "07-navigation.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Continue Training from home goes to /drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-4c0f73d3aee032629c99",
+              "file": "07-navigation.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "My Stats link from home goes to /stats",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-c39772834bd8397992cc",
+              "file": "07-navigation.spec.ts",
+              "line": 40,
+              "column": 7
+            },
+            {
+              "title": "Settings link from home goes to /settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-bdc3b51df1246a333e07",
+              "file": "07-navigation.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "Panic button from home goes to /help",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-4f4b07ca05ab017b3c36",
+              "file": "07-navigation.spec.ts",
+              "line": 58,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Full drill loop",
+          "file": "07-navigation.spec.ts",
+          "line": 68,
+          "column": 6,
+          "specs": [
+            {
+              "title": "home → drill → result → next drill completes without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-4269c88393deb99af2d0",
+              "file": "07-navigation.spec.ts",
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "drill → home (← Home) → continue training → drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-2a32b735a907d4236f8b",
+              "file": "07-navigation.spec.ts",
+              "line": 96,
+              "column": 7
+            },
+            {
+              "title": "home → drill → result → next drill completes without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-a2e858000bca086683ca",
+              "file": "07-navigation.spec.ts",
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "drill → home (← Home) → continue training → drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-46fc4fc7e6d71901a7c5",
+              "file": "07-navigation.spec.ts",
+              "line": 96,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Stats page",
+          "file": "07-navigation.spec.ts",
+          "line": 116,
+          "column": 6,
+          "specs": [
+            {
+              "title": "stats page loads with zero drills",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-22dfc418bd26743b9757",
+              "file": "07-navigation.spec.ts",
+              "line": 117,
+              "column": 7
+            },
+            {
+              "title": "stats page shows drill count after completing drills",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-c8591bded7a0d6cdd23e",
+              "file": "07-navigation.spec.ts",
+              "line": 125,
+              "column": 7
+            },
+            {
+              "title": "stats page Keep Training button navigates to /drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-78a9c34e483184510d2c",
+              "file": "07-navigation.spec.ts",
+              "line": 139,
+              "column": 7
+            },
+            {
+              "title": "stats page Settings link navigates to /settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-4d75b77fbbad436b5496",
+              "file": "07-navigation.spec.ts",
+              "line": 147,
+              "column": 7
+            },
+            {
+              "title": "stats shows premium-gated upsell cards for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-08711aff3f7de15b9904",
+              "file": "07-navigation.spec.ts",
+              "line": 153,
+              "column": 7
+            },
+            {
+              "title": "premium user does not see upsell cards on stats page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-8ae2afe7bd0ac109b038",
+              "file": "07-navigation.spec.ts",
+              "line": 162,
+              "column": 7
+            },
+            {
+              "title": "stats page loads with zero drills",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-658c65be2e2dc3cc4595",
+              "file": "07-navigation.spec.ts",
+              "line": 117,
+              "column": 7
+            },
+            {
+              "title": "stats page shows drill count after completing drills",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-8961f8432b87d57ed24b",
+              "file": "07-navigation.spec.ts",
+              "line": 125,
+              "column": 7
+            },
+            {
+              "title": "stats page Keep Training button navigates to /drill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-e43d6e3d57a5e1b507bc",
+              "file": "07-navigation.spec.ts",
+              "line": 139,
+              "column": 7
+            },
+            {
+              "title": "stats page Settings link navigates to /settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-bb23abedcf656f8f9c76",
+              "file": "07-navigation.spec.ts",
+              "line": 147,
+              "column": 7
+            },
+            {
+              "title": "stats shows premium-gated upsell cards for free user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-33a79af772954ff8e56a",
+              "file": "07-navigation.spec.ts",
+              "line": 153,
+              "column": 7
+            },
+            {
+              "title": "premium user does not see upsell cards on stats page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-06d75b69ffed28d4addb",
+              "file": "07-navigation.spec.ts",
+              "line": 162,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Upgrade page",
+          "file": "07-navigation.spec.ts",
+          "line": 173,
+          "column": 6,
+          "specs": [
+            {
+              "title": "upgrade page shows feature list and price",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-df770079ef59f7b3514c",
+              "file": "07-navigation.spec.ts",
+              "line": 174,
+              "column": 7
+            },
+            {
+              "title": "upgrade page shows Already purchased link for restore",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-663cdf0c0e45d9451b3c",
+              "file": "07-navigation.spec.ts",
+              "line": 181,
+              "column": 7
+            },
+            {
+              "title": "restore section expands and shows email input",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-67f46146783db50b9b48",
+              "file": "07-navigation.spec.ts",
+              "line": 190,
+              "column": 7
+            },
+            {
+              "title": "restore button disabled until email entered",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-e86f22d290bead05bd74",
+              "file": "07-navigation.spec.ts",
+              "line": 201,
+              "column": 7
+            },
+            {
+              "title": "upgrade page shows Pro Unlocked for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-84c3e3dd1867d8a9b8b7",
+              "file": "07-navigation.spec.ts",
+              "line": 212,
+              "column": 7
+            },
+            {
+              "title": "upgrade page shows feature list and price",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-661bb3b66d33d2a5ab55",
+              "file": "07-navigation.spec.ts",
+              "line": 174,
+              "column": 7
+            },
+            {
+              "title": "upgrade page shows Already purchased link for restore",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-1e7300240b5a20457ae9",
+              "file": "07-navigation.spec.ts",
+              "line": 181,
+              "column": 7
+            },
+            {
+              "title": "restore section expands and shows email input",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-321a681070496801f335",
+              "file": "07-navigation.spec.ts",
+              "line": 190,
+              "column": 7
+            },
+            {
+              "title": "restore button disabled until email entered",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-e3de721e9b40ddee9a6c",
+              "file": "07-navigation.spec.ts",
+              "line": 201,
+              "column": 7
+            },
+            {
+              "title": "upgrade page shows Pro Unlocked for premium user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9b4874819e6725d31590-d29edac6c44e42a580e0",
+              "file": "07-navigation.spec.ts",
+              "line": 212,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "08-session.spec.ts",
+      "file": "08-session.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Session page — premium user",
+          "file": "08-session.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "session loads and shows drill 1/10",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-6fe5321b8412f76ae841",
+              "file": "08-session.spec.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "session shows progress bar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-1a9a3323f7096a28f8b1",
+              "file": "08-session.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "session shows channel badge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-186b5444643e3c94c445",
+              "file": "08-session.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "session submit button shows progress counter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-86624db76600e7aab92c",
+              "file": "08-session.spec.ts",
+              "line": 33,
+              "column": 7
+            },
+            {
+              "title": "session submit disabled without verdict + confidence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-dc16bca8d488c55a9bee",
+              "file": "08-session.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "completing a drill advances to drill 2/10",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-19e32b0b8b78adb03d0b",
+              "file": "08-session.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "exit button with cancel keeps user in session",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-97144233c77fbdc635fc",
+              "file": "08-session.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "exit button with confirm navigates to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-7d97ce481fe1cb71c7ba",
+              "file": "08-session.spec.ts",
+              "line": 67,
+              "column": 7
+            },
+            {
+              "title": "session state persists if user navigates away and back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-a3b28fcbc595892de92b",
+              "file": "08-session.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "session loads and shows drill 1/10",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-420e6dcc67e575749daa",
+              "file": "08-session.spec.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "session shows progress bar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-af40646406ecce02c74a",
+              "file": "08-session.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "session shows channel badge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-68ced96299676db459ee",
+              "file": "08-session.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "session submit button shows progress counter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-aa8b04adfbf0a7c021d4",
+              "file": "08-session.spec.ts",
+              "line": 33,
+              "column": 7
+            },
+            {
+              "title": "session submit disabled without verdict + confidence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-cde778228561ae57615d",
+              "file": "08-session.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "completing a drill advances to drill 2/10",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-d7ebc0ed29d173d2a5ca",
+              "file": "08-session.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "exit button with cancel keeps user in session",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-ba4b2c9565d6a821fe7e",
+              "file": "08-session.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "exit button with confirm navigates to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-7d5994bb9f06b746f51d",
+              "file": "08-session.spec.ts",
+              "line": 67,
+              "column": 7
+            },
+            {
+              "title": "session state persists if user navigates away and back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-0621c45b854bdaed39cf",
+              "file": "08-session.spec.ts",
+              "line": 75,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Session summary screen",
+          "file": "08-session.spec.ts",
+          "line": 93,
+          "column": 6,
+          "specs": [
+            {
+              "title": "completing all 10 drills shows Session Complete screen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-09ea9c8cc72a62de1c10",
+              "file": "08-session.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "summary shows accuracy and XP earned",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-8fe2d47bccb8b201d157",
+              "file": "08-session.spec.ts",
+              "line": 108,
+              "column": 7
+            },
+            {
+              "title": "summary shows Keep Training and Back to Home buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-e92d7cba9049692d5ef7",
+              "file": "08-session.spec.ts",
+              "line": 113,
+              "column": 7
+            },
+            {
+              "title": "completing all 10 drills shows Session Complete screen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-2317e99a56741a029f24",
+              "file": "08-session.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "summary shows accuracy and XP earned",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-222476726fc8cc293167",
+              "file": "08-session.spec.ts",
+              "line": 108,
+              "column": 7
+            },
+            {
+              "title": "summary shows Keep Training and Back to Home buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 20000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0d5ba00713e81c1205a8-05a13fc2f539a93211cc",
+              "file": "08-session.spec.ts",
+              "line": 113,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-03-08T13:46:39.288Z",
+    "duration": 168.81399999999996,
+    "expected": 0,
+    "skipped": 218,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
