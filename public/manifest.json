@@ -1,12 +1,14 @@
 {
   "name": "Scam Gym",
   "short_name": "Scam Gym",
-  "description": "Train your scam detection. Track your weak spots.",
+  "description": "Train your brain to spot scams before they fool you.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0a0a0f",
   "theme_color": "#0a0a0f",
   "orientation": "portrait",
+  "categories": ["education", "security"],
   "icons": [
     {
       "src": "/icon-192.png",
@@ -19,6 +21,29 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Training",
+      "short_name": "Train",
+      "url": "/drill",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Stats",
+      "short_name": "Stats",
+      "url": "/stats",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Scam Gym - Train your scam detection skills"
     }
   ]
 }

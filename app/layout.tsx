@@ -4,6 +4,8 @@ import { DrillProvider } from "@/lib/DrillContext";
 import SlowModeInit from "@/lib/SlowModeInit";
 import ThemeInit from "@/lib/ThemeInit";
 import PostHogProvider from "@/components/PostHogProvider";
+import ServiceWorkerRegistration from "@/lib/ServiceWorkerRegistration";
+import InstallPrompt from "@/components/InstallPrompt";
 
 export const metadata: Metadata = {
   title: "Scam Gym",
@@ -15,6 +17,11 @@ export const metadata: Metadata = {
       { url: "/favicon.png", type: "image/png", sizes: "32x32" },
     ],
     apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Scam Gym",
   },
   openGraph: {
     title: "Scam Gym",
@@ -46,11 +53,13 @@ export default function RootLayout({
       <body className="antialiased">
         <SlowModeInit />
         <ThemeInit />
+        <ServiceWorkerRegistration />
         <PostHogProvider>
           <DrillProvider>
             <main className="min-h-dvh max-w-lg mx-auto">
               {children}
             </main>
+            <InstallPrompt />
           </DrillProvider>
         </PostHogProvider>
       </body>
