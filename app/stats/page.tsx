@@ -20,6 +20,8 @@ import { getBookmarks } from "@/lib/bookmarks";
 import TrendChart from "@/components/TrendChart";
 import AttemptHistory from "@/components/AttemptHistory";
 
+type StatsTab = "overview" | "medals" | "history";
+
 export default function StatsPage() {
   const router = useRouter();
   const [stats, setStats] = useState<StatsResult | null>(null);
@@ -29,6 +31,7 @@ export default function StatsPage() {
   const [shareToast, setShareToast] = useState<string | null>(null);
   const [progression, setProgression] = useState<ProgressionState | null>(null);
   const [expandedFamily, setExpandedFamily] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<StatsTab>("overview");
 
   async function shareText(text: string) {
     if (navigator.share) {
@@ -119,18 +122,45 @@ export default function StatsPage() {
         className="flex items-center justify-between px-4 py-3 border-b"
         style={{ borderColor: "var(--border)" }}
       >
-        <button onClick={() => router.push("/drill")} className="text-sm" style={{ color: "var(--text-muted)" }}>
+        <button onClick={() => router.push("/drill")} className="min-h-[44px] px-3 flex items-center text-sm" style={{ color: "var(--text-muted)" }}>
           ← Drill
         </button>
         <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>
           My Progress
         </span>
-        <button onClick={() => router.push("/settings")} className="text-sm" style={{ color: "var(--text-muted)" }}>
+        <button onClick={() => router.push("/settings")} className="min-h-[44px] px-3 flex items-center text-sm" style={{ color: "var(--text-muted)" }}>
           Settings
         </button>
       </div>
 
+      {/* Tab navigation */}
+      <div
+        className="flex gap-1.5 px-4 py-2 border-b"
+        style={{ borderColor: "var(--border)" }}
+      >
+        {(["overview", "medals", "history"] as StatsTab[]).map((tab) => {
+          const active = activeTab === tab;
+          const labels: Record<StatsTab, string> = { overview: "Overview", medals: "Medals", history: "History" };
+          return (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className="px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150"
+              style={{
+                background: active ? "var(--accent)" : "var(--surface-2)",
+                color: active ? "#fff" : "var(--text-muted)",
+              }}
+            >
+              {labels[tab]}
+            </button>
+          );
+        })}
+      </div>
+
       <div className="px-4 py-5 space-y-6 overflow-y-auto flex-1">
+
+        {activeTab === "overview" && <>
+
         {/* Level Badge */}
         {progression && <LevelBadge levelInfo={progression.levelInfo} />}
 
@@ -174,11 +204,6 @@ export default function StatsPage() {
               📤 Share Last Result
             </button>
           )}
-          {shareToast && (
-            <span className="text-xs font-semibold animate-pulse" style={{ color: "var(--accent)" }}>
-              {shareToast}
-            </span>
-          )}
         </div>
 
         {/* Accuracy Trend (premium) */}
@@ -216,13 +241,18 @@ export default function StatsPage() {
           </div>
         )}
 
-        {/* Medal Gallery */}
-        {progression && (
-          <MedalGallery
-            earnedMedals={progression.earnedMedals}
-            allMedals={progression.allMedals}
-          />
+        </>}{/* end first overview block */}
+
+        {activeTab === "medals" && (
+          progression && (
+            <MedalGallery
+              earnedMedals={progression.earnedMedals}
+              allMedals={progression.allMedals}
+            />
+          )
         )}
+
+        {activeTab === "overview" && <>
 
         {/* Vulnerabilities */}
         {stats.topVulnerabilities.length > 0 && (
@@ -481,6 +511,10 @@ export default function StatsPage() {
           </div>
         )}
 
+        </>}{/* end second overview block */}
+
+        {activeTab === "history" && <>
+
         {/* Attempt History (premium) */}
         <PremiumGate label="Attempt History" pitch="Browse and filter every drill you've attempted with full details.">
           <AttemptHistory attempts={allAttempts} drills={drills} />
@@ -549,7 +583,21 @@ export default function StatsPage() {
             );
           })()}
         </PremiumGate>
+
+        </>}
       </div>
+
+      {/* Share snackbar */}
+      {shareToast && (
+        <div className="fixed bottom-24 left-0 right-0 flex justify-center pointer-events-none" style={{ zIndex: 50 }}>
+          <div
+            className="animate-slideUp px-5 py-3 rounded-2xl text-sm font-semibold"
+            style={{ background: "var(--surface-2)", color: "var(--text)", border: "1px solid var(--border)" }}
+          >
+            ✓ Copied to clipboard
+          </div>
+        </div>
+      )}
 
       {/* CTA */}
       <div

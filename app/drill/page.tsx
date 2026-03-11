@@ -133,7 +133,8 @@ export default function DrillPage() {
       >
         <button
           onClick={() => router.push("/?from=drill")}
-          className="min-h-[44px] px-3 flex items-center text-sm"
+          aria-label="Go to home"
+          className="min-h-[44px] px-4 flex items-center text-sm"
           style={{ color: "var(--text-muted)" }}
         >
           ← Home
@@ -160,7 +161,8 @@ export default function DrillPage() {
           {focusFamilies.length > 0 && (
             <button
               onClick={() => { setFocusFamilies([]); setFocusLabel(null); }}
-              className="text-xs px-2 py-1"
+              aria-label="Clear focus filter"
+              className="min-h-[44px] px-3 text-xs flex items-center"
               style={{ color: "var(--text-muted)" }}
             >
               Normal
@@ -207,7 +209,8 @@ export default function DrillPage() {
                 <button
                   key={v}
                   onClick={() => { tap(); setVerdict(v); }}
-                  className="py-4 rounded-2xl font-bold text-lg border-2 transition-all active:scale-95"
+                  aria-pressed={selected}
+                  className="py-4 rounded-2xl font-bold text-lg border-2 transition-colors duration-150 active:scale-95"
                   style={{
                     borderColor: selected
                       ? isScam ? "#ef4444" : "#22c55e"
@@ -239,7 +242,7 @@ export default function DrillPage() {
                 <button
                   key={c}
                   onClick={() => { tap(); setConfidence(c); }}
-                  className="flex-1 min-w-[48px] py-3 rounded-xl font-semibold text-sm border-2 transition-all active:scale-95"
+                  className="flex-1 min-w-[48px] py-3 rounded-xl font-semibold text-sm border-2 transition-colors duration-150 active:scale-95"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
                     background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
@@ -260,7 +263,7 @@ export default function DrillPage() {
         {/* Behavior question */}
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
-            What would you actually do?
+            What would you actually do? <span className="normal-case font-normal tracking-normal opacity-60">(optional)</span>
           </p>
           <div className="flex flex-wrap gap-2">
             {BEHAVIOR_OPTIONS.map(({ value, label }) => {
@@ -269,7 +272,7 @@ export default function DrillPage() {
                 <button
                   key={value}
                   onClick={() => { tap(); setBehaviorChoice(selected ? null : value); }}
-                  className="py-2 px-3 rounded-xl text-sm border-2 transition-all active:scale-95"
+                  className="py-2 px-3 rounded-xl text-sm border-2 transition-colors duration-150 active:scale-95"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
                     background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
@@ -285,13 +288,11 @@ export default function DrillPage() {
       </div>
 
       {/* Sticky submit */}
-      <div
-        className="fixed bottom-0 left-0 right-0 px-4 py-4 border-t max-w-lg mx-auto"
-        style={{
-          background: "var(--background)",
-          borderColor: "var(--border)",
-        }}
-      >
+      <div className="fixed bottom-0 left-0 right-0" style={{ background: "var(--background)" }}>
+        <div
+          className="max-w-lg mx-auto px-4 py-4 border-t"
+          style={{ borderColor: "var(--border)" }}
+        >
         <button
           onClick={() => { tap(); handleSubmit(); }}
           disabled={!canSubmit || submitting}
@@ -304,6 +305,7 @@ export default function DrillPage() {
         >
           {submitting ? "Submitting…" : "Submit"}
         </button>
+        </div>
       </div>
     </div>
   );

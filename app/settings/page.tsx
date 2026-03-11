@@ -99,7 +99,7 @@ export default function SettingsPage() {
         style={{ borderColor: "var(--border)" }}
       >
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push("/")}
           className="min-h-[44px] px-3 flex items-center text-sm"
           style={{ color: "var(--text-muted)" }}
         >
@@ -136,6 +136,7 @@ export default function SettingsPage() {
             </p>
           </div>
         ) : (
+          <>
           <Link
             href="/upgrade"
             className="block rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
@@ -154,6 +155,14 @@ export default function SettingsPage() {
               Upgrade to unlock
             </span>
           </Link>
+          <Link
+            href="/restore"
+            className="block text-center text-xs py-2"
+            style={{ color: "var(--text-muted)" }}
+          >
+            Already purchased? Restore access →
+          </Link>
+          </>
         )}
 
         {/* Context mode */}
@@ -213,7 +222,9 @@ export default function SettingsPage() {
             </div>
             <button
               onClick={() => { tap(); toggleSlowMode(); }}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              role="switch"
+              aria-checked={slowMode}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
               style={{
                 borderColor: slowMode ? "var(--accent)" : "var(--border)",
                 background: slowMode ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
@@ -246,7 +257,9 @@ export default function SettingsPage() {
                 setAudio(next);
                 setAudioEnabled(next);
               }}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              role="switch"
+              aria-checked={audio}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
               style={{
                 borderColor: audio ? "var(--accent)" : "var(--border)",
                 background: audio ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
@@ -279,7 +292,9 @@ export default function SettingsPage() {
                 setThemeState(next);
                 setTheme(next);
               }}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              role="switch"
+              aria-checked={theme === "light"}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
               style={{
                 borderColor: theme === "light" ? "var(--accent)" : "var(--border)",
                 background: theme === "light" ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
@@ -440,7 +455,9 @@ export default function SettingsPage() {
                 setAnalytics(next);
                 setAnalyticsEnabled(next);
               }}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+              role="switch"
+              aria-checked={analytics}
+              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
               style={{
                 borderColor: analytics ? "var(--accent)" : "var(--border)",
                 background: analytics ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
@@ -481,12 +498,22 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        {status && (
-          <p className="text-sm text-center" style={{ color: "var(--text-muted)" }}>
-            {status}
-          </p>
-        )}
       </div>
+
+      {/* Snackbar for status messages */}
+      {status && (
+        <div
+          className="fixed bottom-6 left-0 right-0 flex justify-center pointer-events-none"
+          style={{ zIndex: 50 }}
+        >
+          <div
+            className="animate-slideUp px-5 py-3 rounded-2xl text-sm font-semibold shadow-lg"
+            style={{ background: "var(--surface-2)", color: "var(--text)", border: "1px solid var(--border)" }}
+          >
+            {status}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

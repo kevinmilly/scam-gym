@@ -80,6 +80,8 @@ export default function ResultPage() {
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [isFirstDrill, setIsFirstDrill] = useState(false);
+  const [showFullBreakdown, setShowFullBreakdown] = useState(false);
+  const [showAllTells, setShowAllTells] = useState(false);
   const revealedRef = useRef<HTMLDivElement>(null);
 
   type ContentFlag = {
@@ -267,10 +269,10 @@ export default function ResultPage() {
                 if (result) track("bookmark_added", { drillId: drill.id });
                 setBookmarked(result);
               }}
-              className="min-h-[44px] px-2 flex items-center text-lg"
-              title={bookmarked ? "Remove bookmark" : "Bookmark this drill"}
+              className="min-h-[44px] px-3 flex items-center text-lg"
+              aria-label={bookmarked ? "Remove bookmark" : "Bookmark this drill"}
             >
-              {bookmarked ? "🔖" : "📄"}
+              {bookmarked ? "🔖" : "🏷️"}
             </button>
           )}
           <button
@@ -286,7 +288,7 @@ export default function ResultPage() {
       <div className="px-4 py-5 space-y-5 overflow-y-auto flex-1">
         {/* SAFE / RISKY banner */}
         <div
-          className="rounded-2xl py-5 px-5 border"
+          className="rounded-2xl py-4 px-4 border"
           style={{ background: bannerBg, borderColor: bannerBorder }}
         >
           <div className="text-xl font-bold" style={{ color: bannerColor }}>
@@ -336,7 +338,7 @@ export default function ResultPage() {
 
         {/* Consequence */}
         <div
-          className="rounded-2xl p-4 border"
+          className="rounded-2xl p-3 border"
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#f59e0b" }}>
@@ -355,7 +357,7 @@ export default function ResultPage() {
         {/* Behavior feedback */}
         {attempt.behaviorChoice && behaviorSafety && (
           <div
-            className="rounded-2xl p-4 border"
+            className="rounded-2xl p-3 border"
             style={{
               background: behaviorSafety === "risky" ? "rgba(239,68,68,0.08)" : "rgba(34,197,94,0.08)",
               borderColor: behaviorSafety === "risky" ? "rgba(239,68,68,0.3)" : "rgba(34,197,94,0.3)",
@@ -373,7 +375,7 @@ export default function ResultPage() {
         {/* AI-Polished card */}
         {(drill.ai_amplified ?? false) && (
           <div
-            className="rounded-2xl p-4 border"
+            className="rounded-2xl p-3 border"
             style={{ background: "rgba(239,68,68,0.08)", borderColor: "rgba(239,68,68,0.3)" }}
           >
             <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#ef4444" }}>
@@ -437,30 +439,29 @@ export default function ResultPage() {
           <div ref={revealedRef}>
             {/* Calibration verdict */}
             <div
-              className="rounded-2xl p-5 border"
+              className="rounded-2xl p-3 border"
               style={{ background: vc.bg, borderColor: vc.color + "44" }}
             >
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">{vc.icon}</span>
-                <span className="text-2xl font-bold" style={{ color: vc.color }}>
-                  {vc.label}
-                </span>
-              </div>
-              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-                {vc.description}
-              </p>
-              <div className="mt-3 flex items-center gap-3">
-                <div>
-                  <div className="text-xs" style={{ color: "var(--text-muted)" }}>Accuracy Score</div>
-                  <div className="text-xl font-bold" style={{ color: vc.color }}>{score}/100</div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">{vc.icon}</span>
+                  <span className="text-xl font-bold" style={{ color: vc.color }}>
+                    {vc.label}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold" style={{ color: vc.color }}>{score}/100</div>
                 </div>
               </div>
+              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+                {vc.description}
+              </p>
             </div>
 
             {/* First-drill calibration explainer */}
             {isFirstDrill && (
               <div
-                className="rounded-2xl p-5 border"
+                className="rounded-2xl p-3 border"
                 style={{ background: "var(--surface)", borderColor: "var(--accent)" + "33" }}
               >
                 <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
@@ -490,7 +491,7 @@ export default function ResultPage() {
             {/* Underconfidence intervention */}
             {calVerdict === "underconfident" && attempt.isCorrect && (
               <div
-                className="rounded-2xl p-4 border"
+                className="rounded-2xl p-3 border"
                 style={{ background: "rgba(59,130,246,0.08)", borderColor: "rgba(59,130,246,0.3)" }}
               >
                 <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#3b82f6" }}>
@@ -521,14 +522,9 @@ export default function ResultPage() {
               </span>
             </div>
 
-            <div
-              className="rounded-2xl p-4 border"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              <p className="text-sm font-medium mb-1" style={{ color: "var(--text)" }}>
-                {drill.explanation.short}
-              </p>
-            </div>
+            <p className="text-sm font-medium leading-relaxed" style={{ color: "var(--text)" }}>
+              {drill.explanation.short}
+            </p>
 
             {/* Tells */}
             <div>
@@ -536,14 +532,38 @@ export default function ResultPage() {
                 The Tells
               </p>
               <ul className="space-y-2">
-                {drill.explanation.tells.map((tell, i) => (
+                {(showAllTells ? drill.explanation.tells : drill.explanation.tells.slice(0, 2)).map((tell, i) => (
                   <li key={i} className="flex gap-3 text-sm" style={{ color: "var(--text)" }}>
                     <span style={{ color: "var(--accent)" }}>→</span>
                     <span>{tell}</span>
                   </li>
                 ))}
               </ul>
+              {drill.explanation.tells.length > 2 && !showAllTells && (
+                <button
+                  onClick={() => setShowAllTells(true)}
+                  className="text-xs mt-2 font-semibold"
+                  style={{ color: "var(--accent)" }}
+                >
+                  +{drill.explanation.tells.length - 2} more tells
+                </button>
+              )}
             </div>
+
+            {/* Secondary breakdown — collapsed by default */}
+            <button
+              onClick={() => setShowFullBreakdown((v) => !v)}
+              className="w-full py-3 rounded-xl text-sm font-semibold border transition-colors duration-150 active:scale-95"
+              style={{
+                borderColor: "var(--border)",
+                background: "var(--surface)",
+                color: "var(--text-muted)",
+              }}
+            >
+              {showFullBreakdown ? "Hide breakdown ↑" : "See full breakdown ↓"}
+            </button>
+
+            {showFullBreakdown && <>
 
             {/* Green flags — only for legit drills */}
             {drill.ground_truth === "legit" && drill.green_flags && drill.green_flags.length > 0 && (
@@ -610,51 +630,33 @@ export default function ResultPage() {
               </div>
             )}
 
-            {/* Safe move */}
+            {/* What to do */}
             <div
-              className="rounded-2xl p-4 border"
-              style={{ background: "var(--surface-2)", borderColor: "var(--border)" }}
+              className="rounded-2xl p-3 border"
+              style={{ background: "var(--surface)", borderColor: "var(--accent)" + "33" }}
             >
               <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--accent)" }}>
-                Safe Move
+                What To Do
               </p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
                 {drill.explanation.safe_move}
               </p>
-            </div>
-
-            {/* The Rule */}
-            <div
-              className="rounded-2xl p-4 border"
-              style={{ background: "var(--surface)", borderColor: "var(--accent)" + "33" }}
-            >
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--accent)" }}>
-                The Rule
-              </p>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-                {drill.explanation.behavioral_reinforcement ?? drill.explanation.safe_move}
-              </p>
+              {drill.explanation.behavioral_reinforcement && drill.explanation.behavioral_reinforcement !== drill.explanation.safe_move && (
+                <p className="text-sm leading-relaxed mt-2 pt-2 border-t" style={{ color: "var(--text-muted)", borderColor: "var(--border)" }}>
+                  {drill.explanation.behavioral_reinforcement}
+                </p>
+              )}
             </div>
 
             {/* Contextual upsell for non-premium users */}
             {!isPremium() && (
               <Link
                 href="/upgrade"
-                className="block rounded-2xl p-4 border transition-all active:scale-[0.98]"
-                style={{ background: "rgba(124,106,247,0.06)", borderColor: "rgba(124,106,247,0.2)" }}
+                className="flex items-center gap-2 text-xs py-2"
+                style={{ color: "var(--accent)" }}
               >
-                <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
-                  Seen a message like this in real life?
-                </p>
-                <p className="text-xs leading-relaxed mb-2" style={{ color: "var(--text-muted)" }}>
-                  Get reply scripts, a verified contacts vault, and more with Pro.
-                </p>
-                <span
-                  className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
-                  style={{ background: "var(--accent)", color: "#fff" }}
-                >
-                  Upgrade to unlock
-                </span>
+                <span>✨</span>
+                <span>Want reply scripts &amp; more? <strong>Upgrade to Pro</strong></span>
               </Link>
             )}
 
@@ -724,6 +726,8 @@ export default function ResultPage() {
                 Thanks for the report. We&apos;ll review it.
               </p>
             )}
+
+            </>}
           </div>
         )}
       </div>
@@ -752,10 +756,10 @@ export default function ResultPage() {
             </button>
             <button
               onClick={() => { tap(); router.push("/drill"); }}
-              className="py-4 px-5 rounded-2xl text-sm transition-all active:scale-95"
+              className="py-4 px-5 rounded-2xl text-sm transition-colors duration-150 active:scale-95"
               style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
             >
-              Skip →
+              Skip
             </button>
           </div>
         )}
