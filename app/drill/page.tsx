@@ -190,7 +190,7 @@ export default function DrillPage() {
           className="px-3 py-2 rounded-xl text-sm"
           style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
         >
-          📱 <span>Imagine this just arrived on your phone. How do you call it?</span>
+          📱 <span>This just hit your inbox. Scam or legit?</span>
         </div>
 
         {/* Message */}

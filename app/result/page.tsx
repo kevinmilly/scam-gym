@@ -192,12 +192,23 @@ export default function ResultPage() {
   const correctIds = new Set(drill.correct_red_flag_ids);
 
   // SAFE/RISKY banner
+  // "At risk" only when user missed a real scam (said legit on a scam).
+  // Flagging a legit message as scam = overcautious, not dangerous.
+  const missedScam = !attempt.isCorrect && drill.ground_truth === "scam";
   const wasSafe = attempt.isCorrect;
-  const bannerBg = wasSafe ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)";
-  const bannerBorder = wasSafe ? "#22c55e44" : "#ef444444";
-  const bannerColor = wasSafe ? "#22c55e" : "#ef4444";
-  const bannerIcon = wasSafe ? "✅" : "⚡";
-  const bannerText = wasSafe ? "You were safe" : "You were at risk";
+  const bannerBg = missedScam
+    ? "rgba(239,68,68,0.15)"
+    : wasSafe
+    ? "rgba(34,197,94,0.15)"
+    : "rgba(245,158,11,0.15)";
+  const bannerBorder = missedScam ? "#ef444444" : wasSafe ? "#22c55e44" : "#f59e0b44";
+  const bannerColor = missedScam ? "#ef4444" : wasSafe ? "#22c55e" : "#f59e0b";
+  const bannerIcon = missedScam ? "⚡" : wasSafe ? "✅" : "⚠️";
+  const bannerText = missedScam
+    ? "You were at risk"
+    : wasSafe
+    ? "You were safe"
+    : "You were overcautious";
 
   // Summary line
   const summaryText = `You said ${attempt.userVerdict.toUpperCase()} at ${attempt.confidence}% · ${attempt.isCorrect ? "Correct ✓" : "Incorrect ✗"}`;
@@ -436,7 +447,7 @@ export default function ResultPage() {
 
         {/* Phase 2 — revealed content */}
         {revealed && (
-          <div ref={revealedRef}>
+          <div ref={revealedRef} className="space-y-5">
             {/* Calibration verdict */}
             <div
               className="rounded-2xl p-3 border"
@@ -563,7 +574,7 @@ export default function ResultPage() {
               {showFullBreakdown ? "Hide breakdown ↑" : "See full breakdown ↓"}
             </button>
 
-            {showFullBreakdown && <>
+            {showFullBreakdown && <div className="space-y-5">
 
             {/* Green flags — only for legit drills */}
             {drill.ground_truth === "legit" && drill.green_flags && drill.green_flags.length > 0 && (
@@ -727,7 +738,7 @@ export default function ResultPage() {
               </p>
             )}
 
-            </>}
+            </div>}
           </div>
         )}
       </div>
