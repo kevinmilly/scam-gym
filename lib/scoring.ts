@@ -19,18 +19,18 @@ export function accuracyScore(brier: number): number {
 }
 
 /**
- * Calibration verdict from delta (outcome - confidence/100)
+ * Calibration verdict based on correctness and confidence.
+ * Provides four distinct outcome states for clearer feedback.
  */
 export function calibrationVerdict(
   confidence: number,
   isCorrect: boolean
 ): CalibrationVerdict {
-  const p = confidence / 100;
-  const o = isCorrect ? 1 : 0;
-  const delta = o - p;
-  if (delta <= -0.35) return "overconfident";
-  if (delta >= 0.35) return "underconfident";
-  return "well-calibrated";
+  if (isCorrect) {
+    return confidence >= 85 ? "well-calibrated" : "cautious-win";
+  } else {
+    return confidence >= 70 ? "overconfident-miss" : "self-aware-miss";
+  }
 }
 
 /**

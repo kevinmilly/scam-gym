@@ -149,6 +149,14 @@ export function computeStats(
   };
 }
 
+/** Format TrickType slug to readable label */
+export function trickLabel(slug: string): string {
+  return slug
+    .split("_")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 /** Format pattern_family slug to readable label */
 export function familyLabel(slug: string): string {
   return slug

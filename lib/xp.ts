@@ -38,7 +38,11 @@ export function computeXpForAttempt(attempt: Attempt, drill: Drill): XpBreakdown
   const correct = attempt.isCorrect ? 10 : 0;
 
   const calVerdict = calibrationVerdict(attempt.confidence, attempt.isCorrect);
-  const calibration = calVerdict === "well-calibrated" ? 5 : 0;
+  let calibration = 0;
+  if (calVerdict === "well-calibrated") calibration = 5;
+  else if (calVerdict === "cautious-win") calibration = 3;
+  else if (calVerdict === "self-aware-miss") calibration = 2;
+  else if (calVerdict === "overconfident-miss") calibration = 0;
 
   // +5 for perfect red flag recall on scam drills that have flags
   const hasFlags = drill.ground_truth === "scam" && drill.correct_red_flag_ids.length > 0;

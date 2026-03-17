@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Attempt, Drill, CalibrationVerdict } from "@/lib/types";
 import { accuracyScore, redFlagRecall } from "@/lib/scoring";
+import { trickLabel } from "@/lib/stats";
 import { saveAttempt, saveContentFlag, db } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
 import { tap } from "@/lib/haptics";
@@ -28,19 +29,26 @@ type VerdictConfig = {
 };
 
 const VERDICT_CONFIG: Record<CalibrationVerdict, VerdictConfig> = {
-  overconfident: {
-    label: "Overconfident",
+  "overconfident-miss": {
+    label: "Overconfident Miss",
     color: "#ef4444",
     bg: "rgba(239,68,68,0.1)",
     icon: "⚠️",
-    description: "You were confident — but wrong. This is the danger zone.",
+    description: "You were certain, but wrong. This is the danger zone — slow down.",
   },
-  underconfident: {
-    label: "Underconfident",
+  "self-aware-miss": {
+    label: "Self-Aware Miss",
+    color: "#f59e0b",
+    bg: "rgba(245,158,11,0.1)",
+    icon: "🧐",
+    description: "You were wrong, but your caution would have protected you in real life.",
+  },
+  "cautious-win": {
+    label: "Cautious Win",
     color: "#3b82f6",
     bg: "rgba(59,130,246,0.1)",
     icon: "💡",
-    description: "You got it right, but didn't trust yourself. Build that instinct.",
+    description: "You got it right, but didn't trust your read. Build that instinct.",
   },
   "well-calibrated": {
     label: "Well-calibrated",
@@ -399,7 +407,7 @@ export default function ResultPage() {
         )}
 
         {/* Scroll hint — visible before reveal */}
-        {!revealed && (
+        {!revealed && drill.ground_truth === "scam" && drill.red_flags.length > 0 && (
           <div className="flex flex-col items-center gap-1 py-1" style={{ color: "var(--text-muted)" }}>
             <span className="text-xs">scroll for more</span>
             <span
@@ -515,7 +523,7 @@ export default function ResultPage() {
             )}
 
             {/* Pattern family + short explanation */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span
                 className="text-xs px-3 py-1 rounded-full border font-medium"
                 style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
@@ -531,6 +539,15 @@ export default function ResultPage() {
               >
                 {drill.ground_truth.toUpperCase()}
               </span>
+              {drill.tricks?.map((trick) => (
+                <span
+                  key={trick}
+                  className="text-xs px-3 py-1 rounded-full font-bold"
+                  style={{ background: "rgba(124,106,247,0.1)", color: "var(--accent)" }}
+                >
+                  {trickLabel(trick)}
+                </span>
+              ))}
             </div>
 
             <p className="text-sm font-medium leading-relaxed" style={{ color: "var(--text)" }}>

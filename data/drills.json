@@ -54,8 +54,9 @@
       "urgency"
     ],
     "context": "personal",
-    "ai_amplified": false
-  },
+    "ai_amplified": false,
+    "tricks": ["lookalike_domain", "urgency", "small_dollar_bait"],
+    "message": {
   {
     "id": "sms_toll_legit_001",
     "channel": "sms",

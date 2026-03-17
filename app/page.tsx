@@ -393,11 +393,12 @@ function HomePageInner() {
                   Scam Gym tracks not just whether you got it right — it tracks how sure you were.
                   Clicking a phishing link while 95% confident is far more dangerous than pausing and saying &quot;I&apos;m not sure.&quot;
                 </p>
-                <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="grid grid-cols-2 gap-2 text-center">
                   {[
-                    { label: "Overconfident", color: "#ef4444", desc: "Wrong + sure = danger zone" },
-                    { label: "Well-calibrated", color: "#22c55e", desc: "Confidence matches reality" },
-                    { label: "Underconfident", color: "#3b82f6", desc: "Right but uncertain" },
+                    { label: "Overconfident Miss", color: "#ef4444", desc: "Wrong + sure" },
+                    { label: "Well-calibrated", color: "#22c55e", desc: "Correct + sure" },
+                    { label: "Self-Aware Miss", color: "#f59e0b", desc: "Wrong + unsure" },
+                    { label: "Cautious Win", color: "#3b82f6", desc: "Correct + unsure" },
                   ].map((v) => (
                     <div key={v.label} className="rounded-xl p-3" style={{ background: "var(--surface-2)" }}>
                       <div className="text-xs font-bold mb-1" style={{ color: v.color }}>{v.label}</div>
@@ -420,6 +421,44 @@ function HomePageInner() {
                 <span className="ml-auto text-xs">Change</span>
               </button>
             )}
+
+            {/* Recommended Focus (Adaptive) */}
+            {attempts.length >= 5 && (() => {
+              const stats = computeStats(attempts, allDrills);
+              const weakest = stats.topVulnerabilities[0];
+              if (!weakest) return null;
+              
+              const label = weakest.family.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+              
+              return (
+                <div
+                  className="rounded-2xl p-5 mb-8 border-2"
+                  style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+                >
+                  <p className="text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "var(--accent)" }}>
+                    🎯 Recommended Focus
+                  </p>
+                  <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
+                    {label} Blind Spot
+                  </h3>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
+                    You&apos;re missing {Math.round((1 - weakest.accuracy) * 100)}% of these drills. Train this category specifically to build your instinct.
+                  </p>
+                  <button
+                    onClick={() => {
+                      tap();
+                      setFocusFamilies([weakest.family]);
+                      setFocusLabel(`Focus: ${label}`);
+                      router.push("/drill");
+                    }}
+                    className="w-full py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
+                    style={{ background: "var(--accent)", color: "#fff" }}
+                  >
+                    Train this weakness
+                  </button>
+                </div>
+              );
+            })()}
 
             {/* Panic button — Help Me Right Now */}
             <Link

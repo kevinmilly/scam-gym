@@ -1,9 +1,10 @@
 export type Channel = "sms" | "email" | "dm";
 export type Verdict = "scam" | "legit";
 export type CalibrationVerdict =
-  | "overconfident"
-  | "underconfident"
-  | "well-calibrated";
+  | "well-calibrated"
+  | "cautious-win"
+  | "self-aware-miss"
+  | "overconfident-miss";
 
 export type UserContext = "personal" | "small_business" | "job_seeker" | "family_safety";
 
@@ -17,6 +18,24 @@ export type RedFlag = {
   label: string;
 };
 
+export type TrickType =
+  | "urgency"
+  | "authority_impersonation"
+  | "secrecy"
+  | "small_dollar_bait"
+  | "advance_fee"
+  | "credential_harvest"
+  | "remote_access"
+  | "callback_trap"
+  | "lookalike_domain"
+  | "trust_then_pivot"
+  | "emotional_leverage"
+  | "fear_lockout"
+  | "qr_redirect"
+  | "payment_redirect"
+  | "social_proof"
+  | "overconfidence_trap";
+
 export type Drill = {
   id: string;
   channel: Channel;
@@ -25,6 +44,7 @@ export type Drill = {
   ground_truth: Verdict;
   context: UserContext;
   ai_amplified: boolean;
+  tricks?: TrickType[];
   message: {
     from_name: string;
     from_handle: string;
