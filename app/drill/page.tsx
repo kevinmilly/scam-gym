@@ -145,31 +145,18 @@ export default function DrillPage() {
               {focusLabel}
             </span>
           )}
-          {poolExhausted && !focusLabel && (
-            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--surface-2)", color: "var(--text-muted)" }}>
-              Retention mode
-            </span>
-          )}
-          <span
-            className="text-xs font-bold px-2 py-0.5 rounded-full"
-            style={{ background: "var(--surface-2)", color: channelColors[channelLabel] ?? "var(--text-muted)" }}
-          >
-            {channelLabel}
-          </span>
-        </div>
-        <div className="flex items-center">
           {focusFamilies.length > 0 && (
             <button
               onClick={() => { setFocusFamilies([]); setFocusLabel(null); }}
               aria-label="Clear focus filter"
-              className="min-h-[44px] px-3 text-xs flex items-center"
-              style={{ color: "var(--text-muted)" }}
+              className="text-xs px-2 py-0.5 rounded-full"
+              style={{ background: "var(--surface-2)", color: "var(--text-muted)" }}
             >
-              Normal
+              Clear focus
             </button>
           )}
-          <div className="w-4" />
         </div>
+        <div className="w-16" />
       </div>
 
       {/* Scrollable content */}

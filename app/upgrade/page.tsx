@@ -5,17 +5,25 @@ import { useRouter } from "next/navigation";
 import { isPremium, unlockPremium, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
 import { track } from "@/lib/analytics";
 
-const PREMIUM_FEATURES = [
-  { icon: "📈", label: "Progress tracking", desc: "See if you're actually improving — or just getting lucky" },
-  { icon: "🔍", label: "Weak spot breakdown", desc: "Find out which scam types fool you most often" },
-  { icon: "🎯", label: "Focused practice", desc: "Drill only the categories you want to get better at" },
-  { icon: "🤖", label: "Weakness autopilot", desc: "One tap sets your practice on your worst areas automatically" },
-  { icon: "📋", label: "Full drill history", desc: "Review every drill you've done and what you got wrong" },
-  { icon: "🏃", label: "Timed sessions", desc: "10-drill runs you can finish in under 5 minutes" },
-  { icon: "🔖", label: "Bookmarks", desc: "Save tricky drills to come back to later" },
-  { icon: "🔥", label: "Daily streak", desc: "Build the habit with a streak you actually want to protect" },
-  { icon: "💬", label: "Reply scripts", desc: "50+ copy-paste responses for shutting down scammers safely" },
-  { icon: "📇", label: "Unlimited contacts", desc: "Track everyone in your scam vault without hitting a cap" },
+const UPGRADE_OUTCOMES = [
+  {
+    icon: "🔍",
+    headline: "Know exactly where you're vulnerable",
+    description: "Most people have a blind spot — a scam type they consistently miss, often with high confidence. See your full vulnerability profile and know which scams could actually fool you.",
+    features: ["Per-category accuracy breakdown", "Overconfidence hotspot analysis", "Focused weak-spot training"],
+  },
+  {
+    icon: "📈",
+    headline: "See if you're actually getting better",
+    description: "Random drills don't tell you whether you're improving. Track your real progress over time with a trend chart that shows whether your accuracy and calibration are moving in the right direction.",
+    features: ["Accuracy trend chart", "Full drill history", "Session mode — 10 drills, under 5 minutes"],
+  },
+  {
+    icon: "🤖",
+    headline: "Train smarter, not more",
+    description: "Instead of random drills, let the app automatically focus on your worst categories. One tap and the engine routes you straight to the patterns that catch you off guard.",
+    features: ["Weakness autopilot", "Custom drill focus", "Bookmark tricky drills to revisit"],
+  },
 ];
 
 export default function UpgradePage() {
@@ -95,25 +103,37 @@ export default function UpgradePage() {
           <>
             <div className="text-center">
               <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--text)" }}>
-                Upgrade to Pro
+                Know your blind spots.
               </h1>
               <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-                All training drills stay free — Pro adds power-user tools.
+                Free drills train your instincts. Pro shows you where those instincts are failing.
               </p>
             </div>
 
-            <div className="space-y-2">
-              {PREMIUM_FEATURES.map((f) => (
+            <div className="space-y-4">
+              {UPGRADE_OUTCOMES.map((outcome) => (
                 <div
-                  key={f.label}
-                  className="flex items-start gap-3 rounded-xl px-4 py-3"
-                  style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
+                  key={outcome.headline}
+                  className="rounded-2xl px-5 py-5 border"
+                  style={{ background: "var(--surface)", borderColor: "var(--border)" }}
                 >
-                  <span className="text-xl mt-0.5">{f.icon}</span>
-                  <div>
-                    <p className="text-sm font-semibold leading-tight" style={{ color: "var(--text)" }}>{f.label}</p>
-                    <p className="text-xs mt-0.5 leading-relaxed" style={{ color: "var(--text-muted)" }}>{f.desc}</p>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-2xl">{outcome.icon}</span>
+                    <p className="text-base font-bold leading-tight" style={{ color: "var(--text)" }}>
+                      {outcome.headline}
+                    </p>
                   </div>
+                  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+                    {outcome.description}
+                  </p>
+                  <ul className="space-y-1">
+                    {outcome.features.map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
+                        <span style={{ color: "var(--accent)" }}>✓</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>
@@ -127,10 +147,13 @@ export default function UpgradePage() {
                 className="block w-full text-center py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
                 style={{ background: "var(--accent)", color: "#fff" }}
               >
-                Unlock All for {PREMIUM_PRICE}
+                Unlock Pro — {PREMIUM_PRICE}
               </a>
               <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                One-time purchase · No subscription
+                One-time · No subscription · No account needed
+              </p>
+              <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
+                Thousands of people are already training with Scam Gym. Pro helps you train smarter.
               </p>
             </div>
 

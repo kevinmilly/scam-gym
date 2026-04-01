@@ -164,22 +164,20 @@ export default function StatsPage() {
         {/* Level Badge */}
         {progression && <LevelBadge levelInfo={progression.levelInfo} />}
 
-        {/* Streak badge (premium) */}
-        <PremiumGate hideWhenLocked>
-          {(() => {
-            const streak = getStreak();
-            if (streak.current === 0) return null;
-            return (
-              <div
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
-                style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
-              >
-                <span>🔥</span>
-                <span>{streak.current} day streak</span>
-              </div>
-            );
-          })()}
-        </PremiumGate>
+        {/* Streak badge (free for all) */}
+        {(() => {
+          const streak = getStreak();
+          if (streak.current === 0) return null;
+          return (
+            <div
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
+              style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
+            >
+              <span>🔥</span>
+              <span>{streak.current} day streak</span>
+            </div>
+          );
+        })()}
 
         {/* Total drills */}
         <p className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -299,6 +297,13 @@ export default function StatsPage() {
                       </div>
                     </button>
 
+                    {/* Tap-to-expand hint for free users */}
+                    {!isPremium() && (
+                      <p className="text-xs mt-1 px-1" style={{ color: "var(--text-muted)" }}>
+                        🔒 Tap to see your deep-dive breakdown — upgrade to unlock
+                      </p>
+                    )}
+
                     {/* Per-family deep dive (premium) */}
                     {isExpanded && isPremium() && (
                       <div
@@ -355,6 +360,57 @@ export default function StatsPage() {
                 );
               })}
             </div>
+
+            {/* Locked full vulnerability profile — shown to free users with 3+ attempts */}
+            {!isPremium() && allAttempts.length >= 3 && (
+              <div
+                className="relative mt-3 rounded-xl border overflow-hidden"
+                style={{ borderColor: "var(--accent)", background: "var(--surface)" }}
+              >
+                {/* Blurred preview rows */}
+                <div style={{ filter: "blur(4px)", pointerEvents: "none", opacity: 0.6 }} aria-hidden>
+                  <div className="px-4 py-3 border-b flex justify-between" style={{ borderColor: "var(--border)" }}>
+                    <div>
+                      <div className="text-sm font-semibold" style={{ color: "var(--text)" }}>Phishing — Authority</div>
+                      <div className="text-xs" style={{ color: "var(--text-muted)" }}>8 attempts</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold" style={{ color: "#ef4444" }}>38%</div>
+                      <div className="text-xs" style={{ color: "var(--text-muted)" }}>accuracy</div>
+                    </div>
+                  </div>
+                  <div className="px-4 py-3 flex justify-between">
+                    <div>
+                      <div className="text-sm font-semibold" style={{ color: "var(--text)" }}>Fake Invoice</div>
+                      <div className="text-xs" style={{ color: "var(--text-muted)" }}>5 attempts</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold" style={{ color: "#f59e0b" }}>60%</div>
+                      <div className="text-xs" style={{ color: "var(--text-muted)" }}>accuracy</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Overlay CTA */}
+                <div
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center"
+                  style={{ background: "rgba(0,0,0,0.55)" }}
+                >
+                  <p className="text-sm font-bold" style={{ color: "#fff" }}>
+                    🔍 Your full vulnerability profile is ready
+                  </p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.75)" }}>
+                    See exactly which scam types you&apos;re most at risk for — and train those weak spots.
+                  </p>
+                  <button
+                    onClick={() => router.push("/upgrade")}
+                    className="mt-1 px-5 py-2 rounded-full font-bold text-sm transition-all active:scale-95"
+                    style={{ background: "var(--accent)", color: "#fff" }}
+                  >
+                    Unlock Full Profile
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

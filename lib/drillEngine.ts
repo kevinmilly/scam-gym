@@ -34,7 +34,16 @@ export function selectNextDrill(
   );
 
   if (unseen.length > 0) {
-    // first pass — pick random unseen drill
+    // First 2 drills: serve high-difficulty scam drills to create the "aha" moment.
+    // Users who get surprised by a convincing fake are more likely to continue.
+    if (attempts.length < 2) {
+      const highDeception = unseen.filter(
+        (d) => d.difficulty >= 4 && d.ground_truth === "scam"
+      );
+      const pool = highDeception.length > 0 ? highDeception : unseen;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    // subsequent first-pass: pick random unseen drill
     return unseen[Math.floor(Math.random() * unseen.length)];
   }
 

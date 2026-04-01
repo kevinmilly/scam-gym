@@ -88,6 +88,7 @@ export default function ResultPage() {
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [isFirstDrill, setIsFirstDrill] = useState(false);
+  const [attemptCount, setAttemptCount] = useState(0);
   const [showFullBreakdown, setShowFullBreakdown] = useState(false);
   const [showAllTells, setShowAllTells] = useState(false);
   const revealedRef = useRef<HTMLDivElement>(null);
@@ -132,9 +133,10 @@ export default function ResultPage() {
       calVerdict: cv,
     });
 
-    // Check if this is the user's first drill for calibration explainer
+    // Check attempt count for first-drill explainer and explanation gating
     db.attempts.count().then((count) => {
       if (count <= 1) setIsFirstDrill(true);
+      setAttemptCount(count);
     });
 
     const r = sessionStorage.getItem("lastReward");
@@ -197,6 +199,10 @@ export default function ResultPage() {
 
   const vc = VERDICT_CONFIG[calVerdict];
   const score = accuracyScore(attempt.brierScore);
+
+  // Soft-gate explanation for free users: full access for first 3 drills,
+  // then every 3rd drill (4th, 7th, 10th…) shows an upsell prompt instead.
+  const explanationGated = !isPremium() && attemptCount > 3 && attemptCount % 3 === 1;
   const correctIds = new Set(drill.correct_red_flag_ids);
 
   // SAFE/RISKY banner
@@ -319,41 +325,6 @@ export default function ResultPage() {
         <p className="text-sm" style={{ color: "var(--text-muted)" }}>
           {summaryText}
         </p>
-
-        {/* XP Breakdown */}
-        {xpBreakdown && (
-          <div className="space-y-2">
-            <div className="flex flex-wrap gap-1.5">
-              <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}>
-                +{xpBreakdown.base} base
-              </span>
-              {xpBreakdown.correct > 0 && (
-                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
-                  +{xpBreakdown.correct} correct
-                </span>
-              )}
-              {xpBreakdown.calibration > 0 && (
-                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
-                  +{xpBreakdown.calibration} calibrated
-                </span>
-              )}
-              {xpBreakdown.redFlags > 0 && (
-                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
-                  +{xpBreakdown.redFlags} flags
-                </span>
-              )}
-              {xpBreakdown.safeBehavior > 0 && (
-                <span className="px-2 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
-                  +{xpBreakdown.safeBehavior} safe
-                </span>
-              )}
-              <span className="px-2 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(124,106,247,0.25)", color: "var(--accent)" }}>
-                = {xpBreakdown.total} XP
-              </span>
-            </div>
-            {reward && <XpBar levelInfo={reward.levelInfo} animate />}
-          </div>
-        )}
 
         {/* Consequence */}
         <div
@@ -504,6 +475,28 @@ export default function ResultPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* First-drill wrong answer — vulnerability upsell nudge */}
+            {isFirstDrill && !attempt.isCorrect && !isPremium() && (
+              <div
+                className="rounded-2xl p-4 border"
+                style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+              >
+                <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
+                  That one caught you. You&apos;re not alone.
+                </p>
+                <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+                  After a few more drills, Scam Gym can show you exactly which scam types are most likely to fool you — and let you train those weak spots specifically.
+                </p>
+                <a
+                  href="/upgrade"
+                  className="text-xs font-bold"
+                  style={{ color: "var(--accent)" }}
+                >
+                  See what Pro unlocks →
+                </a>
               </div>
             )}
 
@@ -760,6 +753,18 @@ export default function ResultPage() {
         )}
       </div>
 
+      {/* XP summary — low noise, shown after the content */}
+      {xpBreakdown && (
+        <div className="px-4 pb-2">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
+              +{xpBreakdown.total} XP
+            </span>
+            {reward && <XpBar levelInfo={reward.levelInfo} animate />}
+          </div>
+        </div>
+      )}
+
       {/* Sticky footer */}
       <div
         className="sticky bottom-0 px-4 py-4 border-t"
@@ -773,24 +778,54 @@ export default function ResultPage() {
           >
             Next Drill →
           </button>
-        ) : (
-          <div className="flex gap-3">
-            <button
-              onClick={() => { tap(); handleReveal(); }}
-              className="flex-1 py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
-              style={{ background: "var(--accent)", color: "#fff" }}
-            >
-              See Explanation →
-            </button>
-            <button
-              onClick={() => { tap(); router.push("/drill"); }}
-              className="py-4 px-5 rounded-2xl text-sm transition-colors duration-150 active:scale-95"
-              style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
-            >
-              Skip
-            </button>
-          </div>
-        )}
+        ) : explanationGated ? (
+            /* Soft gate — show upsell instead of explanation on gated drills */
+            <div className="space-y-3">
+              <div
+                className="rounded-2xl px-4 py-4 border text-center"
+                style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+              >
+                <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
+                  You&apos;ve used your free deep-dives for now
+                </p>
+                <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+                  Upgrade to Pro for unlimited explanations, tells, and your full vulnerability profile.
+                </p>
+                <a
+                  href="/upgrade"
+                  className="inline-block px-5 py-2 rounded-full font-bold text-sm"
+                  style={{ background: "var(--accent)", color: "#fff" }}
+                >
+                  Unlock Explanations
+                </a>
+              </div>
+              <button
+                onClick={() => { tap(); router.push("/drill"); }}
+                className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
+                style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
+              >
+                Next Drill →
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-3">
+              <button
+                onClick={() => { tap(); handleReveal(); }}
+                className="flex-1 py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
+                style={{ background: "var(--accent)", color: "#fff" }}
+              >
+                See Explanation →
+              </button>
+              <button
+                onClick={() => { tap(); router.push("/drill"); }}
+                className="py-4 px-5 rounded-2xl text-sm transition-colors duration-150 active:scale-95"
+                style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
+              >
+                Skip
+              </button>
+            </div>
+          )
+        }
       </div>
     </div>
   );
