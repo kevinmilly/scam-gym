@@ -71,7 +71,7 @@ export default function StatsPage() {
     const drill = drills.find((d) => d.id === a.drillId);
     const score = accuracyScore(a.brierScore);
     const calVerdict = calibrationVerdict(a.confidence, a.isCorrect);
-    const verdictLabel = calVerdict === "well-calibrated" ? "Well-calibrated" : calVerdict === "overconfident" ? "Overconfident" : "Underconfident";
+    const verdictLabel = calVerdict === "well-calibrated" ? "Well-calibrated" : calVerdict === "overconfident-miss" ? "Overconfident" : "Underconfident";
     const text = `I just completed a scam drill on Scam Gym!\nResult: ${a.isCorrect ? "Correct" : "Incorrect"} · ${a.confidence}% confidence · Score: ${score}/100\n${verdictLabel}${drill ? `\nPattern: ${drill.pattern_family.replace(/_/g, " ")}` : ""}\n\nTry it yourself: ${window.location.origin}`;
     shareText(text);
   }

@@ -156,7 +156,7 @@ const CALIBRATION_MEDALS: MedalDef[] = [
       const secondHalf = ctx.attempts.slice(mid);
       const overRate = (arr: Attempt[]) => {
         const over = arr.filter(
-          (a) => calibrationVerdict(a.confidence, a.isCorrect) === "overconfident"
+          (a) => calibrationVerdict(a.confidence, a.isCorrect) === "overconfident-miss"
         ).length;
         return arr.length > 0 ? over / arr.length : 0;
       };
@@ -178,7 +178,7 @@ const CALIBRATION_MEDALS: MedalDef[] = [
         const curr = sorted[i];
         if (
           prev3.every(
-            (a) => calibrationVerdict(a.confidence, a.isCorrect) === "underconfident"
+            (a) => calibrationVerdict(a.confidence, a.isCorrect) === "cautious-win"
           ) &&
           calibrationVerdict(curr.confidence, curr.isCorrect) === "well-calibrated"
         ) {

@@ -155,8 +155,8 @@ export default function SessionPage() {
           familySet.add(drill.pattern_family);
         }
         const cv = calibrationVerdict(a.confidence, a.isCorrect);
-        if (cv === "overconfident") overconfident++;
-        else if (cv === "underconfident") underconfident++;
+        if (cv === "overconfident-miss") overconfident++;
+        else if (cv === "cautious-win") underconfident++;
         else wellCalibrated++;
       }
 

@@ -501,7 +501,7 @@ export default function ResultPage() {
             )}
 
             {/* Underconfidence intervention */}
-            {calVerdict === "underconfident" && attempt.isCorrect && (
+            {calVerdict === "cautious-win" && attempt.isCorrect && (
               <div
                 className="rounded-2xl p-3 border"
                 style={{ background: "rgba(59,130,246,0.08)", borderColor: "rgba(59,130,246,0.3)" }}
