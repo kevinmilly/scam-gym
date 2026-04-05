@@ -165,14 +165,19 @@ export default function VaultPage() {
 
         {/* Entry list */}
         {filtered.length === 0 && !showAdd && (
-          <div className="text-center py-8">
-            <p className="text-sm mb-1" style={{ color: "var(--text-muted)" }}>
-              {entries.length === 0 ? "No contacts saved yet" : "No matches found"}
-            </p>
-            {entries.length === 0 && (
-              <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                Save verified phone numbers and websites for quick access.
-              </p>
+          <div className="text-center py-8 space-y-2">
+            {entries.length === 0 ? (
+              <>
+                <p className="text-sm font-semibold" style={{ color: "var(--text)" }}>
+                  No contacts saved yet
+                </p>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                  Save your bank&apos;s real number, your utility&apos;s website, or any contact you&apos;ve personally verified.
+                  Next time you get a suspicious call or message, check here first.
+                </p>
+              </>
+            ) : (
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>No matches found</p>
             )}
           </div>
         )}

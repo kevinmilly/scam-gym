@@ -767,7 +767,7 @@ export default function ResultPage() {
 
       {/* Sticky footer */}
       <div
-        className="sticky bottom-0 px-4 py-4 border-t"
+        className="sticky bottom-[57px] px-4 py-4 border-t"
         style={{ background: "var(--background)", borderColor: "var(--border)" }}
       >
         {revealed ? (
