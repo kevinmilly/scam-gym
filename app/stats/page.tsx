@@ -96,21 +96,78 @@ export default function StatsPage() {
 
   if (!stats || stats.totalAttempts === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-dvh px-6 text-center">
-        <div className="text-5xl mb-4">📊</div>
-        <h2 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
-          No data yet
-        </h2>
-        <p className="mb-6" style={{ color: "var(--text-muted)" }}>
-          Complete a few drills to start building your vulnerability profile.
-        </p>
-        <button
-          onClick={() => router.push("/drill")}
-          className="px-6 py-3 rounded-2xl font-bold"
-          style={{ background: "var(--accent)", color: "#fff" }}
-        >
-          Start Drilling
-        </button>
+      <div className="flex flex-col min-h-dvh">
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: "var(--border)" }}>
+          <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>My Progress</span>
+        </div>
+
+        <div className="flex-1 px-4 py-8 pb-24 space-y-6">
+          {/* Empty state hero */}
+          <div className="text-center py-6">
+            <div className="text-5xl mb-4">📊</div>
+            <h2 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
+              Your stats will appear here
+            </h2>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              Complete a few drills to start building your vulnerability profile.
+            </p>
+          </div>
+
+          {/* Progress indicator */}
+          <div className="rounded-2xl border p-5" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+              Unlock your profile
+            </p>
+            <div className="space-y-3">
+              {[
+                { drills: 1, label: "Accuracy score", done: false },
+                { drills: 3, label: "Vulnerability profile", done: false },
+                { drills: 5, label: "Calibration analysis", done: false },
+                { drills: 10, label: "Pattern breakdown", done: false },
+              ].map(({ drills, label, done }) => (
+                <div key={label} className="flex items-center gap-3">
+                  <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+                    style={{
+                      background: done ? "var(--accent)" : "var(--surface-2)",
+                      color: done ? "#fff" : "var(--text-muted)",
+                    }}
+                  >
+                    {done ? "✓" : drills}
+                  </div>
+                  <span className="text-sm" style={{ color: done ? "var(--text)" : "var(--text-muted)" }}>
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Preview skeleton of what stats look like */}
+          <div className="space-y-3 opacity-30 pointer-events-none" aria-hidden>
+            <div className="h-3 w-3/4 rounded-full" style={{ background: "var(--surface-2)" }} />
+            <div className="rounded-2xl p-4 border" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <div className="flex justify-between mb-3">
+                <div className="h-3 w-24 rounded-full" style={{ background: "var(--surface-2)" }} />
+                <div className="h-3 w-12 rounded-full" style={{ background: "var(--surface-2)" }} />
+              </div>
+              <div className="space-y-2">
+                {[80, 55, 30].map((w) => (
+                  <div key={w} className="h-2 rounded-full" style={{ width: `${w}%`, background: "var(--surface-2)" }} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => router.push("/drill")}
+            className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
+            style={{ background: "var(--accent)", color: "#fff" }}
+          >
+            Start Your First Drill
+          </button>
+        </div>
       </div>
     );
   }
@@ -657,7 +714,7 @@ export default function StatsPage() {
 
       {/* CTA */}
       <div
-        className="sticky bottom-0 px-4 py-4 border-t"
+        className="sticky bottom-[57px] px-4 py-4 border-t"
         style={{ background: "var(--background)", borderColor: "var(--border)" }}
       >
         <button

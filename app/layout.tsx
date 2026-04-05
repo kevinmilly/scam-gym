@@ -6,6 +6,7 @@ import ThemeInit from "@/lib/ThemeInit";
 import PostHogProvider from "@/components/PostHogProvider";
 import ServiceWorkerRegistration from "@/lib/ServiceWorkerRegistration";
 import InstallPrompt from "@/components/InstallPrompt";
+import BottomNav from "@/components/BottomNav";
 
 export const metadata: Metadata = {
   title: "Scam Gym",
@@ -59,6 +60,7 @@ export default function RootLayout({
             <main className="min-h-dvh max-w-lg mx-auto">
               {children}
             </main>
+            <BottomNav />
             <InstallPrompt />
           </DrillProvider>
         </PostHogProvider>

@@ -16,12 +16,12 @@ import { allDrills } from "@/lib/DrillContext";
 
 const CONFIDENCE_OPTIONS = [50, 60, 70, 85, 95];
 
-const BEHAVIOR_OPTIONS: { value: BehaviorChoice; label: string }[] = [
-  { value: "ignore",  label: "Ignore it" },
-  { value: "verify",  label: "Verify first" },
-  { value: "respond", label: "Respond" },
-  { value: "click",   label: "Click the link" },
-  { value: "call",    label: "Call the number" },
+const BEHAVIOR_OPTIONS: { value: BehaviorChoice; label: string; desc: string }[] = [
+  { value: "ignore",  label: "Ignore it",      desc: "Delete and move on" },
+  { value: "verify",  label: "Verify first",   desc: "Check through official channels" },
+  { value: "respond", label: "Respond",         desc: "Reply to the message" },
+  { value: "click",   label: "Click the link", desc: "Follow a link in the message" },
+  { value: "call",    label: "Call the number", desc: "Call a number in the message" },
 ];
 
 export default function DrillPage() {
@@ -128,17 +128,9 @@ export default function DrillPage() {
     <div className="flex flex-col min-h-dvh">
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-3 border-b"
+        className="flex items-center justify-center px-4 py-3 border-b relative"
         style={{ borderColor: "var(--border)" }}
       >
-        <button
-          onClick={() => router.push("/?from=drill")}
-          aria-label="Go to home"
-          className="min-h-[44px] px-4 flex items-center text-sm"
-          style={{ color: "var(--text-muted)" }}
-        >
-          ← Home
-        </button>
         <div className="flex items-center gap-2">
           {focusLabel && (
             <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}>
@@ -152,15 +144,19 @@ export default function DrillPage() {
               className="text-xs px-2 py-0.5 rounded-full"
               style={{ background: "var(--surface-2)", color: "var(--text-muted)" }}
             >
-              Clear focus
+              ✕ Clear focus
             </button>
           )}
+          {!focusLabel && (
+            <span className="text-sm font-semibold" style={{ color: "var(--text-muted)" }}>
+              Scam Gym
+            </span>
+          )}
         </div>
-        <div className="w-16" />
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 pb-36 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-4 pb-48 space-y-6">
         {/* Training banner */}
         {!bannerHidden && (
           <div
@@ -222,27 +218,31 @@ export default function DrillPage() {
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
             How confident are you?
           </p>
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2">
             {CONFIDENCE_OPTIONS.map((c) => {
               const selected = confidence === c;
+              const labels: Record<number, string> = { 50: "Just guessing", 60: "Leaning", 70: "Pretty sure", 85: "Very sure", 95: "Certain" };
               return (
                 <button
                   key={c}
                   onClick={() => { tap(); setConfidence(c); }}
-                  className="flex-1 min-w-[48px] py-3 rounded-xl font-semibold text-sm border-2 transition-colors duration-150 active:scale-95"
+                  aria-pressed={selected}
+                  className="flex-1 py-3.5 rounded-xl font-semibold text-sm border-2 transition-colors duration-150 active:scale-95 flex flex-col items-center gap-0.5"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
                     background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
                     color: selected ? "var(--accent)" : "var(--text-muted)",
+                    minHeight: "52px",
                   }}
                 >
-                  {c}%
+                  <span className="font-bold">{c}%</span>
+                  {selected && <span className="text-[9px] font-medium tracking-wide text-center leading-tight opacity-80">{labels[c]}</span>}
                 </button>
               );
             })}
           </div>
-          <div className="flex justify-between mt-1 px-1">
-            <span className="text-xs" style={{ color: "var(--text-muted)" }}>Coin flip</span>
+          <div className="flex justify-between mt-1.5 px-0.5">
+            <span className="text-xs" style={{ color: "var(--text-muted)" }}>Just guessing</span>
             <span className="text-xs" style={{ color: "var(--text-muted)" }}>Dead certain</span>
           </div>
         </div>
@@ -250,23 +250,37 @@ export default function DrillPage() {
         {/* Behavior question */}
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
-            What would you actually do? <span className="normal-case font-normal tracking-normal opacity-60">(optional)</span>
+            What would you actually do?
           </p>
-          <div className="flex flex-wrap gap-2">
-            {BEHAVIOR_OPTIONS.map(({ value, label }) => {
+          <div className="space-y-2">
+            {BEHAVIOR_OPTIONS.map(({ value, label, desc }) => {
               const selected = behaviorChoice === value;
               return (
                 <button
                   key={value}
                   onClick={() => { tap(); setBehaviorChoice(selected ? null : value); }}
-                  className="py-2 px-3 rounded-xl text-sm border-2 transition-colors duration-150 active:scale-95"
+                  aria-pressed={selected}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-colors duration-150 active:scale-[0.98]"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
-                    color: selected ? "var(--accent)" : "var(--text-muted)",
+                    background: selected ? "rgba(124,106,247,0.12)" : "var(--surface)",
                   }}
                 >
-                  {label}
+                  <div
+                    className="w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center"
+                    style={{
+                      borderColor: selected ? "var(--accent)" : "var(--border)",
+                      background: selected ? "var(--accent)" : "transparent",
+                    }}
+                  >
+                    {selected && <span className="text-white text-xs leading-none">✓</span>}
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>
+                      {label}
+                    </div>
+                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>{desc}</div>
+                  </div>
                 </button>
               );
             })}
@@ -275,9 +289,9 @@ export default function DrillPage() {
       </div>
 
       {/* Sticky submit */}
-      <div className="fixed bottom-0 left-0 right-0" style={{ background: "var(--background)" }}>
+      <div className="fixed bottom-[57px] left-0 right-0" style={{ background: "var(--background)" }}>
         <div
-          className="max-w-lg mx-auto px-4 py-4 border-t"
+          className="max-w-lg mx-auto px-4 py-3 border-t"
           style={{ borderColor: "var(--border)" }}
         >
         <button
