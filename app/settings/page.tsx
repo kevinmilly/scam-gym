@@ -118,8 +118,8 @@ export default function SettingsPage() {
         <div className="w-12" />
       </div>
 
-      <div className="px-4 py-5 space-y-4">
-        {/* Premium section */}
+      <div className="px-4 py-5 space-y-6 pb-24">
+        {/* ── ACCOUNT ── */}
         {premium ? (
           <div
             className="rounded-2xl border px-4 py-4"
@@ -136,366 +136,228 @@ export default function SettingsPage() {
             </p>
           </div>
         ) : (
-          <>
-          <Link
-            href="/upgrade"
-            className="block rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
-            style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <p className="font-bold text-sm mb-1" style={{ color: "var(--text)" }}>
-              Upgrade to Pro
-            </p>
-            <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-              Unlock power-user tools — trend charts, focus training, reply scripts, and more.
-            </p>
-            <span
-              className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
-              style={{ background: "var(--accent)", color: "#fff" }}
+          <div className="space-y-2">
+            <Link
+              href="/upgrade"
+              className="block rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
+              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
             >
-              Upgrade to unlock
-            </span>
-          </Link>
-          <Link
-            href="/restore"
-            className="block text-center text-xs py-2"
-            style={{ color: "var(--text-muted)" }}
-          >
-            Already purchased? Restore access →
-          </Link>
-          </>
+              <p className="font-bold text-sm mb-1" style={{ color: "var(--text)" }}>
+                Upgrade to Pro
+              </p>
+              <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
+                Unlock trend charts, focus training, reply scripts, and more.
+              </p>
+              <span
+                className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
+                style={{ background: "var(--accent)", color: "#fff" }}
+              >
+                Upgrade to unlock
+              </span>
+            </Link>
+            <Link
+              href="/upgrade"
+              className="block text-center text-xs py-2"
+              style={{ color: "var(--text-muted)" }}
+            >
+              Already purchased? Restore access →
+            </Link>
+          </div>
         )}
 
-        {/* Context mode */}
-        <div
-          className="rounded-2xl border px-4 py-4"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-        >
-          <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
-            Training Mode
+        {/* ── TRAINING ── */}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+            Training
           </p>
-          <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
-            Only drills matching your selected mode are shown.
-          </p>
-          <div className="space-y-2">
-            {(Object.keys(CONTEXT_LABELS) as UserContext[]).map((ctx) => {
-              const selected = selectedContext === ctx;
-              return (
-                <button
-                  key={ctx}
-                  onClick={() => setSelectedContext(ctx)}
-                  className="w-full text-left rounded-xl border px-3 py-3 transition-all"
-                  style={{
-                    borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(124,106,247,0.08)" : "var(--surface-2)",
-                  }}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>
-                        {CONTEXT_LABELS[ctx]}
-                      </span>
-                      <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                        {CONTEXT_DESCRIPTIONS[ctx]}
-                      </p>
-                    </div>
-                    {selected && <span className="text-xs font-bold ml-2" style={{ color: "var(--accent)" }}>✓</span>}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Slow Mode */}
-        <div
-          className="rounded-2xl border px-4 py-4"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-                Larger text &amp; spacing
-              </p>
-              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                Increases font size and line spacing
-              </p>
+          <div className="space-y-3">
+            {/* Context mode */}
+            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>Training Mode</p>
+              <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>Only drills matching your selected mode are shown.</p>
+              <div className="space-y-2">
+                {(Object.keys(CONTEXT_LABELS) as UserContext[]).map((ctx) => {
+                  const selected = selectedContext === ctx;
+                  return (
+                    <button key={ctx} onClick={() => setSelectedContext(ctx)}
+                      className="w-full text-left rounded-xl border px-3 py-3 transition-all"
+                      style={{ borderColor: selected ? "var(--accent)" : "var(--border)", background: selected ? "rgba(124,106,247,0.08)" : "var(--surface-2)" }}>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>{CONTEXT_LABELS[ctx]}</span>
+                          <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{CONTEXT_DESCRIPTIONS[ctx]}</p>
+                        </div>
+                        {selected && <span className="text-xs font-bold ml-2" style={{ color: "var(--accent)" }}>✓</span>}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <button
-              onClick={() => { tap(); toggleSlowMode(); }}
-              role="switch"
-              aria-checked={slowMode}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
-              style={{
-                borderColor: slowMode ? "var(--accent)" : "var(--border)",
-                background: slowMode ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
-                color: slowMode ? "var(--accent)" : "var(--text-muted)",
-              }}
-            >
-              {slowMode ? "ON" : "OFF"}
-            </button>
-          </div>
-        </div>
 
-        {/* Sound effects */}
-        <div
-          className="rounded-2xl border px-4 py-4"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-                Sound effects
-              </p>
-              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                Play a tone on correct or incorrect answers
-              </p>
-            </div>
-            <button
-              onClick={() => {
-                tap();
-                const next = !audio;
-                setAudio(next);
-                setAudioEnabled(next);
-              }}
-              role="switch"
-              aria-checked={audio}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
-              style={{
-                borderColor: audio ? "var(--accent)" : "var(--border)",
-                background: audio ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
-                color: audio ? "var(--accent)" : "var(--text-muted)",
-              }}
-            >
-              {audio ? "ON" : "OFF"}
-            </button>
-          </div>
-        </div>
-
-        {/* Theme toggle (free for all users) */}
-        <div
-          className="rounded-2xl border px-4 py-4"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-                Theme
-              </p>
-              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                {theme === "dark" ? "Dark mode (default)" : "Light mode"}
-              </p>
-            </div>
-            <button
-              onClick={() => {
-                tap();
-                const next = theme === "dark" ? "light" : "dark";
-                setThemeState(next);
-                setTheme(next);
-              }}
-              role="switch"
-              aria-checked={theme === "light"}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
-              style={{
-                borderColor: theme === "light" ? "var(--accent)" : "var(--border)",
-                background: theme === "light" ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
-                color: theme === "light" ? "var(--accent)" : "var(--text-muted)",
-              }}
-            >
-              {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-            </button>
-          </div>
-        </div>
-
-        {/* Focus Training (premium) */}
-        <PremiumGate label="Focus Training" pitch="Pick specific scam families to drill until you master them.">
-          <div
-            className="rounded-2xl border px-4 py-4"
-            style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
-              Focus Training
-            </p>
-            <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-              Select pattern families to focus on. Only drills from selected families will appear.
-            </p>
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {[...new Set(allDrills.map((d) => d.pattern_family))].sort().map((fam) => {
-                const active = focusFamilies.includes(fam);
-                return (
-                  <button
-                    key={fam}
-                    onClick={() => {
-                      tap();
-                      const next = active
-                        ? focusFamilies.filter((f) => f !== fam)
-                        : [...focusFamilies, fam];
-                      setFocusFamilies(next);
-                      if (next.length > 0) {
-                        setFocusLabel(`Focus: ${next.map(familyLabel).join(", ")}`);
-                        track("focus_training_set", { families: next });
-                      } else {
-                        setFocusLabel(null);
-                      }
-                    }}
-                    className="px-2.5 py-1.5 rounded-full text-xs border transition-all"
-                    style={{
-                      borderColor: active ? "var(--accent)" : "var(--border)",
-                      background: active ? "rgba(124,106,247,0.15)" : "transparent",
-                      color: active ? "var(--accent)" : "var(--text-muted)",
-                    }}
-                  >
-                    {familyLabel(fam)}
+            {/* Focus Training (premium) */}
+            <PremiumGate label="Focus Training" pitch="Pick specific scam families to drill until you master them.">
+              <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+                <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>Focus Training</p>
+                <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>Select pattern families to focus on. Only drills from selected families will appear.</p>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {[...new Set(allDrills.map((d) => d.pattern_family))].sort().map((fam) => {
+                    const active = focusFamilies.includes(fam);
+                    return (
+                      <button key={fam}
+                        onClick={() => {
+                          tap();
+                          const next = active ? focusFamilies.filter((f) => f !== fam) : [...focusFamilies, fam];
+                          setFocusFamilies(next);
+                          if (next.length > 0) { setFocusLabel(`Focus: ${next.map(familyLabel).join(", ")}`); track("focus_training_set", { families: next }); }
+                          else { setFocusLabel(null); }
+                        }}
+                        className="px-2.5 py-1.5 rounded-full text-xs border transition-all"
+                        style={{ borderColor: active ? "var(--accent)" : "var(--border)", background: active ? "rgba(124,106,247,0.15)" : "transparent", color: active ? "var(--accent)" : "var(--text-muted)" }}>
+                        {familyLabel(fam)}
+                      </button>
+                    );
+                  })}
+                </div>
+                {focusFamilies.length > 0 && (
+                  <button onClick={() => { setFocusFamilies([]); setFocusLabel(null); }} className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    Clear focus filter
                   </button>
-                );
-              })}
+                )}
+              </div>
+            </PremiumGate>
+          </div>
+        </div>
+
+        {/* ── ACCESSIBILITY ── */}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+            Accessibility
+          </p>
+          <div className="space-y-3">
+            {/* Larger text */}
+            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Larger text &amp; spacing</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>Increases font size and line spacing</p>
+                </div>
+                <button onClick={() => { tap(); toggleSlowMode(); }} role="switch" aria-checked={slowMode}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
+                  style={{ borderColor: slowMode ? "var(--accent)" : "var(--border)", background: slowMode ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: slowMode ? "var(--accent)" : "var(--text-muted)" }}>
+                  {slowMode ? "ON" : "OFF"}
+                </button>
+              </div>
             </div>
-            {focusFamilies.length > 0 && (
-              <button
-                onClick={() => { setFocusFamilies([]); setFocusLabel(null); }}
-                className="text-xs"
-                style={{ color: "var(--text-muted)" }}
-              >
-                Clear focus filter
+
+            {/* Sound */}
+            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Sound effects</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>Play a tone on correct or incorrect answers</p>
+                </div>
+                <button onClick={() => { tap(); const next = !audio; setAudio(next); setAudioEnabled(next); }} role="switch" aria-checked={audio}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
+                  style={{ borderColor: audio ? "var(--accent)" : "var(--border)", background: audio ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: audio ? "var(--accent)" : "var(--text-muted)" }}>
+                  {audio ? "ON" : "OFF"}
+                </button>
+              </div>
+            </div>
+
+            {/* Theme */}
+            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Theme</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{theme === "dark" ? "Dark mode (default)" : "Light mode"}</p>
+                </div>
+                <button onClick={() => { tap(); const next = theme === "dark" ? "light" : "dark"; setThemeState(next); setTheme(next); }} role="switch" aria-checked={theme === "light"}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
+                  style={{ borderColor: theme === "light" ? "var(--accent)" : "var(--border)", background: theme === "light" ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: theme === "light" ? "var(--accent)" : "var(--text-muted)" }}>
+                  {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── DATA ── */}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+            Data
+          </p>
+          <div className="rounded-2xl border divide-y" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+            <div className="px-4 py-4">
+              <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>Export Data</p>
+              <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>Download all your attempts and flags as a JSON backup.</p>
+              <button onClick={handleExport} className="px-4 py-2 rounded-xl text-sm font-semibold border" style={{ borderColor: "var(--border)", color: "var(--text)" }}>
+                Download backup
               </button>
-            )}
+            </div>
+            <div className="px-4 py-4">
+              <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>Import Data</p>
+              <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>Restore from a previous backup file.</p>
+              <label className="inline-block px-4 py-2 rounded-xl text-sm font-semibold border cursor-pointer" style={{ borderColor: "var(--border)", color: "var(--text)" }}>
+                Choose file
+                <input type="file" accept=".json" onChange={handleImport} className="hidden" />
+              </label>
+            </div>
+            <div className="px-4 py-4">
+              <p className="font-semibold text-sm mb-1" style={{ color: "var(--text-muted)" }}>Analytics</p>
+              <div className="flex items-center justify-between">
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>Help improve Scam Gym with anonymous usage data</p>
+                <button onClick={() => { tap(); const next = !analytics; setAnalytics(next); setAnalyticsEnabled(next); }} role="switch" aria-checked={analytics}
+                  className="ml-4 px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150 shrink-0"
+                  style={{ borderColor: analytics ? "var(--accent)" : "var(--border)", background: analytics ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: analytics ? "var(--accent)" : "var(--text-muted)" }}>
+                  {analytics ? "ON" : "OFF"}
+                </button>
+              </div>
+            </div>
           </div>
-        </PremiumGate>
+        </div>
 
-        {/* Data export */}
-        <div
-          className="rounded-2xl border divide-y"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-        >
-          <div className="px-4 py-4">
-            <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
-              Export Data
-            </p>
-            <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-              Download all your attempts and flags as a JSON backup.
-            </p>
-            <button
-              onClick={handleExport}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border"
-              style={{ borderColor: "var(--border)", color: "var(--text)" }}
-            >
-              Download backup
-            </button>
-          </div>
-
-          <div className="px-4 py-4">
-            <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
-              Import Data
-            </p>
-            <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-              Restore from a previous backup file.
-            </p>
-            <label
-              className="inline-block px-4 py-2 rounded-xl text-sm font-semibold border cursor-pointer"
-              style={{ borderColor: "var(--border)", color: "var(--text)" }}
-            >
-              Choose file
-              <input type="file" accept=".json" onChange={handleImport} className="hidden" />
-            </label>
-          </div>
-
-          <div className="px-4 py-4">
-            <p className="font-semibold text-sm mb-1" style={{ color: "#ef4444" }}>
-              Reset All Data
-            </p>
-            <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-              Permanently deletes all your attempts and flags. Cannot be undone.
-            </p>
+        {/* ── DANGER ZONE ── */}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "#ef4444" }}>
+            Danger Zone
+          </p>
+          <div className="rounded-2xl border px-4 py-4" style={{ background: "rgba(239,68,68,0.04)", borderColor: "rgba(239,68,68,0.3)" }}>
+            <p className="font-semibold text-sm mb-1" style={{ color: "#ef4444" }}>Reset All Data</p>
+            <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>Permanently deletes all your attempts and flags. This cannot be undone.</p>
             {confirmReset ? (
               <div className="flex gap-2">
-                <button
-                  onClick={handleReset}
-                  className="px-4 py-2 rounded-xl text-sm font-bold"
-                  style={{ background: "#ef4444", color: "#fff" }}
-                >
-                  Yes, reset everything
+                <button onClick={handleReset} className="px-4 py-2 rounded-xl text-sm font-bold" style={{ background: "#ef4444", color: "#fff" }}>
+                  Yes, delete everything
                 </button>
-                <button
-                  onClick={() => setConfirmReset(false)}
-                  className="px-4 py-2 rounded-xl text-sm"
-                  style={{ color: "var(--text-muted)" }}
-                >
+                <button onClick={() => setConfirmReset(false)} className="px-4 py-2 rounded-xl text-sm" style={{ color: "var(--text-muted)" }}>
                   Cancel
                 </button>
               </div>
             ) : (
-              <button
-                onClick={handleReset}
-                className="px-4 py-2 rounded-xl text-sm font-semibold border"
-                style={{ borderColor: "#ef444466", color: "#ef4444" }}
-              >
-                Reset data
+              <button onClick={handleReset} className="px-4 py-2 rounded-xl text-sm font-semibold border" style={{ borderColor: "rgba(239,68,68,0.5)", color: "#ef4444" }}>
+                Reset all data
               </button>
             )}
           </div>
         </div>
 
-        {/* Analytics toggle */}
-        <div
-          className="rounded-2xl border px-4 py-4"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-                Usage analytics
-              </p>
-              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                Help improve Scam Gym with anonymous usage data
-              </p>
-            </div>
-            <button
-              onClick={() => {
-                tap();
-                const next = !analytics;
-                setAnalytics(next);
-                setAnalyticsEnabled(next);
-              }}
-              role="switch"
-              aria-checked={analytics}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
-              style={{
-                borderColor: analytics ? "var(--accent)" : "var(--border)",
-                background: analytics ? "rgba(124,106,247,0.15)" : "var(--surface-2)",
-                color: analytics ? "var(--accent)" : "var(--text-muted)",
-              }}
-            >
-              {analytics ? "ON" : "OFF"}
-            </button>
-          </div>
-        </div>
-
-        {/* About */}
-        <div
-          className="rounded-2xl border px-4 py-4"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-        >
-          <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
-            About Scam Gym
+        {/* ── ABOUT ── */}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+            About
           </p>
-          <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
-            Your drill data stays on your device. We collect anonymous usage analytics to improve the app — no personal information is stored on our servers. You can opt out above.
-            Scam Gym is a personal training tool — not a security product.
-            It won&apos;t stop real scams, but it will sharpen your instincts.
-          </p>
-          <div
-            className="mt-3 pt-3 border-t"
-            style={{ borderColor: "var(--border)" }}
-          >
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--text-muted)" }}>
-              Disclaimer
+          <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+            <p className="font-semibold text-sm mb-2" style={{ color: "var(--text)" }}>About Scam Gym</p>
+            <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+              Your drill data stays on your device. We collect anonymous usage analytics to improve the app — no personal information is stored on our servers. You can opt out in the Data section above.
+              Scam Gym is a personal training tool — not a security product. It won&apos;t stop real scams, but it will sharpen your instincts.
             </p>
             <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
-              Scam Gym is for educational purposes only. All scenarios use fictional companies and brands — any resemblance to real organizations is coincidental. Drills cover common, high-frequency scam patterns and do not represent every type of fraud. Always verify suspicious messages directly through official channels.
+              <strong style={{ color: "var(--text)" }}>Disclaimer:</strong> For educational purposes only. All scenarios use fictional companies and brands. Drills cover common scam patterns — always verify suspicious messages through official channels.
             </p>
+            <p className="text-xs mt-3" style={{ color: "var(--text-muted)" }}>MVP v0.1</p>
           </div>
-          <p className="text-xs mt-3" style={{ color: "var(--text-muted)" }}>
-            MVP v0.1
-          </p>
         </div>
 
       </div>
@@ -503,7 +365,7 @@ export default function SettingsPage() {
       {/* Snackbar for status messages */}
       {status && (
         <div
-          className="fixed bottom-6 left-0 right-0 flex justify-center pointer-events-none"
+          className="fixed bottom-[72px] left-0 right-0 flex justify-center pointer-events-none"
           style={{ zIndex: 50 }}
         >
           <div

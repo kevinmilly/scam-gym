@@ -106,6 +106,17 @@ export default function HelpPage() {
         {/* Step 1: Channel */}
         {step === "channel" && (
           <div>
+            {/* Reassuring banner */}
+            <div
+              className="flex items-start gap-3 rounded-xl px-4 py-3 mb-6"
+              style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)" }}
+            >
+              <span className="text-lg mt-0.5">🛡️</span>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+                <strong>Don&apos;t respond yet.</strong> Let&apos;s figure this out together — step by step.
+              </p>
+            </div>
+
             <h1 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
               How did they contact you?
             </h1>

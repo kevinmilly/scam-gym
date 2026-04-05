@@ -87,17 +87,42 @@ export default function UpgradePage() {
 
       <div className="px-4 py-6 space-y-6">
         {premium ? (
-          <div
-            className="rounded-2xl border px-5 py-6 text-center"
-            style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
-          >
-            <span className="text-3xl block mb-3">✨</span>
-            <p className="font-bold text-lg mb-1" style={{ color: "var(--accent)" }}>
-              Pro Unlocked
+          <div className="space-y-5">
+            <div
+              className="rounded-2xl border px-5 py-6 text-center"
+              style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+            >
+              <span className="text-3xl block mb-3">✨</span>
+              <p className="font-bold text-lg mb-1" style={{ color: "var(--accent)" }}>
+                Pro Active
+              </p>
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                All features are unlocked. Thank you for supporting Scam Gym!
+              </p>
+            </div>
+
+            <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--text-muted)" }}>
+              Your pro features
             </p>
-            <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-              All features are active. Thank you for supporting Scam Gym!
-            </p>
+            {[
+              { icon: "📈", label: "Accuracy trend chart", href: "/stats" },
+              { icon: "🔍", label: "Full vulnerability profile", href: "/stats" },
+              { icon: "🎯", label: "Custom drill focus", href: "/settings" },
+              { icon: "🏃", label: "10-drill session mode", href: "/session" },
+              { icon: "🔖", label: "Drill bookmarks", href: "/stats" },
+              { icon: "🔥", label: "Streak tracking", href: "/stats" },
+            ].map(({ icon, label, href }) => (
+              <button
+                key={label}
+                onClick={() => router.push(href)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left transition-all active:scale-[0.98]"
+                style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              >
+                <span className="text-xl">{icon}</span>
+                <span className="text-sm font-semibold flex-1" style={{ color: "var(--text)" }}>{label}</span>
+                <span style={{ color: "var(--text-muted)" }}>→</span>
+              </button>
+            ))}
           </div>
         ) : (
           <>
