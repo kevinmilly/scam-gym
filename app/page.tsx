@@ -445,7 +445,7 @@ function HomePageInner() {
 
           {/* Sticky CTA */}
           <div
-            className="sticky bottom-0 -mx-6 px-6 pt-6 pb-6 space-y-3"
+            className="sticky bottom-[57px] -mx-6 px-6 pt-6 pb-4 space-y-3"
             style={{ background: "linear-gradient(to bottom, transparent 0%, var(--background) 25%)" }}
           >
             {autopilotMsg && (

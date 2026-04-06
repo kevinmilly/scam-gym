@@ -57,7 +57,7 @@ export default function RootLayout({
         <ServiceWorkerRegistration />
         <PostHogProvider>
           <DrillProvider>
-            <main className="min-h-dvh max-w-lg mx-auto">
+            <main className="min-h-dvh max-w-lg mx-auto pb-20">
               {children}
             </main>
             <BottomNav />
