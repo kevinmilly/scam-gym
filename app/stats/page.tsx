@@ -104,15 +104,14 @@ export default function StatsPage() {
         </div>
 
         <div className="flex-1 px-4 py-8 pb-24 space-y-6">
-          {/* Empty state illustration placeholder */}
-          <div
-            className="flex items-center justify-center rounded-2xl mx-auto mb-4"
-            style={{ height: 140, maxWidth: 240, background: "var(--accent-subtle)" }}
-          >
-            <div className="flex flex-col items-center gap-2" style={{ color: "var(--accent)", opacity: 0.6 }}>
-              <BarChart3 size={40} strokeWidth={1.25} />
-              <span className="text-xs font-medium">Illustration: Growth</span>
-            </div>
+          {/* Empty state illustration */}
+          <div className="flex items-center justify-center mx-auto mb-4" style={{ maxWidth: 240 }}>
+            <img
+              src="/stats_empty_scam_gym.png"
+              alt="Your progress will grow here"
+              className="rounded-2xl object-contain"
+              style={{ height: 140 }}
+            />
           </div>
 
           <div className="text-center py-2">

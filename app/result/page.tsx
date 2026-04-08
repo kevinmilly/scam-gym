@@ -756,13 +756,13 @@ export default function ResultPage() {
 
       {/* XP summary — low noise, shown after the content */}
       {xpBreakdown && (
-        <div className="px-4 pb-2">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
+        <div className="px-4 pt-4 pb-3 border-t" style={{ borderColor: "var(--border)" }}>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "var(--accent-subtle)", color: "var(--accent)" }}>
               +{xpBreakdown.total} XP
             </span>
-            {reward && <XpBar levelInfo={reward.levelInfo} animate />}
           </div>
+          {reward && <XpBar levelInfo={reward.levelInfo} animate />}
         </div>
       )}
 

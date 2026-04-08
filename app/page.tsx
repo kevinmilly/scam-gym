@@ -146,15 +146,14 @@ function HomePageInner() {
         /* ── Welcome / Onboarding Screen ── */
         <>
           <div className="flex-1 flex flex-col">
-            {/* Hero illustration placeholder */}
-            <div
-              className="flex items-center justify-center rounded-2xl mb-6"
-              style={{ height: 180, background: "var(--accent-subtle)" }}
-            >
-              <div className="flex flex-col items-center gap-2" style={{ color: "var(--accent)", opacity: 0.6 }}>
-                <ShieldCheck size={48} strokeWidth={1.25} />
-                <span className="text-xs font-medium">Illustration: Shield + Phone</span>
-              </div>
+            {/* Hero illustration */}
+            <div className="flex items-center justify-center mb-6">
+              <img
+                src="/home_hero_scam_gym.png"
+                alt="Shield protecting a phone from scams"
+                className="rounded-2xl object-cover"
+                style={{ height: 180, width: "100%" }}
+              />
             </div>
 
             {/* Hero */}

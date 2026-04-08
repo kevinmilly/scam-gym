@@ -203,15 +203,14 @@ export default function SessionPage() {
     return (
       <div className="flex flex-col min-h-dvh px-4 py-6">
         <div className="flex-1 flex flex-col items-center justify-center text-center">
-          {/* Illustration placeholder */}
-          <div
-            className="flex items-center justify-center rounded-2xl mb-4"
-            style={{ height: 140, width: 200, background: "var(--accent-subtle)" }}
-          >
-            <div className="flex flex-col items-center gap-2" style={{ color: "var(--accent)", opacity: 0.6 }}>
-              <Trophy size={40} strokeWidth={1.25} />
-              <span className="text-xs font-medium">Illustration: Celebration</span>
-            </div>
+          {/* Session complete illustration */}
+          <div className="flex items-center justify-center mb-4">
+            <img
+              src="/session_complete_scam_gym.png"
+              alt="Session complete - great work!"
+              className="rounded-2xl object-contain"
+              style={{ height: 140, width: 200 }}
+            />
           </div>
           <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
             Session Complete!
