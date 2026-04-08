@@ -27,7 +27,11 @@
       "Read(//c/Users/jamik/kevinProjects/**)",
       "Bash(npm init -y)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:web.dev)"
+      "WebFetch(domain:web.dev)",
+      "Bash(grep -n '\"\"overconfident\"\"\\\\|\"\"underconfident\"\"' app/session/page.tsx app/stats/page.tsx lib/medals.ts)",
+      "Bash(cd:*)",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:m3.material.io)"
     ]
   }
 }

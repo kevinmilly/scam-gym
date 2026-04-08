@@ -1,0 +1,32 @@
+{
+  "id": "journey-restore-purchase",
+  "label": "Returning user restores premium purchase",
+  "description": "Tests the purchase restore flow via email verification — important for users who switch devices or clear localStorage, touching the verify-purchase API endpoint.",
+  "goal": "Restore previously purchased premium access",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Visit upgrade page to find restore option",
+      "url": "https://www.scamgym.com/upgrade",
+      "component": "app\\upgrade\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "audit_form",
+      "label": "Submit email to restore purchase",
+      "component": "app\\upgrade\\page.tsx",
+      "fields": [
+        "email"
+      ]
+    },
+    {
+      "index": 2,
+      "type": "locate_risk",
+      "label": "Confirm payment verification submission",
+      "component": "app\\upgrade\\page.tsx",
+      "risk_type": "submit"
+    }
+  ]
+}

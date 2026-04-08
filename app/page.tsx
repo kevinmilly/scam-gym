@@ -12,29 +12,30 @@ import { unlockPremium, isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
 import { getStreak } from "@/lib/streak";
 import PremiumGate from "@/components/PremiumGate";
+import { Target, Brain, BarChart3, Mail, ShieldAlert, ShieldCheck, Flame, Cpu, Zap, Smartphone, Store, Briefcase, Users, Check, ChevronRight } from "lucide-react";
 
 const ONBOARDED_KEY = "scamgym_onboarded";
 
-const CONTEXT_ICONS: Record<UserContext, string> = {
-  personal:       "📱",
-  small_business: "🏪",
-  job_seeker:     "💼",
-  family_safety:  "👨‍👩‍👧",
+const CONTEXT_ICONS: Record<UserContext, React.ReactNode> = {
+  personal:       <Smartphone size={20} strokeWidth={1.75} />,
+  small_business: <Store size={20} strokeWidth={1.75} />,
+  job_seeker:     <Briefcase size={20} strokeWidth={1.75} />,
+  family_safety:  <Users size={20} strokeWidth={1.75} />,
 };
 
 const VALUE_PROPS = [
   {
-    icon: "🎯",
+    icon: <Target size={24} strokeWidth={1.75} />,
     title: "Real-world drills",
     desc: "Practice spotting real scam messages: phishing emails, fake invoices, job offers, and more.",
   },
   {
-    icon: "🧠",
+    icon: <Brain size={24} strokeWidth={1.75} />,
     title: "Confidence tracking",
     desc: "See when you're guessing vs when you're truly certain. Overconfidence is the real danger.",
   },
   {
-    icon: "📊",
+    icon: <BarChart3 size={24} strokeWidth={1.75} />,
     title: "Personal risk profile",
     desc: "Discover which scam types you're most likely to fall for — and train those weak spots.",
   },
@@ -145,12 +146,23 @@ function HomePageInner() {
         /* ── Welcome / Onboarding Screen ── */
         <>
           <div className="flex-1 flex flex-col">
+            {/* Hero illustration placeholder */}
+            <div
+              className="flex items-center justify-center rounded-2xl mb-6"
+              style={{ height: 180, background: "var(--accent-subtle)" }}
+            >
+              <div className="flex flex-col items-center gap-2" style={{ color: "var(--accent)", opacity: 0.6 }}>
+                <ShieldCheck size={48} strokeWidth={1.25} />
+                <span className="text-xs font-medium">Illustration: Shield + Phone</span>
+              </div>
+            </div>
+
             {/* Hero */}
             <div className="mb-6">
               <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
                 Free · No account needed
               </p>
-              <h1 className="text-3xl font-bold leading-tight mb-4" style={{ color: "var(--text)" }}>
+              <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-6" style={{ color: "var(--text)" }}>
                 Practice spotting scams before they hit you.
               </h1>
               <p className="text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
@@ -179,7 +191,7 @@ function HomePageInner() {
               className="rounded-2xl px-4 py-3 mb-6 flex items-center gap-3"
               style={{ background: "var(--surface-2)" }}
             >
-              <span className="text-lg">📬</span>
+              <Mail size={20} strokeWidth={1.75} style={{ color: "var(--accent)", flexShrink: 0 }} />
               <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
                 <strong style={{ color: "var(--text)" }}>140+ real-style drills</strong> across phishing, fake invoices, job scams, romance fraud, and more.
               </p>
@@ -196,8 +208,7 @@ function HomePageInner() {
 
             {/* Mini-drill demo */}
             <div
-              className="rounded-2xl border p-5 mb-6"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              className="card-base p-5 mb-6"
             >
               <p className="font-bold text-base text-center mb-4" style={{ color: "var(--text)" }}>
                 Would you catch this?
@@ -220,16 +231,16 @@ function HomePageInner() {
                   <button
                     onClick={() => setDemoAnswer("scam")}
                     className="flex-1 py-3 min-h-[48px] rounded-xl font-semibold text-sm transition-all active:scale-95 border"
-                    style={{ borderColor: "#ef4444", color: "#ef4444", background: "rgba(239,68,68,0.08)" }}
+                    style={{ borderColor: "var(--danger)", color: "var(--danger)", background: "var(--danger-bg)" }}
                   >
-                    🚫 Scam
+                    Scam
                   </button>
                   <button
                     onClick={() => setDemoAnswer("legit")}
                     className="flex-1 py-3 min-h-[48px] rounded-xl font-semibold text-sm transition-all active:scale-95 border"
-                    style={{ borderColor: "#22c55e", color: "#22c55e", background: "rgba(34,197,94,0.08)" }}
+                    style={{ borderColor: "var(--success)", color: "var(--success)", background: "var(--success-bg)" }}
                   >
-                    ✅ Legit
+                    Legit
                   </button>
                 </div>
               ) : (
@@ -239,7 +250,7 @@ function HomePageInner() {
                     className="rounded-xl px-4 py-2.5 mb-3 text-center font-bold text-sm"
                     style={{
                       background: demoAnswer === "scam" ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)",
-                      color: demoAnswer === "scam" ? "#22c55e" : "#ef4444",
+                      color: demoAnswer === "scam" ? "var(--success)" : "var(--danger)",
                     }}
                   >
                     {demoAnswer === "scam" ? "✓ Correct! This is a scam." : "✗ Not quite — this is a scam."}
@@ -268,13 +279,13 @@ function HomePageInner() {
 
             {/* Value props */}
             <div className="space-y-4 mb-10">
-              {VALUE_PROPS.map((v) => (
+              {VALUE_PROPS.map((v, i) => (
                 <div
                   key={v.title}
-                  className="flex items-start gap-4 rounded-2xl px-4 py-5 border"
-                  style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+                  className="flex items-start gap-4 card-base p-6 animate-stagger"
+                  style={{ animationDelay: `${i * 80}ms` } as React.CSSProperties}
                 >
-                  <span className="text-2xl mt-0.5">{v.icon}</span>
+                  <span className="mt-0.5" style={{ color: "var(--accent)" }}>{v.icon}</span>
                   <div>
                     <p className="font-semibold text-sm mb-0.5" style={{ color: "var(--text)" }}>{v.title}</p>
                     <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{v.desc}</p>
@@ -292,7 +303,7 @@ function HomePageInner() {
       ) : showContextPicker ? (
         /* ── Context Selection Screen ── */
         <>
-          <h1 className="text-2xl font-bold leading-tight mb-2" style={{ color: "var(--text)" }}>
+          <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
             Choose your training mode
           </h1>
           <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>
@@ -313,7 +324,7 @@ function HomePageInner() {
                   }}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-xl">{CONTEXT_ICONS[ctx]}</span>
+                    <span style={{ color: selected ? "var(--accent)" : "var(--text-muted)" }}>{CONTEXT_ICONS[ctx]}</span>
                     <div>
                       <p className="font-semibold text-sm" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>
                         {CONTEXT_LABELS[ctx]}
@@ -323,7 +334,7 @@ function HomePageInner() {
                       </p>
                     </div>
                     {selected && (
-                      <span className="ml-auto text-xs font-bold" style={{ color: "var(--accent)" }}>✓</span>
+                      <Check size={16} strokeWidth={2.5} className="ml-auto" style={{ color: "var(--accent)" }} />
                     )}
                   </div>
                 </button>
@@ -356,7 +367,7 @@ function HomePageInner() {
                 className="rounded-2xl p-4 mb-6 border"
                 style={{ background: "rgba(34,197,94,0.1)", borderColor: "rgba(34,197,94,0.3)" }}
               >
-                <p className="text-sm font-bold mb-1" style={{ color: "#22c55e" }}>
+                <p className="text-sm font-bold mb-1" style={{ color: "var(--success)" }}>
                   ✨ Premium Unlocked!
                 </p>
                 <p className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -367,7 +378,7 @@ function HomePageInner() {
 
             {/* Header row: title + streak */}
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-2xl font-bold leading-tight" style={{ color: "var(--text)" }}>
+              <h1 className="text-[28px] font-bold leading-tight tracking-tight" style={{ color: "var(--text)" }}>
                 Scam Gym
               </h1>
               {(() => {
@@ -376,9 +387,9 @@ function HomePageInner() {
                 return (
                   <div
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
-                    style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
+                    style={{ background: "var(--warning-bg)", color: "var(--warning)" }}
                   >
-                    <span>🔥</span>
+                    <Flame size={16} strokeWidth={1.75} />
                     <span>{streak.current}</span>
                   </div>
                 );
@@ -388,19 +399,19 @@ function HomePageInner() {
             {/* Panic card — top priority, high intent users */}
             <Link
               href="/help"
-              className="flex items-center gap-3 rounded-2xl border-2 px-4 py-4 mb-6 transition-all active:scale-[0.98]"
-              style={{ background: "rgba(239,68,68,0.06)", borderColor: "rgba(239,68,68,0.35)" }}
+              className="flex items-center gap-3 rounded-2xl border px-4 py-4 mb-6 transition-all active:scale-[0.98]"
+              style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)" }}
             >
-              <span className="text-2xl">🚨</span>
+              <ShieldAlert size={24} strokeWidth={1.75} style={{ color: "var(--danger)", flexShrink: 0 }} />
               <div className="flex-1">
-                <p className="font-bold text-sm" style={{ color: "#ef4444" }}>
+                <p className="font-bold text-sm" style={{ color: "var(--danger)" }}>
                   Got a suspicious message right now?
                 </p>
                 <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
                   Tell me what type — get instant guidance
                 </p>
               </div>
-              <span className="text-sm" style={{ color: "var(--text-muted)" }}>→</span>
+              <ChevronRight size={16} strokeWidth={1.75} style={{ color: "var(--text-muted)", flexShrink: 0 }} />
             </Link>
 
             {/* Recommended Focus (Adaptive) */}
@@ -413,11 +424,11 @@ function HomePageInner() {
               
               return (
                 <div
-                  className="rounded-2xl p-5 mb-8 border-2"
-                  style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+                  className="card-elevated p-5 mb-8"
+                  style={{ background: "var(--accent-subtle)", border: "2px solid var(--accent)" }}
                 >
                   <p className="text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "var(--accent)" }}>
-                    🎯 Recommended Focus
+                    Recommended Focus
                   </p>
                   <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
                     {label} Blind Spot
@@ -446,7 +457,7 @@ function HomePageInner() {
           {/* Sticky CTA */}
           <div
             className="sticky bottom-[57px] -mx-6 px-6 pt-6 pb-4 space-y-3"
-            style={{ background: "linear-gradient(to bottom, transparent 0%, var(--background) 25%)" }}
+            style={{ background: "var(--background)", boxShadow: "0 -8px 24px rgba(0,0,0,0.12)" }}
           >
             {autopilotMsg && (
               <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>{autopilotMsg}</p>
@@ -482,7 +493,7 @@ function HomePageInner() {
                   className="text-sm"
                   style={{ color: "var(--text-muted)" }}
                 >
-                  🤖 Weak Spots
+                  Weak Spots
                 </button>
               )}
               {isPremium() && (
@@ -491,7 +502,7 @@ function HomePageInner() {
                   className="text-sm"
                   style={{ color: "var(--text-muted)" }}
                 >
-                  🏃 10-Drill Session
+                  10-Drill Session
                 </button>
               )}
               <Link href="/stats" className="text-sm" style={{ color: "var(--text-muted)" }}>

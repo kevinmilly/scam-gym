@@ -1,0 +1,21 @@
+{
+  "id": "journey-form-1-page",
+  "label": "Form interaction — page",
+  "description": "Navigate to the page containing \"page\" and audit its form fields for accessibility, labelling, keyboard operability, and error handling. Fields detected: none.",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Navigate to /",
+      "url": "https://www.scamgym.com/",
+      "component": ".next\\dev\\server\\chunks\\ssr\\node_modules_next_dist_2125e029._.js"
+    },
+    {
+      "index": 1,
+      "type": "audit_form",
+      "label": "Audit form: page",
+      "component": "app\\session\\page.tsx",
+      "fields": []
+    }
+  ]
+}

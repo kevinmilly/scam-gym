@@ -1,4 +1,5 @@
 import type { Drill } from "@/lib/types";
+import { Smartphone } from "lucide-react";
 
 type Props = { drill: Drill };
 
@@ -76,7 +77,7 @@ function SmsCard({ message }: { message: Drill["message"] }) {
           className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
           style={{ background: "#2a2a38", color: "var(--text-muted)" }}
         >
-          📱
+          <Smartphone size={16} strokeWidth={1.75} />
         </div>
         <div>
           <div className="font-semibold text-base" style={{ color: "var(--text)" }}>

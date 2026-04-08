@@ -17,6 +17,7 @@ import { playCorrect, playIncorrect } from "@/lib/audio";
 import { track } from "@/lib/analytics";
 import { isPremium } from "@/lib/premium";
 import { familyLabel } from "@/lib/stats";
+import { Trophy, Share, ShieldAlert, ShieldCheck, Loader2 } from "lucide-react";
 
 const CONFIDENCE_OPTIONS = [50, 60, 70, 85, 95];
 const BEHAVIOR_OPTIONS: { value: BehaviorChoice; label: string }[] = [
@@ -202,8 +203,17 @@ export default function SessionPage() {
     return (
       <div className="flex flex-col min-h-dvh px-4 py-6">
         <div className="flex-1 flex flex-col items-center justify-center text-center">
-          <div className="text-5xl mb-4">🎉</div>
-          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--text)" }}>
+          {/* Illustration placeholder */}
+          <div
+            className="flex items-center justify-center rounded-2xl mb-4"
+            style={{ height: 140, width: 200, background: "var(--accent-subtle)" }}
+          >
+            <div className="flex flex-col items-center gap-2" style={{ color: "var(--accent)", opacity: 0.6 }}>
+              <Trophy size={40} strokeWidth={1.25} />
+              <span className="text-xs font-medium">Illustration: Celebration</span>
+            </div>
+          </div>
+          <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
             Session Complete!
           </h1>
           <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
@@ -216,7 +226,7 @@ export default function SessionPage() {
               className="rounded-xl p-4 border text-center"
               style={{ background: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <div className="text-2xl font-bold" style={{ color: summary.accuracy >= 0.7 ? "#22c55e" : "#ef4444" }}>
+              <div className="text-2xl font-bold" style={{ color: summary.accuracy >= 0.7 ? "var(--success)" : "var(--danger)" }}>
                 {Math.round(summary.accuracy * 100)}%
               </div>
               <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>Accuracy</div>
@@ -242,15 +252,15 @@ export default function SessionPage() {
             </p>
             <div className="grid grid-cols-3 gap-2 text-center">
               <div>
-                <div className="text-lg font-bold" style={{ color: "#22c55e" }}>{summary.wellCalibrated}</div>
+                <div className="text-lg font-bold" style={{ color: "var(--success)" }}>{summary.wellCalibrated}</div>
                 <div className="text-xs" style={{ color: "var(--text-muted)" }}>Well-calibrated</div>
               </div>
               <div>
-                <div className="text-lg font-bold" style={{ color: "#ef4444" }}>{summary.overconfident}</div>
+                <div className="text-lg font-bold" style={{ color: "var(--danger)" }}>{summary.overconfident}</div>
                 <div className="text-xs" style={{ color: "var(--text-muted)" }}>Overconfident</div>
               </div>
               <div>
-                <div className="text-lg font-bold" style={{ color: "#3b82f6" }}>{summary.underconfident}</div>
+                <div className="text-lg font-bold" style={{ color: "var(--info)" }}>{summary.underconfident}</div>
                 <div className="text-xs" style={{ color: "var(--text-muted)" }}>Underconfident</div>
               </div>
             </div>
@@ -276,7 +286,7 @@ export default function SessionPage() {
               className="w-full py-3 rounded-2xl font-semibold text-sm border transition-all active:scale-95"
               style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--text)" }}
             >
-              📤 Share Results {shareToast && <span style={{ color: "var(--accent)" }}>· {shareToast}</span>}
+              <Share size={16} strokeWidth={1.75} className="inline mr-1" /> Share Results {shareToast && <span style={{ color: "var(--accent)" }}>· {shareToast}</span>}
             </button>
             <button
               onClick={() => router.push("/drill")}
@@ -309,9 +319,9 @@ export default function SessionPage() {
   const canSubmit = verdict !== null && confidence !== null;
   const channelLabel = currentDrill.channel.toUpperCase();
   const channelColors: Record<string, string> = {
-    SMS: "#22c55e",
-    EMAIL: "#f59e0b",
-    DM: "#3b82f6",
+    SMS: "var(--success)",
+    EMAIL: "var(--warning)",
+    DM: "var(--info)",
   };
 
   return (
@@ -349,14 +359,14 @@ export default function SessionPage() {
       {showExitConfirm && (
         <div
           className="px-4 py-3 flex items-center justify-between gap-3"
-          style={{ background: "rgba(239,68,68,0.1)", borderBottom: "1px solid rgba(239,68,68,0.3)" }}
+          style={{ background: "var(--danger-bg)", borderBottom: "1px solid rgba(239,68,68,0.3)" }}
         >
           <p className="text-sm" style={{ color: "var(--text)" }}>Leave session? Progress will be lost.</p>
           <div className="flex gap-2 shrink-0">
             <button
               onClick={() => { clearSession(); router.push("/?from=drill"); }}
               className="px-3 py-1.5 rounded-xl text-sm font-bold"
-              style={{ background: "#ef4444", color: "#fff" }}
+              style={{ background: "var(--danger)", color: "#fff" }}
             >
               Leave
             </button>
@@ -401,12 +411,12 @@ export default function SessionPage() {
                   onClick={() => { tap(); setVerdict(v); }}
                   className="py-4 rounded-2xl font-bold text-lg border-2 transition-all active:scale-95"
                   style={{
-                    borderColor: selected ? (isScam ? "#ef4444" : "#22c55e") : "var(--border)",
-                    background: selected ? (isScam ? "rgba(239,68,68,0.12)" : "rgba(34,197,94,0.12)") : "var(--surface)",
-                    color: selected ? (isScam ? "#ef4444" : "#22c55e") : "var(--text)",
+                    borderColor: selected ? (isScam ? "var(--danger)" : "var(--success)") : "var(--border)",
+                    background: selected ? (isScam ? "var(--danger-bg)" : "var(--success-bg)") : "var(--surface)",
+                    color: selected ? (isScam ? "var(--danger)" : "var(--success)") : "var(--text)",
                   }}
                 >
-                  {isScam ? "🚨 Scam" : "✅ Legit"}
+                  {isScam ? <><ShieldAlert size={20} strokeWidth={1.75} className="inline mr-1" /> Scam</> : <><ShieldCheck size={20} strokeWidth={1.75} className="inline mr-1" /> Legit</>}
                 </button>
               );
             })}

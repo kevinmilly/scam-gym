@@ -13,6 +13,7 @@ import { playCorrect, playIncorrect } from "@/lib/audio";
 import { track } from "@/lib/analytics";
 import { computePostDrillReward } from "@/lib/progression";
 import { allDrills } from "@/lib/DrillContext";
+import { Loader2, ShieldAlert, ShieldCheck, Lock, Inbox, Check, X as XIcon } from "lucide-react";
 
 const CONFIDENCE_OPTIONS = [50, 60, 70, 85, 95];
 
@@ -49,7 +50,7 @@ export default function DrillPage() {
   if (!currentDrill) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh px-6 text-center">
-        <div className="text-4xl mb-4">⏳</div>
+        <Loader2 size={32} strokeWidth={1.75} className="mb-4 animate-spin" style={{ color: "var(--text-muted)" }} />
         <p style={{ color: "var(--text-muted)" }}>Loading your first drill…</p>
       </div>
     );
@@ -119,9 +120,9 @@ export default function DrillPage() {
 
   const channelLabel = currentDrill.channel.toUpperCase();
   const channelColors: Record<string, string> = {
-    SMS: "#22c55e",
-    EMAIL: "#f59e0b",
-    DM: "#3b82f6",
+    SMS: "var(--success)",
+    EMAIL: "var(--warning)",
+    DM: "var(--info)",
   };
 
   return (
@@ -156,14 +157,14 @@ export default function DrillPage() {
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 pb-48 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-5 pb-48 space-y-8">
         {/* Training banner */}
         {!bannerHidden && (
           <div
             className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
             style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
           >
-            <span>🔒</span>
+            <Lock size={14} strokeWidth={1.75} />
             <span>Simulated training message — never use any links or numbers shown</span>
           </div>
         )}
@@ -173,7 +174,7 @@ export default function DrillPage() {
           className="px-3 py-2 rounded-xl text-sm"
           style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
         >
-          📱 <span>This just hit your inbox. Scam or legit?</span>
+          <Inbox size={16} strokeWidth={1.75} className="inline mr-1.5" /> <span>This just hit your inbox. Scam or legit?</span>
         </div>
 
         {/* Message */}
@@ -196,17 +197,17 @@ export default function DrillPage() {
                   className="py-4 rounded-2xl font-bold text-lg border-2 transition-colors duration-150 active:scale-95"
                   style={{
                     borderColor: selected
-                      ? isScam ? "#ef4444" : "#22c55e"
+                      ? isScam ? "var(--danger)" : "var(--success)"
                       : "var(--border)",
                     background: selected
-                      ? isScam ? "rgba(239,68,68,0.12)" : "rgba(34,197,94,0.12)"
+                      ? isScam ? "var(--danger-bg)" : "var(--success-bg)"
                       : "var(--surface)",
                     color: selected
-                      ? isScam ? "#ef4444" : "#22c55e"
+                      ? isScam ? "var(--danger)" : "var(--success)"
                       : "var(--text)",
                   }}
                 >
-                  {isScam ? "🚨 Scam" : "✅ Legit"}
+                  {isScam ? <><ShieldAlert size={20} strokeWidth={1.75} className="inline mr-1" /> Scam</> : <><ShieldCheck size={20} strokeWidth={1.75} className="inline mr-1" /> Legit</>}
                 </button>
               );
             })}
@@ -227,12 +228,14 @@ export default function DrillPage() {
                   key={c}
                   onClick={() => { tap(); setConfidence(c); }}
                   aria-pressed={selected}
-                  className="flex-1 py-3.5 rounded-xl font-semibold text-sm border-2 transition-colors duration-150 active:scale-95 flex flex-col items-center gap-0.5"
+                  className="flex-1 py-3.5 rounded-xl font-semibold text-sm border-2 btn-press flex flex-col items-center gap-0.5"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
                     background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
                     color: selected ? "var(--accent)" : "var(--text-muted)",
                     minHeight: "52px",
+                    boxShadow: selected ? "0 0 0 3px var(--accent-subtle)" : "none",
+                    transition: "border-color 200ms, background 200ms, color 200ms, box-shadow 200ms",
                   }}
                 >
                   <span className="font-bold">{c}%</span>
@@ -273,7 +276,7 @@ export default function DrillPage() {
                       background: selected ? "var(--accent)" : "transparent",
                     }}
                   >
-                    {selected && <span className="text-white text-xs leading-none">✓</span>}
+                    {selected && <Check size={12} strokeWidth={3} className="text-white" />}
                   </div>
                   <div>
                     <div className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>

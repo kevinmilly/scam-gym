@@ -1,0 +1,23 @@
+{
+  "id": "journey-settings-configuration",
+  "label": "Configure training settings",
+  "description": "Tests settings page where users can change training context, focus families, theme, and reset data. The reset data action is a destructive delete risk.",
+  "goal": "Update training preferences and optionally reset progress",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Visit settings page",
+      "url": "https://www.scamgym.com/settings",
+      "component": "app\\settings\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "locate_risk",
+      "label": "Check reset/delete data risk",
+      "component": "app\\settings\\page.tsx",
+      "risk_type": "delete"
+    }
+  ]
+}

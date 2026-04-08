@@ -1,0 +1,430 @@
+{
+  "capturedAt": "2026-04-05T19:20:56.003Z",
+  "baseUrl": "https://www.scamgym.com",
+  "projectRoot": "C:/Users/jamik/kevinProjects/scam-gym",
+  "routes": [
+    {
+      "path": "/",
+      "file": "app/page.tsx"
+    },
+    {
+      "path": "/drill",
+      "file": "app/drill/page.tsx"
+    },
+    {
+      "path": "/help",
+      "file": "app/help/page.tsx"
+    },
+    {
+      "path": "/help/scripts",
+      "file": "app/help/scripts/page.tsx"
+    },
+    {
+      "path": "/help/vault",
+      "file": "app/help/vault/page.tsx"
+    },
+    {
+      "path": "/result",
+      "file": "app/result/page.tsx"
+    },
+    {
+      "path": "/session",
+      "file": "app/session/page.tsx"
+    },
+    {
+      "path": "/settings",
+      "file": "app/settings/page.tsx"
+    },
+    {
+      "path": "/stats",
+      "file": "app/stats/page.tsx"
+    },
+    {
+      "path": "/upgrade",
+      "file": "app/upgrade/page.tsx"
+    }
+  ],
+  "screenshots": [
+    {
+      "filename": "mobile-home-fresh-top.png",
+      "route": "/",
+      "viewport": "mobile",
+      "state": "fresh",
+      "description": "/ — fresh user, top of page",
+      "capturedAt": "2026-04-05T19:19:14.702Z"
+    },
+    {
+      "filename": "mobile-home-fresh-bottom.png",
+      "route": "/",
+      "viewport": "mobile",
+      "state": "fresh",
+      "description": "/ — fresh user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:15.771Z"
+    },
+    {
+      "filename": "mobile-home-returning-top.png",
+      "route": "/",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/ — returning user, top of page",
+      "capturedAt": "2026-04-05T19:19:18.803Z"
+    },
+    {
+      "filename": "mobile-home-returning-bottom.png",
+      "route": "/",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/ — returning user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:19.885Z"
+    },
+    {
+      "filename": "mobile-home-premium-top.png",
+      "route": "/",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/ — premium user, top of page",
+      "capturedAt": "2026-04-05T19:19:22.862Z"
+    },
+    {
+      "filename": "mobile-home-premium-bottom.png",
+      "route": "/",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/ — premium user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:23.931Z"
+    },
+    {
+      "filename": "mobile-drill-returning-top.png",
+      "route": "/drill",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/drill — returning user, top of page",
+      "capturedAt": "2026-04-05T19:19:27.059Z"
+    },
+    {
+      "filename": "mobile-drill-returning-bottom.png",
+      "route": "/drill",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/drill — returning user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:28.134Z"
+    },
+    {
+      "filename": "mobile-drill-premium-top.png",
+      "route": "/drill",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/drill — premium user, top of page",
+      "capturedAt": "2026-04-05T19:19:31.289Z"
+    },
+    {
+      "filename": "mobile-drill-premium-bottom.png",
+      "route": "/drill",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/drill — premium user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:32.347Z"
+    },
+    {
+      "filename": "mobile-help-returning-top.png",
+      "route": "/help",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/help — returning user, top of page",
+      "capturedAt": "2026-04-05T19:19:35.345Z"
+    },
+    {
+      "filename": "mobile-help-scripts-returning-top.png",
+      "route": "/help/scripts",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/help/scripts — returning user, top of page",
+      "capturedAt": "2026-04-05T19:19:39.040Z"
+    },
+    {
+      "filename": "mobile-help-scripts-returning-bottom.png",
+      "route": "/help/scripts",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/help/scripts — returning user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:40.116Z"
+    },
+    {
+      "filename": "mobile-help-vault-returning-top.png",
+      "route": "/help/vault",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/help/vault — returning user, top of page",
+      "capturedAt": "2026-04-05T19:19:43.111Z"
+    },
+    {
+      "filename": "mobile-result-returning-top.png",
+      "route": "/result",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/result — returning user, top of page",
+      "capturedAt": "2026-04-05T19:19:46.162Z"
+    },
+    {
+      "filename": "mobile-result-returning-bottom.png",
+      "route": "/result",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/result — returning user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:47.230Z"
+    },
+    {
+      "filename": "mobile-result-premium-top.png",
+      "route": "/result",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/result — premium user, top of page",
+      "capturedAt": "2026-04-05T19:19:50.218Z"
+    },
+    {
+      "filename": "mobile-result-premium-bottom.png",
+      "route": "/result",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/result — premium user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:51.282Z"
+    },
+    {
+      "filename": "mobile-session-returning-top.png",
+      "route": "/session",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/session — returning user, top of page",
+      "capturedAt": "2026-04-05T19:19:53.981Z"
+    },
+    {
+      "filename": "mobile-session-returning-bottom.png",
+      "route": "/session",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/session — returning user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:55.050Z"
+    },
+    {
+      "filename": "mobile-session-premium-top.png",
+      "route": "/session",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/session — premium user, top of page",
+      "capturedAt": "2026-04-05T19:19:57.623Z"
+    },
+    {
+      "filename": "mobile-session-premium-bottom.png",
+      "route": "/session",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/session — premium user, bottom of page",
+      "capturedAt": "2026-04-05T19:19:58.682Z"
+    },
+    {
+      "filename": "mobile-settings-returning-top.png",
+      "route": "/settings",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/settings — returning user, top of page",
+      "capturedAt": "2026-04-05T19:20:01.848Z"
+    },
+    {
+      "filename": "mobile-settings-returning-bottom.png",
+      "route": "/settings",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/settings — returning user, bottom of page",
+      "capturedAt": "2026-04-05T19:20:02.939Z"
+    },
+    {
+      "filename": "mobile-settings-premium-top.png",
+      "route": "/settings",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/settings — premium user, top of page",
+      "capturedAt": "2026-04-05T19:20:05.967Z"
+    },
+    {
+      "filename": "mobile-settings-premium-bottom.png",
+      "route": "/settings",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/settings — premium user, bottom of page",
+      "capturedAt": "2026-04-05T19:20:07.053Z"
+    },
+    {
+      "filename": "mobile-stats-returning-top.png",
+      "route": "/stats",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/stats — returning user, top of page",
+      "capturedAt": "2026-04-05T19:20:09.999Z"
+    },
+    {
+      "filename": "mobile-stats-premium-top.png",
+      "route": "/stats",
+      "viewport": "mobile",
+      "state": "premium",
+      "description": "/stats — premium user, top of page",
+      "capturedAt": "2026-04-05T19:20:12.931Z"
+    },
+    {
+      "filename": "mobile-upgrade-returning-top.png",
+      "route": "/upgrade",
+      "viewport": "mobile",
+      "state": "returning",
+      "description": "/upgrade — returning user, top of page",
+      "capturedAt": "2026-04-05T19:20:15.911Z"
+    },
+    {
+      "filename": "desktop-home-returning-top.png",
+      "route": "/",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/ — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:19.155Z"
+    },
+    {
+      "filename": "desktop-home-returning-bottom.png",
+      "route": "/",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/ — returning user, desktop bottom",
+      "capturedAt": "2026-04-05T19:20:20.275Z"
+    },
+    {
+      "filename": "desktop-drill-returning-top.png",
+      "route": "/drill",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/drill — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:23.271Z"
+    },
+    {
+      "filename": "desktop-drill-returning-bottom.png",
+      "route": "/drill",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/drill — returning user, desktop bottom",
+      "capturedAt": "2026-04-05T19:20:24.394Z"
+    },
+    {
+      "filename": "desktop-help-returning-top.png",
+      "route": "/help",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/help — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:27.332Z"
+    },
+    {
+      "filename": "desktop-help-scripts-returning-top.png",
+      "route": "/help/scripts",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/help/scripts — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:30.497Z"
+    },
+    {
+      "filename": "desktop-help-scripts-returning-bottom.png",
+      "route": "/help/scripts",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/help/scripts — returning user, desktop bottom",
+      "capturedAt": "2026-04-05T19:20:31.610Z"
+    },
+    {
+      "filename": "desktop-help-vault-returning-top.png",
+      "route": "/help/vault",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/help/vault — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:34.790Z"
+    },
+    {
+      "filename": "desktop-result-returning-top.png",
+      "route": "/result",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/result — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:37.798Z"
+    },
+    {
+      "filename": "desktop-result-returning-bottom.png",
+      "route": "/result",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/result — returning user, desktop bottom",
+      "capturedAt": "2026-04-05T19:20:38.917Z"
+    },
+    {
+      "filename": "desktop-session-returning-top.png",
+      "route": "/session",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/session — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:42.279Z"
+    },
+    {
+      "filename": "desktop-session-returning-bottom.png",
+      "route": "/session",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/session — returning user, desktop bottom",
+      "capturedAt": "2026-04-05T19:20:43.396Z"
+    },
+    {
+      "filename": "desktop-settings-returning-top.png",
+      "route": "/settings",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/settings — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:46.541Z"
+    },
+    {
+      "filename": "desktop-settings-returning-bottom.png",
+      "route": "/settings",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/settings — returning user, desktop bottom",
+      "capturedAt": "2026-04-05T19:20:47.662Z"
+    },
+    {
+      "filename": "desktop-stats-returning-top.png",
+      "route": "/stats",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/stats — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:50.623Z"
+    },
+    {
+      "filename": "desktop-upgrade-returning-top.png",
+      "route": "/upgrade",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/upgrade — returning user, desktop top",
+      "capturedAt": "2026-04-05T19:20:53.643Z"
+    },
+    {
+      "filename": "desktop-upgrade-returning-bottom.png",
+      "route": "/upgrade",
+      "viewport": "desktop",
+      "state": "returning",
+      "description": "/upgrade — returning user, desktop bottom",
+      "capturedAt": "2026-04-05T19:20:54.761Z"
+    }
+  ],
+  "summary": {
+    "totalScreenshots": 46,
+    "totalRoutes": 10,
+    "viewports": [
+      "mobile (390x844 @2x)",
+      "desktop (1440x900)"
+    ],
+    "userStates": [
+      "fresh",
+      "returning",
+      "premium"
+    ]
+  }
+}

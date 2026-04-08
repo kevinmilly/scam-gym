@@ -1,0 +1,11 @@
+{
+  "url": "https://www.scamgym.com/",
+  "dev_server_command": "",
+  "startup_timeout_ms": 15000,
+  "framework": "Next JS",
+  "pause_threshold": 0.65,
+  "model": {
+    "provider": "claude-code",
+    "model_id": "claude-sonnet-4-6"
+  }
+}

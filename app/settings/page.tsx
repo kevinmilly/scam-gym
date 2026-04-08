@@ -14,6 +14,7 @@ import PremiumGate from "@/components/PremiumGate";
 import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
 import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
+import { Sparkles, Check, Sun, Moon } from "lucide-react";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -126,7 +127,7 @@ export default function SettingsPage() {
             style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
           >
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-lg">✨</span>
+              <Sparkles size={18} strokeWidth={1.75} style={{ color: "var(--accent)" }} />
               <span className="font-bold text-sm" style={{ color: "var(--accent)" }}>
                 Pro Unlocked
               </span>
@@ -187,7 +188,7 @@ export default function SettingsPage() {
                           <span className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>{CONTEXT_LABELS[ctx]}</span>
                           <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{CONTEXT_DESCRIPTIONS[ctx]}</p>
                         </div>
-                        {selected && <span className="text-xs font-bold ml-2" style={{ color: "var(--accent)" }}>✓</span>}
+                        {selected && <Check size={16} strokeWidth={2.5} className="ml-2" style={{ color: "var(--accent)" }} />}
                       </div>
                     </button>
                   );
@@ -275,7 +276,7 @@ export default function SettingsPage() {
                 <button onClick={() => { tap(); const next = theme === "dark" ? "light" : "dark"; setThemeState(next); setTheme(next); }} role="switch" aria-checked={theme === "light"}
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
                   style={{ borderColor: theme === "light" ? "var(--accent)" : "var(--border)", background: theme === "light" ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: theme === "light" ? "var(--accent)" : "var(--text-muted)" }}>
-                  {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+                  {theme === "dark" ? <><Sun size={14} strokeWidth={1.75} className="inline mr-1" /> Light</> : <><Moon size={14} strokeWidth={1.75} className="inline mr-1" /> Dark</>}
                 </button>
               </div>
             </div>
@@ -319,15 +320,15 @@ export default function SettingsPage() {
 
         {/* ── DANGER ZONE ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "#ef4444" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--danger)" }}>
             Danger Zone
           </p>
-          <div className="rounded-2xl border px-4 py-4" style={{ background: "rgba(239,68,68,0.04)", borderColor: "rgba(239,68,68,0.3)" }}>
-            <p className="font-semibold text-sm mb-1" style={{ color: "#ef4444" }}>Reset All Data</p>
+          <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)" }}>
+            <p className="font-semibold text-sm mb-1" style={{ color: "var(--danger)" }}>Reset All Data</p>
             <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>Permanently deletes all your attempts and flags. This cannot be undone.</p>
             {confirmReset ? (
               <div className="flex gap-2">
-                <button onClick={handleReset} className="px-4 py-2 rounded-xl text-sm font-bold" style={{ background: "#ef4444", color: "#fff" }}>
+                <button onClick={handleReset} className="px-4 py-2 rounded-xl text-sm font-bold" style={{ background: "var(--danger)", color: "#fff" }}>
                   Yes, delete everything
                 </button>
                 <button onClick={() => setConfirmReset(false)} className="px-4 py-2 rounded-xl text-sm" style={{ color: "var(--text-muted)" }}>
@@ -335,7 +336,7 @@ export default function SettingsPage() {
                 </button>
               </div>
             ) : (
-              <button onClick={handleReset} className="px-4 py-2 rounded-xl text-sm font-semibold border" style={{ borderColor: "rgba(239,68,68,0.5)", color: "#ef4444" }}>
+              <button onClick={handleReset} className="px-4 py-2 rounded-xl text-sm font-semibold border" style={{ borderColor: "var(--danger-border)", color: "var(--danger)" }}>
                 Reset all data
               </button>
             )}

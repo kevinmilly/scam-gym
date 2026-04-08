@@ -1,0 +1,14 @@
+{
+  "id": "journey-route-scan",
+  "label": "Route scan — visit all static routes",
+  "description": "Load every static route and collect baseline evidence: screenshots, accessibility violations, console errors, and network failures. Establishes whether each page renders correctly and flags any immediate issues.",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Visit /",
+      "url": "https://www.scamgym.com/",
+      "component": ".next\\dev\\server\\chunks\\ssr\\node_modules_next_dist_2125e029._.js"
+    }
+  ]
+}

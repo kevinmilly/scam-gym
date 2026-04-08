@@ -1,0 +1,42 @@
+{
+  "id": "journey-home-to-drill",
+  "label": "New user completes first drill",
+  "description": "Tests the primary training loop from home page through drill submission to result page — the core value proposition every new user experiences.",
+  "goal": "Complete a scam detection drill and see feedback",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Land on home page",
+      "url": "https://www.scamgym.com/",
+      "component": "app\\page.tsx"
+    },
+    {
+      "index": 1,
+      "type": "navigate",
+      "label": "Navigate to drill page",
+      "url": "https://www.scamgym.com/drill",
+      "component": "app\\drill\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 2,
+      "type": "audit_form",
+      "label": "Submit verdict and confidence",
+      "component": "app\\drill\\page.tsx",
+      "fields": [
+        "verdict",
+        "confidence",
+        "behaviorChoice"
+      ]
+    },
+    {
+      "index": 3,
+      "type": "navigate",
+      "label": "View result page",
+      "url": "https://www.scamgym.com/result",
+      "component": "app\\result\\page.tsx",
+      "_url_unverified": true
+    }
+  ]
+}

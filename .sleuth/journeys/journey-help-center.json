@@ -1,0 +1,32 @@
+{
+  "id": "journey-help-center",
+  "label": "Access help resources",
+  "description": "Tests the help page and sub-pages (scripts, vault). Non-technical older-adult users rely on this for scam response guidance — broken help content is a trust failure.",
+  "goal": "Find scam response scripts or safe message vault",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Load help page",
+      "url": "https://www.scamgym.com/help",
+      "component": "app\\help\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "navigate",
+      "label": "View reply scripts",
+      "url": "https://www.scamgym.com/help/scripts",
+      "component": "app\\help\\scripts\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 2,
+      "type": "navigate",
+      "label": "View safe message vault",
+      "url": "https://www.scamgym.com/help/vault",
+      "component": "app\\help\\vault\\page.tsx",
+      "_url_unverified": true
+    }
+  ]
+}

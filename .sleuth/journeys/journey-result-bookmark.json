@@ -1,0 +1,23 @@
+{
+  "id": "journey-result-bookmark",
+  "label": "Bookmark a drill from result",
+  "description": "Tests the bookmark action on the result page, a premium feature. Ensures the toggle works and persists correctly in localStorage without a page reload loop.",
+  "goal": "Bookmark a drill for later review",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Load result page",
+      "url": "https://www.scamgym.com/result",
+      "component": "app\\result\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "locate_risk",
+      "label": "Find remove bookmark action",
+      "component": "app\\result\\page.tsx",
+      "risk_type": "delete"
+    }
+  ]
+}

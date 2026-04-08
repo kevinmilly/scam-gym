@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
+import { Lock } from "lucide-react";
 
 type PremiumGateProps = {
   children: React.ReactNode;
@@ -68,7 +69,7 @@ export default function PremiumGate({
       )}
 
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-sm">🔒</span>
+        <Lock size={16} strokeWidth={1.75} style={{ color: "var(--text-muted)" }} />
         {label && (
           <span className="text-sm font-semibold" style={{ color: "var(--text)" }}>
             {label}

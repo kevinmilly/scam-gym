@@ -18,8 +18,27 @@ import {
   type HelpUrgency,
   type HelpOutput,
 } from "@/lib/helpTemplates";
+import { MessageSquare, Mail, Phone, Smartphone, DollarSign, Key, Link2, Clock, IdCard, Gift, AlertTriangle, Heart, Shield, ShieldCheck, X as XIcon, MessageCircle, BookOpen, Target } from "lucide-react";
 
 type Step = "channel" | "ask" | "theme" | "urgency" | "output";
+
+const CHANNEL_ICON_MAP: Record<string, React.ReactNode> = {
+  "💬": <MessageSquare size={24} strokeWidth={1.75} />,
+  "📧": <Mail size={24} strokeWidth={1.75} />,
+  "📞": <Phone size={24} strokeWidth={1.75} />,
+  "📱": <Smartphone size={24} strokeWidth={1.75} />,
+};
+
+const ASK_ICON_MAP: Record<string, React.ReactNode> = {
+  "💰": <DollarSign size={20} strokeWidth={1.75} />,
+  "🔑": <Key size={20} strokeWidth={1.75} />,
+  "🔗": <Link2 size={20} strokeWidth={1.75} />,
+  "⏰": <Clock size={20} strokeWidth={1.75} />,
+  "🪪": <IdCard size={20} strokeWidth={1.75} />,
+  "🎁": <Gift size={20} strokeWidth={1.75} />,
+  "⚠️": <AlertTriangle size={20} strokeWidth={1.75} />,
+  "💕": <Heart size={20} strokeWidth={1.75} />,
+};
 
 export default function HelpPage() {
   const router = useRouter();
@@ -109,15 +128,15 @@ export default function HelpPage() {
             {/* Reassuring banner */}
             <div
               className="flex items-start gap-3 rounded-xl px-4 py-3 mb-6"
-              style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)" }}
+              style={{ background: "var(--success-bg)", border: "1px solid rgba(34,197,94,0.25)" }}
             >
-              <span className="text-lg mt-0.5">🛡️</span>
+              <Shield size={20} strokeWidth={1.75} className="mt-0.5 shrink-0" style={{ color: "var(--success)" }} />
               <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
                 <strong>Don&apos;t respond yet.</strong> Let&apos;s figure this out together — step by step.
               </p>
             </div>
 
-            <h1 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
+            <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
               How did they contact you?
             </h1>
             <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
@@ -131,7 +150,7 @@ export default function HelpPage() {
                   className="w-full text-left flex items-center gap-3 rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
                   style={{ background: "var(--surface)", borderColor: "var(--border)" }}
                 >
-                  <span className="text-2xl">{opt.icon}</span>
+                  <span style={{ color: "var(--accent)" }}>{CHANNEL_ICON_MAP[opt.icon] ?? opt.icon}</span>
                   <span className="font-semibold text-sm" style={{ color: "var(--text)" }}>
                     {opt.label}
                   </span>
@@ -144,7 +163,7 @@ export default function HelpPage() {
         {/* Step 2: What are they asking */}
         {step === "ask" && (
           <div>
-            <h1 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
+            <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
               What are they asking you to do?
             </h1>
             <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
@@ -158,7 +177,7 @@ export default function HelpPage() {
                   className="w-full text-left flex items-center gap-3 rounded-2xl border px-4 py-3 transition-all active:scale-[0.98]"
                   style={{ background: "var(--surface)", borderColor: "var(--border)" }}
                 >
-                  <span className="text-lg">{opt.icon}</span>
+                  <span style={{ color: "var(--accent)" }}>{ASK_ICON_MAP[opt.icon] ?? opt.icon}</span>
                   <span className="text-sm" style={{ color: "var(--text)" }}>
                     {opt.label}
                   </span>
@@ -171,7 +190,7 @@ export default function HelpPage() {
         {/* Step 3: Theme (optional) */}
         {step === "theme" && (
           <div>
-            <h1 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
+            <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
               Who are they claiming to be?
             </h1>
             <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
@@ -204,7 +223,7 @@ export default function HelpPage() {
         {/* Step 4: Urgency (optional) */}
         {step === "urgency" && (
           <div>
-            <h1 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
+            <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
               How urgent is this?
             </h1>
             <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
@@ -240,9 +259,9 @@ export default function HelpPage() {
             {/* Safe move — primary card */}
             <div
               className="rounded-2xl p-5 border-2"
-              style={{ background: "rgba(34,197,94,0.08)", borderColor: "rgba(34,197,94,0.4)" }}
+              style={{ background: "var(--success-bg)", borderColor: "var(--success-border)" }}
             >
-              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#22c55e" }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "var(--success)" }}>
                 Your Safe Move
               </p>
               <p className="text-base leading-relaxed font-medium" style={{ color: "var(--text)" }}>
@@ -276,15 +295,15 @@ export default function HelpPage() {
             {/* Never do — danger card */}
             <div
               className="rounded-2xl p-4 border"
-              style={{ background: "rgba(239,68,68,0.06)", borderColor: "rgba(239,68,68,0.3)" }}
+              style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)" }}
             >
-              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#ef4444" }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--danger)" }}>
                 Never Do This
               </p>
               <ul className="space-y-2">
                 {output.neverDo.map((item, i) => (
                   <li key={i} className="flex gap-2 text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-                    <span style={{ color: "#ef4444" }}>✕</span>
+                    <XIcon size={14} strokeWidth={2} style={{ color: "var(--danger)", flexShrink: 0 }} />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -298,7 +317,7 @@ export default function HelpPage() {
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-sm transition-all active:scale-95"
                 style={{ background: "var(--accent)", color: "#fff" }}
               >
-                💬 Copy a Reply Script
+                <MessageCircle size={16} strokeWidth={1.75} /> Copy a Reply Script
               </Link>
 
               <Link
@@ -306,7 +325,7 @@ export default function HelpPage() {
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-sm border transition-all active:scale-95"
                 style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--text)" }}
               >
-                📇 Open Verification Vault
+                <BookOpen size={16} strokeWidth={1.75} /> Open Verification Vault
               </Link>
 
               {output.suggestedFamilies.length > 0 && (
@@ -323,7 +342,7 @@ export default function HelpPage() {
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-sm border transition-all active:scale-95"
                   style={{ borderColor: "var(--accent)", background: "rgba(124,106,247,0.1)", color: "var(--accent)" }}
                 >
-                  🎯 Practice Drills Like This
+                  <Target size={16} strokeWidth={1.75} /> Practice Drills Like This
                 </button>
               )}
             </div>

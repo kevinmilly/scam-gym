@@ -19,6 +19,7 @@ import { getStreak } from "@/lib/streak";
 import { getBookmarks } from "@/lib/bookmarks";
 import TrendChart from "@/components/TrendChart";
 import AttemptHistory from "@/components/AttemptHistory";
+import { BarChart3, Flame, Share, AlertTriangle, Check, X as XIcon, Lock, Search } from "lucide-react";
 
 type StatsTab = "overview" | "medals" | "history";
 
@@ -103,10 +104,19 @@ export default function StatsPage() {
         </div>
 
         <div className="flex-1 px-4 py-8 pb-24 space-y-6">
-          {/* Empty state hero */}
-          <div className="text-center py-6">
-            <div className="text-5xl mb-4">📊</div>
-            <h2 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
+          {/* Empty state illustration placeholder */}
+          <div
+            className="flex items-center justify-center rounded-2xl mx-auto mb-4"
+            style={{ height: 140, maxWidth: 240, background: "var(--accent-subtle)" }}
+          >
+            <div className="flex flex-col items-center gap-2" style={{ color: "var(--accent)", opacity: 0.6 }}>
+              <BarChart3 size={40} strokeWidth={1.25} />
+              <span className="text-xs font-medium">Illustration: Growth</span>
+            </div>
+          </div>
+
+          <div className="text-center py-2">
+            <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
               Your stats will appear here
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
@@ -134,7 +144,7 @@ export default function StatsPage() {
                       color: done ? "#fff" : "var(--text-muted)",
                     }}
                   >
-                    {done ? "✓" : drills}
+                    {done ? <Check size={14} strokeWidth={2.5} /> : drills}
                   </div>
                   <span className="text-sm" style={{ color: done ? "var(--text)" : "var(--text-muted)" }}>
                     {label}
@@ -228,9 +238,9 @@ export default function StatsPage() {
           return (
             <div
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
-              style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
+              style={{ background: "rgba(245,158,11,0.15)", color: "var(--warning)" }}
             >
-              <span>🔥</span>
+              <Flame size={16} strokeWidth={1.75} />
               <span>{streak.current} day streak</span>
             </div>
           );
@@ -248,7 +258,7 @@ export default function StatsPage() {
             className="px-3 py-2 rounded-xl text-xs font-semibold border transition-all active:scale-95"
             style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--text-muted)" }}
           >
-            📤 Share My Progress
+            <Share size={14} strokeWidth={1.75} className="inline mr-1" /> Share My Progress
           </button>
           {recent.length > 0 && (
             <button
@@ -256,7 +266,7 @@ export default function StatsPage() {
               className="px-3 py-2 rounded-xl text-xs font-semibold border transition-all active:scale-95"
               style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--text-muted)" }}
             >
-              📤 Share Last Result
+              <Share size={14} strokeWidth={1.75} className="inline mr-1" /> Share Last Result
             </button>
           )}
         </div>
@@ -283,9 +293,9 @@ export default function StatsPage() {
         {stats.insightSummary.length > 0 && (
           <div
             className="rounded-2xl p-4 border space-y-2"
-            style={{ background: "rgba(239,68,68,0.06)", borderColor: "rgba(239,68,68,0.25)" }}
+            style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)" }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#ef4444" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--danger)" }}>
               Your vulnerability profile
             </p>
             {stats.insightSummary.map((line, i) => (
@@ -347,7 +357,7 @@ export default function StatsPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold" style={{ color: "#ef4444" }}>
+                        <div className="font-bold" style={{ color: "var(--danger)" }}>
                           {Math.round(f.accuracy * 100)}%
                         </div>
                         <div className="text-xs" style={{ color: "var(--text-muted)" }}>accuracy</div>
@@ -357,7 +367,7 @@ export default function StatsPage() {
                     {/* Tap-to-expand hint for free users */}
                     {!isPremium() && (
                       <p className="text-xs mt-1 px-1" style={{ color: "var(--text-muted)" }}>
-                        🔒 Tap to see your deep-dive breakdown — upgrade to unlock
+                        <Lock size={12} strokeWidth={1.75} className="inline mr-1" /> Tap to see your deep-dive breakdown — upgrade to unlock
                       </p>
                     )}
 
@@ -375,13 +385,13 @@ export default function StatsPage() {
                             <div className="text-xs" style={{ color: "var(--text-muted)" }}>Total</div>
                           </div>
                           <div>
-                            <div className="text-lg font-bold" style={{ color: "#ef4444" }}>
+                            <div className="text-lg font-bold" style={{ color: "var(--danger)" }}>
                               {wrongAttempts.length}
                             </div>
                             <div className="text-xs" style={{ color: "var(--text-muted)" }}>Wrong</div>
                           </div>
                           <div>
-                            <div className="text-lg font-bold" style={{ color: "#f59e0b" }}>
+                            <div className="text-lg font-bold" style={{ color: "var(--warning)" }}>
                               {avgConfOnWrong}%
                             </div>
                             <div className="text-xs" style={{ color: "var(--text-muted)" }}>Avg conf when wrong</div>
@@ -403,7 +413,7 @@ export default function StatsPage() {
                                 if (!drill) return null;
                                 return (
                                   <div key={a.id} className="text-xs" style={{ color: "var(--text)" }}>
-                                    <span style={{ color: "#ef4444" }}>✗</span>{" "}
+                                    <XIcon size={12} strokeWidth={2} className="inline mr-0.5" style={{ color: "var(--danger)" }} />{" "}
                                     {drill.message.body.slice(0, 60)}… ({a.confidence}% conf)
                                   </div>
                                 );
@@ -432,7 +442,7 @@ export default function StatsPage() {
                       <div className="text-xs" style={{ color: "var(--text-muted)" }}>8 attempts</div>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold" style={{ color: "#ef4444" }}>38%</div>
+                      <div className="font-bold" style={{ color: "var(--danger)" }}>38%</div>
                       <div className="text-xs" style={{ color: "var(--text-muted)" }}>accuracy</div>
                     </div>
                   </div>
@@ -442,7 +452,7 @@ export default function StatsPage() {
                       <div className="text-xs" style={{ color: "var(--text-muted)" }}>5 attempts</div>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold" style={{ color: "#f59e0b" }}>60%</div>
+                      <div className="font-bold" style={{ color: "var(--warning)" }}>60%</div>
                       <div className="text-xs" style={{ color: "var(--text-muted)" }}>accuracy</div>
                     </div>
                   </div>
@@ -453,7 +463,7 @@ export default function StatsPage() {
                   style={{ background: "rgba(0,0,0,0.55)" }}
                 >
                   <p className="text-sm font-bold" style={{ color: "#fff" }}>
-                    🔍 Your full vulnerability profile is ready
+                    Your full vulnerability profile is ready
                   </p>
                   <p className="text-xs" style={{ color: "rgba(255,255,255,0.75)" }}>
                     See exactly which scam types you&apos;re most at risk for — and train those weak spots.
@@ -493,8 +503,8 @@ export default function StatsPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="font-bold" style={{ color: "#f59e0b" }}>
-                      ⚠️ {Math.round(f.avgBrierOnWrong * 100)}
+                    <div className="font-bold" style={{ color: "var(--warning)" }}>
+                      <AlertTriangle size={14} strokeWidth={1.75} className="inline mr-0.5" /> {Math.round(f.avgBrierOnWrong * 100)}
                     </div>
                     <div className="text-xs" style={{ color: "var(--text-muted)" }}>risk score</div>
                   </div>
@@ -513,9 +523,9 @@ export default function StatsPage() {
             <div className="grid grid-cols-2 gap-3">
               <div
                 className="rounded-xl p-4 border text-center"
-                style={{ background: "rgba(239,68,68,0.06)", borderColor: "rgba(239,68,68,0.25)" }}
+                style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)" }}
               >
-                <div className="text-xs font-semibold mb-1" style={{ color: "#ef4444" }}>AI-Polished</div>
+                <div className="text-xs font-semibold mb-1" style={{ color: "var(--danger)" }}>AI-Polished</div>
                 <div className="text-2xl font-bold" style={{ color: "var(--text)" }}>
                   {Math.round(stats.aiSplit.aiAccuracy * 100)}%
                 </div>
@@ -557,7 +567,7 @@ export default function StatsPage() {
               const diff = acc - mid;
               const isOver = diff < -0.1;
               const isUnder = diff > 0.1;
-              const barColor = isOver ? "#ef4444" : isUnder ? "#3b82f6" : "#22c55e";
+              const barColor = isOver ? "var(--danger)" : isUnder ? "var(--info)" : "var(--success)";
 
               return (
                 <div key={bin.label}>
@@ -607,7 +617,7 @@ export default function StatsPage() {
                       >
                         {drill.channel.toUpperCase()}
                       </span>
-                      <span className="text-xs" style={{ color: "#ef4444" }}>
+                      <span className="text-xs" style={{ color: "var(--danger)" }}>
                         Said {a.userVerdict} at {a.confidence}% · Was {drill.ground_truth}
                       </span>
                     </div>
@@ -676,7 +686,7 @@ export default function StatsPage() {
                           <span
                             className="text-xs px-2 py-0.5 rounded-full"
                             style={{
-                              color: drill.ground_truth === "scam" ? "#ef4444" : "#22c55e",
+                              color: drill.ground_truth === "scam" ? "var(--danger)" : "var(--success)",
                             }}
                           >
                             {drill.ground_truth.toUpperCase()}
@@ -707,7 +717,7 @@ export default function StatsPage() {
             className="animate-slideUp px-5 py-3 rounded-2xl text-sm font-semibold"
             style={{ background: "var(--surface-2)", color: "var(--text)", border: "1px solid var(--border)" }}
           >
-            ✓ Copied to clipboard
+            Copied to clipboard
           </div>
         </div>
       )}

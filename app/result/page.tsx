@@ -19,42 +19,43 @@ import { updateStreak } from "@/lib/streak";
 import { isBookmarked, toggleBookmark } from "@/lib/bookmarks";
 import { isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
+import { AlertTriangle, Eye, Lightbulb, Target, Zap, ShieldCheck, ShieldAlert, Check, X as XIcon, Bookmark, BookmarkCheck, ChevronDown, ChevronUp, ArrowRight, Sparkles } from "lucide-react";
 
 type VerdictConfig = {
   label: string;
   color: string;
   bg: string;
-  icon: string;
+  icon: React.ReactNode;
   description: string;
 };
 
 const VERDICT_CONFIG: Record<CalibrationVerdict, VerdictConfig> = {
   "overconfident-miss": {
     label: "Overconfident Miss",
-    color: "#ef4444",
-    bg: "rgba(239,68,68,0.1)",
-    icon: "⚠️",
+    color: "var(--danger)",
+    bg: "var(--danger-bg)",
+    icon: <AlertTriangle size={22} strokeWidth={1.75} />,
     description: "You were certain, but wrong. This is the danger zone — slow down.",
   },
   "self-aware-miss": {
     label: "Self-Aware Miss",
-    color: "#f59e0b",
-    bg: "rgba(245,158,11,0.1)",
-    icon: "🧐",
+    color: "var(--warning)",
+    bg: "var(--warning-bg)",
+    icon: <Eye size={22} strokeWidth={1.75} />,
     description: "You were wrong, but your caution would have protected you in real life.",
   },
   "cautious-win": {
     label: "Cautious Win",
-    color: "#3b82f6",
-    bg: "rgba(59,130,246,0.1)",
-    icon: "💡",
+    color: "var(--info)",
+    bg: "var(--info-bg)",
+    icon: <Lightbulb size={22} strokeWidth={1.75} />,
     description: "You got it right, but didn't trust your read. Build that instinct.",
   },
   "well-calibrated": {
     label: "Well-calibrated",
-    color: "#22c55e",
-    bg: "rgba(34,197,94,0.1)",
-    icon: "🎯",
+    color: "var(--success)",
+    bg: "var(--success-bg)",
+    icon: <Target size={22} strokeWidth={1.75} />,
     description: "Your confidence matched your accuracy. That's the goal.",
   },
 };
@@ -217,7 +218,7 @@ export default function ResultPage() {
     : "rgba(245,158,11,0.15)";
   const bannerBorder = missedScam ? "#ef444444" : wasSafe ? "#22c55e44" : "#f59e0b44";
   const bannerColor = missedScam ? "#ef4444" : wasSafe ? "#22c55e" : "#f59e0b";
-  const bannerIcon = missedScam ? "⚡" : wasSafe ? "✅" : "⚠️";
+  const bannerIcon = missedScam ? <Zap size={22} strokeWidth={1.75} /> : wasSafe ? <ShieldCheck size={22} strokeWidth={1.75} /> : <AlertTriangle size={22} strokeWidth={1.75} />;
   const bannerText = missedScam
     ? "You were at risk"
     : wasSafe
@@ -225,7 +226,7 @@ export default function ResultPage() {
     : "You were overcautious";
 
   // Summary line
-  const summaryText = `You said ${attempt.userVerdict.toUpperCase()} at ${attempt.confidence}% · ${attempt.isCorrect ? "Correct ✓" : "Incorrect ✗"}`;
+  const summaryText = `You said ${attempt.userVerdict.toUpperCase()} at ${attempt.confidence}% · ${attempt.isCorrect ? "Correct" : "Incorrect"}`;
 
   // Consequence framing
   const consequenceText =
@@ -236,12 +237,12 @@ export default function ResultPage() {
   // Consequence header label
   const consequenceLabel =
     drill.ground_truth === "scam" && !attempt.isCorrect
-      ? "⚡ If this were real…"
+      ? "If this were real…"
       : drill.ground_truth === "scam"
-      ? "🛡️ You were right to be suspicious"
+      ? "You were right to be suspicious"
       : attempt.isCorrect
-      ? "✅ This was safe to engage with"
-      : "⚡ You flagged a safe message";
+      ? "This was safe to engage with"
+      : "You flagged a safe message";
 
   // Behavior feedback
   const behaviorSafety =
@@ -297,7 +298,7 @@ export default function ResultPage() {
               className="min-h-[44px] px-3 flex items-center text-lg"
               aria-label={bookmarked ? "Remove bookmark" : "Bookmark this drill"}
             >
-              {bookmarked ? "🔖" : "🏷️"}
+              {bookmarked ? <BookmarkCheck size={20} strokeWidth={1.75} style={{ color: "var(--accent)" }} /> : <Bookmark size={20} strokeWidth={1.75} />}
             </button>
           )}
           <button
@@ -331,7 +332,7 @@ export default function ResultPage() {
           className="rounded-2xl p-3 border"
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
-          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#f59e0b" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--warning)" }}>
             {consequenceLabel}
           </p>
           <p className="text-sm leading-relaxed italic" style={{ color: "var(--text-muted)" }}>
@@ -349,15 +350,15 @@ export default function ResultPage() {
           <div
             className="rounded-2xl p-3 border"
             style={{
-              background: behaviorSafety === "risky" ? "rgba(239,68,68,0.08)" : "rgba(34,197,94,0.08)",
-              borderColor: behaviorSafety === "risky" ? "rgba(239,68,68,0.3)" : "rgba(34,197,94,0.3)",
+              background: behaviorSafety === "risky" ? "var(--danger-bg)" : "var(--success-bg)",
+              borderColor: behaviorSafety === "risky" ? "var(--danger-border)" : "var(--success-border)",
             }}
           >
             <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
               You said you&apos;d <strong>{BEHAVIOR_LABELS[attempt.behaviorChoice]}</strong>
-              {behaviorSafety === "safe" && <> → <span style={{ color: "#22c55e" }}>✅ Safe choice</span></>}
-              {behaviorSafety === "risky" && <> → <span style={{ color: "#ef4444" }}>⚠️ Would have been risky</span></>}
-              {behaviorSafety === "cautious" && <> → <span style={{ color: "#f59e0b" }}>⚠️ Overly cautious (but safe)</span></>}
+              {behaviorSafety === "safe" && <> → <span style={{ color: "var(--success)" }}>Safe choice</span></>}
+              {behaviorSafety === "risky" && <> → <span style={{ color: "var(--danger)" }}>Would have been risky</span></>}
+              {behaviorSafety === "cautious" && <> → <span style={{ color: "var(--warning)" }}>Overly cautious (but safe)</span></>}
             </p>
           </div>
         )}
@@ -366,9 +367,9 @@ export default function ResultPage() {
         {(drill.ai_amplified ?? false) && (
           <div
             className="rounded-2xl p-3 border"
-            style={{ background: "rgba(239,68,68,0.08)", borderColor: "rgba(239,68,68,0.3)" }}
+            style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)" }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#ef4444" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--danger)" }}>
               AI-Polished Message
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
@@ -426,7 +427,7 @@ export default function ResultPage() {
 
         {/* Phase 2 — revealed content */}
         {revealed && (
-          <div ref={revealedRef} className="space-y-5">
+          <div ref={revealedRef} className="space-y-5 animate-revealIn">
             {/* Calibration verdict */}
             <div
               className="rounded-2xl p-3 border"
@@ -434,7 +435,7 @@ export default function ResultPage() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">{vc.icon}</span>
+                  <span style={{ color: vc.color }}>{vc.icon}</span>
                   <span className="text-xl font-bold" style={{ color: vc.color }}>
                     {vc.label}
                   </span>
@@ -465,9 +466,9 @@ export default function ResultPage() {
                 </p>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   {[
-                    { label: "Overconfident", color: "#ef4444", desc: "Wrong + sure" },
-                    { label: "Well-calibrated", color: "#22c55e", desc: "Confidence matches" },
-                    { label: "Underconfident", color: "#3b82f6", desc: "Right but unsure" },
+                    { label: "Overconfident", color: "var(--danger)", desc: "Wrong + sure" },
+                    { label: "Well-calibrated", color: "var(--success)", desc: "Confidence matches" },
+                    { label: "Underconfident", color: "var(--info)", desc: "Right but unsure" },
                   ].map((v) => (
                     <div key={v.label} className="rounded-xl p-2.5" style={{ background: "var(--surface-2)" }}>
                       <div className="text-xs font-bold mb-0.5" style={{ color: v.color }}>{v.label}</div>
@@ -504,9 +505,9 @@ export default function ResultPage() {
             {calVerdict === "cautious-win" && attempt.isCorrect && (
               <div
                 className="rounded-2xl p-3 border"
-                style={{ background: "rgba(59,130,246,0.08)", borderColor: "rgba(59,130,246,0.3)" }}
+                style={{ background: "var(--info-bg)", borderColor: "var(--info-border)" }}
               >
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#3b82f6" }}>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--info)" }}>
                   You hesitated — but were right
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
@@ -589,7 +590,7 @@ export default function ResultPage() {
             {/* Green flags — only for legit drills */}
             {drill.ground_truth === "legit" && drill.green_flags && drill.green_flags.length > 0 && (
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#22c55e" }}>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--success)" }}>
                   Green Flags
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -597,9 +598,9 @@ export default function ResultPage() {
                     <span
                       key={flag.id}
                       className="px-3 py-1.5 rounded-xl text-sm border"
-                      style={{ borderColor: "#22c55e44", color: "#22c55e", background: "rgba(34,197,94,0.08)" }}
+                      style={{ borderColor: "#22c55e44", color: "var(--success)", background: "var(--success-bg)" }}
                     >
-                      ✓ {flag.label}
+                      <Check size={14} strokeWidth={2} className="inline mr-1" /> {flag.label}
                     </span>
                   ))}
                 </div>
@@ -676,7 +677,7 @@ export default function ResultPage() {
                 className="flex items-center gap-2 text-xs py-2"
                 style={{ color: "var(--accent)" }}
               >
-                <span>✨</span>
+                <Sparkles size={14} strokeWidth={1.75} />
                 <span>Want reply scripts &amp; more? <strong>Upgrade to Pro</strong></span>
               </Link>
             )}

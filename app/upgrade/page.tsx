@@ -4,22 +4,23 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { isPremium, unlockPremium, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
 import { track } from "@/lib/analytics";
+import { Search, TrendingUp, Cpu, Sparkles, ChevronRight, Check, Target, Zap, Bookmark, Flame } from "lucide-react";
 
 const UPGRADE_OUTCOMES = [
   {
-    icon: "🔍",
+    icon: <Search size={24} strokeWidth={1.75} />,
     headline: "Know exactly where you're vulnerable",
     description: "Most people have a blind spot — a scam type they consistently miss, often with high confidence. See your full vulnerability profile and know which scams could actually fool you.",
     features: ["Per-category accuracy breakdown", "Overconfidence hotspot analysis", "Focused weak-spot training"],
   },
   {
-    icon: "📈",
+    icon: <TrendingUp size={24} strokeWidth={1.75} />,
     headline: "See if you're actually getting better",
     description: "Random drills don't tell you whether you're improving. Track your real progress over time with a trend chart that shows whether your accuracy and calibration are moving in the right direction.",
     features: ["Accuracy trend chart", "Full drill history", "Session mode — 10 drills, under 5 minutes"],
   },
   {
-    icon: "🤖",
+    icon: <Cpu size={24} strokeWidth={1.75} />,
     headline: "Train smarter, not more",
     description: "Instead of random drills, let the app automatically focus on your worst categories. One tap and the engine routes you straight to the patterns that catch you off guard.",
     features: ["Weakness autopilot", "Custom drill focus", "Bookmark tricky drills to revisit"],
@@ -92,7 +93,7 @@ export default function UpgradePage() {
               className="rounded-2xl border px-5 py-6 text-center"
               style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
             >
-              <span className="text-3xl block mb-3">✨</span>
+              <Sparkles size={32} strokeWidth={1.5} className="mb-3" style={{ color: "var(--accent)" }} />
               <p className="font-bold text-lg mb-1" style={{ color: "var(--accent)" }}>
                 Pro Active
               </p>
@@ -105,12 +106,12 @@ export default function UpgradePage() {
               Your pro features
             </p>
             {[
-              { icon: "📈", label: "Accuracy trend chart", href: "/stats" },
-              { icon: "🔍", label: "Full vulnerability profile", href: "/stats" },
-              { icon: "🎯", label: "Custom drill focus", href: "/settings" },
-              { icon: "🏃", label: "10-drill session mode", href: "/session" },
-              { icon: "🔖", label: "Drill bookmarks", href: "/stats" },
-              { icon: "🔥", label: "Streak tracking", href: "/stats" },
+              { icon: <TrendingUp size={20} strokeWidth={1.75} />, label: "Accuracy trend chart", href: "/stats" },
+              { icon: <Search size={20} strokeWidth={1.75} />, label: "Full vulnerability profile", href: "/stats" },
+              { icon: <Target size={20} strokeWidth={1.75} />, label: "Custom drill focus", href: "/settings" },
+              { icon: <Zap size={20} strokeWidth={1.75} />, label: "10-drill session mode", href: "/session" },
+              { icon: <Bookmark size={20} strokeWidth={1.75} />, label: "Drill bookmarks", href: "/stats" },
+              { icon: <Flame size={20} strokeWidth={1.75} />, label: "Streak tracking", href: "/stats" },
             ].map(({ icon, label, href }) => (
               <button
                 key={label}
@@ -118,16 +119,16 @@ export default function UpgradePage() {
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left transition-all active:scale-[0.98]"
                 style={{ background: "var(--surface)", borderColor: "var(--border)" }}
               >
-                <span className="text-xl">{icon}</span>
+                <span style={{ color: "var(--accent)" }}>{icon}</span>
                 <span className="text-sm font-semibold flex-1" style={{ color: "var(--text)" }}>{label}</span>
-                <span style={{ color: "var(--text-muted)" }}>→</span>
+                <ChevronRight size={16} strokeWidth={1.75} style={{ color: "var(--text-muted)" }} />
               </button>
             ))}
           </div>
         ) : (
           <>
             <div className="text-center">
-              <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--text)" }}>
+              <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
                 Know your blind spots.
               </h1>
               <p className="text-sm" style={{ color: "var(--text-muted)" }}>
@@ -143,7 +144,7 @@ export default function UpgradePage() {
                   style={{ background: "var(--surface)", borderColor: "var(--border)" }}
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="text-2xl">{outcome.icon}</span>
+                    <span style={{ color: "var(--accent)" }}>{outcome.icon}</span>
                     <p className="text-base font-bold leading-tight" style={{ color: "var(--text)" }}>
                       {outcome.headline}
                     </p>
@@ -154,7 +155,7 @@ export default function UpgradePage() {
                   <ul className="space-y-1">
                     {outcome.features.map((f) => (
                       <li key={f} className="flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
-                        <span style={{ color: "var(--accent)" }}>✓</span>
+                        <Check size={14} strokeWidth={2} style={{ color: "var(--accent)" }} />
                         {f}
                       </li>
                     ))}
@@ -229,7 +230,7 @@ export default function UpgradePage() {
                   {restoreMessage && (
                     <p
                       className="text-xs"
-                      style={{ color: restoreStatus === "success" ? "#22c55e" : "#ef4444" }}
+                      style={{ color: restoreStatus === "success" ? "var(--success)" : "var(--danger)" }}
                     >
                       {restoreMessage}
                     </p>

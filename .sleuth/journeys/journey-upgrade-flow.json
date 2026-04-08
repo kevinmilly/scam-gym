@@ -1,0 +1,23 @@
+{
+  "id": "journey-upgrade-flow",
+  "label": "Free user upgrades to premium",
+  "description": "Tests the payment conversion flow — critical for monetization. Covers the upgrade page CTA and Stripe payment risk surface.",
+  "goal": "Purchase premium access via Stripe",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Visit upgrade page",
+      "url": "https://www.scamgym.com/upgrade",
+      "component": "app\\upgrade\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "locate_risk",
+      "label": "Identify payment trigger",
+      "component": "app\\upgrade\\page.tsx",
+      "risk_type": "payment"
+    }
+  ]
+}

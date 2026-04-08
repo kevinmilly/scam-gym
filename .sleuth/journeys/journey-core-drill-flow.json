@@ -1,0 +1,42 @@
+{
+  "id": "journey-core-drill-flow",
+  "label": "Complete a single drill",
+  "description": "Tests the primary user journey: landing on home, navigating to a drill, making a verdict and confidence selection, and submitting to see results. This is the core loop every user follows.",
+  "goal": "Complete one scam detection drill and view the result",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Visit home page",
+      "url": "https://www.scamgym.com/",
+      "component": "app\\page.tsx"
+    },
+    {
+      "index": 1,
+      "type": "navigate",
+      "label": "Go to drill page",
+      "url": "https://www.scamgym.com/drill",
+      "component": "app\\drill\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 2,
+      "type": "audit_form",
+      "label": "Submit drill answer",
+      "component": "app\\drill\\page.tsx",
+      "fields": [
+        "verdict",
+        "confidence",
+        "behaviorChoice"
+      ]
+    },
+    {
+      "index": 3,
+      "type": "navigate",
+      "label": "View result page",
+      "url": "https://www.scamgym.com/result",
+      "component": "app\\result\\page.tsx",
+      "_url_unverified": true
+    }
+  ]
+}

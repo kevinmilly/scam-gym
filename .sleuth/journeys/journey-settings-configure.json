@@ -1,0 +1,23 @@
+{
+  "id": "journey-settings-configure",
+  "label": "User configures training preferences",
+  "description": "Tests settings page interactions including focus family selection, theme toggle, and the data reset flow — a destructive action requiring confirmation.",
+  "goal": "Customize training focus and reset data if needed",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Open settings page",
+      "url": "https://www.scamgym.com/settings",
+      "component": "app\\settings\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "locate_risk",
+      "label": "Locate data reset action",
+      "component": "app\\settings\\page.tsx",
+      "risk_type": "delete"
+    }
+  ]
+}

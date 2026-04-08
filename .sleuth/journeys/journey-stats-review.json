@@ -1,0 +1,23 @@
+{
+  "id": "journey-stats-review",
+  "label": "User reviews their performance stats",
+  "description": "Tests the stats page load, premium gating of deep-dive features, and trend chart rendering — key for retention as users track progress.",
+  "goal": "Review accuracy and calibration statistics",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Navigate to stats page",
+      "url": "https://www.scamgym.com/stats",
+      "component": "app\\stats\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "locate_risk",
+      "label": "Check for premium-gated delete/reset actions",
+      "component": "app\\stats\\page.tsx",
+      "risk_type": "delete"
+    }
+  ]
+}

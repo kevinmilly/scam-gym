@@ -1,0 +1,50 @@
+{
+  "id": "journey-session-mode",
+  "label": "Non-premium user runs 10 drill sessions",
+  "description": "Tests the drill flow for a non-premium user completing 10 consecutive drills from the home page — navigates to drill, submits answers, returns to home, and repeats.",
+  "goal": "Complete 10 individual drills as a non-premium user",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Navigate to home page",
+      "url": "https://www.scamgym.com/",
+      "component": "app\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "navigate",
+      "label": "Start a drill",
+      "url": "https://www.scamgym.com/drill",
+      "component": "app\\drill\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 2,
+      "type": "audit_form",
+      "label": "Submit drill answer",
+      "component": "app\\drill\\page.tsx",
+      "fields": [
+        "verdict",
+        "confidence",
+        "behaviorChoice"
+      ]
+    },
+    {
+      "index": 3,
+      "type": "navigate",
+      "label": "View result and return to home",
+      "url": "https://www.scamgym.com/result",
+      "component": "app\\result\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 4,
+      "type": "repeat",
+      "label": "Repeat drill cycle 9 more times (10 total)",
+      "repeatSteps": [1, 2, 3],
+      "count": 9
+    }
+  ]
+}

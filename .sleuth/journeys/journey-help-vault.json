@@ -1,0 +1,31 @@
+{
+  "id": "journey-help-vault",
+  "label": "User accesses scam help vault",
+  "description": "Tests the help section and vault page — educational content for non-technical users who may need guidance after encountering a real scam.",
+  "goal": "Find actionable advice after encountering a suspected scam",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Open help page",
+      "url": "https://www.scamgym.com/help",
+      "component": "app\\help\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "navigate",
+      "label": "Browse vault page",
+      "url": "https://www.scamgym.com/help/vault",
+      "component": "app\\help\\vault\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 2,
+      "type": "locate_risk",
+      "label": "Check for delete actions in vault",
+      "component": "app\\help\\vault\\page.tsx",
+      "risk_type": "delete"
+    }
+  ]
+}

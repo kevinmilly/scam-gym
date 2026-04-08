@@ -1,0 +1,118 @@
+{
+  "audited_at": "2026-04-05T17:57:57.802Z",
+  "base_url": "https://www.scamgym.com/",
+  "journeys": [
+    {
+      "journey_id": "journey-core-drill-flow",
+      "label": "Complete a single drill",
+      "completed_steps": 4,
+      "total_steps": 4,
+      "stopped_at": null,
+      "evidence_index": ".sleuth\\evidence\\journey-core-drill-flow\\evidence-index.json"
+    },
+    {
+      "journey_id": "journey-form-0-page",
+      "label": "Form interaction — page",
+      "completed_steps": 2,
+      "total_steps": 2,
+      "stopped_at": null,
+      "evidence_index": ".sleuth\\evidence\\journey-form-0-page\\evidence-index.json"
+    },
+    {
+      "journey_id": "journey-form-1-page",
+      "label": "Form interaction — page",
+      "completed_steps": 2,
+      "total_steps": 2,
+      "stopped_at": null,
+      "evidence_index": ".sleuth\\evidence\\journey-form-1-page\\evidence-index.json"
+    },
+    {
+      "journey_id": "journey-help-center",
+      "label": "Access help resources",
+      "completed_steps": 3,
+      "total_steps": 3,
+      "stopped_at": null,
+      "evidence_index": ".sleuth\\evidence\\journey-help-center\\evidence-index.json"
+    },
+    {
+      "journey_id": "journey-home-to-drill",
+      "label": "First-time drill attempt",
+      "completed_steps": 4,
+      "total_steps": 4,
+      "stopped_at": null,
+      "evidence_index": ".sleuth\\evidence\\journey-home-to-drill\\evidence-index.json"
+    },
+    {
+      "journey_id": "journey-premium-upgrade",
+      "label": "Upgrade to premium",
+      "completed_steps": 2,
+      "total_steps": 2,
+      "stopped_at": null,
+      "evidence_index": ".sleuth\\evidence\\journey-premium-upgrade\\evidence-index.json"
+    },
+    {
+      "journey_id": "journey-result-bookmark",
+      "label": "Bookmark a drill from result",
+      "completed_steps": 2,
+      "total_steps": 2,
+      "stopped_at": null,
+      "evidence_index": ".sleuth\\evidence\\journey-result-bookmark\\evidence-index.json"
+    },
+    {
+      "journey_id": "journey-risk-actions",
+      "label": "Risk actions — identify destructive or payment flows",
+      "completed_steps": 0,
+      "total_steps": 6,
+      "stopped_at": "skipped",
+      "evidence_index": null
+    },
+    {
+      "journey_id": "journey-route-scan",
+      "label": "Route scan — visit all static routes",
+      "completed_steps": 0,
+      "total_steps": 1,
+      "stopped_at": "skipped",
+      "evidence_index": null
+    },
+    {
+      "journey_id": "journey-session-mode",
+      "label": "Complete a curated session",
+      "completed_steps": 0,
+      "total_steps": 2,
+      "stopped_at": "skipped",
+      "evidence_index": null
+    },
+    {
+      "journey_id": "journey-settings-configuration",
+      "label": "Configure training settings",
+      "completed_steps": 0,
+      "total_steps": 2,
+      "stopped_at": "skipped",
+      "evidence_index": null
+    },
+    {
+      "journey_id": "journey-settings-configure",
+      "label": "Configure training settings",
+      "completed_steps": 0,
+      "total_steps": 2,
+      "stopped_at": "skipped",
+      "evidence_index": null
+    },
+    {
+      "journey_id": "journey-stats-review",
+      "label": "Review training stats",
+      "completed_steps": 0,
+      "total_steps": 2,
+      "stopped_at": "skipped",
+      "evidence_index": null
+    },
+    {
+      "journey_id": "journey-upgrade-flow",
+      "label": "Upgrade to premium",
+      "completed_steps": 0,
+      "total_steps": 2,
+      "stopped_at": "skipped",
+      "evidence_index": null
+    }
+  ]
+}

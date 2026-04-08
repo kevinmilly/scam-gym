@@ -1,0 +1,23 @@
+{
+  "id": "journey-premium-upgrade",
+  "label": "Upgrade to premium",
+  "description": "Tests the upgrade/paywall flow. Users land on the upgrade page and are presented with the Stripe payment CTA. Conversion risk if the CTA or pricing is unclear.",
+  "goal": "Purchase premium access for $2.99",
+  "steps": [
+    {
+      "index": 0,
+      "type": "navigate",
+      "label": "Visit upgrade page",
+      "url": "https://www.scamgym.com/upgrade",
+      "component": "app\\upgrade\\page.tsx",
+      "_url_unverified": true
+    },
+    {
+      "index": 1,
+      "type": "locate_risk",
+      "label": "Check payment CTA risk",
+      "component": "app\\upgrade\\page.tsx",
+      "risk_type": "payment"
+    }
+  ]
+}

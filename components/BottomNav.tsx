@@ -20,7 +20,7 @@ export default function BottomNav() {
   return (
     <nav
       className="fixed bottom-0 left-0 right-0 z-40"
-      style={{ background: "var(--surface)", borderTop: "1px solid var(--border)" }}
+      style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", boxShadow: "0 -1px 8px rgba(0,0,0,0.08)" }}
       aria-label="Main navigation"
     >
       <div className="max-w-lg mx-auto flex items-stretch">
