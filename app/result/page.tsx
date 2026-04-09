@@ -169,6 +169,19 @@ export default function ResultPage() {
     await saveAttempt(updated);
     setAttempt(updated);
     setRevealed(true);
+
+    // Increment daily explanation counter for free users
+    if (!isPremium()) {
+      const today = new Date().toISOString().slice(0, 10);
+      const stored = localStorage.getItem("scamgym_daily_explains");
+      const data = stored ? JSON.parse(stored) : { date: today, count: 0 };
+      if (data.date !== today) {
+        localStorage.setItem("scamgym_daily_explains", JSON.stringify({ date: today, count: 1 }));
+      } else {
+        localStorage.setItem("scamgym_daily_explains", JSON.stringify({ date: today, count: data.count + 1 }));
+      }
+    }
+
     setTimeout(() => revealedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
 
     // Recompute XP breakdown now that redFlagRecall is populated
@@ -201,9 +214,17 @@ export default function ResultPage() {
   const vc = VERDICT_CONFIG[calVerdict];
   const score = accuracyScore(attempt.brierScore);
 
-  // Soft-gate explanation for free users: full access for first 3 drills,
-  // then every 3rd drill (4th, 7th, 10th…) shows an upsell prompt instead.
-  const explanationGated = !isPremium() && attemptCount > 3 && attemptCount % 3 === 1;
+  // Soft-gate explanation for free users: 3 free explanations per day,
+  // then gated until the next calendar day.
+  const explanationGated = (() => {
+    if (isPremium()) return false;
+    const FREE_DAILY_LIMIT = 3;
+    const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+    const stored = localStorage.getItem("scamgym_daily_explains");
+    const data = stored ? JSON.parse(stored) : { date: today, count: 0 };
+    if (data.date !== today) return false; // new day = fresh quota
+    return data.count >= FREE_DAILY_LIMIT;
+  })();
   const correctIds = new Set(drill.correct_red_flag_ids);
 
   // SAFE/RISKY banner
@@ -345,20 +366,18 @@ export default function ResultPage() {
           )}
         </div>
 
-        {/* Behavior feedback */}
-        {attempt.behaviorChoice && behaviorSafety && (
+        {/* Behavior feedback — only warn when the user picked something dangerous */}
+        {attempt.behaviorChoice && behaviorSafety === "risky" && (
           <div
             className="rounded-2xl p-3 border"
             style={{
-              background: behaviorSafety === "risky" ? "var(--danger-bg)" : "var(--success-bg)",
-              borderColor: behaviorSafety === "risky" ? "var(--danger-border)" : "var(--success-border)",
+              background: "var(--danger-bg)",
+              borderColor: "var(--danger-border)",
             }}
           >
             <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
               You said you&apos;d <strong>{BEHAVIOR_LABELS[attempt.behaviorChoice]}</strong>
-              {behaviorSafety === "safe" && <> → <span style={{ color: "var(--success)" }}>Safe choice</span></>}
-              {behaviorSafety === "risky" && <> → <span style={{ color: "var(--danger)" }}>Would have been risky</span></>}
-              {behaviorSafety === "cautious" && <> → <span style={{ color: "var(--warning)" }}>Overly cautious (but safe)</span></>}
+              {" → "}<span style={{ color: "var(--danger)" }}>That would have been risky</span>
             </p>
           </div>
         )}
@@ -523,15 +542,6 @@ export default function ResultPage() {
                 style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
               >
                 {drill.pattern_family.replace(/_/g, " ")}
-              </span>
-              <span
-                className="text-xs px-3 py-1 rounded-full border font-medium"
-                style={{
-                  borderColor: drill.ground_truth === "scam" ? "#ef444444" : "#22c55e44",
-                  color: drill.ground_truth === "scam" ? "#ef4444" : "#22c55e",
-                }}
-              >
-                {drill.ground_truth.toUpperCase()}
               </span>
               {drill.tricks?.map((trick) => (
                 <span
@@ -787,7 +797,7 @@ export default function ResultPage() {
                 style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
               >
                 <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
-                  You&apos;ve used your free deep-dives for now
+                  You&apos;ve used your 3 free explanations for today
                 </p>
                 <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
                   Upgrade to Pro for unlimited explanations, tells, and your full vulnerability profile.
