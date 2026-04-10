@@ -102,7 +102,32 @@ export function selectNextDrill(
     for (let i = 0; i < weight; i++) weighted.push(drill);
   }
 
-  return weighted[Math.floor(Math.random() * weighted.length)];
+  const pick = weighted[Math.floor(Math.random() * weighted.length)];
+
+  // Format diversity: if last 3 drills used the same drill_type, try to pick a different one
+  if (attempts.length >= 3) {
+    const recentTypes = attempts.slice(-3).map((a) => a.drill_type ?? "standard");
+    const allSame = recentTypes.every((t) => t === recentTypes[0]);
+    if (allSame && (pick.drill_type ?? "standard") === recentTypes[0]) {
+      const alt = weighted.filter((d) => (d.drill_type ?? "standard") !== recentTypes[0]);
+      if (alt.length > 0) {
+        return alt[Math.floor(Math.random() * alt.length)];
+      }
+    }
+  }
+
+  return pick;
+}
+
+/**
+ * Resolve the paired drill for a comparison drill.
+ */
+export function resolveComparisonPair(
+  drill: Drill,
+  allDrills: Drill[]
+): Drill | null {
+  if (!drill.paired_drill_id) return null;
+  return allDrills.find((d) => d.id === drill.paired_drill_id) ?? null;
 }
 
 /**

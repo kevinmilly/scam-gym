@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import type { Attempt, Drill, CalibrationVerdict } from "@/lib/types";
+import type { Attempt, Drill, CalibrationVerdict, DrillType } from "@/lib/types";
+import MessageCard from "@/components/MessageCard";
 import { accuracyScore, redFlagRecall } from "@/lib/scoring";
 import { trickLabel } from "@/lib/stats";
 import { saveAttempt, saveContentFlag, db } from "@/lib/db";
@@ -396,6 +397,82 @@ export default function ResultPage() {
             </p>
           </div>
         )}
+
+        {/* Format-specific result sections */}
+        {(drill.drill_type ?? "standard") === "preview" && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+              Full Message
+            </p>
+            <MessageCard drill={drill} />
+          </div>
+        )}
+
+        {(drill.drill_type ?? "standard") === "spot_flag" && attempt.spot_flag_pick && (
+          <div
+            className="rounded-2xl p-3 border"
+            style={{
+              background: attempt.spot_flag_correct ? "var(--success-bg)" : "var(--warning-bg)",
+              borderColor: attempt.spot_flag_correct ? "var(--success)" + "44" : "var(--warning)" + "44",
+            }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: attempt.spot_flag_correct ? "var(--success)" : "var(--warning)" }}>
+              {attempt.spot_flag_correct ? "You spotted the right flag" : "Not quite the key flag"}
+            </p>
+            <p className="text-sm" style={{ color: "var(--text)" }}>
+              You picked: <strong>{drill.spot_flag_options?.find(o => o.id === attempt.spot_flag_pick)?.label}</strong>
+            </p>
+            {!attempt.spot_flag_correct && drill.spot_flag_correct_id && (
+              <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>
+                Key flag: <strong style={{ color: "var(--text)" }}>{drill.spot_flag_options?.find(o => o.id === drill.spot_flag_correct_id)?.label}</strong>
+              </p>
+            )}
+          </div>
+        )}
+
+        {(drill.drill_type ?? "standard") === "comparison" && (() => {
+          const pairData = sessionStorage.getItem("comparisonPair");
+          if (!pairData) return null;
+          const pair = JSON.parse(pairData);
+          return (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+                The two messages
+              </p>
+              <div className="space-y-3">
+                {[pair.drillA, pair.drillB].map((d: Drill, i: number) => {
+                  const label = i === 0 ? "A" : "B";
+                  const isScam = d.ground_truth === "scam";
+                  return (
+                    <div
+                      key={d.id}
+                      className="rounded-2xl border-2 p-1"
+                      style={{
+                        borderColor: isScam ? "var(--danger)" : "var(--success)",
+                      }}
+                    >
+                      <div className="flex items-center gap-2 px-3 py-1.5">
+                        <span
+                          className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                          style={{
+                            background: isScam ? "var(--danger)" : "var(--success)",
+                            color: "#fff",
+                          }}
+                        >
+                          {label}
+                        </span>
+                        <span className="text-xs font-bold" style={{ color: isScam ? "var(--danger)" : "var(--success)" }}>
+                          {isScam ? "Scam" : "Legit"}
+                        </span>
+                      </div>
+                      <MessageCard drill={d} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Scroll hint — visible before reveal */}
         {!revealed && drill.ground_truth === "scam" && drill.red_flags.length > 0 && (

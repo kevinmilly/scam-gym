@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { useDrillContext } from "@/lib/DrillContext";
 import MessageCard from "@/components/MessageCard";
+import PreviewCard from "@/components/PreviewCard";
+import ThreadCard from "@/components/ThreadCard";
+import ComparisonLayout from "@/components/ComparisonLayout";
+import SpotFlagPicker from "@/components/SpotFlagPicker";
 import { brierScore, redFlagRecall, calibrationVerdict } from "@/lib/scoring";
 import { saveAttempt } from "@/lib/db";
-import type { Verdict, BehaviorChoice } from "@/lib/types";
+import type { Verdict, BehaviorChoice, Drill } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { playCorrect, playIncorrect } from "@/lib/audio";
 import { track } from "@/lib/analytics";
@@ -34,13 +38,38 @@ export default function DrillPage() {
   const [behaviorChoice, setBehaviorChoice] = useState<BehaviorChoice | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
+  // New format states
+  const [spotFlagPick, setSpotFlagPick] = useState<string | null>(null);
+  const [threadSusIndex, setThreadSusIndex] = useState<number | null>(null);
+  const [comparisonPick, setComparisonPick] = useState<"A" | "B" | null>(null);
+
   const bannerHidden = contextAttempts.length >= 5;
+
+  const drillType = currentDrill?.drill_type ?? "standard";
+
+  // Resolve comparison pair — randomize A/B order, stable per drill
+  const comparisonPair = useMemo(() => {
+    if (drillType !== "comparison" || !currentDrill?.paired_drill_id) return null;
+    const paired = allDrills.find((d) => d.id === currentDrill.paired_drill_id);
+    if (!paired) return null;
+    // Use drill ID char sum for stable randomization
+    const sum = currentDrill.id.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
+    const scamFirst = sum % 2 === 0;
+    return {
+      drillA: scamFirst ? currentDrill : paired,
+      drillB: scamFirst ? paired : currentDrill,
+      scamSlot: scamFirst ? "A" as const : "B" as const,
+    };
+  }, [currentDrill?.id, drillType, currentDrill?.paired_drill_id]);
 
   // Reset state when drill changes
   useEffect(() => {
     setVerdict(null);
     setConfidence(null);
     setBehaviorChoice(null);
+    setSpotFlagPick(null);
+    setThreadSusIndex(null);
+    setComparisonPick(null);
     setSubmitting(false);
     if (currentDrill) {
       track("drill_started", { drillId: currentDrill.id, patternFamily: currentDrill.pattern_family });
@@ -56,13 +85,30 @@ export default function DrillPage() {
     );
   }
 
-  const canSubmit = verdict !== null && confidence !== null;
+  // canSubmit varies by format
+  const canSubmitBase = confidence !== null;
+  let canSubmit = false;
+  if (drillType === "comparison") {
+    canSubmit = canSubmitBase && comparisonPick !== null;
+  } else {
+    canSubmit = canSubmitBase && verdict !== null;
+  }
 
   async function handleSubmit() {
     if (!canSubmit || submitting) return;
     setSubmitting(true);
 
-    const isCorrect = verdict === currentDrill!.ground_truth;
+    let isCorrect: boolean;
+    let effectiveVerdict: Verdict;
+
+    if (drillType === "comparison" && comparisonPair) {
+      isCorrect = comparisonPick === comparisonPair.scamSlot;
+      effectiveVerdict = isCorrect ? "scam" : "legit";
+    } else {
+      effectiveVerdict = verdict!;
+      isCorrect = effectiveVerdict === currentDrill!.ground_truth;
+    }
+
     const brier = brierScore(confidence!, isCorrect);
     const flagRecall = redFlagRecall([], currentDrill!.correct_red_flag_ids);
     const calVerdict = calibrationVerdict(confidence!, isCorrect);
@@ -71,7 +117,7 @@ export default function DrillPage() {
       id: uuidv4(),
       drillId: currentDrill!.id,
       timestamp: Date.now(),
-      userVerdict: verdict!,
+      userVerdict: effectiveVerdict,
       confidence: confidence!,
       selectedRedFlagIds: [],
       isCorrect,
@@ -79,9 +125,15 @@ export default function DrillPage() {
       redFlagRecall: flagRecall,
       syncedAt: null,
       behaviorChoice: behaviorChoice ?? undefined,
+      drill_type: drillType === "standard" ? undefined : drillType,
+      spot_flag_pick: spotFlagPick ?? undefined,
+      spot_flag_correct: spotFlagPick ? spotFlagPick === currentDrill!.spot_flag_correct_id : undefined,
+      thread_sus_index: threadSusIndex ?? undefined,
+      comparison_pick_id: comparisonPick && comparisonPair
+        ? (comparisonPick === "A" ? comparisonPair.drillA.id : comparisonPair.drillB.id)
+        : undefined,
     };
 
-    // Track + sound feedback
     track("drill_completed", {
       drillId: currentDrill!.id,
       patternFamily: currentDrill!.pattern_family,
@@ -92,38 +144,29 @@ export default function DrillPage() {
     if (isCorrect) playCorrect();
     else playIncorrect();
 
-    // Persist
     try {
       await saveAttempt(attempt);
       recordAttempt(attempt);
 
-      // Compute post-drill reward (before/after comparison)
       const allAttempts = [...contextAttempts, attempt];
       const reward = computePostDrillReward(allAttempts, allDrills);
 
-      // Store in sessionStorage for result page (clear streakUpdated so it fires once for this drill)
       sessionStorage.removeItem("streakUpdated");
       sessionStorage.setItem("lastAttempt", JSON.stringify(attempt));
       sessionStorage.setItem("lastDrill", JSON.stringify(currentDrill));
       sessionStorage.setItem("calVerdict", calVerdict);
       sessionStorage.setItem("lastReward", JSON.stringify(reward));
+      if (comparisonPair) {
+        sessionStorage.setItem("comparisonPair", JSON.stringify(comparisonPair));
+      }
 
-      // Advance drill queue (prefetch next)
       advance();
-
       router.push("/result");
     } catch (err) {
       console.error("Failed to save attempt:", err);
       setSubmitting(false);
     }
   }
-
-  const channelLabel = currentDrill.channel.toUpperCase();
-  const channelColors: Record<string, string> = {
-    SMS: "var(--success)",
-    EMAIL: "var(--warning)",
-    DM: "var(--info)",
-  };
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -174,45 +217,114 @@ export default function DrillPage() {
           className="px-3 py-2 rounded-xl text-sm"
           style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
         >
-          <Inbox size={16} strokeWidth={1.75} className="inline mr-1.5" /> <span>This just hit your inbox. Scam or legit?</span>
+          <Inbox size={16} strokeWidth={1.75} className="inline mr-1.5" /> <span>{currentDrill.framing ?? "This just hit your inbox. Scam or legit?"}</span>
         </div>
 
-        {/* Message */}
-        <MessageCard drill={currentDrill} />
+        {/* Message — varies by drill type */}
+        {drillType === "preview" && (
+          <PreviewCard drill={currentDrill} />
+        )}
+        {drillType === "thread" && (
+          <ThreadCard drill={currentDrill} />
+        )}
+        {drillType === "comparison" && comparisonPair && (
+          <ComparisonLayout
+            drillA={comparisonPair.drillA}
+            drillB={comparisonPair.drillB}
+            selected={comparisonPick}
+            onSelect={setComparisonPick}
+          />
+        )}
+        {(drillType === "standard" || drillType === "spot_flag") && (
+          <MessageCard drill={currentDrill} />
+        )}
 
-        {/* Verdict */}
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
-            Is this message…
-          </p>
-          <div className="grid grid-cols-2 gap-3">
-            {(["scam", "legit"] as Verdict[]).map((v) => {
-              const selected = verdict === v;
-              const isScam = v === "scam";
-              return (
-                <button
-                  key={v}
-                  onClick={() => { tap(); setVerdict(v); }}
-                  aria-pressed={selected}
-                  className="py-4 rounded-2xl font-bold text-lg border-2 transition-colors duration-150 active:scale-95"
-                  style={{
-                    borderColor: selected
-                      ? isScam ? "var(--danger)" : "var(--success)"
-                      : "var(--border)",
-                    background: selected
-                      ? isScam ? "var(--danger-bg)" : "var(--success-bg)"
-                      : "var(--surface)",
-                    color: selected
-                      ? isScam ? "var(--danger)" : "var(--success)"
-                      : "var(--text)",
-                  }}
-                >
-                  {isScam ? <><ShieldAlert size={20} strokeWidth={1.75} className="inline mr-1" /> Scam</> : <><ShieldCheck size={20} strokeWidth={1.75} className="inline mr-1" /> Legit</>}
-                </button>
-              );
-            })}
+        {/* Spot the flag — shown after message for spot_flag drills */}
+        {drillType === "spot_flag" && currentDrill.spot_flag_options && (
+          <SpotFlagPicker
+            options={currentDrill.spot_flag_options}
+            selected={spotFlagPick}
+            onSelect={setSpotFlagPick}
+          />
+        )}
+
+        {/* Thread suspicion picker */}
+        {drillType === "thread" && currentDrill.thread && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+              At which point did it get suspicious?
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {currentDrill.thread.filter(m => m.sender === "them").map((_, i) => {
+                const msgIndex = i + 1;
+                const selected = threadSusIndex === msgIndex;
+                return (
+                  <button
+                    key={msgIndex}
+                    onClick={() => { tap(); setThreadSusIndex(selected ? null : msgIndex); }}
+                    aria-pressed={selected}
+                    className="px-4 py-2.5 rounded-xl font-semibold text-sm border-2 transition-colors duration-150 active:scale-95"
+                    style={{
+                      borderColor: selected ? "var(--accent)" : "var(--border)",
+                      background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
+                      color: selected ? "var(--accent)" : "var(--text-muted)",
+                    }}
+                  >
+                    Message {msgIndex}
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => { tap(); setThreadSusIndex(0); }}
+                aria-pressed={threadSusIndex === 0}
+                className="px-4 py-2.5 rounded-xl font-semibold text-sm border-2 transition-colors duration-150 active:scale-95"
+                style={{
+                  borderColor: threadSusIndex === 0 ? "var(--success)" : "var(--border)",
+                  background: threadSusIndex === 0 ? "var(--success-bg)" : "var(--surface)",
+                  color: threadSusIndex === 0 ? "var(--success)" : "var(--text-muted)",
+                }}
+              >
+                None — seems fine
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Verdict — not shown for comparison (picking A/B IS the verdict) */}
+        {drillType !== "comparison" && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+              Is this message…
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {(["scam", "legit"] as Verdict[]).map((v) => {
+                const selected = verdict === v;
+                const isScam = v === "scam";
+                return (
+                  <button
+                    key={v}
+                    onClick={() => { tap(); setVerdict(v); }}
+                    aria-pressed={selected}
+                    className="py-4 rounded-2xl font-bold text-lg border-2 transition-colors duration-150 active:scale-95"
+                    style={{
+                      borderColor: selected
+                        ? isScam ? "var(--danger)" : "var(--success)"
+                        : "var(--border)",
+                      background: selected
+                        ? isScam ? "var(--danger-bg)" : "var(--success-bg)"
+                        : "var(--surface)",
+                      color: selected
+                        ? isScam ? "var(--danger)" : "var(--success)"
+                        : "var(--text)",
+                    }}
+                  >
+                    {isScam ? <><ShieldAlert size={20} strokeWidth={1.75} className="inline mr-1" /> Scam</> : <><ShieldCheck size={20} strokeWidth={1.75} className="inline mr-1" /> Legit</>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Confidence */}
         <div>

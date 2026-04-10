@@ -75,17 +75,16 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
     attemptsRef.current = all;
   }, []);
 
-  /** Build the drill pool applying context + focus filters */
+  /** Build the drill pool applying focus filters (all drills available) */
   const buildPool = useCallback((focus: string[]) => {
-    let pool = selectedContext
-      ? allDrills.filter((d) => d.context === selectedContext)
-      : allDrills;
+    // Exclude comparison "legit" role drills — they're only used as pairs
+    let pool = allDrills.filter((d) => d.comparison_role !== "legit");
     if (focus.length > 0) {
       const focused = pool.filter((d) => focus.includes(d.pattern_family));
       if (focused.length > 0) pool = focused;
     }
     return pool;
-  }, [selectedContext]);
+  }, []);
 
   // Re-initialize drill queue whenever context or focus changes
   useEffect(() => {

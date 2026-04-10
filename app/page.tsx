@@ -5,23 +5,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useDrillContext, allDrills } from "@/lib/DrillContext";
 import { computeStats } from "@/lib/stats";
-import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
-import type { UserContext } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { unlockPremium, isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
 import { getStreak } from "@/lib/streak";
 import PremiumGate from "@/components/PremiumGate";
-import { Target, Brain, BarChart3, Mail, ShieldAlert, ShieldCheck, Flame, Cpu, Zap, Smartphone, Store, Briefcase, Users, Check, ChevronRight } from "lucide-react";
+import { Target, Brain, BarChart3, ShieldAlert, Flame, ChevronRight } from "lucide-react";
 
 const ONBOARDED_KEY = "scamgym_onboarded";
-
-const CONTEXT_ICONS: Record<UserContext, React.ReactNode> = {
-  personal:       <Smartphone size={20} strokeWidth={1.75} />,
-  small_business: <Store size={20} strokeWidth={1.75} />,
-  job_seeker:     <Briefcase size={20} strokeWidth={1.75} />,
-  family_safety:  <Users size={20} strokeWidth={1.75} />,
-};
 
 const VALUE_PROPS = [
   {
@@ -55,7 +46,6 @@ function HomePageInner() {
   const { selectedContext, setSelectedContext, attempts, setFocusFamilies, setFocusLabel } = useDrillContext();
   const [checked, setChecked] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [showContextPicker, setShowContextPicker] = useState(false);
   const [premiumJustActivated, setPremiumJustActivated] = useState(false);
   const [demoAnswer, setDemoAnswer] = useState<null | "scam" | "legit">(null);
   const [autopilotMsg, setAutopilotMsg] = useState<string | null>(null);
@@ -90,11 +80,6 @@ function HomePageInner() {
     }
   }, [router, selectedContext, searchParams]);
 
-  function handleContextSelect(ctx: UserContext) {
-    setSelectedContext(ctx);
-    setShowContextPicker(false);
-  }
-
   function handleStart() {
     // Skip context picker — default to "personal" if not already set.
     // Context filtering is available later in Settings for users who want it.
@@ -125,23 +110,6 @@ function HomePageInner() {
 
   return (
     <div className="flex flex-col min-h-dvh px-6 py-10">
-      {/* Logo */}
-      <div className="mb-12 flex items-center gap-2">
-        <svg width="26" height="26" viewBox="0 0 512 512" aria-hidden="true">
-          <defs>
-            <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#7c6af7"/>
-              <stop offset="100%" stopColor="#5b4bd6"/>
-            </linearGradient>
-          </defs>
-          <path d="M256 28 L460 120 C460 120 468 320 256 484 C44 320 52 120 52 120 Z" fill="url(#sg)"/>
-          <path d="M192 260 L232 310 L328 200" fill="none" stroke="#fff" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        <span className="font-bold text-xl tracking-tight" style={{ color: "var(--text)" }}>
-          Scam Gym
-        </span>
-      </div>
-
       {showOnboarding ? (
         /* ── Welcome / Onboarding Screen ── */
         <>
@@ -184,26 +152,6 @@ function HomePageInner() {
                 </p>
               </div>
             </div>
-
-            {/* Proof stat (moved up) */}
-            <div
-              className="rounded-2xl px-4 py-3 mb-6 flex items-center gap-3"
-              style={{ background: "var(--surface-2)" }}
-            >
-              <Mail size={20} strokeWidth={1.75} style={{ color: "var(--accent)", flexShrink: 0 }} />
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                <strong style={{ color: "var(--text)" }}>140+ real-style drills</strong> across phishing, fake invoices, job scams, romance fraud, and more.
-              </p>
-            </div>
-
-            {/* CTA */}
-            <button
-              onClick={() => { tap(); handleStart(); }}
-              className="w-full py-4 min-h-[48px] rounded-2xl font-bold text-lg transition-all active:scale-95 mb-8"
-              style={{ background: "var(--accent)", color: "#fff" }}
-            >
-              Try Your First Drill — It&apos;s Free
-            </button>
 
             {/* Mini-drill demo */}
             <div
@@ -298,63 +246,6 @@ function HomePageInner() {
           <p className="text-xs text-center mt-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>
             For educational use only. Scenarios use fictional companies and cover common scam patterns — not every scam type. When in doubt, verify directly through official channels.
           </p>
-        </>
-      ) : showContextPicker ? (
-        /* ── Context Selection Screen ── */
-        <>
-          <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
-            Choose your training mode
-          </h1>
-          <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>
-            This sets the mental frame for every drill. All 140 drills are available in every mode — this just changes how you approach them.
-          </p>
-
-          <div className="space-y-3 flex-1">
-            {(Object.keys(CONTEXT_LABELS) as UserContext[]).map((ctx) => {
-              const selected = selectedContext === ctx;
-              return (
-                <button
-                  key={ctx}
-                  onClick={() => handleContextSelect(ctx)}
-                  className="w-full text-left rounded-2xl border-2 px-4 py-4 transition-all active:scale-95"
-                  style={{
-                    borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(124,106,247,0.10)" : "var(--surface)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <span style={{ color: selected ? "var(--accent)" : "var(--text-muted)" }}>{CONTEXT_ICONS[ctx]}</span>
-                    <div>
-                      <p className="font-semibold text-sm" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>
-                        {CONTEXT_LABELS[ctx]}
-                      </p>
-                      <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                        {CONTEXT_DESCRIPTIONS[ctx]}
-                      </p>
-                    </div>
-                    {selected && (
-                      <Check size={16} strokeWidth={2.5} className="ml-auto" style={{ color: "var(--accent)" }} />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mt-8">
-            <button
-              onClick={() => { tap(); handleStart(); }}
-              disabled={!selectedContext}
-              className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-              style={{
-                background: selectedContext ? "var(--accent)" : "var(--surface-2)",
-                color: selectedContext ? "#fff" : "var(--text-muted)",
-                cursor: selectedContext ? "pointer" : "not-allowed",
-              }}
-            >
-              Start Training
-            </button>
-          </div>
         </>
       ) : (
         /* ── Returning User Screen ── */

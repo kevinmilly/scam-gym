@@ -7,14 +7,14 @@ const NAV_ITEMS = [
   { href: "/?from=drill", label: "Home", icon: HomeIcon, match: (p: string) => p === "/" },
   { href: "/drill", label: "Drill", icon: DrillIcon, match: (p: string) => p === "/drill" },
   { href: "/stats", label: "Stats", icon: StatsIcon, match: (p: string) => p === "/stats" },
-  { href: "/settings", label: "More", icon: MoreIcon, match: (p: string) => p === "/settings" || p === "/upgrade" || p === "/help" },
+  { href: "/settings", label: "Settings", icon: SettingsIcon, match: (p: string) => p === "/settings" || p === "/upgrade" || p === "/help" },
 ];
 
 export default function BottomNav() {
   const pathname = usePathname();
 
   // Hide on session page (immersive) and onboarding
-  const hidden = pathname === "/session" || pathname === "/offline";
+  const hidden = pathname === "/" || pathname === "/session" || pathname === "/offline";
   if (hidden) return null;
 
   return (
@@ -86,11 +86,21 @@ function StatsIcon({ active }: { active: boolean }) {
   );
 }
 
-function MoreIcon({ active }: { active: boolean }) {
+function SettingsIcon({ active }: { active: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} fill={active ? "currentColor" : "none"} fillOpacity={active ? 0.12 : 0} />
-      <path d="M12 8v4m0 4h.01" stroke="currentColor" strokeWidth={2} strokeLinecap="round" />
+      <path
+        d="M12 15a3 3 0 100-6 3 3 0 000 6z"
+        stroke="currentColor"
+        strokeWidth={active ? 2.2 : 1.8}
+        fill={active ? "currentColor" : "none"}
+        fillOpacity={active ? 0.12 : 0}
+      />
+      <path
+        d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"
+        stroke="currentColor"
+        strokeWidth={active ? 2.2 : 1.8}
+      />
     </svg>
   );
 }

@@ -1,5 +1,6 @@
-export type Channel = "sms" | "email" | "dm";
+export type Channel = "sms" | "email" | "dm" | "phone";
 export type Verdict = "scam" | "legit";
+export type DrillType = "standard" | "spot_flag" | "preview" | "thread" | "comparison";
 export type CalibrationVerdict =
   | "well-calibrated"
   | "cautious-win"
@@ -42,9 +43,19 @@ export type Drill = {
   pattern_family: string;
   difficulty: 1 | 2 | 3 | 4 | 5;
   ground_truth: Verdict;
-  context: UserContext;
+  context?: UserContext;
   ai_amplified: boolean;
   tricks?: TrickType[];
+  drill_type?: DrillType;
+  framing?: string;
+  // spot_flag format
+  spot_flag_options?: { id: string; label: string }[];
+  spot_flag_correct_id?: string;
+  // thread format
+  thread?: { sender: "them" | "you"; body: string }[];
+  // comparison format
+  paired_drill_id?: string;
+  comparison_role?: "scam" | "legit";
   message: {
     from_name: string;
     from_handle: string;
@@ -78,6 +89,11 @@ export type Attempt = {
   redFlagRecall: number; // 0–1
   syncedAt: number | null;
   behaviorChoice?: BehaviorChoice;
+  drill_type?: DrillType;
+  spot_flag_pick?: string;
+  spot_flag_correct?: boolean;
+  thread_sus_index?: number;
+  comparison_pick_id?: string;
 };
 
 export type ContentFlag = {
