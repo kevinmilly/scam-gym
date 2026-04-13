@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createHmac } from "crypto";
 
-// This endpoint verifies a Stripe purchase by customer email.
-// Set STRIPE_SECRET_KEY in your environment variables.
+// This endpoint verifies a Stripe purchase by customer email and returns a signed token.
+// Set STRIPE_SECRET_KEY and PREMIUM_TOKEN_SECRET in your environment variables.
+
+function signToken(payload: string, secret: string): string {
+  const sig = createHmac("sha256", secret).update(`premium:${payload}`).digest("hex");
+  return `${Buffer.from(`premium:${payload}`).toString("base64")}.${sig}`;
+}
 
 export async function POST(req: NextRequest) {
   const { email } = await req.json();
@@ -11,7 +17,9 @@ export async function POST(req: NextRequest) {
   }
 
   const stripeKey = process.env.STRIPE_SECRET_KEY;
-  if (!stripeKey) {
+  const tokenSecret = process.env.PREMIUM_TOKEN_SECRET;
+
+  if (!stripeKey || !tokenSecret) {
     return NextResponse.json(
       { error: "Payment verification is not configured yet." },
       { status: 503 }
@@ -22,7 +30,7 @@ export async function POST(req: NextRequest) {
     // Search Stripe for completed checkout sessions with this email
     const params = new URLSearchParams({
       "customer_details[email]": email.trim().toLowerCase(),
-      limit: "1",
+      limit: "5",
     });
 
     const res = await fetch(
@@ -42,13 +50,15 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await res.json();
-    const found = data.data?.some(
-      (session: { payment_status: string }) =>
+    const paidSession = data.data?.find(
+      (session: { payment_status: string; id: string }) =>
         session.payment_status === "paid"
     );
 
-    if (found) {
-      return NextResponse.json({ verified: true });
+    if (paidSession) {
+      // Return a signed token so the client can store verified premium state
+      const token = signToken(paidSession.id, tokenSecret);
+      return NextResponse.json({ verified: true, token });
     }
 
     return NextResponse.json({

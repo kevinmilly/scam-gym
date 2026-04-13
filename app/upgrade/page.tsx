@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { isPremium, unlockPremium, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
+import { isPremium, unlockPremiumWithToken, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
 import { track } from "@/lib/analytics";
 import { Search, TrendingUp, Cpu, Sparkles, ChevronRight, Check, Target, Zap, Bookmark, Flame } from "lucide-react";
 
@@ -51,8 +51,8 @@ export default function UpgradePage() {
         body: JSON.stringify({ email: restoreEmail.trim() }),
       });
       const data = await res.json();
-      if (data.verified) {
-        unlockPremium();
+      if (data.verified && data.token) {
+        unlockPremiumWithToken(data.token);
         setPremium(true);
         setRestoreStatus("success");
         setRestoreMessage("Premium restored! All features are now unlocked.");

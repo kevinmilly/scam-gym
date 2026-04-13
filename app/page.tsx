@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useDrillContext, allDrills } from "@/lib/DrillContext";
 import { computeStats } from "@/lib/stats";
 import { tap } from "@/lib/haptics";
-import { unlockPremium, isPremium } from "@/lib/premium";
+import { unlockPremiumWithToken, isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
 import { getStreak, hasTrainedToday } from "@/lib/streak";
 import { getDailyChallengeDrill, getDailyChallengeState, secondsUntilMidnight, formatCountdown } from "@/lib/dailyChallenge";
@@ -52,14 +52,31 @@ function HomePageInner() {
   const [autopilotMsg, setAutopilotMsg] = useState<string | null>(null);
   const [countdown, setCountdown] = useState("");
 
-  // Handle premium activation via URL param (Stripe redirect)
+  // Handle premium activation via Stripe redirect (session_id param)
   useEffect(() => {
-    if (searchParams.get("premium") === "1" && !isPremium()) {
-      unlockPremium();
-      setPremiumJustActivated(true);
-      track("purchase_success");
-      // Clean URL
+    const sessionId = searchParams.get("session_id");
+    if (sessionId && sessionId.startsWith("cs_") && !isPremium()) {
+      // Clean the URL immediately so refreshing doesn't re-trigger
       window.history.replaceState({}, "", "/");
+      fetch("/api/unlock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId }),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.token) {
+            unlockPremiumWithToken(data.token);
+            setPremiumJustActivated(true);
+            track("purchase_success");
+          } else {
+            // Verification failed — don't unlock
+            console.warn("Premium verification failed:", data.error);
+          }
+        })
+        .catch(() => {
+          // Network error — don't unlock silently
+        });
     }
   }, [searchParams]);
 
@@ -67,7 +84,7 @@ function HomePageInner() {
     if (typeof window !== "undefined") {
       const onboarded = localStorage.getItem(ONBOARDED_KEY);
       const fromDrill = searchParams.get("from") === "drill";
-      if (onboarded && selectedContext && !fromDrill && searchParams.get("premium") !== "1") {
+      if (onboarded && selectedContext && !fromDrill && !searchParams.get("session_id")) {
         router.replace("/drill");
       } else {
         setChecked(true);
