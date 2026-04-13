@@ -8,9 +8,10 @@ import { computeStats } from "@/lib/stats";
 import { tap } from "@/lib/haptics";
 import { unlockPremium, isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
-import { getStreak } from "@/lib/streak";
+import { getStreak, hasTrainedToday } from "@/lib/streak";
+import { getDailyChallengeDrill, getDailyChallengeState, secondsUntilMidnight, formatCountdown } from "@/lib/dailyChallenge";
 import PremiumGate from "@/components/PremiumGate";
-import { Target, Brain, BarChart3, ShieldAlert, Flame, ChevronRight } from "lucide-react";
+import { Target, Brain, BarChart3, ShieldAlert, Flame, ChevronRight, Zap } from "lucide-react";
 
 const ONBOARDED_KEY = "scamgym_onboarded";
 
@@ -49,6 +50,7 @@ function HomePageInner() {
   const [premiumJustActivated, setPremiumJustActivated] = useState(false);
   const [demoAnswer, setDemoAnswer] = useState<null | "scam" | "legit">(null);
   const [autopilotMsg, setAutopilotMsg] = useState<string | null>(null);
+  const [countdown, setCountdown] = useState("");
 
   // Handle premium activation via URL param (Stripe redirect)
   useEffect(() => {
@@ -79,6 +81,14 @@ function HomePageInner() {
       }
     }
   }, [router, selectedContext, searchParams]);
+
+  // Countdown timer for daily challenge
+  useEffect(() => {
+    const tick = () => setCountdown(formatCountdown(secondsUntilMidnight()));
+    tick();
+    const interval = setInterval(tick, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   function handleStart() {
     // Skip context picker — default to "personal" if not already set.
@@ -274,13 +284,27 @@ function HomePageInner() {
               {(() => {
                 const streak = getStreak();
                 if (streak.current === 0) return null;
+                const trained = hasTrainedToday();
+                const atRisk = streak.current >= 2 && !trained;
+                // Scale flame size with streak: 16px base, up to 24px at 30+ days
+                const flameSize = Math.min(16 + Math.floor(streak.current / 5) * 2, 24);
                 return (
-                  <div
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
-                    style={{ background: "var(--warning-bg)", color: "var(--warning)" }}
-                  >
-                    <Flame size={16} strokeWidth={1.75} />
-                    <span>{streak.current}</span>
+                  <div className="flex flex-col items-end gap-1">
+                    <div
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
+                      style={{
+                        background: atRisk ? "rgba(239,68,68,0.12)" : "var(--warning-bg)",
+                        color: atRisk ? "var(--danger)" : "var(--warning)",
+                      }}
+                    >
+                      <Flame size={flameSize} strokeWidth={1.75} />
+                      <span>{streak.current}</span>
+                    </div>
+                    {atRisk && (
+                      <p className="text-xs font-semibold" style={{ color: "var(--danger)" }}>
+                        Streak at risk!
+                      </p>
+                    )}
                   </div>
                 );
               })()}
@@ -303,6 +327,53 @@ function HomePageInner() {
               </div>
               <ChevronRight size={16} strokeWidth={1.75} style={{ color: "var(--text-muted)", flexShrink: 0 }} />
             </Link>
+
+            {/* Daily Challenge */}
+            {(() => {
+              const challengeDrill = getDailyChallengeDrill(allDrills);
+              const challengeState = getDailyChallengeState();
+              const isCompleted = challengeState?.completed ?? false;
+              return (
+                <div
+                  className="card-base p-4 mb-6"
+                  style={{
+                    border: `1.5px solid ${isCompleted ? "var(--success)" : "var(--accent)"}`,
+                    background: isCompleted ? "rgba(34,197,94,0.06)" : "rgba(124,106,247,0.06)",
+                  }}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Zap size={16} strokeWidth={1.75} style={{ color: isCompleted ? "var(--success)" : "var(--accent)" }} />
+                      <span className="text-xs font-bold uppercase tracking-widest" style={{ color: isCompleted ? "var(--success)" : "var(--accent)" }}>
+                        Daily Challenge
+                      </span>
+                    </div>
+                    <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                      {isCompleted ? "Done ✓" : `Resets in ${countdown}`}
+                    </span>
+                  </div>
+                  <p className="text-sm font-semibold mb-1" style={{ color: "var(--text)" }}>
+                    {challengeDrill.pattern_family.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                  </p>
+                  <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
+                    {isCompleted ? "You completed today's challenge. Come back tomorrow!" : "2× XP bonus for completing this drill."}
+                  </p>
+                  {!isCompleted && (
+                    <button
+                      onClick={() => {
+                        tap();
+                        sessionStorage.setItem("dailyChallengeId", challengeDrill.id);
+                        router.push("/drill");
+                      }}
+                      className="w-full py-2.5 rounded-xl font-bold text-sm transition-all active:scale-95"
+                      style={{ background: "var(--accent)", color: "#fff" }}
+                    >
+                      Start Challenge →
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Recommended Focus (Adaptive) */}
             {attempts.length >= 5 && (() => {

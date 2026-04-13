@@ -31,6 +31,19 @@ export function getStreak(): StreakData {
   }
 }
 
+/** Returns true if the user has already drilled today. */
+export function hasTrainedToday(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = localStorage.getItem(STREAK_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw) as StreakData;
+    return data.lastDate === today();
+  } catch {
+    return false;
+  }
+}
+
 /** Call after completing a drill. Returns updated streak count. */
 export function updateStreak(): number {
   const streak = getStreak();

@@ -17,6 +17,7 @@ import { playCorrect, playIncorrect } from "@/lib/audio";
 import { track } from "@/lib/analytics";
 import { computePostDrillReward } from "@/lib/progression";
 import { allDrills } from "@/lib/DrillContext";
+import { completeDailyChallenge } from "@/lib/dailyChallenge";
 import { Loader2, ShieldAlert, ShieldCheck, Lock, Inbox, Check, X as XIcon } from "lucide-react";
 
 const CONFIDENCE_OPTIONS = [50, 60, 70, 85, 95];
@@ -149,13 +150,29 @@ export default function DrillPage() {
       recordAttempt(attempt);
 
       const allAttempts = [...contextAttempts, attempt];
-      const reward = computePostDrillReward(allAttempts, allDrills);
+      let reward = computePostDrillReward(allAttempts, allDrills);
+
+      // Apply 2× XP bonus for daily challenge
+      const dailyChallengeId = sessionStorage.getItem("dailyChallengeId");
+      const isDailyChallenge = dailyChallengeId === currentDrill!.id;
+      if (isDailyChallenge) {
+        completeDailyChallenge(currentDrill!.id);
+        sessionStorage.removeItem("dailyChallengeId");
+        const bonus = reward.xpBreakdown.total;
+        reward = {
+          ...reward,
+          xpBreakdown: { ...reward.xpBreakdown, total: reward.xpBreakdown.total + bonus },
+          totalXp: reward.totalXp + bonus,
+        };
+      }
 
       sessionStorage.removeItem("streakUpdated");
       sessionStorage.setItem("lastAttempt", JSON.stringify(attempt));
       sessionStorage.setItem("lastDrill", JSON.stringify(currentDrill));
       sessionStorage.setItem("calVerdict", calVerdict);
       sessionStorage.setItem("lastReward", JSON.stringify(reward));
+      if (isDailyChallenge) sessionStorage.setItem("isDailyChallenge", "1");
+      else sessionStorage.removeItem("isDailyChallenge");
       if (comparisonPair) {
         sessionStorage.setItem("comparisonPair", JSON.stringify(comparisonPair));
       }

@@ -1,6 +1,7 @@
 import type { Attempt, Drill } from "./types";
 import { calibrationVerdict } from "./scoring";
 import { familyLabel } from "./stats";
+import { getStreak } from "./streak";
 
 export type MedalCategory = "core" | "calibration" | "volume" | "pattern" | "special";
 
@@ -325,6 +326,43 @@ const SPECIAL_MEDALS: MedalDef[] = [
   },
 ];
 
+// ── Streak milestone medals ──────────────────────────────────────
+
+const STREAK_MEDALS: MedalDef[] = [
+  {
+    id: "streak_3",
+    name: "3-Day Habit",
+    emoji: "🔥",
+    category: "special",
+    description: "Train 3 days in a row",
+    evaluate: () => getStreak().current >= 3,
+  },
+  {
+    id: "streak_7",
+    name: "Week Warrior",
+    emoji: "🗓️",
+    category: "special",
+    description: "Train 7 days in a row",
+    evaluate: () => getStreak().current >= 7,
+  },
+  {
+    id: "streak_14",
+    name: "Two-Week Vigilante",
+    emoji: "⚡",
+    category: "special",
+    description: "Train 14 days in a row",
+    evaluate: () => getStreak().current >= 14,
+  },
+  {
+    id: "streak_30",
+    name: "Iron Habit",
+    emoji: "🏆",
+    category: "special",
+    description: "Train 30 days in a row",
+    evaluate: () => getStreak().current >= 30,
+  },
+];
+
 // ── All medals ───────────────────────────────────────────────────
 
 export const ALL_MEDALS: MedalDef[] = [
@@ -333,6 +371,7 @@ export const ALL_MEDALS: MedalDef[] = [
   ...VOLUME_MEDALS,
   ...FAMILY_MEDALS,
   ...SPECIAL_MEDALS,
+  ...STREAK_MEDALS,
 ];
 
 /** Evaluate all medals and return earned ones. */

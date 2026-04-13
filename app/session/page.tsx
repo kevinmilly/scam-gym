@@ -16,6 +16,7 @@ import { tap } from "@/lib/haptics";
 import { playCorrect, playIncorrect } from "@/lib/audio";
 import { track } from "@/lib/analytics";
 import { isPremium } from "@/lib/premium";
+import { isGated, incrementUsage, recordGateHit } from "@/lib/trial";
 import { familyLabel } from "@/lib/stats";
 import { Trophy, Share, ShieldAlert, ShieldCheck, Loader2 } from "lucide-react";
 
@@ -57,8 +58,9 @@ export default function SessionPage() {
 
   // Initialize or restore session
   useEffect(() => {
-    if (!isPremium()) {
-      router.replace("/");
+    if (!isPremium() && isGated("session")) {
+      recordGateHit("session");
+      router.replace("/upgrade");
       return;
     }
 
@@ -70,6 +72,8 @@ export default function SessionPage() {
       setSessionDrills(drills);
       setCurrentDrill(drills[existing.currentIndex] || null);
     } else {
+      // Track free session usage
+      if (!isPremium()) incrementUsage("session");
       // Build new session
       const contextPool = selectedContext
         ? allDrills.filter((d) => d.context === selectedContext)

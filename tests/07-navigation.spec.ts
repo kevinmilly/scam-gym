@@ -174,8 +174,8 @@ test.describe("Upgrade page", () => {
   test("upgrade page shows feature list and price", async ({ page }) => {
     await page.goto("/upgrade");
     await expect(page.getByText("Upgrade to Pro")).toBeVisible();
-    await expect(page.getByText("$2.99")).toBeVisible();
-    await expect(page.getByText("One-time purchase · No subscription")).toBeVisible();
+    await expect(page.getByText("$9.99")).toBeVisible();
+    await expect(page.getByText("One-time · No subscription · No account needed")).toBeVisible();
   });
 
   test("upgrade page shows Already purchased link for restore", async ({

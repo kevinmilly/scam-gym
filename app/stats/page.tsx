@@ -270,23 +270,69 @@ export default function StatsPage() {
           )}
         </div>
 
-        {/* Accuracy Trend (premium) */}
-        <PremiumGate label="Your Progress" pitch="See if you're actually getting better — or just getting lucky.">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
-              Your Progress
-            </p>
-            <div
-              className="rounded-2xl p-3 border"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              <TrendChart attempts={allAttempts} />
+        {/* Accuracy Trend — free users see first 7 points, rest blurred */}
+        {(() => {
+          const FREE_POINTS = 7;
+          const pro = isPremium();
+          const hasEnough = allAttempts.length >= 3;
+          if (!hasEnough) return null;
+
+          if (pro) {
+            return (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+                  Your Progress
+                </p>
+                <div className="rounded-2xl p-3 border" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+                  <TrendChart attempts={allAttempts} />
+                </div>
+                <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>How your accuracy has shifted over your recent drills</p>
+              </div>
+            );
+          }
+
+          // Free: show first FREE_POINTS data points, blur overlay if more exist
+          const overLimit = allAttempts.length > FREE_POINTS;
+          const freeAttempts = allAttempts.slice(0, FREE_POINTS);
+
+          return (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
+                Your Progress
+              </p>
+              <div className="relative rounded-2xl border overflow-hidden" style={{ background: "var(--surface)", borderColor: overLimit ? "var(--accent)" : "var(--border)" }}>
+                <div className="p-3" style={overLimit ? { filter: "blur(3px)", pointerEvents: "none" } : {}}>
+                  <TrendChart attempts={freeAttempts} />
+                </div>
+                {overLimit && (
+                  <div
+                    className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center"
+                    style={{ background: "rgba(0,0,0,0.55)" }}
+                  >
+                    <p className="text-sm font-bold" style={{ color: "#fff" }}>Your trend is growing</p>
+                    <p className="text-xs" style={{ color: "rgba(255,255,255,0.8)" }}>
+                      Unlock Pro to see your full accuracy trend across all {allAttempts.length} drills
+                    </p>
+                    <button
+                      onClick={() => router.push("/upgrade")}
+                      className="mt-1 px-5 py-2 rounded-full font-bold text-sm"
+                      style={{ background: "var(--accent)", color: "#fff" }}
+                    >
+                      Unlock Full Trend
+                    </button>
+                  </div>
+                )}
+              </div>
+              {!overLimit && (
+                <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+                  {FREE_POINTS - allAttempts.length > 0
+                    ? `${FREE_POINTS - allAttempts.length} more drills to see your full trend`
+                    : "Upgrade to track your trend beyond 7 drills"}
+                </p>
+              )}
             </div>
-            <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-              How your accuracy has shifted over your recent drills
-            </p>
-          </div>
-        </PremiumGate>
+          );
+        })()}
 
         {/* Insight summary */}
         {stats.insightSummary.length > 0 && (
@@ -637,14 +683,42 @@ export default function StatsPage() {
 
         {activeTab === "history" && <>
 
-        {/* Attempt History (premium) */}
-        <PremiumGate label="Attempt History" pitch="Browse and filter every drill you've attempted with full details.">
-          <AttemptHistory attempts={allAttempts} drills={drills} />
-        </PremiumGate>
+        {/* Attempt History — free users see last 5, rest gated */}
+        {(() => {
+          const FREE_HISTORY = 5;
+          const pro = isPremium();
+          const overLimit = !pro && allAttempts.length > FREE_HISTORY;
+          const visibleAttempts = pro ? allAttempts : allAttempts.slice(-FREE_HISTORY);
 
-        {/* Saved Drills (premium) */}
-        <PremiumGate label="Saved Drills" pitch="Bookmark drills on the result page to save them here for later review.">
-          {(() => {
+          return (
+            <div>
+              <AttemptHistory attempts={visibleAttempts} drills={drills} />
+              {overLimit && (
+                <div
+                  className="mt-3 rounded-2xl px-4 py-4 border text-center"
+                  style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+                >
+                  <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
+                    Showing your last {FREE_HISTORY} of {allAttempts.length} attempts
+                  </p>
+                  <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+                    Upgrade to see your full history with filters and search.
+                  </p>
+                  <button
+                    onClick={() => router.push("/upgrade")}
+                    className="px-5 py-2 rounded-full font-bold text-sm"
+                    style={{ background: "var(--accent)", color: "#fff" }}
+                  >
+                    Unlock Full History
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
+        {/* Saved Drills — free users can see up to 3 (enforced at bookmark time) */}
+        {(() => {
             const bookmarkIds = getBookmarks();
             if (bookmarkIds.length === 0) {
               return (
@@ -703,8 +777,7 @@ export default function StatsPage() {
                 </div>
               </div>
             );
-          })()}
-        </PremiumGate>
+        })()}
 
         </>}
       </div>

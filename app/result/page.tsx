@@ -17,10 +17,13 @@ import XpBar from "@/components/XpBar";
 import MedalToast from "@/components/MedalToast";
 import LevelUpOverlay from "@/components/LevelUpOverlay";
 import { updateStreak } from "@/lib/streak";
-import { isBookmarked, toggleBookmark } from "@/lib/bookmarks";
+import { isBookmarked, toggleBookmark, getBookmarks } from "@/lib/bookmarks";
 import { isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
 import { AlertTriangle, Eye, Lightbulb, Target, Zap, ShieldCheck, ShieldAlert, Check, X as XIcon, Bookmark, BookmarkCheck, ChevronDown, ChevronUp, ArrowRight, Sparkles } from "lucide-react";
+import { getLevelInfo } from "@/lib/xp";
+import { shouldShowInterstitial, dismissInterstitial, isGated, recordGateHit, TRIAL_LIMITS } from "@/lib/trial";
+import ConversionInterstitial from "@/components/ConversionInterstitial";
 
 type VerdictConfig = {
   label: string;
@@ -93,6 +96,9 @@ export default function ResultPage() {
   const [attemptCount, setAttemptCount] = useState(0);
   const [showFullBreakdown, setShowFullBreakdown] = useState(false);
   const [showAllTells, setShowAllTells] = useState(false);
+  const [displayedXp, setDisplayedXp] = useState(0);
+  const [showInterstitial, setShowInterstitial] = useState(false);
+  const [overallAccuracy, setOverallAccuracy] = useState(0.5);
   const revealedRef = useRef<HTMLDivElement>(null);
 
   type ContentFlag = {
@@ -136,9 +142,18 @@ export default function ResultPage() {
     });
 
     // Check attempt count for first-drill explainer and explanation gating
-    db.attempts.count().then((count) => {
+    db.attempts.toArray().then((all) => {
+      const count = all.length;
       if (count <= 1) setIsFirstDrill(true);
       setAttemptCount(count);
+      if (count > 0) {
+        const correctCount = all.filter((a) => a.isCorrect).length;
+        setOverallAccuracy(correctCount / count);
+      }
+      // Show conversion interstitial after 3s if conditions are met
+      if (shouldShowInterstitial(count)) {
+        setTimeout(() => setShowInterstitial(true), 3000);
+      }
     });
 
     const r = sessionStorage.getItem("lastReward");
@@ -146,6 +161,15 @@ export default function ResultPage() {
       const parsed = JSON.parse(r) as PostDrillReward;
       setReward(parsed);
       setXpBreakdown(parsed.xpBreakdown);
+      // Animate XP count-up
+      const target = parsed.xpBreakdown.total;
+      let current = 0;
+      const step = Math.ceil(target / 12);
+      const interval = setInterval(() => {
+        current = Math.min(current + step, target);
+        setDisplayedXp(current);
+        if (current >= target) clearInterval(interval);
+      }, 40);
       // Show medal toast after 500ms delay
       if (parsed.newMedals.length > 0) {
         setTimeout(() => setShowMedalToast(true), 500);
@@ -228,6 +252,55 @@ export default function ResultPage() {
   })();
   const correctIds = new Set(drill.correct_red_flag_ids);
 
+  // Personalized "just one more" nudge shown after reveal
+  function getNextDrillNudge(): string | null {
+    if (!reward) return null;
+    const { levelInfo } = reward;
+
+    // Nudge 1: close to leveling up
+    if (levelInfo.xpForNextLevel !== null) {
+      const xpNeeded = levelInfo.xpForNextLevel - levelInfo.currentXp;
+      if (xpNeeded <= 33) {
+        return `You need ${xpNeeded} more XP to reach ${
+          getLevelInfo(levelInfo.xpForNextLevel).title
+        } — one more drill could do it.`;
+      }
+    }
+
+    // Nudge 2: correct streak
+    const correctStreak = (() => {
+      const recentAttempts = ((): Attempt[] => {
+        try {
+          const stored = sessionStorage.getItem("recentAttempts");
+          return stored ? JSON.parse(stored) : [];
+        } catch { return []; }
+      })();
+      if (recentAttempts.length === 0) return 0;
+      let streak = 0;
+      for (let i = recentAttempts.length - 1; i >= 0; i--) {
+        if (recentAttempts[i].isCorrect) streak++;
+        else break;
+      }
+      return attempt!.isCorrect ? streak + 1 : 0;
+    })();
+    if (correctStreak >= 3) {
+      return `${correctStreak} correct in a row — can you make it ${correctStreak + 2}?`;
+    }
+
+    // Nudge 3: missed scam → train it
+    if (!attempt!.isCorrect && drill!.ground_truth === "scam") {
+      return "You missed that one. Train the same category to sharpen your instinct.";
+    }
+
+    // Nudge 4: early user encouragement
+    if (attemptCount < 10) {
+      return `${10 - attemptCount} more drills to unlock your Vulnerability Profile.`;
+    }
+
+    return null;
+  }
+  const nextDrillNudge = revealed ? getNextDrillNudge() : null;
+
   // SAFE/RISKY banner
   // "At risk" only when user missed a real scam (said legit on a scam).
   // Flagging a legit message as scam = overcautious, not dangerous.
@@ -309,20 +382,34 @@ export default function ResultPage() {
           ← Home
         </button>
         <div className="flex items-center gap-1">
-          {isPremium() && drill && (
-            <button
-              onClick={() => {
-                tap();
-                const result = toggleBookmark(drill.id);
-                if (result) track("bookmark_added", { drillId: drill.id });
-                setBookmarked(result);
-              }}
-              className="min-h-[44px] px-3 flex items-center text-lg"
-              aria-label={bookmarked ? "Remove bookmark" : "Bookmark this drill"}
-            >
-              {bookmarked ? <BookmarkCheck size={20} strokeWidth={1.75} style={{ color: "var(--accent)" }} /> : <Bookmark size={20} strokeWidth={1.75} />}
-            </button>
-          )}
+          {drill && (() => {
+            const bookmarkCount = getBookmarks().length;
+            const bookmarkGated = isGated("bookmarks", bookmarkCount) && !bookmarked;
+            return (
+              <button
+                onClick={() => {
+                  tap();
+                  if (bookmarkGated) {
+                    recordGateHit("bookmarks");
+                    track("upgrade_prompt_shown", { label: "bookmark_limit" });
+                    router.push("/upgrade");
+                    return;
+                  }
+                  const result = toggleBookmark(drill.id);
+                  if (result) track("bookmark_added", { drillId: drill.id });
+                  setBookmarked(result);
+                }}
+                className="min-h-[44px] px-3 flex items-center text-lg"
+                aria-label={bookmarked ? "Remove bookmark" : "Bookmark this drill"}
+                title={bookmarkGated ? `Free limit: ${TRIAL_LIMITS.bookmarks} bookmarks` : undefined}
+              >
+                {bookmarked
+                  ? <BookmarkCheck size={20} strokeWidth={1.75} style={{ color: "var(--accent)" }} />
+                  : <Bookmark size={20} strokeWidth={1.75} style={{ color: bookmarkGated ? "var(--text-muted)" : undefined }} />
+                }
+              </button>
+            );
+          })()}
           <button
             onClick={() => router.push("/stats")}
             className="min-h-[44px] px-3 flex items-center text-sm"
@@ -861,8 +948,13 @@ export default function ResultPage() {
         <div className="px-4 pt-4 pb-3 border-t" style={{ borderColor: "var(--border)" }}>
           <div className="flex items-center gap-2 mb-3">
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "var(--accent-subtle)", color: "var(--accent)" }}>
-              +{xpBreakdown.total} XP
+              +{displayedXp} XP
             </span>
+            {typeof window !== "undefined" && sessionStorage.getItem("isDailyChallenge") === "1" && (
+              <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "rgba(245,158,11,0.15)", color: "var(--warning)" }}>
+                ⚡ 2× Daily Challenge Bonus!
+              </span>
+            )}
           </div>
           {reward && <XpBar levelInfo={reward.levelInfo} animate />}
         </div>
@@ -874,13 +966,20 @@ export default function ResultPage() {
         style={{ background: "var(--background)", borderColor: "var(--border)" }}
       >
         {revealed ? (
-          <button
-            onClick={() => { tap(); router.push("/drill"); }}
-            className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
-            style={{ background: "var(--accent)", color: "#fff" }}
-          >
-            Next Drill →
-          </button>
+          <div className="space-y-2">
+            {nextDrillNudge && (
+              <p className="text-xs text-center font-medium px-2" style={{ color: "var(--text-muted)" }}>
+                {nextDrillNudge}
+              </p>
+            )}
+            <button
+              onClick={() => { tap(); router.push("/drill"); }}
+              className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
+              style={{ background: "var(--accent)", color: "#fff" }}
+            >
+              Next Drill →
+            </button>
+          </div>
         ) : explanationGated ? (
             /* Soft gate — show upsell instead of explanation on gated drills */
             <div className="space-y-3">
@@ -930,6 +1029,15 @@ export default function ResultPage() {
           )
         }
       </div>
+
+      {/* Conversion interstitial — shown once after 15+ drills + 2 gates hit */}
+      {showInterstitial && (
+        <ConversionInterstitial
+          totalAttempts={attemptCount}
+          accuracy={overallAccuracy}
+          onDismiss={() => { setShowInterstitial(false); }}
+        />
+      )}
     </div>
   );
 }
