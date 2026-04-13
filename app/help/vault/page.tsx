@@ -289,7 +289,7 @@ export default function VaultPage() {
 
             <input
               type="text"
-              placeholder="Name (e.g. Chase Bank)"
+              placeholder="Name (e.g. My Bank)"
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
               className="w-full px-3 py-2.5 rounded-xl text-sm border"

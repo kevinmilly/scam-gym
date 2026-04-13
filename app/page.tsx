@@ -166,9 +166,9 @@ function HomePageInner() {
                 className="rounded-xl px-4 py-3 mb-4"
                 style={{ background: "var(--surface-2)" }}
               >
-                <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>From: Amazon</p>
+                <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>From: MegaShop</p>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-                  &quot;Your account has been locked. Verify immediately: amaz0n-secure-login.com&quot;
+                  &quot;Your account has been locked. Verify immediately: megash0p-secure-login.com&quot;
                 </p>
               </div>
 
