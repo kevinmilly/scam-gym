@@ -31,7 +31,10 @@
       "Bash(grep -n '\"\"overconfident\"\"\\\\|\"\"underconfident\"\"' app/session/page.tsx app/stats/page.tsx lib/medals.ts)",
       "Bash(cd:*)",
       "WebFetch(domain:www.google.com)",
-      "WebFetch(domain:m3.material.io)"
+      "WebFetch(domain:m3.material.io)",
+      "Bash(mv /c/Users/jamik/kevinProjects/scam-gym/home_hero_scam_gym.png /c/Users/jamik/kevinProjects/scam-gym/public/home_hero_scam_gym.png)",
+      "Bash(mv /c/Users/jamik/kevinProjects/scam-gym/session_complete_scam_gym.png /c/Users/jamik/kevinProjects/scam-gym/public/session_complete_scam_gym.png)",
+      "Bash(mv /c/Users/jamik/kevinProjects/scam-gym/stats_empty_scam_gym.png /c/Users/jamik/kevinProjects/scam-gym/public/stats_empty_scam_gym.png)"
     ]
   }
 }

@@ -362,8 +362,8 @@ export default function DrillPage() {
           </div>
         </div>
 
-        {/* Behavior question */}
-        <div>
+        {/* Behavior question — only meaningful for standard/preview/spot_flag */}
+        {drillType !== "thread" && drillType !== "comparison" && <div>
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
             What would you actually do?
           </p>
@@ -400,7 +400,7 @@ export default function DrillPage() {
               );
             })}
           </div>
-        </div>
+        </div>}
       </div>
 
       {/* Sticky submit */}

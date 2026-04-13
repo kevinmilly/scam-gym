@@ -43,6 +43,19 @@ export function selectNextDrill(
       const pool = highDeception.length > 0 ? highDeception : unseen;
       return pool[Math.floor(Math.random() * pool.length)];
     }
+
+    // Within first 30 attempts: enforce format variety — no more than 3 back-to-back same type
+    if (attempts.length < 30 && attempts.length >= 3) {
+      const recentTypes = attempts.slice(-3).map((a) => a.drill_type ?? "standard");
+      const allSame = recentTypes.every((t) => t === recentTypes[0]);
+      if (allSame) {
+        const alt = unseen.filter((d) => (d.drill_type ?? "standard") !== recentTypes[0]);
+        if (alt.length > 0) {
+          return alt[Math.floor(Math.random() * alt.length)];
+        }
+      }
+    }
+
     // subsequent first-pass: pick random unseen drill
     return unseen[Math.floor(Math.random() * unseen.length)];
   }

@@ -474,6 +474,21 @@ export default function ResultPage() {
           );
         })()}
 
+        {/* Legit drill tip — fills white space and encourages breakdown */}
+        {!revealed && drill.ground_truth === "legit" && (
+          <div
+            className="rounded-2xl p-4 border"
+            style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--success)" }}>
+              Know what made this safe
+            </p>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              Scammers often mimic safe messages. Seeing what made this one legitimate helps you tell them apart.
+            </p>
+          </div>
+        )}
+
         {/* Scroll hint — visible before reveal */}
         {!revealed && drill.ground_truth === "scam" && drill.red_flags.length > 0 && (
           <div className="flex flex-col items-center gap-1 py-1" style={{ color: "var(--text-muted)" }}>
@@ -874,23 +889,23 @@ export default function ResultPage() {
                 style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
               >
                 <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
-                  You&apos;ve used your 3 free explanations for today
+                  You&apos;ve used your 3 free breakdowns for today
                 </p>
                 <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
-                  Upgrade to Pro for unlimited explanations, tells, and your full vulnerability profile.
+                  Pro unlocks unlimited breakdowns — see exactly which red flags appeared, which you caught, and which you missed. Plus your full vulnerability profile across all scam types.
                 </p>
                 <a
                   href="/upgrade"
                   className="inline-block px-5 py-2 rounded-full font-bold text-sm"
                   style={{ background: "var(--accent)", color: "#fff" }}
                 >
-                  Unlock Explanations
+                  Unlock Full Breakdowns
                 </a>
               </div>
               <button
                 onClick={() => { tap(); router.push("/drill"); }}
                 className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
-                style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
+                style={{ background: "var(--surface-2)", color: "var(--text)", border: "1px solid var(--border)", cursor: "pointer" }}
               >
                 Next Drill →
               </button>
@@ -902,7 +917,7 @@ export default function ResultPage() {
                 className="flex-1 py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
                 style={{ background: "var(--accent)", color: "#fff" }}
               >
-                See Explanation →
+                Show Full Picture
               </button>
               <button
                 onClick={() => { tap(); router.push("/drill"); }}
