@@ -33,6 +33,16 @@ export default function SettingsPage() {
     setThemeState(getTheme());
     setAudio(isAudioEnabled());
     setAnalytics(isAnalyticsEnabled());
+
+    // When Stripe completes in another tab, localStorage updates there.
+    // The storage event fires in THIS tab so we can reflect the unlock immediately.
+    function onStorage(e: StorageEvent) {
+      if (e.key === "scamgym_premium_token") {
+        setPremium(isPremium());
+      }
+    }
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
 
   function toggleSlowMode() {
