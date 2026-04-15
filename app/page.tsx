@@ -146,6 +146,8 @@ function HomePageInner() {
               <img
                 src="/home_hero_scam_gym.png"
                 alt="Shield protecting a phone from scams"
+                width={400}
+                height={180}
                 className="rounded-2xl object-cover"
                 style={{ height: 180, width: "100%" }}
               />
@@ -167,6 +169,7 @@ function HomePageInner() {
                   {["🧑", "👩", "👴", "👩‍💼", "🧓"].map((emoji, i) => (
                     <span
                       key={i}
+                      aria-hidden="true"
                       className="inline-flex items-center justify-center w-7 h-7 rounded-full text-sm border-2"
                       style={{ background: "var(--surface-2)", borderColor: "var(--background)" }}
                     >

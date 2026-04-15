@@ -15,18 +15,23 @@ export default function BottomSheet({ open, onClose, title, children }: BottomSh
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === "Escape") onClose();
+      };
+      window.addEventListener("keydown", handleEscape);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleEscape);
+      };
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  }, [open, onClose]);
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
+    <div className="fixed inset-0 z-50 flex items-end justify-center" role="dialog" aria-modal="true" aria-label={title ?? "Dialog"}>
       {/* Backdrop */}
       <div
         className="absolute inset-0 animate-fadeIn"
@@ -42,6 +47,7 @@ export default function BottomSheet({ open, onClose, title, children }: BottomSh
           background: "var(--surface)",
           maxHeight: "85dvh",
           overflow: "auto",
+          overscrollBehavior: "contain",
         }}
       >
         {/* Drag handle */}

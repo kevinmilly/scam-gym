@@ -15,6 +15,7 @@ import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
 import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
 import { Sparkles, Check, Sun, Moon } from "lucide-react";
+import AuthButton from "@/components/AuthButton";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -175,6 +176,9 @@ export default function SettingsPage() {
             </Link>
           </div>
         )}
+
+        {/* ── SIGN IN ── */}
+        <AuthButton />
 
         {/* ── TRAINING ── */}
         <div>

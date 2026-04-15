@@ -50,14 +50,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: "dark light" }}>
       <body className="antialiased">
         <SlowModeInit />
         <ThemeInit />
         <ServiceWorkerRegistration />
         <PostHogProvider>
           <DrillProvider>
-            <main className="min-h-dvh max-w-lg mx-auto pb-20">
+            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--accent)] focus:text-white focus:rounded-md focus:top-2 focus:left-2">
+              Skip to content
+            </a>
+            <main id="main-content" className="min-h-dvh max-w-lg mx-auto pb-20">
               {children}
             </main>
             <BottomNav />

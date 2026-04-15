@@ -179,6 +179,7 @@ export default function UpgradePage() {
                 href={STRIPE_PAYMENT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Unlock Pro for $9.99 — opens Stripe checkout in a new tab"
                 onClick={() => track("purchase_started")}
                 className="block w-full text-center py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
                 style={{ background: "var(--accent)", color: "#fff" }}
@@ -216,7 +217,9 @@ export default function UpgradePage() {
                   </p>
                   <input
                     type="email"
-                    placeholder="your@email.com"
+                    placeholder="your@email.com…"
+                    autoComplete="email"
+                    spellCheck={false}
                     value={restoreEmail}
                     onChange={(e) => setRestoreEmail(e.target.value)}
                     className="w-full px-3 py-2 rounded-xl text-sm border"

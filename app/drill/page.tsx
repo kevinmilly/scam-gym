@@ -224,7 +224,7 @@ export default function DrillPage() {
             className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
             style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
           >
-            <Lock size={14} strokeWidth={1.75} />
+            <Lock size={14} strokeWidth={1.75} aria-hidden="true" />
             <span>Simulated training message — never use any links or numbers shown</span>
           </div>
         )}
@@ -234,7 +234,7 @@ export default function DrillPage() {
           className="px-3 py-2 rounded-xl text-sm"
           style={{ background: "var(--surface-2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
         >
-          <Inbox size={16} strokeWidth={1.75} className="inline mr-1.5" /> <span>{currentDrill.framing ?? "This just hit your inbox. Scam or legit?"}</span>
+          <Inbox size={16} strokeWidth={1.75} className="inline mr-1.5" aria-hidden="true" /> <span>{currentDrill.framing ?? "This just hit your inbox. Scam or legit?"}</span>
         </div>
 
         {/* Message — varies by drill type */}
@@ -335,7 +335,7 @@ export default function DrillPage() {
                         : "var(--text)",
                     }}
                   >
-                    {isScam ? <><ShieldAlert size={20} strokeWidth={1.75} className="inline mr-1" /> Scam</> : <><ShieldCheck size={20} strokeWidth={1.75} className="inline mr-1" /> Legit</>}
+                    {isScam ? <><ShieldAlert size={20} strokeWidth={1.75} className="inline mr-1" aria-hidden="true" /> Scam</> : <><ShieldCheck size={20} strokeWidth={1.75} className="inline mr-1" aria-hidden="true" /> Legit</>}
                   </button>
                 );
               })}

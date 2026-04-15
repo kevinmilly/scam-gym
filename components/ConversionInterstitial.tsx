@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { dismissInterstitial } from "@/lib/trial";
 import { tap } from "@/lib/haptics";
@@ -14,6 +15,15 @@ type Props = {
 
 export default function ConversionInterstitial({ totalAttempts, accuracy, onDismiss }: Props) {
   const router = useRouter();
+
+  // Escape key dismisses
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleDismiss();
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, []);
   const pct = Math.round(accuracy * 100);
 
   // Describe improvement direction — if no prior data we just say overall
@@ -38,6 +48,9 @@ export default function ConversionInterstitial({ totalAttempts, accuracy, onDism
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Upgrade to Pro"
       style={{ background: "rgba(0,0,0,0.6)" }}
       onClick={handleDismiss}
     >
@@ -48,8 +61,8 @@ export default function ConversionInterstitial({ totalAttempts, accuracy, onDism
       >
         {/* Dismiss button */}
         <div className="flex justify-end">
-          <button onClick={handleDismiss} style={{ color: "var(--text-muted)" }}>
-            <X size={20} strokeWidth={1.75} />
+          <button onClick={handleDismiss} aria-label="Close" style={{ color: "var(--text-muted)" }}>
+            <X size={20} strokeWidth={1.75} aria-hidden="true" />
           </button>
         </div>
 
