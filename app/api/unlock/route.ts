@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 
 /**
  * POST /api/unlock
@@ -66,7 +67,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Session is paid — issue a signed token the client stores locally
+    // Session is paid — cache premium in Redis by email
+    const customerEmail = session.customer_details?.email;
+    if (customerEmail && process.env.KV_REST_API_URL) {
+      try {
+        const redis = new Redis({
+          url: process.env.KV_REST_API_URL,
+          token: process.env.KV_REST_API_TOKEN!,
+        });
+        await redis.set(
+          `premium:${customerEmail.toLowerCase().trim()}`,
+          { sessionId, unlockedAt: new Date().toISOString() },
+        );
+      } catch {
+        // Redis cache write failed — non-critical
+      }
+    }
+
+    // Issue a signed token the client stores locally
     const token = signToken(sessionId, tokenSecret);
     return NextResponse.json({ token });
   } catch {

@@ -15,7 +15,8 @@ import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
 import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
 import { Sparkles, Check, Sun, Moon } from "lucide-react";
-import AuthButton from "@/components/AuthButton";
+import dynamic from "next/dynamic";
+const AuthButton = dynamic(() => import("@/components/AuthButton"), { ssr: false });
 
 export default function SettingsPage() {
   const router = useRouter();

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createHmac } from "crypto";
+import { Redis } from "@upstash/redis";
 
 // This endpoint verifies a Stripe purchase by customer email and returns a signed token.
 // Set STRIPE_SECRET_KEY and PREMIUM_TOKEN_SECRET in your environment variables.
@@ -24,6 +25,25 @@ export async function POST(req: NextRequest) {
       { error: "Payment verification is not configured yet." },
       { status: 503 }
     );
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+
+  // Check Redis cache first (fast path)
+  if (process.env.KV_REST_API_URL) {
+    try {
+      const redis = new Redis({
+        url: process.env.KV_REST_API_URL,
+        token: process.env.KV_REST_API_TOKEN!,
+      });
+      const cached = await redis.get<{ sessionId: string }>(`premium:${normalizedEmail}`);
+      if (cached) {
+        const token = signToken(cached.sessionId, tokenSecret);
+        return NextResponse.json({ verified: true, token });
+      }
+    } catch {
+      // Redis check failed — fall through to Stripe
+    }
   }
 
   try {
@@ -56,7 +76,22 @@ export async function POST(req: NextRequest) {
     );
 
     if (paidSession) {
-      // Return a signed token so the client can store verified premium state
+      // Cache in Redis for faster future lookups
+      if (process.env.KV_REST_API_URL) {
+        try {
+          const redis = new Redis({
+            url: process.env.KV_REST_API_URL,
+            token: process.env.KV_REST_API_TOKEN!,
+          });
+          await redis.set(`premium:${normalizedEmail}`, {
+            sessionId: paidSession.id,
+            unlockedAt: new Date().toISOString(),
+          });
+        } catch {
+          // Cache write failed — non-critical
+        }
+      }
+
       const token = signToken(paidSession.id, tokenSecret);
       return NextResponse.json({ verified: true, token });
     }
