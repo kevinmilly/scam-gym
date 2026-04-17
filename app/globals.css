@@ -166,6 +166,25 @@ select:focus-visible {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
+/* ── Drill arrival entrance animations (per channel) ── */
+@keyframes drillArrivalBanner {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes drillArrivalEmail {
+  from { opacity: 0; transform: scale(0.985); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes drillArrivalPop {
+  0%   { opacity: 0; transform: scale(0.9); }
+  60%  { opacity: 1; transform: scale(1.015); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.drill-arrival-sms   { animation: drillArrivalBanner 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.drill-arrival-email { animation: drillArrivalEmail  0.36s ease-out both; }
+.drill-arrival-dm    { animation: drillArrivalPop    0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.drill-arrival-phone { animation: drillArrivalBanner 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

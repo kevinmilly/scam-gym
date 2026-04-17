@@ -14,6 +14,7 @@ import type { SessionState } from "@/lib/session";
 import type { Drill, Verdict, BehaviorChoice, Attempt } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { playCorrect, playIncorrect } from "@/lib/audio";
+import { fireDrillArrival, arrivalAnimationClass, isAlertsEnabled } from "@/lib/alerts";
 import { track } from "@/lib/analytics";
 import { isPremium } from "@/lib/premium";
 import { isGated, incrementUsage, recordGateHit } from "@/lib/trial";
@@ -99,6 +100,7 @@ export default function SessionPage() {
     setConfidence(null);
     setBehaviorChoice(null);
     setSubmitting(false);
+    if (currentDrill) fireDrillArrival(currentDrill.channel);
   }, [currentDrill?.id]);
 
   async function handleSubmit() {
@@ -397,7 +399,12 @@ export default function SessionPage() {
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-36 space-y-6">
-        <MessageCard drill={currentDrill} />
+        <div
+          key={currentDrill.id}
+          className={isAlertsEnabled() ? arrivalAnimationClass(currentDrill.channel) : undefined}
+        >
+          <MessageCard drill={currentDrill} />
+        </div>
 
         {/* Verdict */}
         <div>

@@ -14,6 +14,7 @@ import { saveAttempt } from "@/lib/db";
 import type { Verdict, BehaviorChoice, Drill } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { playCorrect, playIncorrect } from "@/lib/audio";
+import { fireDrillArrival, arrivalAnimationClass, isAlertsEnabled } from "@/lib/alerts";
 import { track } from "@/lib/analytics";
 import { computePostDrillReward } from "@/lib/progression";
 import { allDrills } from "@/lib/DrillContext";
@@ -74,6 +75,7 @@ export default function DrillPage() {
     setSubmitting(false);
     if (currentDrill) {
       track("drill_started", { drillId: currentDrill.id, patternFamily: currentDrill.pattern_family });
+      fireDrillArrival(currentDrill.channel);
     }
   }, [currentDrill?.id]);
 
@@ -237,24 +239,30 @@ export default function DrillPage() {
           <Inbox size={16} strokeWidth={1.75} className="inline mr-1.5" aria-hidden="true" /> <span>{currentDrill.framing ?? "This just hit your inbox. Scam or legit?"}</span>
         </div>
 
-        {/* Message — varies by drill type */}
-        {drillType === "preview" && (
-          <PreviewCard drill={currentDrill} />
-        )}
-        {drillType === "thread" && (
-          <ThreadCard drill={currentDrill} />
-        )}
-        {drillType === "comparison" && comparisonPair && (
-          <ComparisonLayout
-            drillA={comparisonPair.drillA}
-            drillB={comparisonPair.drillB}
-            selected={comparisonPick}
-            onSelect={setComparisonPick}
-          />
-        )}
-        {(drillType === "standard" || drillType === "spot_flag") && (
-          <MessageCard drill={currentDrill} />
-        )}
+        {/* Message — varies by drill type. Keyed by drill.id so the entrance
+            animation re-fires for each new drill. */}
+        <div
+          key={currentDrill.id}
+          className={isAlertsEnabled() ? arrivalAnimationClass(currentDrill.channel) : undefined}
+        >
+          {drillType === "preview" && (
+            <PreviewCard drill={currentDrill} />
+          )}
+          {drillType === "thread" && (
+            <ThreadCard drill={currentDrill} />
+          )}
+          {drillType === "comparison" && comparisonPair && (
+            <ComparisonLayout
+              drillA={comparisonPair.drillA}
+              drillB={comparisonPair.drillB}
+              selected={comparisonPick}
+              onSelect={setComparisonPick}
+            />
+          )}
+          {(drillType === "standard" || drillType === "spot_flag") && (
+            <MessageCard drill={currentDrill} />
+          )}
+        </div>
 
         {/* Spot the flag — shown after message for spot_flag drills */}
         {drillType === "spot_flag" && currentDrill.spot_flag_options && (

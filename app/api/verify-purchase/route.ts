@@ -4,6 +4,17 @@ import { Redis } from "@upstash/redis";
 
 // This endpoint verifies a Stripe purchase by customer email and returns a signed token.
 // Set STRIPE_SECRET_KEY and PREMIUM_TOKEN_SECRET in your environment variables.
+// ADMIN_EMAILS (comma-separated) grants premium without a Stripe purchase — used by the app owner.
+
+const DEFAULT_ADMIN_EMAILS = ["kevinmilly@gmail.com"];
+
+function getAdminEmails(): string[] {
+  const fromEnv = (process.env.ADMIN_EMAILS || "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+  return fromEnv.length > 0 ? fromEnv : DEFAULT_ADMIN_EMAILS;
+}
 
 function signToken(payload: string, secret: string): string {
   const sig = createHmac("sha256", secret).update(`premium:${payload}`).digest("hex");
@@ -20,7 +31,7 @@ export async function POST(req: NextRequest) {
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   const tokenSecret = process.env.PREMIUM_TOKEN_SECRET;
 
-  if (!stripeKey || !tokenSecret) {
+  if (!tokenSecret) {
     return NextResponse.json(
       { error: "Payment verification is not configured yet." },
       { status: 503 }
@@ -28,6 +39,19 @@ export async function POST(req: NextRequest) {
   }
 
   const normalizedEmail = email.trim().toLowerCase();
+
+  // Admin allowlist — grants premium without requiring a Stripe purchase.
+  if (getAdminEmails().includes(normalizedEmail)) {
+    const token = signToken(`cs_admin_${normalizedEmail.replace(/[^a-z0-9]/g, "_")}`, tokenSecret);
+    return NextResponse.json({ verified: true, token });
+  }
+
+  if (!stripeKey) {
+    return NextResponse.json(
+      { error: "Payment verification is not configured yet." },
+      { status: 503 }
+    );
+  }
 
   // Check Redis cache first (fast path)
   if (process.env.KV_REST_API_URL) {

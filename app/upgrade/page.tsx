@@ -187,7 +187,7 @@ export default function UpgradePage() {
                 Unlock Pro — {PREMIUM_PRICE}
               </a>
               <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                One-time · No subscription · No account needed
+                One-time · No subscription · Sign in to sync across devices
               </p>
               <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
                 Thousands of people are already training with Scam Gym. Pro helps you train smarter.

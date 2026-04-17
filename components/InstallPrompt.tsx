@@ -9,37 +9,89 @@ interface BeforeInstallPromptEvent extends Event {
 
 const DISMISSED_KEY = "scamgym_install_dismissed";
 
+// Module-level state so other components (e.g. Settings) can query & trigger the
+// same deferred prompt. The `beforeinstallprompt` event only fires once per page
+// load, so we capture it here and share it.
+let deferredPrompt: BeforeInstallPromptEvent | null = null;
+const listeners = new Set<() => void>();
+
+function notify() {
+  listeners.forEach((l) => l());
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e as BeforeInstallPromptEvent;
+    notify();
+  });
+  window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
+    notify();
+  });
+}
+
+export function hasInstallPrompt(): boolean {
+  return deferredPrompt !== null;
+}
+
+export async function triggerInstallPrompt(): Promise<"accepted" | "dismissed" | "unavailable"> {
+  if (!deferredPrompt) return "unavailable";
+  await deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === "accepted") {
+    deferredPrompt = null;
+    notify();
+  }
+  return outcome;
+}
+
+export function subscribeToInstallPrompt(cb: () => void): () => void {
+  listeners.add(cb);
+  return () => {
+    listeners.delete(cb);
+  };
+}
+
+export function isIOS(): boolean {
+  if (typeof window === "undefined") return false;
+  const ua = window.navigator.userAgent;
+  return /iPad|iPhone|iPod/.test(ua) && !("MSStream" in window);
+}
+
+export function isStandalone(): boolean {
+  if (typeof window === "undefined") return false;
+  if (window.matchMedia("(display-mode: standalone)").matches) return true;
+  return (window.navigator as unknown as { standalone?: boolean }).standalone === true;
+}
+
 export default function InstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
   const [visible, setVisible] = useState(false);
+  const [hasPrompt, setHasPrompt] = useState(false);
 
   useEffect(() => {
-    // Don't show if already dismissed, already installed, or in standalone mode
     if (localStorage.getItem(DISMISSED_KEY)) return;
-    if (window.matchMedia("(display-mode: standalone)").matches) return;
+    if (isStandalone()) return;
 
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-      // Small delay so it doesn't flash immediately on load
-      setTimeout(() => setVisible(true), 2000);
-    };
-
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    setHasPrompt(hasInstallPrompt());
+    const unsub = subscribeToInstallPrompt(() => setHasPrompt(hasInstallPrompt()));
+    return unsub;
   }, []);
 
-  if (!visible || !deferredPrompt) return null;
+  useEffect(() => {
+    if (!hasPrompt) {
+      setVisible(false);
+      return;
+    }
+    const t = setTimeout(() => setVisible(true), 2000);
+    return () => clearTimeout(t);
+  }, [hasPrompt]);
+
+  if (!visible || !hasPrompt) return null;
 
   async function handleInstall() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") {
-      setVisible(false);
-    }
-    setDeferredPrompt(null);
+    const outcome = await triggerInstallPrompt();
+    if (outcome === "accepted") setVisible(false);
   }
 
   function handleDismiss() {

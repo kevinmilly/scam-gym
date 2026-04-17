@@ -13,9 +13,17 @@ import { isPremium } from "@/lib/premium";
 import PremiumGate from "@/components/PremiumGate";
 import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
+import { isAlertsEnabled, setAlertsEnabled } from "@/lib/alerts";
 import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
-import { Sparkles, Check, Sun, Moon } from "lucide-react";
+import { Sparkles, Check, Sun, Moon, Share, Plus, Smartphone } from "lucide-react";
 import dynamic from "next/dynamic";
+import {
+  hasInstallPrompt,
+  triggerInstallPrompt,
+  subscribeToInstallPrompt,
+  isIOS,
+  isStandalone,
+} from "@/components/InstallPrompt";
 const AuthButton = dynamic(() => import("@/components/AuthButton"), { ssr: false });
 
 export default function SettingsPage() {
@@ -27,13 +35,21 @@ export default function SettingsPage() {
   const [premium, setPremium] = useState(false);
   const [theme, setThemeState] = useState<"dark" | "light">("dark");
   const [audio, setAudio] = useState(false);
+  const [alerts, setAlerts] = useState(true);
   const [analytics, setAnalytics] = useState(true);
+  const [installState, setInstallState] = useState<{
+    standalone: boolean;
+    canPrompt: boolean;
+    ios: boolean;
+  }>({ standalone: false, canPrompt: false, ios: false });
+  const [showIOSInstall, setShowIOSInstall] = useState(false);
 
   useEffect(() => {
     setSlowMode(localStorage.getItem("scamgym_slowmode") === "1");
     setPremium(isPremium());
     setThemeState(getTheme());
     setAudio(isAudioEnabled());
+    setAlerts(isAlertsEnabled());
     setAnalytics(isAnalyticsEnabled());
 
     // When Stripe completes in another tab, localStorage updates there.
@@ -44,8 +60,34 @@ export default function SettingsPage() {
       }
     }
     window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+
+    // Install state — updates when the browser fires beforeinstallprompt later.
+    setInstallState({ standalone: isStandalone(), canPrompt: hasInstallPrompt(), ios: isIOS() });
+    const unsubInstall = subscribeToInstallPrompt(() => {
+      setInstallState({ standalone: isStandalone(), canPrompt: hasInstallPrompt(), ios: isIOS() });
+    });
+
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      unsubInstall();
+    };
   }, []);
+
+  async function handleInstallClick() {
+    if (installState.ios) {
+      setShowIOSInstall(true);
+      return;
+    }
+    if (installState.canPrompt) {
+      const outcome = await triggerInstallPrompt();
+      if (outcome === "accepted") {
+        setInstallState((s) => ({ ...s, standalone: true, canPrompt: false }));
+        setStatus("App installed.");
+      }
+      return;
+    }
+    setStatus("Installation isn't available in this browser yet. Try Chrome, Edge, or open this site in Safari on iOS.");
+  }
 
   function toggleSlowMode() {
     const next = !slowMode;
@@ -99,6 +141,7 @@ export default function SettingsPage() {
       "scamgym_theme",
       "scamgym_sound_default",
       "scamgym_analytics_enabled",
+      "scamgym_alerts",
     ].forEach((k) => localStorage.removeItem(k));
     setConfirmReset(false);
     setStatus("All data reset.");
@@ -180,6 +223,56 @@ export default function SettingsPage() {
 
         {/* ── SIGN IN ── */}
         <AuthButton />
+
+        {/* ── INSTALL APP ── */}
+        {!installState.standalone && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+              App
+            </p>
+            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <div className="flex items-start gap-3 mb-3">
+                <Smartphone size={20} strokeWidth={1.75} style={{ color: "var(--accent)" }} />
+                <div className="flex-1">
+                  <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
+                    Install Scam Gym
+                  </p>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                    Add to your home screen for quick access. Works offline, feels like a regular app, no app store needed.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => { tap(); handleInstallClick(); }}
+                className="px-4 py-2 rounded-xl text-sm font-semibold"
+                style={{ background: "var(--accent)", color: "#fff" }}
+              >
+                {installState.ios ? "Show install steps" : installState.canPrompt ? "Install app" : "How to install"}
+              </button>
+
+              {showIOSInstall && installState.ios && (
+                <div
+                  className="mt-4 rounded-xl border px-3 py-3 text-xs leading-relaxed"
+                  style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--text-muted)" }}
+                >
+                  <p className="font-semibold mb-2" style={{ color: "var(--text)" }}>On iPhone / iPad (Safari):</p>
+                  <ol className="space-y-2 list-decimal pl-4">
+                    <li>
+                      Tap the <Share size={12} strokeWidth={2} className="inline mx-0.5" /> <strong>Share</strong> button at the bottom of Safari.
+                    </li>
+                    <li>
+                      Scroll down and tap <Plus size={12} strokeWidth={2} className="inline mx-0.5" /> <strong>Add to Home Screen</strong>.
+                    </li>
+                    <li>Tap <strong>Add</strong> in the top right.</li>
+                  </ol>
+                  <p className="mt-3" style={{ color: "var(--text-muted)" }}>
+                    If you&apos;re not in Safari, open <strong>scam-gym.vercel.app</strong> in Safari first — other iOS browsers don&apos;t support installing.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* ── TRAINING ── */}
         <div>
@@ -277,6 +370,21 @@ export default function SettingsPage() {
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
                   style={{ borderColor: audio ? "var(--accent)" : "var(--border)", background: audio ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: audio ? "var(--accent)" : "var(--text-muted)" }}>
                   {audio ? "ON" : "OFF"}
+                </button>
+              </div>
+            </div>
+
+            {/* Realistic alerts */}
+            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <div className="flex items-center justify-between">
+                <div className="pr-3">
+                  <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Realistic alerts</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>Chime, vibration, and banner animation when each drill arrives — matches the channel (SMS, email, DM).</p>
+                </div>
+                <button onClick={() => { tap(); const next = !alerts; setAlerts(next); setAlertsEnabled(next); }} role="switch" aria-checked={alerts}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150 shrink-0"
+                  style={{ borderColor: alerts ? "var(--accent)" : "var(--border)", background: alerts ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: alerts ? "var(--accent)" : "var(--text-muted)" }}>
+                  {alerts ? "ON" : "OFF"}
                 </button>
               </div>
             </div>
