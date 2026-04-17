@@ -43,7 +43,7 @@ type SessionSummaryData = {
 
 export default function SessionPage() {
   const router = useRouter();
-  const { attempts: contextAttempts, selectedContext, recordAttempt } = useDrillContext();
+  const { attempts: contextAttempts, recordAttempt } = useDrillContext();
 
   const [session, setSession] = useState<SessionState | null>(null);
   const [sessionDrills, setSessionDrills] = useState<Drill[]>([]);
@@ -75,11 +75,7 @@ export default function SessionPage() {
     } else {
       // Track free session usage
       if (!isPremium()) incrementUsage("session");
-      // Build new session
-      const contextPool = selectedContext
-        ? allDrills.filter((d) => d.context === selectedContext)
-        : allDrills;
-      const drills = buildSessionDrills(allDrills, contextAttempts, contextPool);
+      const drills = buildSessionDrills(allDrills, contextAttempts, allDrills);
       const newSession: SessionState = {
         drillIds: drills.map((d) => d.id),
         currentIndex: 0,
@@ -92,7 +88,7 @@ export default function SessionPage() {
       saveSession(newSession);
       track("session_started");
     }
-  }, [router, selectedContext, contextAttempts]);
+  }, [router, contextAttempts]);
 
   // Reset form when drill changes
   useEffect(() => {

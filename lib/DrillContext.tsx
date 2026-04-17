@@ -8,14 +8,13 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import type { Drill, Attempt, UserContext } from "./types";
+import type { Drill, Attempt } from "./types";
 import { selectNextDrill, isPoolExhausted } from "./drillEngine";
 import { getAllAttempts } from "./db";
 import drillsData from "@/data/drills.json";
 
 const allDrills = drillsData as Drill[];
 
-const CONTEXT_KEY = "scamgym_context";
 const FOCUS_KEY = "scamgym_focus_families";
 
 type DrillContextValue = {
@@ -23,8 +22,6 @@ type DrillContextValue = {
   nextDrill: Drill | null;
   attempts: Attempt[];
   poolExhausted: boolean;
-  selectedContext: UserContext | null;
-  setSelectedContext: (ctx: UserContext) => void;
   advance: () => void;
   recordAttempt: (a: Attempt) => void;
   refreshAttempts: () => Promise<void>;
@@ -40,24 +37,16 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [currentDrill, setCurrentDrill] = useState<Drill | null>(null);
   const [nextDrill, setNextDrill] = useState<Drill | null>(null);
-  const [selectedContext, setSelectedContextState] = useState<UserContext | null>(null);
   const [focusFamilies, setFocusFamiliesState] = useState<string[]>([]);
   const [focusLabel, setFocusLabel] = useState<string | null>(null);
   const attemptsRef = useRef<Attempt[]>([]);
 
-  // Load persisted context + focus on mount
+  // Load persisted focus on mount
   useEffect(() => {
-    const stored = localStorage.getItem(CONTEXT_KEY) as UserContext | null;
-    if (stored) setSelectedContextState(stored);
     try {
       const focus = localStorage.getItem(FOCUS_KEY);
       if (focus) setFocusFamiliesState(JSON.parse(focus));
     } catch { /* ignore */ }
-  }, []);
-
-  const setSelectedContext = useCallback((ctx: UserContext) => {
-    localStorage.setItem(CONTEXT_KEY, ctx);
-    setSelectedContextState(ctx);
   }, []);
 
   const setFocusFamilies = useCallback((families: string[]) => {
@@ -86,9 +75,8 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
     return pool;
   }, []);
 
-  // Re-initialize drill queue whenever context or focus changes
+  // Initialize drill queue on mount and whenever focus changes
   useEffect(() => {
-    if (!selectedContext) return;
     const pool = buildPool(focusFamilies);
     refreshAttempts().then(() => {
       const current = selectNextDrill(pool, attemptsRef.current);
@@ -96,7 +84,7 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
       setCurrentDrill(current);
       setNextDrill(next);
     });
-  }, [selectedContext, focusFamilies, refreshAttempts, buildPool]);
+  }, [focusFamilies, refreshAttempts, buildPool]);
 
   const advance = useCallback(() => {
     setCurrentDrill(nextDrill);
@@ -121,8 +109,6 @@ export function DrillProvider({ children }: { children: React.ReactNode }) {
         nextDrill,
         attempts,
         poolExhausted,
-        selectedContext,
-        setSelectedContext,
         advance,
         recordAttempt,
         refreshAttempts,

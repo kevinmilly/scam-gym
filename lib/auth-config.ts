@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Resend from "next-auth/providers/resend";
+import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter";
 import { Redis } from "@upstash/redis";
 
 const redis = new Redis({
@@ -45,6 +46,7 @@ async function checkPremiumByEmail(email: string): Promise<{ isPremium: boolean;
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  adapter: UpstashRedisAdapter(redis),
   providers: [
     Resend({
       from: "Scam Gym <noreply@scamgym.com>",

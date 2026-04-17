@@ -44,7 +44,7 @@ export default function HomePage() {
 function HomePageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { selectedContext, setSelectedContext, attempts, setFocusFamilies, setFocusLabel } = useDrillContext();
+  const { attempts, setFocusFamilies, setFocusLabel } = useDrillContext();
   const [checked, setChecked] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [premiumJustActivated, setPremiumJustActivated] = useState(false);
@@ -84,12 +84,11 @@ function HomePageInner() {
     if (typeof window !== "undefined") {
       const onboarded = localStorage.getItem(ONBOARDED_KEY);
       const fromDrill = searchParams.get("from") === "drill";
-      if (onboarded && selectedContext && !fromDrill && !searchParams.get("session_id")) {
+      if (onboarded && !fromDrill && !searchParams.get("session_id")) {
         router.replace("/drill");
       } else {
         setChecked(true);
-        if (!selectedContext) {
-          // Show welcome onboarding before context picker for brand-new users
+        if (!onboarded) {
           setShowOnboarding(true);
           track("landing_viewed", { isOnboarded: false });
         } else {
@@ -97,7 +96,7 @@ function HomePageInner() {
         }
       }
     }
-  }, [router, selectedContext, searchParams]);
+  }, [router, searchParams]);
 
   // Countdown timer for daily challenge
   useEffect(() => {
@@ -108,11 +107,6 @@ function HomePageInner() {
   }, []);
 
   function handleStart() {
-    // Skip context picker — default to "personal" if not already set.
-    // Context filtering is available later in Settings for users who want it.
-    if (!selectedContext) {
-      setSelectedContext("personal");
-    }
     localStorage.setItem(ONBOARDED_KEY, "1");
     router.push("/drill");
   }

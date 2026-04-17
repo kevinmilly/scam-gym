@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { exportData, importData, resetAllData } from "@/lib/db";
 import { useDrillContext, allDrills } from "@/lib/DrillContext";
 import { familyLabel } from "@/lib/stats";
-import { CONTEXT_LABELS, CONTEXT_DESCRIPTIONS } from "@/lib/contextFraming";
-import type { UserContext } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import Link from "next/link";
 import { isPremium } from "@/lib/premium";
@@ -15,7 +13,7 @@ import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
 import { isAlertsEnabled, setAlertsEnabled } from "@/lib/alerts";
 import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
-import { Sparkles, Check, Sun, Moon, Share, Plus, Smartphone } from "lucide-react";
+import { Sparkles, Sun, Moon, Share, Plus, Smartphone } from "lucide-react";
 import dynamic from "next/dynamic";
 import {
   hasInstallPrompt,
@@ -28,7 +26,7 @@ const AuthButton = dynamic(() => import("@/components/AuthButton"), { ssr: false
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { selectedContext, setSelectedContext, focusFamilies, setFocusFamilies, setFocusLabel } = useDrillContext();
+  const { focusFamilies, setFocusFamilies, setFocusLabel } = useDrillContext();
   const [status, setStatus] = useState<string | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
   const [slowMode, setSlowMode] = useState(false);
@@ -133,7 +131,6 @@ export default function SettingsPage() {
     await resetAllData();
     [
       "scamgym_onboarded",
-      "scamgym_context",
       "scamgym_streak",
       "scamgym_bookmarks",
       "scamgym_focus_families",
@@ -280,30 +277,6 @@ export default function SettingsPage() {
             Training
           </p>
           <div className="space-y-3">
-            {/* Context mode */}
-            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
-              <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>Training Mode</p>
-              <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>Only drills matching your selected mode are shown.</p>
-              <div className="space-y-2">
-                {(Object.keys(CONTEXT_LABELS) as UserContext[]).map((ctx) => {
-                  const selected = selectedContext === ctx;
-                  return (
-                    <button key={ctx} onClick={() => setSelectedContext(ctx)}
-                      className="w-full text-left rounded-xl border px-3 py-3 transition-all"
-                      style={{ borderColor: selected ? "var(--accent)" : "var(--border)", background: selected ? "rgba(124,106,247,0.08)" : "var(--surface-2)" }}>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>{CONTEXT_LABELS[ctx]}</span>
-                          <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{CONTEXT_DESCRIPTIONS[ctx]}</p>
-                        </div>
-                        {selected && <Check size={16} strokeWidth={2.5} className="ml-2" style={{ color: "var(--accent)" }} />}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Focus Training (premium) */}
             <PremiumGate label="Focus Training" pitch="Pick specific scam families to drill until you master them.">
               <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
