@@ -8,6 +8,7 @@ import { computeStats } from "@/lib/stats";
 import { getCurrentTier } from "@/lib/drillEngine";
 import { tap } from "@/lib/haptics";
 import { unlockPremiumWithToken, isPremium } from "@/lib/premium";
+import { syncPremiumToFirestore } from "@/lib/auth";
 import { track } from "@/lib/analytics";
 import { getStreak, hasTrainedToday } from "@/lib/streak";
 import { getDailyChallengeDrill, getDailyChallengeState, secondsUntilMidnight, formatCountdown } from "@/lib/dailyChallenge";
@@ -70,6 +71,10 @@ function HomePageInner() {
             unlockPremiumWithToken(data.token);
             setPremiumJustActivated(true);
             track("purchase_success");
+            // If signed in, persist to Firestore so other devices see the unlock
+            syncPremiumToFirestore(sessionId).catch(() => {
+              // Non-critical — local unlock still works
+            });
           } else {
             // Verification failed — don't unlock
             console.warn("Premium verification failed:", data.error);

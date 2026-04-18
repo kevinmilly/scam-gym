@@ -7,7 +7,6 @@ import PostHogProvider from "@/components/PostHogProvider";
 import ServiceWorkerRegistration from "@/lib/ServiceWorkerRegistration";
 import InstallPrompt from "@/components/InstallPrompt";
 import BottomNav from "@/components/BottomNav";
-import SessionWrapper from "@/components/SessionWrapper";
 
 export const metadata: Metadata = {
   title: "Scam Gym",
@@ -56,7 +55,6 @@ export default function RootLayout({
         <SlowModeInit />
         <ThemeInit />
         <ServiceWorkerRegistration />
-        <SessionWrapper>
         <PostHogProvider>
           <DrillProvider>
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--accent)] focus:text-white focus:rounded-md focus:top-2 focus:left-2">
@@ -69,7 +67,6 @@ export default function RootLayout({
             <InstallPrompt />
           </DrillProvider>
         </PostHogProvider>
-        </SessionWrapper>
       </body>
     </html>
   );

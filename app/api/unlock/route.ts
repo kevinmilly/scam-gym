@@ -1,17 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
+import { createHmac } from "crypto";
 
 /**
  * POST /api/unlock
  *
  * Verifies a Stripe Checkout session ID and returns a signed unlock token.
  * The client stores this token and presents it whenever isPremium() is checked.
- *
- * Body: { sessionId: string }
- * Response: { token: string } | { error: string }
+ * Cross-device sync is handled client-side via Firestore (see lib/auth.ts).
  */
-
-import { createHmac } from "crypto";
 
 function signToken(sessionId: string, secret: string): string {
   const payload = `premium:${sessionId}`;
@@ -43,7 +39,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Fetch the session directly from Stripe by ID
     const res = await fetch(
       `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`,
       {
@@ -67,24 +62,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Session is paid — cache premium in Redis by email
-    const customerEmail = session.customer_details?.email;
-    if (customerEmail && process.env.KV_REST_API_URL) {
-      try {
-        const redis = new Redis({
-          url: process.env.KV_REST_API_URL,
-          token: process.env.KV_REST_API_TOKEN!,
-        });
-        await redis.set(
-          `premium:${customerEmail.toLowerCase().trim()}`,
-          { sessionId, unlockedAt: new Date().toISOString() },
-        );
-      } catch {
-        // Redis cache write failed — non-critical
-      }
-    }
-
-    // Issue a signed token the client stores locally
     const token = signToken(sessionId, tokenSecret);
     return NextResponse.json({ token });
   } catch {

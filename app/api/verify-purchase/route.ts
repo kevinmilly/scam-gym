@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createHmac } from "crypto";
-import { Redis } from "@upstash/redis";
 
-// This endpoint verifies a Stripe purchase by customer email and returns a signed token.
+// Verify a Stripe purchase by customer email and return a signed unlock token.
 // Set STRIPE_SECRET_KEY and PREMIUM_TOKEN_SECRET in your environment variables.
-// ADMIN_EMAILS (comma-separated) grants premium without a Stripe purchase — used by the app owner.
+// ADMIN_EMAILS (comma-separated) grants premium without a Stripe purchase.
 
 const DEFAULT_ADMIN_EMAILS = ["kevinmilly@gmail.com"];
 
@@ -40,7 +39,6 @@ export async function POST(req: NextRequest) {
 
   const normalizedEmail = email.trim().toLowerCase();
 
-  // Admin allowlist — grants premium without requiring a Stripe purchase.
   if (getAdminEmails().includes(normalizedEmail)) {
     const token = signToken(`cs_admin_${normalizedEmail.replace(/[^a-z0-9]/g, "_")}`, tokenSecret);
     return NextResponse.json({ verified: true, token });
@@ -53,27 +51,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Check Redis cache first (fast path)
-  if (process.env.KV_REST_API_URL) {
-    try {
-      const redis = new Redis({
-        url: process.env.KV_REST_API_URL,
-        token: process.env.KV_REST_API_TOKEN!,
-      });
-      const cached = await redis.get<{ sessionId: string }>(`premium:${normalizedEmail}`);
-      if (cached) {
-        const token = signToken(cached.sessionId, tokenSecret);
-        return NextResponse.json({ verified: true, token });
-      }
-    } catch {
-      // Redis check failed — fall through to Stripe
-    }
-  }
-
   try {
-    // Search Stripe for completed checkout sessions with this email
     const params = new URLSearchParams({
-      "customer_details[email]": email.trim().toLowerCase(),
+      "customer_details[email]": normalizedEmail,
       limit: "5",
     });
 
@@ -100,22 +80,6 @@ export async function POST(req: NextRequest) {
     );
 
     if (paidSession) {
-      // Cache in Redis for faster future lookups
-      if (process.env.KV_REST_API_URL) {
-        try {
-          const redis = new Redis({
-            url: process.env.KV_REST_API_URL,
-            token: process.env.KV_REST_API_TOKEN!,
-          });
-          await redis.set(`premium:${normalizedEmail}`, {
-            sessionId: paidSession.id,
-            unlockedAt: new Date().toISOString(),
-          });
-        } catch {
-          // Cache write failed — non-critical
-        }
-      }
-
       const token = signToken(paidSession.id, tokenSecret);
       return NextResponse.json({ verified: true, token });
     }
