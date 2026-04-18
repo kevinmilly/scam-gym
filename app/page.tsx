@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useDrillContext, allDrills } from "@/lib/DrillContext";
 import { computeStats } from "@/lib/stats";
+import { getCurrentTier } from "@/lib/drillEngine";
 import { tap } from "@/lib/haptics";
 import { unlockPremiumWithToken, isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
@@ -323,6 +324,33 @@ function HomePageInner() {
                 );
               })()}
             </div>
+
+            {/* Tier chip — shows once user is past warmup */}
+            {attempts.length >= 5 && (() => {
+              const tier = getCurrentTier(attempts);
+              const pct = tier.tier / 5;
+              return (
+                <div className="mb-5">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--accent)" }}>
+                      Tier {tier.tier} / 5 · {tier.title}
+                    </span>
+                    <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                      {tier.tier < 5 ? "Accuracy climbs the ladder" : "Max tier — keep it up"}
+                    </span>
+                  </div>
+                  <div
+                    className="h-1.5 rounded-full overflow-hidden"
+                    style={{ background: "var(--surface-2)" }}
+                  >
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{ width: `${pct * 100}%`, background: "var(--accent)" }}
+                    />
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Panic card — top priority, high intent users */}
             <Link

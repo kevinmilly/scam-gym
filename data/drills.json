@@ -44321,5 +44321,1141 @@
       "callback_number",
       "lookalike_domain"
     ]
+  },
+  {
+    "id": "email_bank_legit_004_t5",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BluePeak Bank",
+      "from_handle": "wires@bluepeak.com",
+      "subject": "Wire confirmation — reference WR-4419823",
+      "body": "Hello Maria,\n\nThis is confirmation of the outgoing wire you initiated today at 10:42 AM ET.\n\nAmount: $38,250.00\nBeneficiary: CLOSING ESCROW (last 4: 7712)\nReference: WR-4419823\n\nIf you did NOT initiate this wire, call the number on the back of your BluePeak debit card within 24 hours. Do not reply to this email; this mailbox is not monitored.\n\nBluePeak Wire Operations"
+    },
+    "red_flags": [
+      {
+        "id": "large_dollar_figure",
+        "label": "Large dollar amount"
+      },
+      {
+        "id": "urgency_timer",
+        "label": "24-hour response window"
+      },
+      {
+        "id": "transaction_you_initiated",
+        "label": "References a transaction"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legitimate wire confirmation — matches something you actually did, directs you to the back-of-card number, no link to click.",
+      "tells": [
+        "Sender domain matches the bank exactly — not a lookalike",
+        "No login link or 'click here to cancel' — asks you to call the number on your own card",
+        "Large dollar amounts legitimately trigger 24-hour review windows at banks",
+        "References a specific reference number and escrow beneficiary — the kind of detail an attacker usually can't fake"
+      ],
+      "safe_move": "If you did initiate this wire, no action needed. If not, call the number printed on the back of your card — never a number from the email itself.",
+      "consequence": "No risk from reading this email. If the wire was unauthorized, a fast callback can still claw it back within the bank's recovery window.",
+      "behavioral_reinforcement": "Large-dollar urgency from a bank is a red flag only when the sender domain, the callback channel, or both look off. A matching domain + back-of-card callback is the legit shape."
+    },
+    "tags": [
+      "bank",
+      "wire",
+      "legit",
+      "bluepeak",
+      "high-stakes"
+    ],
+    "green_flags": [
+      {
+        "id": "sender_matches_official_domain",
+        "label": "Sender address matches bank domain"
+      },
+      {
+        "id": "no_embedded_call_link",
+        "label": "No embedded phone number or link"
+      },
+      {
+        "id": "references_card_back_number",
+        "label": "Directs you to number on back of card"
+      },
+      {
+        "id": "specific_reference_number",
+        "label": "Includes reference number you can verify in online banking"
+      }
+    ]
+  },
+  {
+    "id": "sms_delivery_legit_003_t5",
+    "channel": "sms",
+    "pattern_family": "package_delivery",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NationPost",
+      "from_handle": "47832",
+      "subject": null,
+      "body": "NationPost: Delivery attempted for pkg 9412 711X 6899. No one home. Reschedule free in the app or at nationpost.com/reschedule. Reply STOP to opt out."
+    },
+    "red_flags": [
+      {
+        "id": "link_in_sms",
+        "label": "Link in a text message"
+      },
+      {
+        "id": "delivery_issue_pattern",
+        "label": "Delivery-issue pattern (common scam)"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Real carrier reschedule message — from the carrier's real short code, with the carrier's actual domain and no urgency or fee.",
+      "tells": [
+        "Sender is a 5-digit short code (47832), not a random 10-digit number",
+        "Domain is the carrier's real root domain (nationpost.com), not a hyphenated lookalike like nationpost-reschedule.com",
+        "No fee, no urgency timer, and no demand for personal info — just 'use the app or website'",
+        "Includes a STOP opt-out, which is a legal requirement for legit US business SMS"
+      ],
+      "safe_move": "If you're expecting a package, open the carrier's app (not the link) and reschedule there. That avoids link-sniffing entirely and verifies the notice independently.",
+      "consequence": "No risk if you use the app. Clicking the link in this specific message is also safe because the domain matches, but the app-first habit makes you immune to lookalike scams.",
+      "behavioral_reinforcement": "Short-code sender + real root domain + STOP opt-out = legit carrier pattern. Train yourself to check those three."
+    },
+    "tags": [
+      "delivery",
+      "carrier",
+      "legit",
+      "nationpost"
+    ],
+    "green_flags": [
+      {
+        "id": "short_code_sender",
+        "label": "Sent from 5-digit short code"
+      },
+      {
+        "id": "real_root_domain",
+        "label": "Root domain matches carrier"
+      },
+      {
+        "id": "stop_opt_out",
+        "label": "Includes STOP opt-out"
+      },
+      {
+        "id": "no_fee_or_urgency",
+        "label": "No fee, no urgency timer"
+      }
+    ]
+  },
+  {
+    "id": "email_acct_verify_legit_004_t5",
+    "channel": "email",
+    "pattern_family": "account_verification",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Helix IT",
+      "from_handle": "it-notify@helix-corp.com",
+      "subject": "Your Helix password expires in 48 hours",
+      "body": "Hi Devon,\n\nYour Helix network password expires on Friday at 5:00 PM.\n\nRotate it before then via single sign-on at sso.helix-corp.com/account. You'll be redirected through the standard Okta flow and prompted for MFA.\n\nIf you've rotated recently and think this is a mistake, reply to this email or ping #it-help in Slack.\n\n— Helix IT"
+    },
+    "red_flags": [
+      {
+        "id": "urgency_timer",
+        "label": "48-hour deadline"
+      },
+      {
+        "id": "password_reset_prompt",
+        "label": "Asks you to rotate credentials"
+      },
+      {
+        "id": "link_in_email",
+        "label": "Clickable link"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit internal IT notice — sender matches company domain, sends you through the real SSO flow with MFA, offers a human-verifiable channel (Slack, reply-to).",
+      "tells": [
+        "From-address domain matches the company's domain exactly",
+        "Link goes to sso.helix-corp.com (the company's real SSO subdomain) — not a lookalike like helix-corp-sso.com",
+        "Mentions the real MFA flow rather than asking for the password in the email",
+        "Offers a known secondary channel (Slack #it-help) for verification"
+      ],
+      "safe_move": "Instead of clicking the link, open your browser and type the SSO URL directly, or launch it from your company bookmark. Both lead to the same place and remove any lookalike-domain risk.",
+      "consequence": "Ignoring this legitimately will lock your account at password expiry. Reporting it as phishing wastes IT time but causes no damage.",
+      "behavioral_reinforcement": "Legit password-expiry emails go through SSO and mention MFA. A scam version would ask you to enter your current password directly or send you to a lookalike domain."
+    },
+    "tags": [
+      "workplace",
+      "it",
+      "password",
+      "legit",
+      "sso"
+    ],
+    "green_flags": [
+      {
+        "id": "internal_domain_match",
+        "label": "Sender matches company domain"
+      },
+      {
+        "id": "sso_redirect",
+        "label": "Uses SSO flow with MFA"
+      },
+      {
+        "id": "secondary_verification_channel",
+        "label": "Offers Slack/reply as verification"
+      },
+      {
+        "id": "real_subdomain",
+        "label": "Link uses real company subdomain"
+      }
+    ]
+  },
+  {
+    "id": "dm_job_legit_001_t5",
+    "channel": "dm",
+    "pattern_family": "job_seeker",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "job_seeker",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Priya R.",
+      "from_handle": "@priya.r.recruiter",
+      "subject": null,
+      "body": "Hey — following up on your application for the Senior Backend role at Ledgerly from March 14. The hiring manager would like a 30-min intro call this week. Here's my calendar: ledgerly.com/careers/priya-r. No take-home, no prep needed — just a chat. Let me know if you'd rather we find another time."
+    },
+    "red_flags": [
+      {
+        "id": "link_from_dm",
+        "label": "Link sent in DM"
+      },
+      {
+        "id": "unsolicited_message",
+        "label": "Direct-messaged by someone you don't know personally"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit recruiter follow-up — references a specific application you actually submitted, scheduling link uses the company's real domain, no payment or personal info asks.",
+      "tells": [
+        "References a specific role and application date — the kind of detail only an internal recruiter has access to",
+        "Scheduling link is on the company's real careers subdomain, not a third-party form",
+        "No request for bank info, SSN, 'onboarding fee,' or gift cards — the usual job-scam tells are all absent",
+        "Tone is casual and no-pressure — 'just a chat' contradicts the urgency scammers rely on"
+      ],
+      "safe_move": "Verify by searching the recruiter on the company's careers page or LinkedIn before scheduling. If the match checks out, book the call through the link.",
+      "consequence": "No risk. A legit intro call is how most hires start — declining out of caution could cost you a real opportunity.",
+      "behavioral_reinforcement": "Real recruiters reference specific applications and use company domains. Fake ones invent generic roles, rush you, and ask for money or personal data upfront."
+    },
+    "tags": [
+      "job",
+      "recruiter",
+      "legit",
+      "ledgerly"
+    ],
+    "green_flags": [
+      {
+        "id": "references_specific_application",
+        "label": "Mentions specific role and date you applied"
+      },
+      {
+        "id": "company_domain_scheduling",
+        "label": "Scheduling link on company's real domain"
+      },
+      {
+        "id": "no_payment_ask",
+        "label": "No fee, bank info, or SSN request"
+      },
+      {
+        "id": "no_urgency",
+        "label": "No pressure to book immediately"
+      }
+    ]
+  },
+  {
+    "id": "email_invoice_legit_005_t5",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Jordan at Finchley CPA",
+      "from_handle": "jordan@finchleycpa.com",
+      "subject": "Your 2025 tax docs — secure upload link",
+      "body": "Hi Sam,\n\nTime to get your 2025 returns rolling. I've set up your folder in our secure portal.\n\nUpload your W-2s, 1099s, and the business mileage log here: portal.finchleycpa.com/u/sam-k-2025\n\nThe portal requires your email + a one-time code — same flow as last year. If you have questions, reply to this email or call the office at the number on my card.\n\nJordan"
+    },
+    "red_flags": [
+      {
+        "id": "document_upload_request",
+        "label": "Asks you to upload sensitive docs"
+      },
+      {
+        "id": "link_in_email",
+        "label": "Contains a link"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legitimate CPA message — ongoing relationship, real firm subdomain, references the exact auth flow used previously.",
+      "tells": [
+        "Sender domain matches the CPA firm's real domain",
+        "Portal link uses the firm's real subdomain (portal.finchleycpa.com), not a hosted form on a third-party domain",
+        "Mentions 'same flow as last year' — establishes continuity with a prior legit interaction",
+        "Offers multiple verification paths (reply-to, phone on card)"
+      ],
+      "safe_move": "Confirm by calling the number on Jordan's business card (not a number in the email). Once verified, use the portal.",
+      "consequence": "No risk if the portal is real (it is). A 'swap this invoice for a new bank account' email would be the scam version — this is the opposite.",
+      "behavioral_reinforcement": "Legit CPAs use their own firm's portal with MFA. Scammers impersonating CPAs push you to generic file-sharing links or ask you to wire fees to a new account."
+    },
+    "tags": [
+      "tax",
+      "cpa",
+      "legit",
+      "finchley"
+    ],
+    "green_flags": [
+      {
+        "id": "firm_subdomain",
+        "label": "Portal on firm's real subdomain"
+      },
+      {
+        "id": "mfa_flow",
+        "label": "Uses MFA same as prior year"
+      },
+      {
+        "id": "ongoing_relationship",
+        "label": "References existing client relationship"
+      },
+      {
+        "id": "multiple_verification_paths",
+        "label": "Offers phone/reply verification"
+      }
+    ]
+  },
+  {
+    "id": "sms_acct_verify_legit_002_t5",
+    "channel": "sms",
+    "pattern_family": "account_verification",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "family_safety",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "MetroHealth",
+      "from_handle": "83919",
+      "subject": null,
+      "body": "MetroHealth: Reminder — Dr. Chen on Thu Mar 20, 2:15 PM. Reply C to confirm, R to reschedule, or tap metrohealth.org/mychart to message the office. STOP to opt out."
+    },
+    "red_flags": [
+      {
+        "id": "link_in_sms",
+        "label": "Link in a text message"
+      },
+      {
+        "id": "healthcare_reference",
+        "label": "References medical info"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legitimate appointment reminder — short code sender, real domain, multiple response paths (including non-link ones), no request for personal or payment info.",
+      "tells": [
+        "Short-code sender (83919) with a recognizable hospital system name",
+        "Domain is metrohealth.org, the hospital's real root domain — not metrohealth-mychart.com or similar",
+        "Offers a keyword response (C/R) — you never need to click anything if you don't want to",
+        "No request for date of birth, SSN, or payment info in the text"
+      ],
+      "safe_move": "Reply C to confirm or open MyChart in your own bookmark. Avoid clicking the link even though it's legit — the habit matters more than this one message.",
+      "consequence": "No risk. Missing the reminder might cost you a visit; clicking the link here is fine but sets a habit that could hurt you against a lookalike later.",
+      "behavioral_reinforcement": "Healthcare reminders use short codes, real root domains, and keyword replies. If a 'reminder' asks for DOB, SSN, or a copay payment link, that's the scam version."
+    },
+    "tags": [
+      "healthcare",
+      "appointment",
+      "legit",
+      "metrohealth"
+    ],
+    "green_flags": [
+      {
+        "id": "short_code_sender",
+        "label": "Sent from short code"
+      },
+      {
+        "id": "real_root_domain",
+        "label": "Real hospital domain"
+      },
+      {
+        "id": "keyword_reply_path",
+        "label": "Offers no-link reply path"
+      },
+      {
+        "id": "no_personal_info_ask",
+        "label": "Does not request DOB/SSN/payment"
+      }
+    ]
+  },
+  {
+    "id": "email_bank_legit_005_t5",
+    "channel": "email",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "BluePeak Mortgage Servicing",
+      "from_handle": "notices@bluepeak-servicing.com",
+      "subject": "Your mortgage servicer is changing — action may not be required",
+      "body": "Dear Ms. Hart,\n\nEffective May 1, the servicing of your BluePeak mortgage (loan ending 8841) will transfer to Rivermark Home Loans. Your loan terms, interest rate, and balance do not change.\n\nYour monthly payment will stay the same. After May 1, please send payments to Rivermark (details in the attached transfer notice and the letter mailed to your home address on file).\n\nA federal 60-day grace period protects you from late fees if you accidentally pay the old servicer during the transition.\n\nQuestions? Call the number on your most recent BluePeak statement or visit bluepeak.com/servicing-transfer.\n\nBluePeak Loan Servicing"
+    },
+    "red_flags": [
+      {
+        "id": "change_payment_destination",
+        "label": "Changes where you send money"
+      },
+      {
+        "id": "attachment_present",
+        "label": "Includes an attachment"
+      },
+      {
+        "id": "new_sender_subdomain",
+        "label": "Uses 'servicing' subdomain/variant"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "This looks like a classic 'change the payment destination' scam — but mortgage servicing transfers are a real, federally-regulated thing. It's legit.",
+      "tells": [
+        "References your loan's last-4 and a specific effective date",
+        "Cites the federal 60-day grace period — a real RESPA provision scammers usually don't know about",
+        "Also mentions a physical letter mailed to your address — legit transfers must be sent by mail, not email alone",
+        "Directs verification to the phone number on your existing statement, not a new number in the email"
+      ],
+      "safe_move": "Verify in two ways: (1) call the number on your most recent paper statement, and (2) check that the physical letter arrives within ~15 days. If both match, the transfer is real.",
+      "consequence": "Sending payments to the wrong place during a servicer transfer is protected by the 60-day grace — you won't be penalized. But falling for a scam that imitates this pattern sends your mortgage payment to a thief.",
+      "behavioral_reinforcement": "Real servicer transfers: federal grace period mention, physical letter, last-4 of loan, verification via existing statement phone. Scam versions skip the letter and push urgency."
+    },
+    "tags": [
+      "mortgage",
+      "servicing",
+      "legit",
+      "bluepeak",
+      "regulated"
+    ],
+    "green_flags": [
+      {
+        "id": "federal_grace_period_mention",
+        "label": "References federal RESPA grace period"
+      },
+      {
+        "id": "physical_letter_backup",
+        "label": "Notes that a physical letter is also being mailed"
+      },
+      {
+        "id": "loan_last_four",
+        "label": "References loan last-4"
+      },
+      {
+        "id": "verify_via_existing_statement",
+        "label": "Verification via existing statement phone"
+      }
+    ]
+  },
+  {
+    "id": "sms_bank_legit_003_t5",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Northbridge CU",
+      "from_handle": "73927",
+      "subject": null,
+      "body": "Northbridge CU Fraud: Did you attempt $412.18 at 'SHELLNOR GAS #1119' at 3:12 AM? Reply YES or NO. No links. If you did not attempt, call us at the number on your card. STOP to opt out."
+    },
+    "red_flags": [
+      {
+        "id": "fraud_alert_shape",
+        "label": "Classic fraud-alert pattern"
+      },
+      {
+        "id": "odd_hour_transaction",
+        "label": "References 3:12 AM transaction"
+      },
+      {
+        "id": "dollar_amount",
+        "label": "Specific dollar amount"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit card fraud alert — short code, reply-only (no links), and directs you to call the number on your card rather than a number in the text.",
+      "tells": [
+        "Short-code sender and 'No links' literally in the body — attackers almost never write that",
+        "YES/NO keyword reply flow — the standard fraud-alert pattern from real card networks",
+        "Transaction is specific: merchant, amount, time — and unusual (3 AM)",
+        "Callback instruction is 'number on your card', not a number provided in the SMS"
+      ],
+      "safe_move": "If you did not make the charge, reply NO, then call the number on the back of your card. Don't Google the credit union's fraud line — scammers buy ads on common searches.",
+      "consequence": "Ignoring a real fraud alert can let further charges through. Replying YES when you didn't make the charge greenlights the thief.",
+      "behavioral_reinforcement": "Real fraud alerts: short code, YES/NO reply, no links, card-back callback. Fake versions push a 'call this number NOW' with a new phone number embedded in the text."
+    },
+    "tags": [
+      "bank",
+      "fraud",
+      "legit",
+      "credit-union"
+    ],
+    "green_flags": [
+      {
+        "id": "short_code_sender",
+        "label": "Short-code sender"
+      },
+      {
+        "id": "no_links_explicit",
+        "label": "States 'No links' explicitly"
+      },
+      {
+        "id": "yes_no_reply",
+        "label": "YES/NO keyword reply"
+      },
+      {
+        "id": "card_back_callback",
+        "label": "Callback via number on card"
+      }
+    ]
+  },
+  {
+    "id": "email_invoice_legit_006_t5",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Cedarwood HOA Management",
+      "from_handle": "billing@cedarwoodhoa.com",
+      "subject": "Q2 assessment — due May 15",
+      "body": "Dear Cedarwood Homeowner (Unit 214-B),\n\nYour Q2 assessment of $487.00 is due May 15.\n\nPay via the owner portal at portal.cedarwoodhoa.com (check or ACH, no card fees). Paper coupon also mailed separately.\n\nQuestions? The board's quarterly meeting is April 28 at 7 PM in the clubhouse, or email bookkeeper@cedarwoodhoa.com.\n\nThank you — Cedarwood HOA Management"
+    },
+    "red_flags": [
+      {
+        "id": "invoice_with_link",
+        "label": "Invoice with payment link"
+      },
+      {
+        "id": "specific_amount_due",
+        "label": "Specific dollar amount with due date"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit HOA assessment — identifies your unit number, sender matches management company, portal on real subdomain, offers multiple non-link verification paths.",
+      "tells": [
+        "References your unit number — detail only the management company has",
+        "Sender domain matches the HOA management company",
+        "Mentions a paper coupon mailed separately — legit HOAs almost always send both",
+        "Points to a scheduled board meeting as a verification venue"
+      ],
+      "safe_move": "If you haven't received the paper coupon yet, wait for it or call the HOA's existing phone number. The scheduled board meeting is another way to verify the amount.",
+      "consequence": "No risk. Missing a legit HOA payment incurs late fees, not security loss.",
+      "behavioral_reinforcement": "Legit HOA invoices include your unit number, mention paper backup, and point to real-world verification (meetings, on-file phone). Scams invent generic 'community fees'."
+    },
+    "tags": [
+      "hoa",
+      "invoice",
+      "legit",
+      "cedarwood"
+    ],
+    "green_flags": [
+      {
+        "id": "unit_number_reference",
+        "label": "References specific unit number"
+      },
+      {
+        "id": "paper_coupon_backup",
+        "label": "Paper coupon also mailed"
+      },
+      {
+        "id": "real_world_verification",
+        "label": "References in-person board meeting"
+      },
+      {
+        "id": "management_company_domain",
+        "label": "Sender matches management company"
+      }
+    ]
+  },
+  {
+    "id": "dm_delivery_legit_001_t5",
+    "channel": "dm",
+    "pattern_family": "package_delivery",
+    "difficulty": 5,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "SkyBridge Air",
+      "from_handle": "@skybridgeair",
+      "subject": null,
+      "body": "Hi — SkyBridge here. Your flight SB842 on Apr 19 has a schedule change: now departs 6:45 AM (was 8:10 AM). You're rebooked automatically. Open the SkyBridge app to confirm or switch to a later flight at no cost. DM replies aren't monitored — use the app or skybridgeair.com/manage."
+    },
+    "red_flags": [
+      {
+        "id": "schedule_change_urgency",
+        "label": "Schedule change with implicit urgency"
+      },
+      {
+        "id": "dm_from_brand",
+        "label": "DM from a brand account"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit schedule-change DM — verified handle, sends you to the app/real domain, explicitly says DM replies aren't monitored (real brands gate support to official channels).",
+      "tells": [
+        "References a specific flight number and a before/after time",
+        "Explicitly tells you DM replies aren't monitored — scammers want you to reply to them",
+        "Directs to the app or real root domain, not a shortened link or third-party site",
+        "No 'pay $75 change fee' or 'verify your payment method' — the usual scam shape is absent"
+      ],
+      "safe_move": "Open the SkyBridge app (not the link) and check for the change there. If the flight matches, the DM is real.",
+      "consequence": "No risk if you use the app. Schedule changes are real and common; over-reacting by calling a number from the DM could expose you to a support-line scam.",
+      "behavioral_reinforcement": "Real airline DMs about schedule changes push you to the app. Fake ones push you to call a number or pay a change fee via the DM itself."
+    },
+    "tags": [
+      "airline",
+      "schedule-change",
+      "legit",
+      "skybridge"
+    ],
+    "green_flags": [
+      {
+        "id": "specific_flight_reference",
+        "label": "References real flight number"
+      },
+      {
+        "id": "dm_not_monitored_notice",
+        "label": "States DM replies aren't monitored"
+      },
+      {
+        "id": "app_first_path",
+        "label": "Points to the official app"
+      },
+      {
+        "id": "no_fee_ask",
+        "label": "No change fee or payment ask"
+      }
+    ]
+  },
+  {
+    "id": "email_invoice_legit_007_t4",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "small_business",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Gatekeep Domains",
+      "from_handle": "renewals@gatekeepdomains.com",
+      "subject": "yourshop.com renews in 14 days",
+      "body": "Hi,\n\nyourshop.com will auto-renew on April 30 for $14.99/yr using the card ending 4419.\n\nManage or cancel at gatekeepdomains.com/account (log in, then Domains → Renewals). Reply to this email if the card on file has changed.\n\nGatekeep Domains"
+    },
+    "red_flags": [
+      {
+        "id": "subscription_renewal_notice",
+        "label": "Auto-renewal notice"
+      },
+      {
+        "id": "card_last_four_mention",
+        "label": "References card last-4"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit domain renewal reminder — references your specific domain, card last-4, sends you to the real root domain with a normal account flow.",
+      "tells": [
+        "Specific domain name that matches what you actually own",
+        "Last-4 of card on file matches what you have",
+        "No 'your domain has been suspended, pay within 24 hours' fake-urgency",
+        "Link goes to the root domain, not a lookalike or separate 'renewal' domain"
+      ],
+      "safe_move": "Log in directly via a bookmark (not the email link) and verify the renewal date and card. Adjust if needed.",
+      "consequence": "Ignoring a real renewal past the due date lets the domain expire — costly if someone else grabs it.",
+      "behavioral_reinforcement": "Legit renewal emails give you 2-4 weeks of notice and point to your account dashboard. Scam versions compress the timeline ('act in 24 hours') and ask you to pay via a new link."
+    },
+    "tags": [
+      "domain",
+      "renewal",
+      "legit",
+      "gatekeep"
+    ],
+    "green_flags": [
+      {
+        "id": "specific_asset_referenced",
+        "label": "References your actual domain"
+      },
+      {
+        "id": "card_last_four_match",
+        "label": "Card last-4 matches your records"
+      },
+      {
+        "id": "generous_lead_time",
+        "label": "Gives 2+ weeks notice"
+      },
+      {
+        "id": "real_root_domain",
+        "label": "Link uses real root domain"
+      }
+    ]
+  },
+  {
+    "id": "sms_bank_legit_004_t4",
+    "channel": "sms",
+    "pattern_family": "bank_fraud_alert",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "GreenGrid Energy",
+      "from_handle": "62711",
+      "subject": null,
+      "body": "GreenGrid: Outage credit of $18.42 applied to acct ****4822 from the Apr 3 storm. See details in your next bill or at greengridenergy.com/account. STOP to opt out."
+    },
+    "red_flags": [
+      {
+        "id": "refund_pattern",
+        "label": "Refund/credit pattern (common scam bait)"
+      },
+      {
+        "id": "link_in_sms",
+        "label": "Link in text"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit utility credit notification — short code, account last-4, references a specific documented event, doesn't ask for anything.",
+      "tells": [
+        "Short-code sender",
+        "Account last-4 matches your actual utility account",
+        "References the Apr 3 storm — a verifiable real-world event",
+        "Asks for nothing — no 'click to confirm', no login prompt, no payment info"
+      ],
+      "safe_move": "Nothing to do. Verify against your next bill if you care. The credit just shows up.",
+      "consequence": "No risk. Refund-bait scams usually ask you to click and enter banking info to 'claim' the refund. This one applies automatically.",
+      "behavioral_reinforcement": "Real credits are applied automatically. If a 'refund' message asks you to click a link and enter bank info to receive money, that's the scam version."
+    },
+    "tags": [
+      "utility",
+      "credit",
+      "legit",
+      "greengrid"
+    ],
+    "green_flags": [
+      {
+        "id": "short_code_sender",
+        "label": "Short-code sender"
+      },
+      {
+        "id": "account_last_four_match",
+        "label": "Account last-4 matches records"
+      },
+      {
+        "id": "references_real_event",
+        "label": "References documented real event"
+      },
+      {
+        "id": "no_action_required",
+        "label": "No click or action requested"
+      }
+    ]
+  },
+  {
+    "id": "email_invoice_legit_008_t4",
+    "channel": "email",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Clearpath Aid",
+      "from_handle": "receipts@clearpathaid.org",
+      "subject": "Your 2025 donation receipt — thank you",
+      "body": "Dear Tomás,\n\nThank you for your $150 donation on March 8, 2025. Clearpath Aid is a registered 501(c)(3) (EIN 82-1119422). This receipt is valid for tax purposes.\n\nReceipt PDF: clearpathaid.org/receipts/2025-T-KTN-8842\n\nNo goods or services were provided in exchange for this contribution.\n\nClearpath Aid"
+    },
+    "red_flags": [
+      {
+        "id": "pdf_link",
+        "label": "Link to a PDF"
+      },
+      {
+        "id": "charity_context",
+        "label": "Charity email (charity fraud is common)"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit donation receipt — references a donation you actually made, includes EIN, uses charity's real domain, and includes the IRS-required 'no goods or services' language.",
+      "tells": [
+        "Donation amount and date match what you actually gave",
+        "Includes the EIN, which you can verify at IRS.gov's tax-exempt lookup",
+        "Includes the IRS-mandated 'no goods or services' language — small detail legit nonprofits always include",
+        "Link uses the charity's real root domain"
+      ],
+      "safe_move": "Save the receipt for taxes. If uncertain, verify the EIN on IRS.gov independently.",
+      "consequence": "No risk. Real tax receipts help you at filing time.",
+      "behavioral_reinforcement": "Legit donation receipts include the EIN and the 'no goods or services' line. A charity-fraud scam wouldn't know to include those."
+    },
+    "tags": [
+      "charity",
+      "receipt",
+      "legit",
+      "clearpath",
+      "tax"
+    ],
+    "green_flags": [
+      {
+        "id": "ein_included",
+        "label": "Includes verifiable EIN"
+      },
+      {
+        "id": "irs_language",
+        "label": "Includes 'no goods or services' line"
+      },
+      {
+        "id": "matches_actual_donation",
+        "label": "Amount and date match your records"
+      },
+      {
+        "id": "real_root_domain",
+        "label": "Real charity root domain"
+      }
+    ]
+  },
+  {
+    "id": "dm_social_legit_004_t4",
+    "channel": "dm",
+    "pattern_family": "account_verification",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Swarmfeed Support",
+      "from_handle": "@swarmfeed.help",
+      "subject": null,
+      "body": "Hi — we reviewed your appeal (ref #A-771822) on the suspension of @tomas_k. The account has been reinstated. It may take up to 15 minutes to reflect. No action is needed from you. Policy details: swarmfeed.com/help/appeals. DMs are not a support channel — use the Help Center for anything else."
+    },
+    "red_flags": [
+      {
+        "id": "dm_from_support",
+        "label": "DM claiming to be from support"
+      },
+      {
+        "id": "account_reinstated_pattern",
+        "label": "Reinstatement pattern"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit support DM — references your actual appeal number, sends you to the official help center, explicitly says DMs aren't support.",
+      "tells": [
+        "Reference number (A-771822) matches something you actually submitted",
+        "'DMs are not a support channel' — a real brand gate against impersonation",
+        "Uses real root domain for policy link",
+        "No request for password, 2FA code, or payment to 'expedite' the reinstatement"
+      ],
+      "safe_move": "Check your account directly to confirm the reinstatement. If it's back, the DM was real.",
+      "consequence": "No risk. Support-impersonation scams typically ask you to 'verify identity' by sending a 2FA code or resetting a password. This does neither.",
+      "behavioral_reinforcement": "Real support DMs (when they happen) reference your ticket and point you to the help center. Fake ones ask for 2FA codes or fees to 'restore' the account."
+    },
+    "tags": [
+      "support",
+      "social",
+      "legit",
+      "swarmfeed"
+    ],
+    "green_flags": [
+      {
+        "id": "appeal_reference_match",
+        "label": "Appeal ref matches your submission"
+      },
+      {
+        "id": "dms_not_support_notice",
+        "label": "States DMs aren't support"
+      },
+      {
+        "id": "no_2fa_or_password_ask",
+        "label": "No 2FA or password request"
+      },
+      {
+        "id": "real_root_domain",
+        "label": "Policy link on real root domain"
+      }
+    ]
+  },
+  {
+    "id": "email_acct_verify_legit_005_t4",
+    "channel": "email",
+    "pattern_family": "credential_phishing",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "SentryWatch",
+      "from_handle": "alerts@sentrywatch.io",
+      "subject": "Your email appeared in a new data breach",
+      "body": "Hi,\n\nWe monitor public breach data for subscribers. Your address tomas.k@protomail.com appeared in a new breach disclosed April 2: 'NovaForum 2025'.\n\nWhat to do:\n• Change your NovaForum password if you reuse it anywhere.\n• Review activity at sentrywatch.io/dashboard (log in, no link needed here).\n\nThis is informational only — we never ask for your passwords, and we don't send password-reset links. Reply if you want to unsubscribe.\n\nSentryWatch"
+    },
+    "red_flags": [
+      {
+        "id": "breach_notification",
+        "label": "Breach notification pattern"
+      },
+      {
+        "id": "mentions_your_email",
+        "label": "Mentions your email address"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit breach notification — from a service you subscribed to, explicitly says it never sends password-reset links (the scam shape it could be mistaken for).",
+      "tells": [
+        "You actually subscribed to SentryWatch (pretend-scenario for this drill)",
+        "Tells you to log in at your own dashboard rather than clicking a password reset link",
+        "Explicitly calls out that it never sends password-reset emails — a direct inoculation against phishing that imitates it",
+        "Mentions a specific, nameable breach ('NovaForum 2025') you can verify independently"
+      ],
+      "safe_move": "Log into SentryWatch via your bookmark, not the email. If the breach matches, change any reused passwords.",
+      "consequence": "Ignoring it leaves you exposed if you reuse passwords. Falling for a phishing version of this email could give up your password to the attacker.",
+      "behavioral_reinforcement": "Legit breach notices tell you to log in to your dashboard via your bookmark. Fake ones include a 'reset your password here' link — which is exactly how the scam works."
+    },
+    "tags": [
+      "breach",
+      "security",
+      "legit",
+      "sentrywatch"
+    ],
+    "green_flags": [
+      {
+        "id": "subscribed_service",
+        "label": "From a service you actually use"
+      },
+      {
+        "id": "no_reset_link",
+        "label": "Explicitly does not send reset links"
+      },
+      {
+        "id": "dashboard_bookmark_path",
+        "label": "Points to your own dashboard"
+      },
+      {
+        "id": "specific_breach_name",
+        "label": "Names a verifiable breach"
+      }
+    ]
+  },
+  {
+    "id": "sms_acct_verify_legit_003_t4",
+    "channel": "sms",
+    "pattern_family": "account_verification",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "NovaWireless",
+      "from_handle": "91334",
+      "subject": null,
+      "body": "NovaWireless: Your plan upgrade to Unlimited+ is active as of today. New price $65/mo starts next billing cycle. Manage in the Nova app. Reply HELP for help, STOP to opt out."
+    },
+    "red_flags": [
+      {
+        "id": "plan_change_notice",
+        "label": "Plan change notice"
+      },
+      {
+        "id": "price_increase",
+        "label": "Price increase mentioned"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit plan-change confirmation — short code, confirms something you actually did, points to the app rather than a link.",
+      "tells": [
+        "Short-code sender",
+        "Confirms a specific plan change and new price — details scammers usually can't guess correctly",
+        "No link at all — points to the app",
+        "HELP/STOP keywords present, which is a legal requirement for business SMS"
+      ],
+      "safe_move": "Open the Nova app to confirm. If it matches, ignore. If you didn't change your plan, contact support via the app.",
+      "consequence": "No risk. Ignoring a real confirmation is harmless. Over-reacting by calling a phone number you Googled could expose you to a carrier-impersonation scam.",
+      "behavioral_reinforcement": "Real carrier confirmations are app-first with no link. Fake ones contain a link to 'manage' your plan."
+    },
+    "tags": [
+      "telecom",
+      "plan-change",
+      "legit",
+      "nova"
+    ],
+    "green_flags": [
+      {
+        "id": "short_code_sender",
+        "label": "Short-code sender"
+      },
+      {
+        "id": "no_link",
+        "label": "No link in the message"
+      },
+      {
+        "id": "app_first_path",
+        "label": "Points to the official app"
+      },
+      {
+        "id": "help_stop_compliance",
+        "label": "HELP/STOP compliance language"
+      }
+    ]
+  },
+  {
+    "id": "email_acct_verify_legit_006_t4",
+    "channel": "email",
+    "pattern_family": "subscription_renewal",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Lumea Streaming",
+      "from_handle": "billing@lumea.com",
+      "subject": "Payment issue — your plan will pause April 28 if not updated",
+      "body": "Hi Chen,\n\nWe couldn't process your April payment for Lumea Premium ($12.99) on the Visa ending 0817.\n\nUpdate your payment method at lumea.com/account/billing (log in — we'll never ask for your card number by email).\n\nYour plan continues through April 28. After that, it pauses — no cancellation, just paused — until you update the card.\n\nLumea Billing"
+    },
+    "red_flags": [
+      {
+        "id": "payment_issue_urgency",
+        "label": "Payment issue with deadline"
+      },
+      {
+        "id": "pause_threat",
+        "label": "Threatens service pause"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit subscription-billing email — references card last-4, uses the real root domain, explicitly says it won't ask for card info by email.",
+      "tells": [
+        "Card last-4 matches the card you actually have on file",
+        "Explicitly states 'we'll never ask for your card number by email' — inoculates against phishing that imitates it",
+        "Deadline is 2+ weeks out, not 'act now'",
+        "'Paused, not cancelled' — realistic subscription language"
+      ],
+      "safe_move": "Log in via your bookmark and update the card. Never click 'update card' links in emails, even legit ones — the habit protects you from scam versions.",
+      "consequence": "Ignoring it pauses the service, which is reversible. Falling for a scam version hands your new card number to an attacker.",
+      "behavioral_reinforcement": "Legit billing emails say 'log in to update' and warn against card-info-by-email. Scam versions embed a form asking for full card numbers."
+    },
+    "tags": [
+      "streaming",
+      "billing",
+      "legit",
+      "lumea"
+    ],
+    "green_flags": [
+      {
+        "id": "card_last_four_match",
+        "label": "Card last-4 matches"
+      },
+      {
+        "id": "anti_phishing_statement",
+        "label": "Warns against card info by email"
+      },
+      {
+        "id": "reasonable_deadline",
+        "label": "Deadline is 2+ weeks out"
+      },
+      {
+        "id": "real_root_domain",
+        "label": "Link uses real root domain"
+      }
+    ]
+  },
+  {
+    "id": "sms_invoice_legit_001_t4",
+    "channel": "sms",
+    "pattern_family": "invoice_vendor",
+    "difficulty": 4,
+    "ground_truth": "legit",
+    "context": "personal",
+    "ai_amplified": false,
+    "message": {
+      "from_name": "Riverton Library",
+      "from_handle": "55412",
+      "subject": null,
+      "body": "Riverton Library: Overdue reminder — 'The Overstory' was due Apr 2. Please return or renew. Fines cap at $5. Manage at rivertonlib.org/myaccount. STOP to opt out."
+    },
+    "red_flags": [
+      {
+        "id": "overdue_notice",
+        "label": "Overdue notice"
+      },
+      {
+        "id": "fine_mention",
+        "label": "Mentions a fine"
+      }
+    ],
+    "correct_red_flag_ids": [],
+    "explanation": {
+      "short": "Legit library overdue reminder — short code, real .org domain, specific book title, fine is a realistic cap (not a $500 'collections' scam).",
+      "tells": [
+        "Short-code sender",
+        "Specific book title matches something you actually checked out",
+        "Fine cap is $5 — realistic, not the $200+ 'collections fee' scam version",
+        ".org domain matches the real library"
+      ],
+      "safe_move": "Return or renew via the library site (bookmark it, don't click). The fine is tiny and resolvable in person.",
+      "consequence": "Ignoring a real overdue notice costs you at most a small fine. Falling for the scam version ('pay $275 collections fee') costs you a credit card number.",
+      "behavioral_reinforcement": "Real library fines max out at a few dollars. Any 'library' message demanding hundreds is a scam."
+    },
+    "tags": [
+      "library",
+      "overdue",
+      "legit",
+      "riverton"
+    ],
+    "green_flags": [
+      {
+        "id": "short_code_sender",
+        "label": "Short-code sender"
+      },
+      {
+        "id": "specific_item_reference",
+        "label": "References a specific item checked out"
+      },
+      {
+        "id": "realistic_fine_cap",
+        "label": "Fine cap is realistic ($5)"
+      },
+      {
+        "id": "dot_org_domain",
+        "label": "Real .org domain"
+      }
+    ]
   }
 ]
