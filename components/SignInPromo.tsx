@@ -6,6 +6,7 @@ import { CloudUpload, X } from "lucide-react";
 import { signInWithGoogle, onAuthChange, checkFirestorePremium, syncPremiumToFirestore } from "@/lib/auth";
 import { isFirebaseConfigured } from "@/lib/firebase";
 import { isPremium } from "@/lib/premium";
+import { track } from "@/lib/analytics";
 
 const DISMISSED_KEY = "scamgym_signin_promo_dismissed";
 
@@ -47,8 +48,10 @@ export default function SignInPromo({ variant = "card" }: Props) {
 
   async function handleSignIn() {
     setLoading(true);
+    track("signin_promo_signin_clicked", { variant });
     try {
       await signInWithGoogle();
+      track("signin_completed", { source: "promo", variant });
     } catch (e: unknown) {
       const err = e as { code?: string };
       if (err?.code !== "auth/popup-closed-by-user" && err?.code !== "auth/cancelled-popup-request") {
@@ -62,12 +65,16 @@ export default function SignInPromo({ variant = "card" }: Props) {
   function handleDismiss() {
     localStorage.setItem(DISMISSED_KEY, "1");
     setDismissed(true);
+    track("signin_promo_dismissed", { variant });
   }
 
-  if (!mounted) return null;
-  if (!isFirebaseConfigured()) return null;
-  if (user) return null;
-  if (dismissed) return null;
+  const visible = mounted && isFirebaseConfigured() && !user && !dismissed;
+
+  useEffect(() => {
+    if (visible) track("signin_promo_shown", { variant });
+  }, [visible, variant]);
+
+  if (!visible) return null;
 
   if (variant === "inline") {
     return (

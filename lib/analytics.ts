@@ -13,6 +13,28 @@ export function track(event: string, properties?: Record<string, unknown>) {
   }
 }
 
+/** Identify a signed-in user so retention + funnels work across devices */
+export function identifyUser(uid: string, props?: { email?: string | null; displayName?: string | null }) {
+  try {
+    posthog.identify(uid, {
+      email: props?.email ?? undefined,
+      name: props?.displayName ?? undefined,
+      isPro: isPremium(),
+    });
+  } catch {
+    // PostHog not initialized
+  }
+}
+
+/** Reset analytics identity on sign-out so the next user is a distinct profile */
+export function resetUser() {
+  try {
+    posthog.reset();
+  } catch {
+    // PostHog not initialized
+  }
+}
+
 /** Opt the user in or out of analytics */
 export function setAnalyticsEnabled(enabled: boolean) {
   localStorage.setItem("scamgym_analytics", enabled ? "1" : "0");

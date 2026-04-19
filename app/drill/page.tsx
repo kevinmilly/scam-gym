@@ -62,7 +62,7 @@ export default function DrillPage() {
       drillB: scamFirst ? paired : currentDrill,
       scamSlot: scamFirst ? "A" as const : "B" as const,
     };
-  }, [currentDrill?.id, drillType, currentDrill?.paired_drill_id]);
+  }, [currentDrill, drillType]);
 
   // Reset state when drill changes
   useEffect(() => {
@@ -182,7 +182,7 @@ export default function DrillPage() {
       advance();
       router.push("/result");
     } catch (err) {
-      console.error("Failed to save attempt:", err);
+      track("error_save_attempt", { message: err instanceof Error ? err.message : String(err) });
       setSubmitting(false);
     }
   }

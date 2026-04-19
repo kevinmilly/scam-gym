@@ -15,15 +15,6 @@ type Props = {
 
 export default function ConversionInterstitial({ totalAttempts, accuracy, onDismiss }: Props) {
   const router = useRouter();
-
-  // Escape key dismisses
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleDismiss();
-    };
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, []);
   const pct = Math.round(accuracy * 100);
 
   // Describe improvement direction — if no prior data we just say overall
@@ -44,6 +35,16 @@ export default function ConversionInterstitial({ totalAttempts, accuracy, onDism
     dismissInterstitial();
     onDismiss();
   }
+
+  // Escape key dismisses
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleDismiss();
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+
+  }, []);
 
   return (
     <div

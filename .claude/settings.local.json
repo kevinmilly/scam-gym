@@ -39,7 +39,9 @@
       "Read(//c/Users/jamik/.agents/skills/**)",
       "Bash(wait)",
       "Bash(npm uninstall *)",
-      "Bash(npm i *)"
+      "Bash(npm i *)",
+      "Bash(git rm *)",
+      "Bash(git check-ignore *)"
     ]
   }
 }

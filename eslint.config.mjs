@@ -12,7 +12,26 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Batch scripts: one-off CommonJS helpers, not part of the app bundle.
+    "scripts/**/*.cjs",
+    "scripts/**/*.js",
   ]),
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+      // The React 19 "set state in effect" rule flags common async-load
+      // patterns (localStorage, Dexie, fetch) that would otherwise cause
+      // hydration mismatches if hoisted to lazy init. Keep as warning.
+      "react-hooks/set-state-in-effect": "warn",
+    },
+  },
 ]);
 
 export default eslintConfig;

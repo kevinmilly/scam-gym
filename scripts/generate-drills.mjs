@@ -316,7 +316,6 @@ async function main() {
       const pairs = batch.pairs;
       // Generate in groups of 2 pairs per request
       for (let i = 0; i < pairs; i += 2) {
-        const pairsThisRound = Math.min(2, pairs - i);
         const allIds = [...existingIds, ...newDrills.map(d => d.id)];
         const pairIdx = getCounter(`comp_${family}`);
         const prompt = comparisonPrompt(family, channel, difficulty, pairIdx, allIds);

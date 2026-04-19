@@ -65,7 +65,6 @@ export function generateImagePrompt(drill: Drill): string {
   const comedyReply = pickRandom(replies);
 
   const isEmail = drill.channel === "email";
-  const isSms = drill.channel === "sms" || drill.channel === "dm";
 
   if (isEmail) {
     return [

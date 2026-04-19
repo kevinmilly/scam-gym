@@ -46,19 +46,6 @@ export function longestStreak(
   return max;
 }
 
-/** Current (trailing) streak where predicate is true. */
-function currentStreak(
-  attempts: Attempt[],
-  predicate: (a: Attempt) => boolean
-): number {
-  let streak = 0;
-  for (let i = attempts.length - 1; i >= 0; i--) {
-    if (predicate(attempts[i])) streak++;
-    else break;
-  }
-  return streak;
-}
-
 // ── Family emoji map ──────────────────────────────────────────────
 
 const FAMILY_EMOJI: Record<string, string> = {

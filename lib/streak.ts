@@ -1,4 +1,7 @@
+import { track } from "./analytics";
+
 const STREAK_KEY = "scamgym_streak";
+const MILESTONES = [3, 7, 14, 30, 60, 100];
 
 type StreakData = {
   current: number;
@@ -65,5 +68,10 @@ export function updateStreak(): number {
 
   const updated: StreakData = { current: newCount, lastDate: t };
   localStorage.setItem(STREAK_KEY, JSON.stringify(updated));
+
+  if (MILESTONES.includes(newCount)) {
+    track("streak_milestone", { days: newCount });
+  }
+
   return newCount;
 }

@@ -15,6 +15,16 @@ export default function MessageCard({ drill }: Props) {
   return <DmCard message={message} />;
 }
 
+function displayName(message: Drill["message"]): string {
+  return message.from_name || message.from_handle || "Unknown";
+}
+
+function avatarInitial(message: Drill["message"]): string {
+  const source = message.from_name || message.from_handle || "?";
+  const match = source.match(/[a-zA-Z0-9]/);
+  return (match ? match[0] : "?").toUpperCase();
+}
+
 function EmailCard({ message }: { message: Drill["message"] }) {
   return (
     <div
@@ -31,15 +41,17 @@ function EmailCard({ message }: { message: Drill["message"] }) {
             className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
             style={{ background: "var(--accent)", color: "#fff" }}
           >
-            {message.from_name[0].toUpperCase()}
+            {avatarInitial(message)}
           </div>
           <div className="min-w-0 flex-1">
             <div className="font-semibold text-base truncate" style={{ color: "var(--text)" }}>
-              {message.from_name}
+              {displayName(message)}
             </div>
-            <div className="text-xs truncate" style={{ color: "var(--text-muted)" }}>
-              {message.from_handle}
-            </div>
+            {message.from_name && message.from_handle && (
+              <div className="text-xs truncate" style={{ color: "var(--text-muted)" }}>
+                {message.from_handle}
+              </div>
+            )}
           </div>
         </div>
         {message.subject && (
@@ -81,11 +93,13 @@ function SmsCard({ message }: { message: Drill["message"] }) {
         </div>
         <div>
           <div className="font-semibold text-base" style={{ color: "var(--text)" }}>
-            {message.from_name}
+            {displayName(message)}
           </div>
-          <div className="text-xs" style={{ color: "var(--text-muted)" }}>
-            {message.from_handle}
-          </div>
+          {message.from_name && message.from_handle && (
+            <div className="text-xs" style={{ color: "var(--text-muted)" }}>
+              {message.from_handle}
+            </div>
+          )}
         </div>
       </div>
 
@@ -117,15 +131,17 @@ function DmCard({ message }: { message: Drill["message"] }) {
           className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
           style={{ background: "#1da1f2", color: "#fff" }}
         >
-          {message.from_name[0].toUpperCase()}
+          {avatarInitial(message)}
         </div>
         <div>
           <div className="font-semibold text-base" style={{ color: "var(--text)" }}>
-            {message.from_name}
+            {displayName(message)}
           </div>
-          <div className="text-xs" style={{ color: "var(--text-muted)" }}>
-            {message.from_handle}
-          </div>
+          {message.from_name && message.from_handle && (
+            <div className="text-xs" style={{ color: "var(--text-muted)" }}>
+              {message.from_handle}
+            </div>
+          )}
         </div>
         <div
           className="ml-auto text-xs px-2 py-0.5 rounded-full"

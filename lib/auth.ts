@@ -9,6 +9,7 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getFirebaseAuth, getFirebaseDb } from "@/lib/firebase";
 import { unlockPremiumWithToken } from "@/lib/premium";
+import { identifyUser, resetUser } from "@/lib/analytics";
 
 const provider = new GoogleAuthProvider();
 
@@ -28,7 +29,14 @@ export async function signOutUser(): Promise<void> {
 export function onAuthChange(callback: (user: User | null) => void): Unsubscribe | null {
   const auth = getFirebaseAuth();
   if (!auth) return null;
-  return onAuthStateChanged(auth, callback);
+  return onAuthStateChanged(auth, (user) => {
+    if (user) {
+      identifyUser(user.uid, { email: user.email, displayName: user.displayName });
+    } else {
+      resetUser();
+    }
+    callback(user);
+  });
 }
 
 export function getCurrentUser(): User | null {

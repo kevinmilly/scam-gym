@@ -1,4 +1,4 @@
-const CACHE_NAME = "scamgym-v1";
+const CACHE_NAME = "scamgym-v2";
 const OFFLINE_URL = "/offline";
 
 // Assets to precache on install

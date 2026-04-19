@@ -92,6 +92,7 @@ export default function SettingsPage() {
     setSlowMode(next);
     localStorage.setItem("scamgym_slowmode", next ? "1" : "0");
     document.documentElement.dataset.slowMode = next ? "true" : "false";
+    track("slow_mode_changed", { enabled: next });
   }
 
   async function handleExport() {
@@ -388,7 +389,7 @@ export default function SettingsPage() {
                   <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Theme</p>
                   <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{theme === "dark" ? "Dark mode (default)" : "Light mode"}</p>
                 </div>
-                <button onClick={() => { tap(); const next = theme === "dark" ? "light" : "dark"; setThemeState(next); setTheme(next); }} role="switch" aria-checked={theme === "light"}
+                <button onClick={() => { tap(); const next = theme === "dark" ? "light" : "dark"; setThemeState(next); setTheme(next); track("theme_changed", { theme: next }); }} role="switch" aria-checked={theme === "light"}
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
                   style={{ borderColor: theme === "light" ? "var(--accent)" : "var(--border)", background: theme === "light" ? "rgba(13,31,60,0.15)" : "var(--surface-2)", color: theme === "light" ? "var(--accent)" : "var(--text-muted)" }}>
                   {theme === "dark" ? <><Sun size={14} strokeWidth={1.75} className="inline mr-1" /> Light</> : <><Moon size={14} strokeWidth={1.75} className="inline mr-1" /> Dark</>}

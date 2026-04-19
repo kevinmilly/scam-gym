@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { track } from "@/lib/analytics";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -99,7 +100,10 @@ export default function InstallPrompt() {
       setVisible(false);
       return;
     }
-    const t = setTimeout(() => setVisible(true), 2000);
+    const t = setTimeout(() => {
+      setVisible(true);
+      track("install_prompt_shown");
+    }, 2000);
     return () => clearTimeout(t);
   }, [hasPrompt]);
 
@@ -107,12 +111,18 @@ export default function InstallPrompt() {
 
   async function handleInstall() {
     const outcome = await triggerInstallPrompt();
-    if (outcome === "accepted") setVisible(false);
+    if (outcome === "accepted") {
+      track("install_prompt_accepted");
+      setVisible(false);
+    } else if (outcome === "dismissed") {
+      track("install_prompt_dismissed", { trigger: "native" });
+    }
   }
 
   function handleDismiss() {
     setVisible(false);
     localStorage.setItem(DISMISSED_KEY, String(Date.now()));
+    track("install_prompt_dismissed", { trigger: "manual" });
   }
 
   return (

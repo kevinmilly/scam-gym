@@ -57,7 +57,7 @@ export type Drill = {
   paired_drill_id?: string;
   comparison_role?: "scam" | "legit";
   message: {
-    from_name: string;
+    from_name: string | null;
     from_handle: string;
     subject: string | null;
     body: string;
