@@ -13,7 +13,7 @@ export default function SpotFlagPicker({ options, selected, onSelect }: Props) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
-        What&apos;s the first red flag you notice?
+        Which tell tipped you off?
       </p>
       <div className="space-y-2">
         {options.map(({ id, label }) => {
@@ -26,7 +26,7 @@ export default function SpotFlagPicker({ options, selected, onSelect }: Props) {
               className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-colors duration-150 active:scale-[0.98]"
               style={{
                 borderColor: isSelected ? "var(--accent)" : "var(--border)",
-                background: isSelected ? "rgba(124,106,247,0.12)" : "var(--surface)",
+                background: isSelected ? "rgba(13,31,60,0.12)" : "var(--surface)",
               }}
             >
               <div

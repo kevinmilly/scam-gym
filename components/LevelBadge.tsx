@@ -17,7 +17,7 @@ export default function LevelBadge({ levelInfo }: Props) {
         <div
           className="w-12 h-12 rounded-full flex items-center justify-center font-black text-xl shrink-0"
           style={{
-            background: "rgba(124,106,247,0.15)",
+            background: "rgba(13,31,60,0.15)",
             color: "var(--accent)",
             border: "2px solid var(--accent)",
           }}

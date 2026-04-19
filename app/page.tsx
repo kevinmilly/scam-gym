@@ -13,6 +13,7 @@ import { track } from "@/lib/analytics";
 import { getStreak, hasTrainedToday } from "@/lib/streak";
 import { getDailyChallengeDrill, getDailyChallengeState, secondsUntilMidnight, formatCountdown } from "@/lib/dailyChallenge";
 import PremiumGate from "@/components/PremiumGate";
+import SignInPromo from "@/components/SignInPromo";
 import { Target, Brain, BarChart3, ShieldAlert, Flame, ChevronRight, Zap } from "lucide-react";
 
 const ONBOARDED_KEY = "scamgym_onboarded";
@@ -298,7 +299,7 @@ function HomePageInner() {
 
             {/* Header row: title + streak */}
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-[28px] font-bold leading-tight tracking-tight" style={{ color: "var(--text)" }}>
+              <h1 className="font-display text-[32px] font-extrabold leading-none" style={{ color: "var(--text)", letterSpacing: "-0.02em" }}>
                 Scam Gym
               </h1>
               {(() => {
@@ -385,7 +386,7 @@ function HomePageInner() {
                   className="card-base p-4 mb-6"
                   style={{
                     border: `1.5px solid ${isCompleted ? "var(--success)" : "var(--accent)"}`,
-                    background: isCompleted ? "rgba(34,197,94,0.06)" : "rgba(124,106,247,0.06)",
+                    background: isCompleted ? "rgba(34,197,94,0.06)" : "rgba(13,31,60,0.06)",
                   }}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -460,6 +461,8 @@ function HomePageInner() {
               );
             })()}
 
+            {attempts.length >= 3 && <SignInPromo />}
+
           </div>
 
           {/* Sticky CTA */}
@@ -472,10 +475,10 @@ function HomePageInner() {
             )}
             <button
               onClick={() => { tap(); handleStart(); }}
-              className="w-full py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-              style={{ background: "var(--accent)", color: "#fff" }}
+              className="w-full py-4 rounded-full font-bold text-lg transition-all active:scale-95"
+              style={{ background: "var(--signature)", color: "#fff", boxShadow: "0 6px 20px rgba(247,122,15,0.35)" }}
             >
-              Start Drill
+              Start Drill →
             </button>
 
             <div className="flex justify-center gap-6 pt-1">

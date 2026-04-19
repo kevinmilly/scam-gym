@@ -8,6 +8,22 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const DISMISSED_KEY = "scamgym_install_dismissed";
+const DISMISS_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+
+function isDismissed(): boolean {
+  const raw = localStorage.getItem(DISMISSED_KEY);
+  if (!raw) return false;
+  const ts = Number(raw);
+  if (!Number.isFinite(ts)) {
+    localStorage.removeItem(DISMISSED_KEY);
+    return false;
+  }
+  if (Date.now() - ts > DISMISS_TTL_MS) {
+    localStorage.removeItem(DISMISSED_KEY);
+    return false;
+  }
+  return true;
+}
 
 // Module-level state so other components (e.g. Settings) can query & trigger the
 // same deferred prompt. The `beforeinstallprompt` event only fires once per page
@@ -70,7 +86,7 @@ export default function InstallPrompt() {
   const [hasPrompt, setHasPrompt] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem(DISMISSED_KEY)) return;
+    if (isDismissed()) return;
     if (isStandalone()) return;
 
     setHasPrompt(hasInstallPrompt());
@@ -96,7 +112,7 @@ export default function InstallPrompt() {
 
   function handleDismiss() {
     setVisible(false);
-    localStorage.setItem(DISMISSED_KEY, "1");
+    localStorage.setItem(DISMISSED_KEY, String(Date.now()));
   }
 
   return (

@@ -196,7 +196,7 @@ export default function DrillPage() {
       >
         <div className="flex items-center gap-2">
           {focusLabel && (
-            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}>
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--accent-subtle)", color: "var(--accent)" }}>
               {focusLabel}
             </span>
           )}
@@ -264,8 +264,8 @@ export default function DrillPage() {
           )}
         </div>
 
-        {/* Spot the flag — shown after message for spot_flag drills */}
-        {drillType === "spot_flag" && currentDrill.spot_flag_options && (
+        {/* Spot the flag — shown only after user commits to "scam", so we don't bias them */}
+        {drillType === "spot_flag" && verdict === "scam" && currentDrill.spot_flag_options && (
           <SpotFlagPicker
             options={currentDrill.spot_flag_options}
             selected={spotFlagPick}
@@ -291,7 +291,7 @@ export default function DrillPage() {
                     className="px-4 py-2.5 rounded-xl font-semibold text-sm border-2 transition-colors duration-150 active:scale-95"
                     style={{
                       borderColor: selected ? "var(--accent)" : "var(--border)",
-                      background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
+                      background: selected ? "var(--accent-subtle)" : "var(--surface)",
                       color: selected ? "var(--accent)" : "var(--text-muted)",
                     }}
                   >
@@ -318,32 +318,36 @@ export default function DrillPage() {
         {/* Verdict — not shown for comparison (picking A/B IS the verdict) */}
         {drillType !== "comparison" && (
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
-              Is this message…
+            <p className="font-display text-3xl font-extrabold mb-4" style={{ color: "var(--text)", lineHeight: 1.1 }}>
+              Scam or legit?
             </p>
             <div className="grid grid-cols-2 gap-3">
               {(["scam", "legit"] as Verdict[]).map((v) => {
                 const selected = verdict === v;
                 const isScam = v === "scam";
+                const tone = isScam ? "var(--danger)" : "var(--success)";
+                const toneBg = isScam ? "var(--danger-bg)" : "var(--success-bg)";
                 return (
                   <button
                     key={v}
                     onClick={() => { tap(); setVerdict(v); }}
                     aria-pressed={selected}
-                    className="py-4 rounded-2xl font-bold text-lg border-2 transition-colors duration-150 active:scale-95"
+                    className="rounded-2xl font-display font-extrabold text-xl border-2 transition-all duration-150 active:scale-95 flex flex-col items-center justify-center gap-2"
                     style={{
-                      borderColor: selected
-                        ? isScam ? "var(--danger)" : "var(--success)"
-                        : "var(--border)",
-                      background: selected
-                        ? isScam ? "var(--danger-bg)" : "var(--success-bg)"
-                        : "var(--surface)",
-                      color: selected
-                        ? isScam ? "var(--danger)" : "var(--success)"
-                        : "var(--text)",
+                      borderColor: selected ? tone : "var(--border)",
+                      background: selected ? toneBg : "var(--surface)",
+                      color: selected ? tone : "var(--text)",
+                      paddingTop: "20px",
+                      paddingBottom: "20px",
+                      boxShadow: selected
+                        ? `0 0 0 3px ${isScam ? "rgba(180,35,24,0.15)" : "rgba(47,122,74,0.15)"}, 0 4px 12px rgba(13,31,60,0.08)`
+                        : "var(--shadow-sm)",
                     }}
                   >
-                    {isScam ? <><ShieldAlert size={20} strokeWidth={1.75} className="inline mr-1" aria-hidden="true" /> Scam</> : <><ShieldCheck size={20} strokeWidth={1.75} className="inline mr-1" aria-hidden="true" /> Legit</>}
+                    {isScam
+                      ? <ShieldAlert size={32} strokeWidth={2} aria-hidden="true" style={{ color: selected ? tone : "var(--text-muted)" }} />
+                      : <ShieldCheck size={32} strokeWidth={2} aria-hidden="true" style={{ color: selected ? tone : "var(--text-muted)" }} />}
+                    <span style={{ letterSpacing: "-0.01em" }}>{isScam ? "Scam" : "Legit"}</span>
                   </button>
                 );
               })}
@@ -368,7 +372,7 @@ export default function DrillPage() {
                   className="flex-1 py-3.5 rounded-xl font-semibold text-sm border-2 btn-press flex flex-col items-center gap-0.5"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
+                    background: selected ? "var(--accent-subtle)" : "var(--surface)",
                     color: selected ? "var(--accent)" : "var(--text-muted)",
                     minHeight: "52px",
                     boxShadow: selected ? "0 0 0 3px var(--accent-subtle)" : "none",
@@ -403,7 +407,7 @@ export default function DrillPage() {
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-colors duration-150 active:scale-[0.98]"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(124,106,247,0.12)" : "var(--surface)",
+                    background: selected ? "rgba(13,31,60,0.12)" : "var(--surface)",
                   }}
                 >
                   <div
@@ -437,11 +441,13 @@ export default function DrillPage() {
         <button
           onClick={() => { tap(); handleSubmit(); }}
           disabled={!canSubmit || submitting}
-          className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
+          className="w-full py-4 rounded-full font-display font-extrabold text-lg transition-all active:scale-95"
           style={{
-            background: canSubmit ? "var(--accent)" : "var(--surface-2)",
+            background: canSubmit ? "var(--signature)" : "var(--surface-2)",
             color: canSubmit ? "#fff" : "var(--text-muted)",
             cursor: canSubmit ? "pointer" : "not-allowed",
+            boxShadow: canSubmit ? "0 8px 24px rgba(247,122,15,0.38)" : "none",
+            letterSpacing: "-0.01em",
           }}
         >
           {submitting ? "Submitting…" : "Submit"}

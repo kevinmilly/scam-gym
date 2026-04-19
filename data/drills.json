@@ -31340,8 +31340,8 @@
     "framing": "You manage vendor payments. This came in this morning.",
     "spot_flag_options": [
       {
-        "id": "reply_to_different",
-        "label": "Reply-to address differs from sender address"
+        "id": "no_po_reference",
+        "label": "No purchase order or contract number referenced"
       },
       {
         "id": "attached_invoice",
@@ -31356,7 +31356,7 @@
         "label": "Amount differs slightly from usual"
       }
     ],
-    "spot_flag_correct_id": "reply_to_different",
+    "spot_flag_correct_id": "no_po_reference",
     "message": {
       "from_name": "Sandra Osei | Summit Analytics",
       "from_handle": "sosei@summit-analytics.com",
@@ -31365,42 +31365,41 @@
     },
     "red_flags": [
       {
-        "id": "reply_to_different",
-        "label": "Reply-to routes to a different address than the sender"
+        "id": "no_po_reference",
+        "label": "No purchase order or contract number referenced"
       },
       {
         "id": "new_contact",
         "label": "Sandra Osei is not a known contact at this vendor"
       },
       {
-        "id": "no_po_reference",
-        "label": "No purchase order number referenced"
-      },
-      {
         "id": "vague_services",
         "label": "Q1 consulting is vague with no detail"
+      },
+      {
+        "id": "pressure_language",
+        "label": "Pushes for quick payment without detail"
       }
     ],
     "correct_red_flag_ids": [
-      "reply_to_different",
+      "no_po_reference",
       "new_contact",
-      "no_po_reference"
+      "vague_services"
     ],
     "explanation": {
-      "short": "A mismatched reply-to address is a classic email interception technique — replies and payments go to the scammer, not the vendor.",
+      "short": "Legitimate vendor invoices always reference a purchase order or signed contract. A vague invoice with no PO is a classic BEC invoice-fraud setup.",
       "tells": [
-        "Scammers set the reply-to field to their own address while spoofing the from field",
-        "You would not notice unless you carefully check both the from and reply-to headers",
-        "A new contact name you cannot verify at a known vendor is suspicious",
-        "Legitimate invoices always reference a purchase order or contract number"
+        "No purchase order or contract number tied to the invoice",
+        "Sandra Osei is not a named contact you recognize at this vendor",
+        "\"Q1 consulting services\" is vague — no line items, no delivery dates",
+        "Soft pressure to pay \"at your earliest convenience\" with no detail to verify against"
       ],
-      "safe_move": "Check your email headers for the reply-to address. Verify the invoice by calling the vendor on their main line.",
-      "consequence": "Payment is processed and your reply confirms receipt — to the scammer, who now knows the account is active.",
-      "behavioral_reinforcement": "Always check that the reply-to address matches the sender before acting on any invoice."
+      "safe_move": "Don't pay until you match the invoice to an open PO. Call the vendor on a known main line to verify Sandra Osei and the invoice.",
+      "consequence": "Payment is wired to the scammer. By the time the real vendor asks about the outstanding invoice, the money is gone.",
+      "behavioral_reinforcement": "Every invoice should reference a PO or contract. No PO, no payment — verify by phone first."
     },
     "tags": [
       "bec",
-      "reply_to_attack",
       "invoice_fraud"
     ],
     "tricks": [
@@ -31659,23 +31658,23 @@
     "framing": "You handle accounts payable. This came from a known vendor.",
     "spot_flag_options": [
       {
-        "id": "malicious_attachment",
-        "label": "Invoice attachment is an executable or macro file"
+        "id": "lookalike_domain",
+        "label": "Sender domain ends in .co instead of .com"
       },
       {
         "id": "different_amount",
         "label": "Amount is higher than usual"
       },
       {
-        "id": "new_email",
-        "label": "Sent from a slightly different email address"
+        "id": "opens_file_request",
+        "label": "Pushes you to open the file before any other check"
       },
       {
         "id": "rushed_request",
         "label": "Marked urgent for quick payment"
       }
     ],
-    "spot_flag_correct_id": "malicious_attachment",
+    "spot_flag_correct_id": "lookalike_domain",
     "message": {
       "from_name": "Tom Reeves | Vertex Electronics",
       "from_handle": "treeves@vertex-electronics.co",
@@ -31684,38 +31683,38 @@
     },
     "red_flags": [
       {
-        "id": "malicious_attachment",
-        "label": "Invoice file could contain malware macros"
-      },
-      {
         "id": "lookalike_domain",
-        "label": "vertex-electronics.co differs from real vendor domain"
+        "label": "vertex-electronics.co instead of .com — a lookalike domain"
       },
       {
         "id": "opens_file_request",
-        "label": "Specifically asks you to open and interact with the file"
+        "label": "Specifically asks you to open the file before processing"
       },
       {
-        "id": "new_email",
-        "label": "Email address slightly different from known contact"
+        "id": "no_po_reference",
+        "label": "No purchase order or contract number in the invoice"
+      },
+      {
+        "id": "generic_greeting",
+        "label": "Generic \"Hi\" with no recipient name"
       }
     ],
     "correct_red_flag_ids": [
-      "malicious_attachment",
       "lookalike_domain",
-      "opens_file_request"
+      "opens_file_request",
+      "no_po_reference"
     ],
     "explanation": {
-      "short": "Invoice attachments from spoofed vendor addresses are a common malware delivery vector — opening the file can compromise your system.",
+      "short": "The sender's domain ends in .co — one letter off from the real .com domain. Lookalike domains are how scammers impersonate known vendors.",
       "tells": [
-        "Scammers spoof known vendor names to get recipients to open attachments without suspicion",
-        "The domain vertex-electronics.co differs subtly from the real vendor domain",
-        "Malicious invoice files often contain macros that install malware when enabled",
-        "Real invoices from established vendors rarely change their sending domain suddenly"
+        "vertex-electronics.co is NOT the same as vertex-electronics.com — attackers register near-identical domains",
+        "The email pushes you to open the attachment before doing any verification",
+        "No purchase order or contract number is referenced for the $7,600 invoice",
+        "\"Hi\" with no name — a real vendor contact would address you directly"
       ],
-      "safe_move": "Contact Tom directly on a known phone number to verify the invoice before opening any attachment.",
-      "consequence": "Opening the file enables a macro that installs ransomware or a keylogger on your system.",
-      "behavioral_reinforcement": "Verify unexpected invoice attachments by phone before opening — especially if the sender domain looks slightly different."
+      "safe_move": "Compare the sender's domain character-by-character to the real vendor's. Call Tom on a number you already have — not one from this email — before opening anything.",
+      "consequence": "Opening the attachment installs malware. Even without opening it, replying confirms the account is active and invites more targeted attacks.",
+      "behavioral_reinforcement": "For any invoice, read the sender's domain letter by letter. .co vs .com, -electronics vs .electronics, rn vs m — one character is enough."
     },
     "tags": [
       "malware",

@@ -85,7 +85,7 @@ export default function AttemptHistory({ attempts, drills }: AttemptHistoryProps
             className="px-2.5 py-1 rounded-full text-xs border transition-all"
             style={{
               borderColor: filter.channel === ch ? "var(--accent)" : "var(--border)",
-              background: filter.channel === ch ? "rgba(124,106,247,0.15)" : "transparent",
+              background: filter.channel === ch ? "rgba(13,31,60,0.15)" : "transparent",
               color: filter.channel === ch ? "var(--accent)" : "var(--text-muted)",
             }}
           >
@@ -101,7 +101,7 @@ export default function AttemptHistory({ attempts, drills }: AttemptHistoryProps
             className="px-2.5 py-1 rounded-full text-xs border transition-all"
             style={{
               borderColor: filter.family === fam ? "var(--accent)" : "var(--border)",
-              background: filter.family === fam ? "rgba(124,106,247,0.15)" : "transparent",
+              background: filter.family === fam ? "rgba(13,31,60,0.15)" : "transparent",
               color: filter.family === fam ? "var(--accent)" : "var(--text-muted)",
             }}
           >

@@ -101,7 +101,7 @@ export default function UpgradePage() {
           <div className="space-y-5">
             <div
               className="rounded-2xl border px-5 py-6 text-center"
-              style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+              style={{ background: "rgba(13,31,60,0.06)", borderColor: "var(--accent)" }}
             >
               <Sparkles size={32} strokeWidth={1.5} className="mb-3" style={{ color: "var(--accent)" }} />
               <p className="font-bold text-lg mb-1" style={{ color: "var(--accent)" }}>

@@ -340,7 +340,7 @@ export default function HelpPage() {
                     router.push("/drill");
                   }}
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-sm border transition-all active:scale-95"
-                  style={{ borderColor: "var(--accent)", background: "rgba(124,106,247,0.1)", color: "var(--accent)" }}
+                  style={{ borderColor: "var(--accent)", background: "rgba(13,31,60,0.1)", color: "var(--accent)" }}
                 >
                   <Target size={16} strokeWidth={1.75} /> Practice Drills Like This
                 </button>
@@ -352,7 +352,7 @@ export default function HelpPage() {
               <Link
                 href="/upgrade"
                 className="block rounded-2xl p-4 border mt-4 transition-all active:scale-[0.98]"
-                style={{ background: "rgba(124,106,247,0.06)", borderColor: "rgba(124,106,247,0.2)" }}
+                style={{ background: "rgba(13,31,60,0.06)", borderColor: "rgba(13,31,60,0.2)" }}
               >
                 <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
                   Know exactly what to say next time

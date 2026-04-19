@@ -426,7 +426,7 @@ export default function ResultPage() {
           className="rounded-2xl py-4 px-4 border"
           style={{ background: bannerBg, borderColor: bannerBorder }}
         >
-          <div className="text-xl font-bold" style={{ color: bannerColor }}>
+          <div className="font-display text-3xl font-extrabold flex items-center gap-2" style={{ color: bannerColor, lineHeight: 1.1 }}>
             {bannerIcon} {bannerText}
           </div>
         </div>
@@ -611,7 +611,7 @@ export default function ResultPage() {
                     className="px-3 py-2 rounded-xl text-sm border-2 transition-all active:scale-95"
                     style={{
                       borderColor: selected ? "var(--accent)" : "var(--border)",
-                      background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
+                      background: selected ? "rgba(13,31,60,0.15)" : "var(--surface)",
                       color: selected ? "var(--accent)" : "var(--text-muted)",
                     }}
                   >
@@ -681,7 +681,7 @@ export default function ResultPage() {
             {isFirstDrill && !attempt.isCorrect && !isPremium() && (
               <div
                 className="rounded-2xl p-4 border"
-                style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+                style={{ background: "var(--accent-subtle)", borderColor: "var(--accent)" }}
               >
                 <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
                   That one caught you. You&apos;re not alone.
@@ -726,7 +726,7 @@ export default function ResultPage() {
                 <span
                   key={trick}
                   className="text-xs px-3 py-1 rounded-full font-bold"
-                  style={{ background: "rgba(124,106,247,0.1)", color: "var(--accent)" }}
+                  style={{ background: "rgba(13,31,60,0.1)", color: "var(--accent)" }}
                 >
                   {trickLabel(trick)}
                 </span>
@@ -947,7 +947,15 @@ export default function ResultPage() {
       {xpBreakdown && (
         <div className="px-4 pt-4 pb-3 border-t" style={{ borderColor: "var(--border)" }}>
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "var(--accent-subtle)", color: "var(--accent)" }}>
+            <span
+              className="font-display text-sm font-extrabold px-3 py-1 rounded-full"
+              style={{
+                background: "var(--signature-subtle)",
+                color: "var(--signature)",
+                border: "1px solid var(--signature-border)",
+                letterSpacing: "-0.01em",
+              }}
+            >
               +{displayedXp} XP
             </span>
             {typeof window !== "undefined" && sessionStorage.getItem("isDailyChallenge") === "1" && (
@@ -974,8 +982,13 @@ export default function ResultPage() {
             )}
             <button
               onClick={() => { tap(); router.push("/drill"); }}
-              className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
-              style={{ background: "var(--accent)", color: "#fff" }}
+              className="w-full py-4 rounded-full font-display font-extrabold text-lg transition-all active:scale-95"
+              style={{
+                background: "var(--signature)",
+                color: "#fff",
+                boxShadow: "0 8px 24px rgba(247,122,15,0.38)",
+                letterSpacing: "-0.01em",
+              }}
             >
               Next Drill →
             </button>
@@ -985,7 +998,7 @@ export default function ResultPage() {
             <div className="space-y-3">
               <div
                 className="rounded-2xl px-4 py-4 border text-center"
-                style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+                style={{ background: "var(--accent-subtle)", borderColor: "var(--accent)" }}
               >
                 <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
                   You&apos;ve used your 3 free breakdowns for today

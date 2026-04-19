@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces } from "next/font/google";
 import "./globals.css";
 import { DrillProvider } from "@/lib/DrillContext";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
+  variable: "--font-display",
+  display: "swap",
+});
 import SlowModeInit from "@/lib/SlowModeInit";
 import ThemeInit from "@/lib/ThemeInit";
 import PostHogProvider from "@/components/PostHogProvider";
@@ -39,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0f",
+  themeColor: "#faf7f2",
   width: "device-width",
   initialScale: 1,
 };
@@ -50,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" style={{ colorScheme: "dark light" }}>
+    <html lang="en" className={fraunces.variable} style={{ colorScheme: "dark light" }}>
       <body className="antialiased">
         <SlowModeInit />
         <ThemeInit />

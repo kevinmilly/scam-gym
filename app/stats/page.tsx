@@ -19,6 +19,7 @@ import { getStreak } from "@/lib/streak";
 import { getBookmarks } from "@/lib/bookmarks";
 import TrendChart from "@/components/TrendChart";
 import AttemptHistory from "@/components/AttemptHistory";
+import SignInPromo from "@/components/SignInPromo";
 import { BarChart3, Flame, Share, AlertTriangle, Check, X as XIcon, Lock, Search } from "lucide-react";
 
 type StatsTab = "overview" | "medals" | "history";
@@ -249,6 +250,8 @@ export default function StatsPage() {
         <p className="text-xs" style={{ color: "var(--text-muted)" }}>
           {stats.totalAttempts} drills completed · {Math.round(stats.overallAccuracy * 100)}% overall accuracy
         </p>
+
+        {stats.totalAttempts >= 3 && <SignInPromo variant="inline" />}
 
         {/* Share section */}
         <div className="flex gap-2 items-center">
@@ -696,7 +699,7 @@ export default function StatsPage() {
               {overLimit && (
                 <div
                   className="mt-3 rounded-2xl px-4 py-4 border text-center"
-                  style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+                  style={{ background: "rgba(13,31,60,0.06)", borderColor: "var(--accent)" }}
                 >
                   <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
                     Showing your last {FREE_HISTORY} of {allAttempts.length} attempts

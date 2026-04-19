@@ -13,7 +13,7 @@ import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
 import { isAlertsEnabled, setAlertsEnabled } from "@/lib/alerts";
 import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
-import { Sparkles, Sun, Moon, Share, Plus, Smartphone } from "lucide-react";
+import { Sparkles, Sun, Moon, Share, Plus, Smartphone, Crown, Target } from "lucide-react";
 import dynamic from "next/dynamic";
 import {
   hasInstallPrompt,
@@ -163,7 +163,7 @@ export default function SettingsPage() {
             Settings
           </span>
           {premium && (
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}>
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "rgba(13,31,60,0.15)", color: "var(--accent)" }}>
               Pro
             </span>
           )}
@@ -176,7 +176,7 @@ export default function SettingsPage() {
         {premium ? (
           <div
             className="rounded-2xl border px-4 py-4"
-            style={{ background: "rgba(124,106,247,0.06)", borderColor: "var(--accent)" }}
+            style={{ background: "rgba(13,31,60,0.06)", borderColor: "var(--accent)" }}
           >
             <div className="flex items-center gap-2 mb-1">
               <Sparkles size={18} strokeWidth={1.75} style={{ color: "var(--accent)" }} />
@@ -193,16 +193,26 @@ export default function SettingsPage() {
             <Link
               href="/upgrade"
               className="block rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              style={{
+                background: "var(--signature-subtle)",
+                borderColor: "var(--signature-border)",
+              }}
             >
-              <p className="font-bold text-sm mb-1" style={{ color: "var(--text)" }}>
-                Upgrade to Pro
-              </p>
-              <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-                Unlock trend charts, focus training, reply scripts, and more.
-              </p>
+              <div className="flex items-start gap-3 mb-3">
+                <span className="icon-chip" style={{ background: "var(--signature)" }}>
+                  <Crown size={18} strokeWidth={2} style={{ color: "#fff" }} />
+                </span>
+                <div className="flex-1">
+                  <p className="font-bold text-sm mb-1" style={{ color: "var(--text)" }}>
+                    Upgrade to Pro
+                  </p>
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    Unlock trend charts, focus training, reply scripts, and more.
+                  </p>
+                </div>
+              </div>
               <span
-                className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
+                className="inline-block px-5 py-2 rounded-full text-sm font-bold"
                 style={{ background: "var(--accent)", color: "#fff" }}
               >
                 Upgrade to unlock
@@ -224,12 +234,14 @@ export default function SettingsPage() {
         {/* ── INSTALL APP ── */}
         {!installState.standalone && (
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+            <p className="text-[11px] font-bold uppercase tracking-[0.15em] mb-3 px-1" style={{ color: "var(--text-subtle)" }}>
               App
             </p>
             <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
               <div className="flex items-start gap-3 mb-3">
-                <Smartphone size={20} strokeWidth={1.75} style={{ color: "var(--accent)" }} />
+                <span className="icon-chip" style={{ background: "var(--accent-subtle)" }}>
+                  <Smartphone size={18} strokeWidth={2} style={{ color: "var(--accent)" }} />
+                </span>
                 <div className="flex-1">
                   <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>
                     Install Scam Gym
@@ -241,7 +253,7 @@ export default function SettingsPage() {
               </div>
               <button
                 onClick={() => { tap(); handleInstallClick(); }}
-                className="px-4 py-2 rounded-xl text-sm font-semibold"
+                className="px-5 py-2 rounded-full text-sm font-semibold"
                 style={{ background: "var(--accent)", color: "#fff" }}
               >
                 {installState.ios ? "Show install steps" : installState.canPrompt ? "Install app" : "How to install"}
@@ -273,14 +285,21 @@ export default function SettingsPage() {
 
         {/* ── TRAINING ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.15em] mb-3 px-1" style={{ color: "var(--text-subtle)" }}>
             Training
           </p>
           <div className="space-y-3">
             {/* Focus Training (premium) */}
             <PremiumGate label="Focus Training" pitch="Pick specific scam families to drill until you master them.">
               <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
-                <p className="font-semibold text-sm mb-1" style={{ color: "var(--text)" }}>Focus Training</p>
+                <div className="flex items-start gap-3 mb-2">
+                  <span className="icon-chip" style={{ background: "var(--accent-subtle)" }}>
+                    <Target size={18} strokeWidth={2} style={{ color: "var(--accent)" }} />
+                  </span>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Focus Training</p>
+                  </div>
+                </div>
                 <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>Select pattern families to focus on. Only drills from selected families will appear.</p>
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {[...new Set(allDrills.map((d) => d.pattern_family))].sort().map((fam) => {
@@ -295,7 +314,7 @@ export default function SettingsPage() {
                           else { setFocusLabel(null); }
                         }}
                         className="px-2.5 py-1.5 rounded-full text-xs border transition-all"
-                        style={{ borderColor: active ? "var(--accent)" : "var(--border)", background: active ? "rgba(124,106,247,0.15)" : "transparent", color: active ? "var(--accent)" : "var(--text-muted)" }}>
+                        style={{ borderColor: active ? "var(--accent)" : "var(--border)", background: active ? "rgba(13,31,60,0.15)" : "transparent", color: active ? "var(--accent)" : "var(--text-muted)" }}>
                         {familyLabel(fam)}
                       </button>
                     );
@@ -313,7 +332,7 @@ export default function SettingsPage() {
 
         {/* ── ACCESSIBILITY ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.15em] mb-3 px-1" style={{ color: "var(--text-subtle)" }}>
             Accessibility
           </p>
           <div className="space-y-3">
@@ -326,7 +345,7 @@ export default function SettingsPage() {
                 </div>
                 <button onClick={() => { tap(); toggleSlowMode(); }} role="switch" aria-checked={slowMode}
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
-                  style={{ borderColor: slowMode ? "var(--accent)" : "var(--border)", background: slowMode ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: slowMode ? "var(--accent)" : "var(--text-muted)" }}>
+                  style={{ borderColor: slowMode ? "var(--accent)" : "var(--border)", background: slowMode ? "rgba(13,31,60,0.15)" : "var(--surface-2)", color: slowMode ? "var(--accent)" : "var(--text-muted)" }}>
                   {slowMode ? "ON" : "OFF"}
                 </button>
               </div>
@@ -341,7 +360,7 @@ export default function SettingsPage() {
                 </div>
                 <button onClick={() => { tap(); const next = !audio; setAudio(next); setAudioEnabled(next); }} role="switch" aria-checked={audio}
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
-                  style={{ borderColor: audio ? "var(--accent)" : "var(--border)", background: audio ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: audio ? "var(--accent)" : "var(--text-muted)" }}>
+                  style={{ borderColor: audio ? "var(--accent)" : "var(--border)", background: audio ? "rgba(13,31,60,0.15)" : "var(--surface-2)", color: audio ? "var(--accent)" : "var(--text-muted)" }}>
                   {audio ? "ON" : "OFF"}
                 </button>
               </div>
@@ -356,7 +375,7 @@ export default function SettingsPage() {
                 </div>
                 <button onClick={() => { tap(); const next = !alerts; setAlerts(next); setAlertsEnabled(next); }} role="switch" aria-checked={alerts}
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150 shrink-0"
-                  style={{ borderColor: alerts ? "var(--accent)" : "var(--border)", background: alerts ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: alerts ? "var(--accent)" : "var(--text-muted)" }}>
+                  style={{ borderColor: alerts ? "var(--accent)" : "var(--border)", background: alerts ? "rgba(13,31,60,0.15)" : "var(--surface-2)", color: alerts ? "var(--accent)" : "var(--text-muted)" }}>
                   {alerts ? "ON" : "OFF"}
                 </button>
               </div>
@@ -371,7 +390,7 @@ export default function SettingsPage() {
                 </div>
                 <button onClick={() => { tap(); const next = theme === "dark" ? "light" : "dark"; setThemeState(next); setTheme(next); }} role="switch" aria-checked={theme === "light"}
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"
-                  style={{ borderColor: theme === "light" ? "var(--accent)" : "var(--border)", background: theme === "light" ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: theme === "light" ? "var(--accent)" : "var(--text-muted)" }}>
+                  style={{ borderColor: theme === "light" ? "var(--accent)" : "var(--border)", background: theme === "light" ? "rgba(13,31,60,0.15)" : "var(--surface-2)", color: theme === "light" ? "var(--accent)" : "var(--text-muted)" }}>
                   {theme === "dark" ? <><Sun size={14} strokeWidth={1.75} className="inline mr-1" /> Light</> : <><Moon size={14} strokeWidth={1.75} className="inline mr-1" /> Dark</>}
                 </button>
               </div>
@@ -381,7 +400,7 @@ export default function SettingsPage() {
 
         {/* ── DATA ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.15em] mb-3 px-1" style={{ color: "var(--text-subtle)" }}>
             Data
           </p>
           <div className="rounded-2xl border divide-y" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
@@ -406,7 +425,7 @@ export default function SettingsPage() {
                 <p className="text-xs" style={{ color: "var(--text-muted)" }}>Help improve Scam Gym with anonymous usage data</p>
                 <button onClick={() => { tap(); const next = !analytics; setAnalytics(next); setAnalyticsEnabled(next); }} role="switch" aria-checked={analytics}
                   className="ml-4 px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150 shrink-0"
-                  style={{ borderColor: analytics ? "var(--accent)" : "var(--border)", background: analytics ? "rgba(124,106,247,0.15)" : "var(--surface-2)", color: analytics ? "var(--accent)" : "var(--text-muted)" }}>
+                  style={{ borderColor: analytics ? "var(--accent)" : "var(--border)", background: analytics ? "rgba(13,31,60,0.15)" : "var(--surface-2)", color: analytics ? "var(--accent)" : "var(--text-muted)" }}>
                   {analytics ? "ON" : "OFF"}
                 </button>
               </div>
@@ -416,7 +435,7 @@ export default function SettingsPage() {
 
         {/* ── DANGER ZONE ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--danger)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.15em] mb-3 px-1" style={{ color: "var(--danger)" }}>
             Danger Zone
           </p>
           <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)" }}>
@@ -441,7 +460,7 @@ export default function SettingsPage() {
 
         {/* ── ABOUT ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3 px-1" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.15em] mb-3 px-1" style={{ color: "var(--text-muted)" }}>
             About
           </p>
           <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>

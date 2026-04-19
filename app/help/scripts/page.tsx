@@ -105,7 +105,7 @@ function ScriptsPageInner() {
                 className="px-3 py-2 rounded-full text-xs font-semibold whitespace-nowrap border transition-all"
                 style={{
                   borderColor: active ? "var(--accent)" : "var(--border)",
-                  background: active ? "rgba(124,106,247,0.15)" : "var(--surface)",
+                  background: active ? "rgba(13,31,60,0.15)" : "var(--surface)",
                   color: active ? "var(--accent)" : "var(--text-muted)",
                 }}
               >
@@ -128,7 +128,7 @@ function ScriptsPageInner() {
                   className="px-3 py-1.5 rounded-full text-xs font-medium border transition-all"
                   style={{
                     borderColor: active ? "var(--accent)" : "var(--border)",
-                    background: active ? "rgba(124,106,247,0.1)" : "transparent",
+                    background: active ? "rgba(13,31,60,0.1)" : "transparent",
                     color: active ? "var(--accent)" : "var(--text-muted)",
                   }}
                 >
@@ -262,7 +262,7 @@ function ScriptCard({
       <div className="flex items-center gap-2 mb-2">
         <span
           className="text-xs px-2 py-0.5 rounded-full font-medium"
-          style={{ background: "rgba(124,106,247,0.12)", color: "var(--accent)" }}
+          style={{ background: "rgba(13,31,60,0.12)", color: "var(--accent)" }}
         >
           {script.channel.toUpperCase()}
         </span>
@@ -293,7 +293,7 @@ function ScriptCard({
           className="min-h-[44px] px-4 py-2 rounded-xl text-xs font-semibold border transition-all active:scale-95"
           style={{
             borderColor: isCopied ? "#22c55e" : "var(--accent)",
-            background: isCopied ? "rgba(34,197,94,0.1)" : "rgba(124,106,247,0.1)",
+            background: isCopied ? "rgba(34,197,94,0.1)" : "rgba(13,31,60,0.1)",
             color: isCopied ? "#22c55e" : "var(--accent)",
           }}
         >

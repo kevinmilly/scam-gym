@@ -342,7 +342,7 @@ export default function SessionPage() {
         <div className="flex items-center gap-2">
           <span
             className="text-xs font-bold px-3 py-1 rounded-full"
-            style={{ background: "rgba(124,106,247,0.15)", color: "var(--accent)" }}
+            style={{ background: "rgba(13,31,60,0.15)", color: "var(--accent)" }}
           >
             {session.currentIndex + 1}/{sessionDrills.length}
           </span>
@@ -444,7 +444,7 @@ export default function SessionPage() {
                   className="flex-1 min-w-[48px] py-3 rounded-xl font-semibold text-sm border-2 transition-all active:scale-95"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
+                    background: selected ? "rgba(13,31,60,0.15)" : "var(--surface)",
                     color: selected ? "var(--accent)" : "var(--text-muted)",
                   }}
                 >
@@ -470,7 +470,7 @@ export default function SessionPage() {
                   className="py-2 px-3 rounded-xl text-sm border-2 transition-all active:scale-95"
                   style={{
                     borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(124,106,247,0.15)" : "var(--surface)",
+                    background: selected ? "rgba(13,31,60,0.15)" : "var(--surface)",
                     color: selected ? "var(--accent)" : "var(--text-muted)",
                   }}
                 >

@@ -1,58 +1,147 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Balanced palette — navy chrome + warm-neutral base + coral signature
+   Light is the default. Dark mode via [data-theme="dark"].
+   --accent = navy (primary actions). --signature = coral (hero moments only).
+   ============================================================ */
+
 :root {
-  --background: #0a0a0f;
-  --surface: #13131a;
-  --surface-2: #1c1c26;
-  --surface-3: #222230;
-  --border: #2a2a38;
-  --text: #e8e8f0;
-  --text-muted: #8b8b9e;
-  --accent: #7c6af7;
-  --accent-hover: #9585ff;
-  --accent-subtle: rgba(124,106,247,0.08);
-  --danger: #ef4444;
-  --danger-bg: rgba(239,68,68,0.1);
-  --danger-border: rgba(239,68,68,0.3);
-  --success: #22c55e;
-  --success-bg: rgba(34,197,94,0.1);
-  --success-border: rgba(34,197,94,0.3);
-  --warning: #f59e0b;
-  --warning-bg: rgba(245,158,11,0.1);
-  --info: #3b82f6;
-  --info-bg: rgba(59,130,246,0.1);
-  --info-border: rgba(59,130,246,0.3);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.16);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --background: #faf7f2;
+  --surface: #ffffff;
+  --surface-2: #f2eee7;
+  --surface-3: #e8e2d5;
+  --border: #e4ded2;
+  --text: #0d1f3c;
+  --text-muted: #4a5878;
+  --text-subtle: #8a93a8;
+
+  --accent: #0d1f3c;
+  --accent-hover: #1a3058;
+  --accent-subtle: rgba(13,31,60,0.06);
+
+  --signature: #f77a0f;
+  --signature-hover: #e86a00;
+  --signature-subtle: rgba(247,122,15,0.08);
+  --signature-border: rgba(247,122,15,0.35);
+
+  --arc: #5eead4;
+
+  --danger: #b42318;
+  --danger-bg: rgba(180,35,24,0.08);
+  --danger-border: rgba(180,35,24,0.28);
+  --success: #2f7a4a;
+  --success-bg: rgba(47,122,74,0.10);
+  --success-border: rgba(47,122,74,0.28);
+  --warning: #c8971a;
+  --warning-bg: rgba(200,151,26,0.10);
+  --info: #1f62c9;
+  --info-bg: rgba(31,98,201,0.10);
+  --info-border: rgba(31,98,201,0.28);
+
+  --shadow-sm: 0 1px 3px rgba(13,31,60,0.06), 0 1px 2px rgba(13,31,60,0.03);
+  --shadow-md: 0 4px 12px rgba(13,31,60,0.08);
+
+  /* Reward accents — only on rewards/feedback, never on chrome */
+  --reward-gold: #c8971a;
+  --reward-gold-bg: rgba(200,151,26,0.10);
+  --reward-flame: #d9541f;
+  --reward-flame-bg: rgba(217,84,31,0.10);
+
+  /* Legacy section tokens — kept so existing callers compile.
+     All map to the muted primary tint so nothing renders loud. */
+  --section-gold: var(--warning);
+  --section-gold-bg: var(--warning-bg);
+  --section-gold-border: var(--signature-border);
+  --section-blue: var(--info);
+  --section-blue-bg: var(--info-bg);
+  --section-blue-border: var(--info-border);
+  --section-teal: #0f766e;
+  --section-teal-bg: rgba(15,118,110,0.08);
+  --section-teal-border: rgba(15,118,110,0.25);
+  --section-orange: var(--signature);
+  --section-orange-bg: var(--signature-subtle);
+  --section-orange-border: var(--signature-border);
+  --section-pink: #b8357e;
+  --section-pink-bg: rgba(184,53,126,0.08);
+  --section-pink-border: rgba(184,53,126,0.25);
+
+  /* Gradients — kept for back-compat but toned down to navy→coral */
+  --gradient-primary: linear-gradient(135deg, #0d1f3c 0%, #1a3058 100%);
+  --gradient-hero: linear-gradient(135deg, #0d1f3c 0%, #f77a0f 100%);
+  --gradient-gold: linear-gradient(135deg, #c8971a 0%, #d9541f 100%);
 }
 
-[data-theme="light"] {
-  --background: #f5f5f7;
-  --surface: #ffffff;
-  --surface-2: #eeeef0;
-  --surface-3: #e4e4e8;
-  --border: #d4d4da;
-  --text: #1a1a2e;
-  --text-muted: #6b6b80;
-  --accent: #5b4bd6;
-  --accent-hover: #4a3bc5;
-  --accent-subtle: rgba(91,75,214,0.08);
-  --danger: #dc2626;
-  --danger-bg: rgba(220,38,38,0.08);
-  --danger-border: rgba(220,38,38,0.25);
-  --success: #16a34a;
-  --success-bg: rgba(22,163,74,0.08);
-  --success-border: rgba(22,163,74,0.25);
-  --warning: #d97706;
-  --warning-bg: rgba(217,119,6,0.08);
-  --info: #2563eb;
-  --info-bg: rgba(37,99,235,0.08);
-  --info-border: rgba(37,99,235,0.25);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+[data-theme="dark"] {
+  --background: #0a1528;
+  --surface: #122338;
+  --surface-2: #1a2e48;
+  --surface-3: #233a58;
+  --border: #2a3f5f;
+  --text: #f0ecfa;
+  --text-muted: #95a0b8;
+  --text-subtle: #6a7590;
+
+  --accent: #ffffff;
+  --accent-hover: #e8eefa;
+  --accent-subtle: rgba(255,255,255,0.08);
+
+  --signature: #ff8f2e;
+  --signature-hover: #ffa04a;
+  --signature-subtle: rgba(255,143,46,0.12);
+  --signature-border: rgba(255,143,46,0.4);
+
+  --arc: #5eead4;
+
+  --danger: #ef4444;
+  --danger-bg: rgba(239,68,68,0.12);
+  --danger-border: rgba(239,68,68,0.35);
+  --success: #4ade80;
+  --success-bg: rgba(74,222,128,0.12);
+  --success-border: rgba(74,222,128,0.35);
+  --warning: #fcc858;
+  --warning-bg: rgba(252,200,88,0.12);
+  --info: #6fb3ff;
+  --info-bg: rgba(111,179,255,0.12);
+  --info-border: rgba(111,179,255,0.35);
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.16);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+
+  --reward-gold: #fcc858;
+  --reward-gold-bg: rgba(252,200,88,0.12);
+  --reward-flame: #ff8f4d;
+  --reward-flame-bg: rgba(255,143,77,0.12);
+
+  --section-gold: var(--reward-gold);
+  --section-gold-bg: var(--reward-gold-bg);
+  --section-gold-border: rgba(252,200,88,0.35);
+  --section-blue: var(--info);
+  --section-blue-bg: var(--info-bg);
+  --section-blue-border: var(--info-border);
+  --section-teal: #4fe3ce;
+  --section-teal-bg: rgba(79,227,206,0.12);
+  --section-teal-border: rgba(79,227,206,0.35);
+  --section-orange: var(--signature);
+  --section-orange-bg: var(--signature-subtle);
+  --section-orange-border: var(--signature-border);
+  --section-pink: #f687c1;
+  --section-pink-bg: rgba(246,135,193,0.12);
+  --section-pink-border: rgba(246,135,193,0.35);
+
+  --gradient-primary: linear-gradient(135deg, #122338 0%, #1a3058 100%);
+  --gradient-hero: linear-gradient(135deg, #122338 0%, #ff8f2e 100%);
+  --gradient-gold: linear-gradient(135deg, #fcc858 0%, #ff8f4d 100%);
 }
 
 html { font-size: 18px; }
+
+/* ── Display headline font (Fraunces serif) ── */
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-feature-settings: "ss01", "ss02";
+  letter-spacing: -0.015em;
+}
 
 [data-slow-mode="true"] { font-size: 20px; }
 [data-slow-mode="true"] p,
@@ -71,6 +160,7 @@ html, body {
   min-height: 100dvh;
   overscroll-behavior: none;
 }
+
 
 button {
   -webkit-tap-highlight-color: transparent;
@@ -103,6 +193,17 @@ select:focus-visible {
   background: var(--surface);
   border-radius: 16px;
   border: 2px solid var(--border);
+}
+
+/* ── Icon chip: tinted circle behind a section icon ── */
+.icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  flex-shrink: 0;
 }
 
 /* ── Micro-interactions ── */
@@ -201,22 +302,11 @@ select:focus-visible {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-/* Desktop layout: subtle side panel treatment */
+/* Desktop layout: clean side panel with subtle shadow */
 @media (min-width: 1024px) {
-  body::before {
-    content: '';
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(124,106,247,0.06) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
   main {
     position: relative;
     z-index: 1;
-    box-shadow: 0 0 0 1px var(--border), 0 0 80px rgba(0,0,0,0.4);
+    box-shadow: 0 0 0 1px var(--border), var(--shadow-md);
   }
 }

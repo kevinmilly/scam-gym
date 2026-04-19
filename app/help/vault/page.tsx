@@ -306,7 +306,7 @@ export default function VaultPage() {
                     className="px-2.5 py-1.5 rounded-full text-xs border transition-all"
                     style={{
                       borderColor: active ? "var(--accent)" : "var(--border)",
-                      background: active ? "rgba(124,106,247,0.15)" : "transparent",
+                      background: active ? "rgba(13,31,60,0.15)" : "transparent",
                       color: active ? "var(--accent)" : "var(--text-muted)",
                     }}
                   >
@@ -372,7 +372,7 @@ export default function VaultPage() {
             <button
               onClick={handleAdd}
               className="w-full py-3.5 rounded-2xl font-semibold text-sm border transition-all active:scale-95"
-              style={{ borderColor: "var(--accent)", background: "rgba(124,106,247,0.1)", color: "var(--accent)" }}
+              style={{ borderColor: "var(--accent)", background: "rgba(13,31,60,0.1)", color: "var(--accent)" }}
             >
               + Add Contact
             </button>
