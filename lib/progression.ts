@@ -3,6 +3,7 @@ import { computeXpForAttempt, computeTotalXp, getLevelInfo } from "./xp";
 import type { XpBreakdown, LevelInfo } from "./xp";
 import { evaluateAllMedals, ALL_MEDALS } from "./medals";
 import type { EarnedMedal, MedalDef } from "./medals";
+import { unlockSharpMode } from "./drillEngine";
 
 export type ProgressionState = {
   totalXp: number;
@@ -60,6 +61,11 @@ export function computePostDrillReward(
 
   const currentMedals = evaluateAllMedals({ attempts: allAttempts, drillMap });
   const newMedals = currentMedals.filter((m) => !previousMedals.has(m.id));
+
+  // Unlock Sharp Mode when all milestones are earned for the first time
+  if (currentMedals.length >= ALL_MEDALS.length && typeof window !== "undefined") {
+    unlockSharpMode();
+  }
 
   return {
     xpBreakdown,

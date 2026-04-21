@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { href: "/?from=drill", label: "Home", icon: HomeIcon, match: (p: string) => p === "/" },
-  { href: "/drill", label: "Drill", icon: DrillIcon, match: (p: string) => p === "/drill" },
+  { href: "/drill", label: "Practice", icon: DrillIcon, match: (p: string) => p === "/drill" },
   { href: "/stats", label: "Stats", icon: StatsIcon, match: (p: string) => p === "/stats" },
   { href: "/settings", label: "Settings", icon: SettingsIcon, match: (p: string) => p === "/settings" || p === "/upgrade" || p === "/help" },
 ];

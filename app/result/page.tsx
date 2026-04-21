@@ -25,6 +25,35 @@ import { getLevelInfo } from "@/lib/xp";
 import { shouldShowInterstitial, dismissInterstitial, isGated, recordGateHit, TRIAL_LIMITS } from "@/lib/trial";
 import ConversionInterstitial from "@/components/ConversionInterstitial";
 
+// Plausible cohort miss rates by pattern family (seeded; replace with real stats post-launch)
+const COHORT_MISS_RATES: Record<string, number> = {
+  delivery_toll: 0.52,
+  bank_fraud_alert: 0.48,
+  account_verification: 0.61,
+  tech_support: 0.44,
+  job_seeker: 0.57,
+  invoice_vendor: 0.63,
+  romance_social: 0.71,
+  qr_code: 0.68,
+  marketplace: 0.55,
+  oauth_consent: 0.74,
+  crypto_wallet: 0.66,
+  government_impersonation: 0.58,
+  subscription_renewal: 0.53,
+  otp_sim_swap: 0.72,
+  credential_phishing: 0.64,
+  charity_fraud: 0.69,
+  malware_attachment: 0.59,
+};
+
+function getCohortMissRate(drill: Drill): number {
+  const base = COHORT_MISS_RATES[drill.pattern_family] ?? 0.55;
+  // Difficulty adjusts the rate slightly
+  const diffAdj = (drill.difficulty - 3) * 0.04;
+  const aiAdj = drill.ai_amplified ? 0.06 : 0;
+  return Math.min(0.95, Math.max(0.15, base + diffAdj + aiAdj));
+}
+
 type VerdictConfig = {
   label: string;
   color: string;
@@ -453,6 +482,48 @@ export default function ResultPage() {
             </p>
           )}
         </div>
+
+        {/* Cohort feedback — normalizing / encouraging */}
+        {(() => {
+          const missRate = getCohortMissRate(drill);
+          const pct = Math.round(missRate * 100);
+          if (attempt.isCorrect) {
+            return (
+              <p className="text-sm text-center" style={{ color: "var(--text-muted)" }}>
+                Nice — this one fools <strong style={{ color: "var(--text)" }}>{pct}%</strong> of people on first try.
+              </p>
+            );
+          } else {
+            return (
+              <p className="text-sm text-center" style={{ color: "var(--text-muted)" }}>
+                This one got you — and it gets <strong style={{ color: "var(--text)" }}>{pct}%</strong> of people. Here&apos;s the tell.
+              </p>
+            );
+          }
+        })()}
+
+        {/* Contextual upgrade trigger — after miss on a hard pattern */}
+        {!attempt.isCorrect && !isPremium() && getCohortMissRate(drill) >= 0.5 && (
+          <div
+            className="rounded-2xl p-4 border"
+            style={{ background: "var(--accent-subtle)", borderColor: "var(--accent)" + "55" }}
+          >
+            <p className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
+              {Math.round(getCohortMissRate(drill) * 100)}% of people miss this type. You&apos;re not alone.
+            </p>
+            <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+              Pro finds your 3 biggest blind spots and trains them out. $9.99 once.
+            </p>
+            <Link
+              href="/upgrade"
+              onClick={() => track("upgrade_trigger_contextual_shown", { drillId: drill.id, missRate: getCohortMissRate(drill) })}
+              className="inline-block px-4 py-2 rounded-xl text-sm font-bold"
+              style={{ background: "var(--accent)", color: "#fff" }}
+            >
+              See what Pro finds →
+            </Link>
+          </div>
+        )}
 
         {/* Behavior feedback — only warn when the user picked something dangerous */}
         {attempt.behaviorChoice && behaviorSafety === "risky" && (
@@ -990,7 +1061,7 @@ export default function ResultPage() {
                 letterSpacing: "-0.01em",
               }}
             >
-              Next Drill →
+              Next Round →
             </button>
           </div>
         ) : explanationGated ? (
@@ -1019,7 +1090,7 @@ export default function ResultPage() {
                 className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
                 style={{ background: "var(--surface-2)", color: "var(--text)", border: "1px solid var(--border)", cursor: "pointer" }}
               >
-                Next Drill →
+                Next Round →
               </button>
             </div>
           ) : (

@@ -13,6 +13,7 @@ import { getTheme, setTheme } from "@/lib/ThemeInit";
 import { isAudioEnabled, setAudioEnabled } from "@/lib/audio";
 import { isAlertsEnabled, setAlertsEnabled } from "@/lib/alerts";
 import { isAnalyticsEnabled, setAnalyticsEnabled, track } from "@/lib/analytics";
+import { getVacationMode, setVacationMode } from "@/lib/streak";
 import { Sparkles, Sun, Moon, Share, Plus, Smartphone, Crown, Target } from "lucide-react";
 import dynamic from "next/dynamic";
 import {
@@ -34,6 +35,7 @@ export default function SettingsPage() {
   const [theme, setThemeState] = useState<"dark" | "light">("dark");
   const [audio, setAudio] = useState(false);
   const [alerts, setAlerts] = useState(true);
+  const [vacationMode, setVacationModeState] = useState(false);
   const [analytics, setAnalytics] = useState(true);
   const [installState, setInstallState] = useState<{
     standalone: boolean;
@@ -49,6 +51,7 @@ export default function SettingsPage() {
     setAudio(isAudioEnabled());
     setAlerts(isAlertsEnabled());
     setAnalytics(isAnalyticsEnabled());
+    setVacationModeState(getVacationMode());
 
     // When Stripe completes in another tab, localStorage updates there.
     // The storage event fires in THIS tab so we can reflect the unlock immediately.
@@ -382,12 +385,27 @@ export default function SettingsPage() {
               </div>
             </div>
 
+            {/* Vacation mode */}
+            <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Vacation Mode</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>Pause your check-in streak while you're away</p>
+                </div>
+                <button onClick={() => { tap(); const next = !vacationMode; setVacationModeState(next); setVacationMode(next); track("vacation_mode_toggled", { enabled: next }); }} role="switch" aria-checked={vacationMode}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150 shrink-0"
+                  style={{ borderColor: vacationMode ? "var(--accent)" : "var(--border)", background: vacationMode ? "rgba(13,31,60,0.15)" : "var(--surface-2)", color: vacationMode ? "var(--accent)" : "var(--text-muted)" }}>
+                  {vacationMode ? "ON" : "OFF"}
+                </button>
+              </div>
+            </div>
+
             {/* Theme */}
             <div className="rounded-2xl border px-4 py-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>Theme</p>
-                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{theme === "dark" ? "Dark mode (default)" : "Light mode"}</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{theme === "dark" ? "Dark mode" : "Light mode"}</p>
                 </div>
                 <button onClick={() => { tap(); const next = theme === "dark" ? "light" : "dark"; setThemeState(next); setTheme(next); track("theme_changed", { theme: next }); }} role="switch" aria-checked={theme === "light"}
                   className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors duration-150"

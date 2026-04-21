@@ -142,6 +142,17 @@ export function selectNextDrill(
   attempts: Attempt[],
   excludeId?: string
 ): Drill {
+  // Sharp Mode: all milestones earned — only serve hardest, AI-amplified drills
+  const sharpMode = isSharpModeUnlocked();
+  if (sharpMode && attempts.length > 0) {
+    const sharpPool = drills.filter(
+      (d) => d.difficulty >= 4 && d.ai_amplified && d.id !== excludeId
+    );
+    if (sharpPool.length > 0) {
+      return sharpPool[Math.floor(Math.random() * sharpPool.length)];
+    }
+  }
+
   const tier = getCurrentTier(attempts);
   const drillMap = new Map(drills.map((d) => [d.id, d]));
 
@@ -158,8 +169,19 @@ export function selectNextDrill(
     (d) => !attemptedIds.has(d.id) && d.id !== excludeId
   );
 
-  // First two drills: high-difficulty scam seed (creates the "aha" moment).
-  if (attempts.length < 2 && unseenAll.length > 0) {
+  // First drill: easy win to build confidence (≥90% success target).
+  if (attempts.length === 0 && unseenAll.length > 0) {
+    const easyFamilies = ["delivery_toll", "bank_fraud_alert"];
+    const easyPool = unseenAll.filter(
+      (d) => d.difficulty === 1 && !d.ai_amplified && easyFamilies.includes(d.pattern_family)
+    );
+    const fallbackEasy = unseenAll.filter((d) => d.difficulty === 1 && !d.ai_amplified);
+    const pool = easyPool.length > 0 ? easyPool : fallbackEasy.length > 0 ? fallbackEasy : unseenAll;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // Second drill: high-difficulty scam seed (creates the "aha" moment after the confidence win).
+  if (attempts.length === 1 && unseenAll.length > 0) {
     const highDeception = unseenAll.filter(
       (d) => d.difficulty >= 4 && d.ground_truth === "scam"
     );
@@ -235,6 +257,18 @@ export function selectNextDrill(
   }
 
   return weighted[Math.floor(Math.random() * weighted.length)];
+}
+
+const SHARP_MODE_KEY = "scamgym_sharp_mode";
+
+export function isSharpModeUnlocked(): boolean {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem(SHARP_MODE_KEY) === "1";
+}
+
+export function unlockSharpMode(): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(SHARP_MODE_KEY, "1");
 }
 
 export function resolveComparisonPair(

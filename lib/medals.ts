@@ -76,7 +76,7 @@ const CORE_MEDALS: MedalDef[] = [
     name: "First Instinct",
     emoji: "🧠",
     category: "core",
-    description: "Complete your first drill",
+    description: "Complete your first practice round",
     evaluate: (ctx) => ctx.attempts.length >= 1,
   },
   {
@@ -186,7 +186,7 @@ const VOLUME_MEDALS: MedalDef[] = [
     name: "Warming Up",
     emoji: "🔥",
     category: "volume",
-    description: "Complete 10 drills",
+    description: "Complete 10 practice rounds",
     evaluate: (ctx) => ctx.attempts.length >= 10,
   },
   {
@@ -194,7 +194,7 @@ const VOLUME_MEDALS: MedalDef[] = [
     name: "In Training",
     emoji: "💪",
     category: "volume",
-    description: "Complete 25 drills",
+    description: "Complete 25 practice rounds",
     evaluate: (ctx) => ctx.attempts.length >= 25,
   },
   {
@@ -202,7 +202,7 @@ const VOLUME_MEDALS: MedalDef[] = [
     name: "Battle Tested",
     emoji: "⚔️",
     category: "volume",
-    description: "Complete 50 drills",
+    description: "Complete 50 practice rounds",
     evaluate: (ctx) => ctx.attempts.length >= 50,
   },
   {
@@ -210,7 +210,7 @@ const VOLUME_MEDALS: MedalDef[] = [
     name: "Scam Gym Regular",
     emoji: "🏋️",
     category: "volume",
-    description: "Complete 100 drills",
+    description: "Complete 100 practice rounds",
     evaluate: (ctx) => ctx.attempts.length >= 100,
   },
 ];
@@ -223,7 +223,7 @@ function buildPatternMedals(): MedalDef[] {
     name: `${familyLabel(family)} Master`,
     emoji,
     category: "pattern" as MedalCategory,
-    description: `80%+ accuracy on 5+ ${familyLabel(family)} drills`,
+    description: `80%+ accuracy on 5+ ${familyLabel(family)} practice rounds`,
     evaluate: (ctx: MedalContext) => {
       const familyAttempts = ctx.attempts.filter((a) => {
         const drill = ctx.drillMap.get(a.drillId);
@@ -261,7 +261,7 @@ const SPECIAL_MEDALS: MedalDef[] = [
     name: "Red Flag Hunter",
     emoji: "🚩",
     category: "special",
-    description: "5 drills with perfect red flag recall",
+    description: "5 practice rounds with perfect red flag recall",
     evaluate: (ctx) => {
       const perfectRecalls = ctx.attempts.filter((a) => {
         const drill = ctx.drillMap.get(a.drillId);
@@ -279,7 +279,7 @@ const SPECIAL_MEDALS: MedalDef[] = [
     name: "Safety First",
     emoji: "🦺",
     category: "special",
-    description: "10 consecutive scam drills with safe behavior",
+    description: "10 consecutive scam rounds with safe behavior",
     evaluate: (ctx) => {
       const scamAttempts = ctx.attempts.filter((a) => {
         const drill = ctx.drillMap.get(a.drillId);
@@ -321,7 +321,7 @@ const STREAK_MEDALS: MedalDef[] = [
     name: "3-Day Habit",
     emoji: "🔥",
     category: "special",
-    description: "Train 3 days in a row",
+    description: "Practice 3 days in a row",
     evaluate: () => getStreak().current >= 3,
   },
   {
@@ -329,7 +329,7 @@ const STREAK_MEDALS: MedalDef[] = [
     name: "Week Warrior",
     emoji: "🗓️",
     category: "special",
-    description: "Train 7 days in a row",
+    description: "Practice 7 days in a row",
     evaluate: () => getStreak().current >= 7,
   },
   {
@@ -337,7 +337,7 @@ const STREAK_MEDALS: MedalDef[] = [
     name: "Two-Week Vigilante",
     emoji: "⚡",
     category: "special",
-    description: "Train 14 days in a row",
+    description: "Practice 14 days in a row",
     evaluate: () => getStreak().current >= 14,
   },
   {
@@ -345,7 +345,7 @@ const STREAK_MEDALS: MedalDef[] = [
     name: "Iron Habit",
     emoji: "🏆",
     category: "special",
-    description: "Train 30 days in a row",
+    description: "Practice 30 days in a row",
     evaluate: () => getStreak().current >= 30,
   },
 ];

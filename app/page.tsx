@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useDrillContext, allDrills } from "@/lib/DrillContext";
+import { db } from "@/lib/db";
 import { computeStats } from "@/lib/stats";
 import { getCurrentTier } from "@/lib/drillEngine";
 import { tap } from "@/lib/haptics";
@@ -54,6 +55,7 @@ function HomePageInner() {
   const [demoAnswer, setDemoAnswer] = useState<null | "scam" | "legit">(null);
   const [autopilotMsg, setAutopilotMsg] = useState<string | null>(null);
   const [countdown, setCountdown] = useState("");
+  const [weeklyWins, setWeeklyWins] = useState<{ correct: number; total: number; prevCorrect: number } | null>(null);
 
   // Handle premium activation via Stripe redirect (session_id param)
   useEffect(() => {
@@ -111,6 +113,21 @@ function HomePageInner() {
     tick();
     const interval = setInterval(tick, 60000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Weekly progress stats
+  useEffect(() => {
+    db.attempts.toArray().then((all) => {
+      const now = Date.now();
+      const oneWeek = 7 * 24 * 60 * 60 * 1000;
+      const twoWeeks = 14 * 24 * 60 * 60 * 1000;
+      const thisWeek = all.filter((a) => now - a.timestamp < oneWeek);
+      const lastWeek = all.filter((a) => now - a.timestamp >= oneWeek && now - a.timestamp < twoWeeks);
+      if (thisWeek.length < 2) return; // not enough data yet
+      const correct = thisWeek.filter((a) => a.isCorrect).length;
+      const prevCorrect = lastWeek.length > 0 ? lastWeek.filter((a) => a.isCorrect).length : 0;
+      setWeeklyWins({ correct, total: thisWeek.length, prevCorrect });
+    });
   }, []);
 
   function handleStart() {
@@ -358,6 +375,31 @@ function HomePageInner() {
               );
             })()}
 
+            {/* Weekly progress card */}
+            {weeklyWins && (
+              <div
+                className="rounded-2xl border px-4 py-3 mb-5 flex items-center justify-between"
+                style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              >
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest mb-0.5" style={{ color: "var(--text-subtle)" }}>
+                    This week
+                  </p>
+                  <p className="text-base font-bold" style={{ color: "var(--text)" }}>
+                    {weeklyWins.correct}/{weeklyWins.total} caught
+                    {weeklyWins.prevCorrect > 0 && (
+                      <span className="ml-2 text-xs font-semibold" style={{ color: weeklyWins.correct >= weeklyWins.prevCorrect ? "var(--success)" : "var(--text-muted)" }}>
+                        {weeklyWins.correct >= weeklyWins.prevCorrect ? `↑ from ${weeklyWins.prevCorrect}` : `↓ from ${weeklyWins.prevCorrect}`}
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <div className="text-2xl font-extrabold" style={{ color: weeklyWins.correct / weeklyWins.total >= 0.7 ? "var(--success)" : "var(--warning)" }}>
+                  {Math.round((weeklyWins.correct / weeklyWins.total) * 100)}%
+                </div>
+              </div>
+            )}
+
             {/* Panic card — top priority, high intent users */}
             <Link
               href="/help"
@@ -443,7 +485,7 @@ function HomePageInner() {
                     {label} Blind Spot
                   </h3>
                   <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
-                    You&apos;re missing {Math.round((1 - weakest.accuracy) * 100)}% of these drills. Train this category specifically to build your instinct.
+                    You&apos;re missing {Math.round((1 - weakest.accuracy) * 100)}% of these. Practice this category to build your instinct.
                   </p>
                   <button
                     onClick={() => {
@@ -478,7 +520,7 @@ function HomePageInner() {
               className="w-full py-4 rounded-full font-bold text-lg transition-all active:scale-95"
               style={{ background: "var(--signature)", color: "#fff", boxShadow: "0 6px 20px rgba(247,122,15,0.35)" }}
             >
-              Start Drill →
+              Start Practice →
             </button>
 
             <div className="flex justify-center gap-6 pt-1">

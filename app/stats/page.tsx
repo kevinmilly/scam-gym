@@ -58,7 +58,7 @@ export default function StatsPage() {
     tap();
     const accuracy = Math.round(stats.overallAccuracy * 100);
     const levelText = progression ? `Level ${progression.levelInfo.level} ${progression.levelInfo.title} · ` : "";
-    const medalCount = progression ? ` · ${progression.earnedMedals.length} medals` : "";
+    const medalCount = progression ? ` · ${progression.earnedMedals.length} milestones` : "";
     const insights = stats.insightSummary.length > 0
       ? "\n" + stats.insightSummary.map((l) => `→ ${l}`).join("\n") + "\n"
       : "";
@@ -207,7 +207,7 @@ export default function StatsPage() {
       >
         {(["overview", "medals", "history"] as StatsTab[]).map((tab) => {
           const active = activeTab === tab;
-          const labels: Record<StatsTab, string> = { overview: "Overview", medals: "Medals", history: "History" };
+          const labels: Record<StatsTab, string> = { overview: "Overview", medals: "Milestones", history: "History" };
           return (
             <button
               key={tab}
@@ -241,14 +241,14 @@ export default function StatsPage() {
               style={{ background: "rgba(245,158,11,0.15)", color: "var(--warning)" }}
             >
               <Flame size={16} strokeWidth={1.75} />
-              <span>{streak.current} day streak</span>
+              <span>{streak.current}-day check-in streak</span>
             </div>
           );
         })()}
 
         {/* Total drills */}
         <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-          {stats.totalAttempts} drills completed · {Math.round(stats.overallAccuracy * 100)}% overall accuracy
+          {stats.totalAttempts} practice rounds · {Math.round(stats.overallAccuracy * 100)}% overall accuracy
         </p>
 
         {stats.totalAttempts >= 3 && <SignInPromo variant="inline" />}
