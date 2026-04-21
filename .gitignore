@@ -44,3 +44,12 @@ next-env.d.ts
 sleuth-session.json
 .sleuth/evidence/
 .sleuth/app-map.json
+
+# Android signing — never commit the keystore
+android/keystore.jks
+android/*.jks
+android/keystore.properties
+
+# Android build outputs
+android/app/build/
+android/.gradle/
