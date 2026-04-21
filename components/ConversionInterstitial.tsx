@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { dismissInterstitial } from "@/lib/trial";
+import { PREMIUM_TAGLINE } from "@/lib/premium";
 import { tap } from "@/lib/haptics";
 import { track } from "@/lib/analytics";
 import { X } from "lucide-react";
@@ -20,7 +21,7 @@ export default function ConversionInterstitial({ totalAttempts, accuracy, onDism
   // Describe improvement direction — if no prior data we just say overall
   const accuracyLine = pct >= 70
     ? `Your accuracy is ${pct}% — you're getting sharp.`
-    : `You've caught ${Math.round(accuracy * totalAttempts)} out of ${totalAttempts} drills so far.`;
+    : `You've caught ${Math.round(accuracy * totalAttempts)} out of ${totalAttempts} practice rounds so far.`;
 
   function handleUpgrade() {
     tap();
@@ -76,18 +77,19 @@ export default function ConversionInterstitial({ totalAttempts, accuracy, onDism
             {accuracyLine}
           </h2>
           <p className="text-sm mt-2 leading-relaxed" style={{ color: "var(--text-muted)" }}>
-            You&apos;ve completed {totalAttempts} drills. Pro shows you exactly where you&apos;re still
-            vulnerable — and automatically trains those blind spots.
+            You&apos;ve completed {totalAttempts} practice rounds. Pro shows exactly where you&apos;re still
+            vulnerable — and automatically trains those blind spots for you.
           </p>
         </div>
 
         {/* Feature bullets */}
+        <p className="text-xs font-bold text-center" style={{ color: "var(--accent)" }}>{PREMIUM_TAGLINE}</p>
         <ul className="space-y-2">
           {[
-            "Accuracy trend chart — see if you're actually improving",
-            "Weakness autopilot — trains your worst categories automatically",
-            "Unlimited drill breakdowns — no daily limit",
-            "Full attempt history — review every drill you've done",
+            "See yourself getting safer week by week",
+            "Weakness autopilot — trains your blind spots automatically",
+            "Unlimited full breakdowns — no daily limit",
+            "Full attempt history — review every round you&apos;ve done",
           ].map((line) => (
             <li key={line} className="flex items-start gap-2 text-sm" style={{ color: "var(--text)" }}>
               <span style={{ color: "var(--accent)" }}>✓</span>
@@ -105,7 +107,7 @@ export default function ConversionInterstitial({ totalAttempts, accuracy, onDism
           Unlock Pro — $9.99
         </button>
         <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-          One-time · No subscription · No account needed
+          One-time payment · No subscription
         </p>
       </div>
     </div>

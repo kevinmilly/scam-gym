@@ -2,6 +2,8 @@ const PREMIUM_KEY = "scamgym_premium";
 const PREMIUM_TOKEN_KEY = "scamgym_premium_token";
 
 export const PREMIUM_PRICE = "$9.99";
+export const PREMIUM_TAGLINE = "$9.99 once. The average scam costs $500.";
+export const PREMIUM_SUBTEXT = "One-time payment. New practice rounds added every week.";
 
 export const STRIPE_PAYMENT_URL = "https://buy.stripe.com/eVqcMZ0dyfhd5BkdLJe7m01";
 

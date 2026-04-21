@@ -9,6 +9,7 @@ import { computeStats } from "@/lib/stats";
 import { getCurrentTier } from "@/lib/drillEngine";
 import { tap } from "@/lib/haptics";
 import { unlockPremiumWithToken, isPremium } from "@/lib/premium";
+import { getCurrentUser } from "@/lib/auth";
 import { syncPremiumToFirestore } from "@/lib/auth";
 import { track } from "@/lib/analytics";
 import { getStreak, hasTrainedToday } from "@/lib/streak";
@@ -56,6 +57,7 @@ function HomePageInner() {
   const [autopilotMsg, setAutopilotMsg] = useState<string | null>(null);
   const [countdown, setCountdown] = useState("");
   const [weeklyWins, setWeeklyWins] = useState<{ correct: number; total: number; prevCorrect: number } | null>(null);
+  const [showSignInNudge, setShowSignInNudge] = useState(false);
 
   // Handle premium activation via Stripe redirect (session_id param)
   useEffect(() => {
@@ -113,6 +115,16 @@ function HomePageInner() {
     tick();
     const interval = setInterval(tick, 60000);
     return () => clearInterval(interval);
+  }, []);
+
+  // "Don't lose Pro" sign-in nudge — shown every 3 launches until signed in
+  useEffect(() => {
+    if (!isPremium()) return;
+    if (getCurrentUser()) return; // already signed in
+    const NUDGE_KEY = "scamgym_signin_nudge_count";
+    const count = parseInt(localStorage.getItem(NUDGE_KEY) ?? "0", 10) + 1;
+    localStorage.setItem(NUDGE_KEY, String(count));
+    if (count % 3 === 1) setShowSignInNudge(true); // show on launch 1, 4, 7…
   }, []);
 
   // Weekly progress stats
@@ -311,6 +323,34 @@ function HomePageInner() {
                 <p className="text-xs" style={{ color: "var(--text-muted)" }}>
                   All premium features are now active. Thank you for supporting Scam Gym!
                 </p>
+              </div>
+            )}
+
+            {/* "Don't lose Pro" sign-in nudge */}
+            {showSignInNudge && (
+              <div
+                className="rounded-2xl border px-4 py-3 mb-4 flex items-center justify-between gap-3"
+                style={{ background: "var(--accent-subtle)", borderColor: "var(--accent)" + "55" }}
+              >
+                <p className="text-sm leading-snug flex-1" style={{ color: "var(--text)" }}>
+                  Sign in so you don&apos;t lose Pro if you switch devices.
+                </p>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={() => router.push("/settings")}
+                    className="px-3 py-1.5 rounded-xl text-xs font-bold"
+                    style={{ background: "var(--accent)", color: "#fff" }}
+                  >
+                    Sign in
+                  </button>
+                  <button
+                    onClick={() => setShowSignInNudge(false)}
+                    className="text-xs"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Later
+                  </button>
+                </div>
               </div>
             )}
 

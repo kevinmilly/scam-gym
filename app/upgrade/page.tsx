@@ -2,28 +2,28 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { isPremium, unlockPremiumWithToken, PREMIUM_PRICE, STRIPE_PAYMENT_URL } from "@/lib/premium";
+import { isPremium, unlockPremiumWithToken, PREMIUM_PRICE, PREMIUM_TAGLINE, PREMIUM_SUBTEXT, STRIPE_PAYMENT_URL } from "@/lib/premium";
 import { track } from "@/lib/analytics";
 import { Search, TrendingUp, Cpu, Sparkles, ChevronRight, Check, Target, Zap, Bookmark, Flame } from "lucide-react";
 
 const UPGRADE_OUTCOMES = [
   {
     icon: <Search size={24} strokeWidth={1.75} />,
-    headline: "Know exactly where you're vulnerable",
-    description: "Most people have a blind spot — a scam type they consistently miss, often with high confidence. See your full vulnerability profile and know which scams could actually fool you.",
-    features: ["Per-category accuracy breakdown", "Overconfidence hotspot analysis", "Focused weak-spot training"],
+    headline: "Find your 3 biggest blind spots",
+    description: "Most people have a scam type they consistently miss — often while feeling confident. Pro shows you exactly which categories can still fool you, so you can fix them before it costs you.",
+    features: ["See yourself getting safer week by week", "Know which scams are most likely to fool you", "Focused weak-spot practice"],
   },
   {
     icon: <TrendingUp size={24} strokeWidth={1.75} />,
-    headline: "See if you're actually getting better",
-    description: "Random drills don't tell you whether you're improving. Track your real progress over time with a trend chart that shows whether your accuracy and calibration are moving in the right direction.",
-    features: ["Accuracy trend chart", "Full drill history", "Session mode — 10 drills, under 5 minutes"],
+    headline: "Know if you're actually getting safer",
+    description: "Free practice builds your instincts. Pro shows whether those instincts are actually improving — with a trend chart and full history so you can see real progress, not just feelings.",
+    features: ["Accuracy trend chart — week over week", "Full attempt history — review every round", "10-minute check-up session mode"],
   },
   {
     icon: <Cpu size={24} strokeWidth={1.75} />,
-    headline: "Train smarter, not more",
-    description: "Instead of random drills, let the app automatically focus on your worst categories. One tap and the engine routes you straight to the patterns that catch you off guard.",
-    features: ["Weakness autopilot", "Custom drill focus", "Bookmark tricky drills to revisit"],
+    headline: "\"I'll train your weak spots for you\"",
+    description: "One tap and the app focuses entirely on the scam types that can still catch you. No guessing what to practice — the engine routes you straight to your vulnerabilities.",
+    features: ["Weakness autopilot — one tap, instant focus", "Train the scams that can still fool you", "Save rounds you want to show your family"],
   },
 ];
 
@@ -118,9 +118,9 @@ export default function UpgradePage() {
             {[
               { icon: <TrendingUp size={20} strokeWidth={1.75} />, label: "Accuracy trend chart", href: "/stats" },
               { icon: <Search size={20} strokeWidth={1.75} />, label: "Full vulnerability profile", href: "/stats" },
-              { icon: <Target size={20} strokeWidth={1.75} />, label: "Custom drill focus", href: "/settings" },
-              { icon: <Zap size={20} strokeWidth={1.75} />, label: "10-drill session mode", href: "/session" },
-              { icon: <Bookmark size={20} strokeWidth={1.75} />, label: "Drill bookmarks", href: "/stats" },
+              { icon: <Target size={20} strokeWidth={1.75} />, label: "Custom practice focus", href: "/settings" },
+              { icon: <Zap size={20} strokeWidth={1.75} />, label: "10-round check-up session", href: "/session" },
+              { icon: <Bookmark size={20} strokeWidth={1.75} />, label: "Saved rounds", href: "/stats" },
               { icon: <Flame size={20} strokeWidth={1.75} />, label: "Streak tracking", href: "/stats" },
             ].map(({ icon, label, href }) => (
               <button
@@ -138,11 +138,14 @@ export default function UpgradePage() {
         ) : (
           <>
             <div className="text-center">
-              <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-4" style={{ color: "var(--text)" }}>
+              <h1 className="text-[28px] font-bold leading-tight tracking-tight mb-2" style={{ color: "var(--text)" }}>
                 Know your blind spots.
               </h1>
-              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-                Free drills train your instincts. Pro shows you where those instincts are failing.
+              <p className="text-sm mb-1" style={{ color: "var(--text-muted)" }}>
+                Free rounds build your instincts. Pro shows you where they&apos;re still failing.
+              </p>
+              <p className="text-sm font-bold" style={{ color: "var(--accent)" }}>
+                {PREMIUM_TAGLINE}
               </p>
             </div>
 
@@ -187,10 +190,7 @@ export default function UpgradePage() {
                 Unlock Pro — {PREMIUM_PRICE}
               </a>
               <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                One-time · No subscription · Sign in to sync across devices
-              </p>
-              <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                Thousands of people are already training with Scam Gym. Pro helps you train smarter.
+                {PREMIUM_SUBTEXT}
               </p>
             </div>
 
