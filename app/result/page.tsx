@@ -20,7 +20,7 @@ import { updateStreak } from "@/lib/streak";
 import { isBookmarked, toggleBookmark, getBookmarks } from "@/lib/bookmarks";
 import { isPremium } from "@/lib/premium";
 import { track } from "@/lib/analytics";
-import { AlertTriangle, Eye, Lightbulb, Target, Zap, ShieldCheck, ShieldAlert, Check, X as XIcon, Bookmark, BookmarkCheck, ChevronDown, ChevronUp, ArrowRight, Sparkles } from "lucide-react";
+import { AlertTriangle, Eye, Lightbulb, Target, Zap, ShieldCheck, ShieldAlert, Check, X as XIcon, Bookmark, BookmarkCheck, ChevronDown, ChevronUp, ArrowRight, Sparkles, Share2 } from "lucide-react";
 import { getLevelInfo } from "@/lib/xp";
 import { shouldShowInterstitial, dismissInterstitial, isGated, recordGateHit, TRIAL_LIMITS } from "@/lib/trial";
 import ConversionInterstitial from "@/components/ConversionInterstitial";
@@ -128,6 +128,7 @@ export default function ResultPage() {
   const [displayedXp, setDisplayedXp] = useState(0);
   const [showInterstitial, setShowInterstitial] = useState(false);
   const [overallAccuracy, setOverallAccuracy] = useState(0.5);
+  const [shareStatus, setShareStatus] = useState<"idle" | "copied">("idle");
   const revealedRef = useRef<HTMLDivElement>(null);
 
   type ContentFlag = {
@@ -256,6 +257,22 @@ export default function ResultPage() {
     setReportSubmitted(true);
     setReportOpen(false);
   }, [drill, reportReason]);
+
+  async function handleShare() {
+    if (!drill || !attempt) return;
+    tap();
+    const pct = Math.round(overallAccuracy * 100);
+    const text = `I'm training to spot scams on Scam Gym — ${pct}% accuracy so far. Try it free: https://scamgym.com/?ref=share_result_v1`;
+    track("result_shared", { drillId: drill.id, accuracy: overallAccuracy });
+    if (navigator.share) {
+      try { await navigator.share({ text }); return; } catch { /* cancelled */ }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      setShareStatus("copied");
+      setTimeout(() => setShareStatus("idle"), 2500);
+    } catch { /* ignore */ }
+  }
 
   if (!attempt || !drill || !calVerdict) {
     return (
@@ -1051,18 +1068,28 @@ export default function ResultPage() {
                 {nextDrillNudge}
               </p>
             )}
-            <button
-              onClick={() => { tap(); router.push("/drill"); }}
-              className="w-full py-4 rounded-full font-display font-extrabold text-lg transition-all active:scale-95"
-              style={{
-                background: "var(--signature)",
-                color: "#fff",
-                boxShadow: "0 8px 24px rgba(247,122,15,0.38)",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Next Round →
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => { tap(); router.push("/drill"); }}
+                className="flex-1 py-4 rounded-full font-display font-extrabold text-lg transition-all active:scale-95"
+                style={{
+                  background: "var(--signature)",
+                  color: "#fff",
+                  boxShadow: "0 8px 24px rgba(247,122,15,0.38)",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                Next Round →
+              </button>
+              <button
+                onClick={handleShare}
+                aria-label="Share your result"
+                className="py-4 px-4 rounded-full transition-all active:scale-95 flex items-center justify-center min-w-[56px]"
+                style={{ background: "var(--surface-2)", color: shareStatus === "copied" ? "var(--success)" : "var(--text-muted)", border: "1px solid var(--border)" }}
+              >
+                <Share2 size={20} strokeWidth={1.75} />
+              </button>
+            </div>
           </div>
         ) : explanationGated ? (
             /* Soft gate — show upsell instead of explanation on gated drills */

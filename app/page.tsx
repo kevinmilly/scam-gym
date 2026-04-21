@@ -545,6 +545,27 @@ function HomePageInner() {
 
             {attempts.length >= 3 && <SignInPromo />}
 
+            {/* Scam IQ Quiz entry point */}
+            <button
+              onClick={() => { tap(); router.push("/quiz"); }}
+              className="w-full flex items-center gap-3 rounded-2xl border px-4 py-4 transition-all active:scale-[0.98]"
+              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: "var(--accent-subtle)", color: "var(--accent)" }}
+              >
+                <span className="text-lg font-extrabold" style={{ lineHeight: 1 }}>?</span>
+              </div>
+              <div className="flex-1 text-left">
+                <p className="font-bold text-sm" style={{ color: "var(--text)" }}>Scam IQ Quiz</p>
+                <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                  10 questions · See how you rank · Share your score
+                </p>
+              </div>
+              <ChevronRight size={16} strokeWidth={1.75} style={{ color: "var(--text-muted)", flexShrink: 0 }} />
+            </button>
+
           </div>
 
           {/* Sticky CTA */}
