@@ -66,14 +66,14 @@ export default function PrivacyPage() {
       <section className="space-y-2">
         <h2 className="text-base font-bold">Deleting your data</h2>
         <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-          To delete all local data: Settings → Reset All Data. To delete your account and server-side data (if signed in): Settings → Delete Account. To request data deletion by email: contact@scamgym.com.
+          To delete all local data: Settings → Reset All Data. To delete your account and server-side data (if signed in): Settings → Delete Account. To request data deletion by email: kevincoder@protonmail.com.
         </p>
       </section>
 
       <section className="space-y-2">
         <h2 className="text-base font-bold">Contact</h2>
         <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-          Questions? Email contact@scamgym.com.
+          Questions? Email kevincoder@protonmail.com.
         </p>
       </section>
     </div>
