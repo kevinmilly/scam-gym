@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { syncStatusBar } from "@/lib/statusBar";
 
 const THEME_KEY = "scamgym_theme";
 
@@ -14,6 +15,7 @@ export function setTheme(theme: "dark" | "light") {
   document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute("content", theme === "dark" ? "#0a1528" : "#faf7f2");
+  syncStatusBar(theme === "dark");
 }
 
 export default function ThemeInit() {
@@ -24,6 +26,7 @@ export default function ThemeInit() {
     }
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", theme === "dark" ? "#0a1528" : "#faf7f2");
+    syncStatusBar(theme === "dark");
   }, []);
 
   return null;

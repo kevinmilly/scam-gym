@@ -9,7 +9,7 @@ import { accuracyScore, redFlagRecall } from "@/lib/scoring";
 import { trickLabel } from "@/lib/stats";
 import { saveAttempt, saveContentFlag, db } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
-import { tap } from "@/lib/haptics";
+import { tap, correctVibrate, wrongVibrate } from "@/lib/haptics";
 import type { PostDrillReward } from "@/lib/progression";
 import { computeXpForAttempt } from "@/lib/xp";
 import type { XpBreakdown } from "@/lib/xp";
@@ -23,6 +23,7 @@ import { track } from "@/lib/analytics";
 import { AlertTriangle, Eye, Lightbulb, Target, Zap, ShieldCheck, ShieldAlert, Check, X as XIcon, Bookmark, BookmarkCheck, ChevronDown, ChevronUp, ArrowRight, Sparkles, Share2 } from "lucide-react";
 import { getLevelInfo } from "@/lib/xp";
 import { shouldShowInterstitial, dismissInterstitial, isGated, recordGateHit, TRIAL_LIMITS } from "@/lib/trial";
+import { maybeRequestReview } from "@/lib/nativeReview";
 import ConversionInterstitial from "@/components/ConversionInterstitial";
 
 // Plausible cohort miss rates by pattern family (seeded; replace with real stats post-launch)
@@ -153,9 +154,11 @@ export default function ResultPage() {
       router.replace("/drill");
       return;
     }
+    const parsedAttempt = JSON.parse(a);
     const parsedDrill = JSON.parse(d);
-    setAttempt(JSON.parse(a));
+    setAttempt(parsedAttempt);
     setDrill(parsedDrill);
+    if (parsedAttempt.isCorrect) correctVibrate(); else wrongVibrate();
     setCalVerdict(cv as CalibrationVerdict);
     setBookmarked(isBookmarked(parsedDrill.id));
 
@@ -179,6 +182,7 @@ export default function ResultPage() {
       if (count > 0) {
         const correctCount = all.filter((a) => a.isCorrect).length;
         setOverallAccuracy(correctCount / count);
+        maybeRequestReview(correctCount);
       }
       // Show conversion interstitial after 3s if conditions are met
       if (shouldShowInterstitial(count)) {

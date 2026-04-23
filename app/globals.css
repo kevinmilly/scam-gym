@@ -159,6 +159,9 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   min-height: 100dvh;
   overscroll-behavior: none;
+  /* Push content below the native status bar on iOS/Android */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 
