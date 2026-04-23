@@ -83,7 +83,8 @@ export async function checkFirestorePremium(): Promise<boolean> {
   if (!email) return false;
 
   try {
-    const res = await fetch("/api/verify-purchase", {
+    const { apiUrl } = await import("@/lib/apiBase");
+    const res = await fetch(apiUrl("/api/verify-purchase"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),

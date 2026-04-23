@@ -12,10 +12,12 @@
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",
     "issues": "tsx scripts/generate-issues.ts",
+    "build:mobile": "tsx scripts/build-mobile.ts",
     "android:sync": "npx cap sync android",
     "android:open": "npx cap open android",
-    "android:build": "cd android && gradlew assembleRelease",
-    "android:bundle": "cd android && gradlew bundleRelease"
+    "android:build": "cd android && ./gradlew.bat assembleRelease",
+    "android:bundle": "cd android && ./gradlew.bat bundleRelease",
+    "android:build-full": "npm run build:mobile && npm run android:sync && npm run android:bundle"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.1",
@@ -41,6 +43,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/uuid": "^10.0.0",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",

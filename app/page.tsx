@@ -13,6 +13,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { syncPremiumToFirestore } from "@/lib/auth";
 import { track } from "@/lib/analytics";
 import { getStreak, hasTrainedToday } from "@/lib/streak";
+import { apiUrl } from "@/lib/apiBase";
 import { getDailyChallengeDrill, getDailyChallengeState, secondsUntilMidnight, formatCountdown } from "@/lib/dailyChallenge";
 import PremiumGate from "@/components/PremiumGate";
 import SignInPromo from "@/components/SignInPromo";
@@ -65,7 +66,7 @@ function HomePageInner() {
     if (sessionId && sessionId.startsWith("cs_") && !isPremium()) {
       // Clean the URL immediately so refreshing doesn't re-trigger
       window.history.replaceState({}, "", "/");
-      fetch("/api/unlock", {
+      fetch(apiUrl("/api/unlock"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId }),

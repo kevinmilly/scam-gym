@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { isPremium, unlockPremiumWithToken, PREMIUM_PRICE, PREMIUM_TAGLINE, PREMIUM_SUBTEXT, STRIPE_PAYMENT_URL } from "@/lib/premium";
+import { apiUrl } from "@/lib/apiBase";
 import { track } from "@/lib/analytics";
 import { Search, TrendingUp, Cpu, Sparkles, ChevronRight, Check, Target, Zap, Bookmark, Flame } from "lucide-react";
 
@@ -55,7 +56,7 @@ export default function UpgradePage() {
     setRestoreStatus("loading");
     setRestoreMessage("");
     try {
-      const res = await fetch("/api/verify-purchase", {
+      const res = await fetch(apiUrl("/api/verify-purchase"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: restoreEmail.trim() }),

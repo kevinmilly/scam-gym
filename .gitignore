@@ -53,3 +53,4 @@ android/keystore.properties
 # Android build outputs
 android/app/build/
 android/.gradle/
+android/app/src/main/assets/public/
