@@ -11,6 +11,10 @@ const config: CapacitorConfig = {
     webContentsDebuggingEnabled: false,
   },
   plugins: {
+    FirebaseAuthentication: {
+      skipNativeAuth: false,
+      providers: ["google.com"],
+    },
     SplashScreen: {
       launchShowDuration: 1200,
       backgroundColor: "#faf7f2",

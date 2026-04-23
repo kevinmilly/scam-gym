@@ -20,6 +20,7 @@
     "android:build-full": "npm run build:mobile && npm run android:sync && npm run android:bundle"
   },
   "dependencies": {
+    "@capacitor-firebase/authentication": "^8.2.0",
     "@capacitor/android": "^8.3.1",
     "@capacitor/cli": "^8.3.1",
     "@capacitor/core": "^8.3.1",

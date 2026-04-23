@@ -1,5 +1,6 @@
 import {
   signInWithPopup,
+  signInWithCredential,
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
@@ -7,16 +8,28 @@ import {
   type Unsubscribe,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { Capacitor } from "@capacitor/core";
 import { getFirebaseAuth, getFirebaseDb } from "@/lib/firebase";
 import { unlockPremiumWithToken } from "@/lib/premium";
 import { identifyUser, resetUser } from "@/lib/analytics";
 
-const provider = new GoogleAuthProvider();
+const webProvider = new GoogleAuthProvider();
 
 export async function signInWithGoogle(): Promise<User | null> {
   const auth = getFirebaseAuth();
   if (!auth) return null;
-  const result = await signInWithPopup(auth, provider);
+
+  if (Capacitor.isNativePlatform()) {
+    // Native flow: avoids WebView OAuth popup (deprecated by Google)
+    const { FirebaseAuthentication } = await import("@capacitor-firebase/authentication");
+    const result = await FirebaseAuthentication.signInWithGoogle();
+    if (!result.credential?.idToken) return null;
+    const credential = GoogleAuthProvider.credential(result.credential.idToken);
+    const userCredential = await signInWithCredential(auth, credential);
+    return userCredential.user;
+  }
+
+  const result = await signInWithPopup(auth, webProvider);
   return result.user;
 }
 
