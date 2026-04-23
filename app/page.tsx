@@ -15,6 +15,7 @@ import { track } from "@/lib/analytics";
 import { getStreak, hasTrainedToday } from "@/lib/streak";
 import { apiUrl } from "@/lib/apiBase";
 import { getDailyChallengeDrill, getDailyChallengeState, secondsUntilMidnight, formatCountdown } from "@/lib/dailyChallenge";
+import { initPushNotifications } from "@/lib/pushNotifications";
 import PremiumGate from "@/components/PremiumGate";
 import SignInPromo from "@/components/SignInPromo";
 import { Target, Brain, BarChart3, ShieldAlert, Flame, ChevronRight, Zap } from "lucide-react";
@@ -105,6 +106,8 @@ function HomePageInner() {
           track("landing_viewed", { isOnboarded: false });
         } else {
           track("landing_viewed", { isOnboarded: true });
+          // Request push permission after onboarding is complete (non-blocking)
+          initPushNotifications().catch(() => null);
         }
       }
     }

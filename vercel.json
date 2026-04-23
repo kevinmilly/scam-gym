@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/daily-post",
       "schedule": "0 14 * * *"
+    },
+    {
+      "path": "/api/cron/daily-drill-reminder",
+      "schedule": "0 18 * * *"
     }
   ]
 }
