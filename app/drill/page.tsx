@@ -11,7 +11,7 @@ import ComparisonLayout from "@/components/ComparisonLayout";
 import SpotFlagPicker from "@/components/SpotFlagPicker";
 import { brierScore, redFlagRecall, calibrationVerdict } from "@/lib/scoring";
 import { saveAttempt } from "@/lib/db";
-import type { Verdict, BehaviorChoice, Drill } from "@/lib/types";
+import type { Verdict, Drill } from "@/lib/types";
 import { tap } from "@/lib/haptics";
 import { playCorrect, playIncorrect } from "@/lib/audio";
 import { fireDrillArrival, arrivalAnimationClass, isAlertsEnabled } from "@/lib/alerts";
@@ -19,17 +19,10 @@ import { track } from "@/lib/analytics";
 import { computePostDrillReward } from "@/lib/progression";
 import { allDrills } from "@/lib/DrillContext";
 import { completeDailyChallenge } from "@/lib/dailyChallenge";
-import { Loader2, ShieldAlert, ShieldCheck, Lock, Inbox, Check, X as XIcon } from "lucide-react";
+import { Loader2, ShieldAlert, ShieldCheck, Lock, Inbox, X as XIcon } from "lucide-react";
 
 const CONFIDENCE_OPTIONS = [50, 60, 70, 85, 95];
 
-const BEHAVIOR_OPTIONS: { value: BehaviorChoice; label: string; desc: string }[] = [
-  { value: "ignore",  label: "Ignore it",      desc: "Delete and move on" },
-  { value: "verify",  label: "Verify first",   desc: "Check through official channels" },
-  { value: "respond", label: "Respond",         desc: "Reply to the message" },
-  { value: "click",   label: "Click the link", desc: "Follow a link in the message" },
-  { value: "call",    label: "Call the number", desc: "Call a number in the message" },
-];
 
 export default function DrillPage() {
   const router = useRouter();
@@ -37,8 +30,7 @@ export default function DrillPage() {
 
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
-  const [behaviorChoice, setBehaviorChoice] = useState<BehaviorChoice | null>(null);
-  const [submitting, setSubmitting] = useState(false);
+const [submitting, setSubmitting] = useState(false);
 
   // New format states
   const [spotFlagPick, setSpotFlagPick] = useState<string | null>(null);
@@ -68,8 +60,7 @@ export default function DrillPage() {
   useEffect(() => {
     setVerdict(null);
     setConfidence(null);
-    setBehaviorChoice(null);
-    setSpotFlagPick(null);
+setSpotFlagPick(null);
     setThreadSusIndex(null);
     setComparisonPick(null);
     setSubmitting(false);
@@ -127,8 +118,7 @@ export default function DrillPage() {
       brierScore: brier,
       redFlagRecall: flagRecall,
       syncedAt: null,
-      behaviorChoice: behaviorChoice ?? undefined,
-      drill_type: drillType === "standard" ? undefined : drillType,
+drill_type: drillType === "standard" ? undefined : drillType,
       spot_flag_pick: spotFlagPick ?? undefined,
       spot_flag_correct: spotFlagPick ? spotFlagPick === currentDrill!.spot_flag_correct_id : undefined,
       thread_sus_index: threadSusIndex ?? undefined,
@@ -391,45 +381,6 @@ export default function DrillPage() {
           </div>
         </div>
 
-        {/* Behavior question — only meaningful for standard/preview/spot_flag */}
-        {drillType !== "thread" && drillType !== "comparison" && <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>
-            What would you actually do?
-          </p>
-          <div className="space-y-2">
-            {BEHAVIOR_OPTIONS.map(({ value, label, desc }) => {
-              const selected = behaviorChoice === value;
-              return (
-                <button
-                  key={value}
-                  onClick={() => { tap(); setBehaviorChoice(selected ? null : value); }}
-                  aria-pressed={selected}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-colors duration-150 active:scale-[0.98]"
-                  style={{
-                    borderColor: selected ? "var(--accent)" : "var(--border)",
-                    background: selected ? "rgba(13,31,60,0.12)" : "var(--surface)",
-                  }}
-                >
-                  <div
-                    className="w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center"
-                    style={{
-                      borderColor: selected ? "var(--accent)" : "var(--border)",
-                      background: selected ? "var(--accent)" : "transparent",
-                    }}
-                  >
-                    {selected && <Check size={12} strokeWidth={3} className="text-white" />}
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: selected ? "var(--accent)" : "var(--text)" }}>
-                      {label}
-                    </div>
-                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>{desc}</div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>}
       </div>
 
       {/* Sticky submit */}

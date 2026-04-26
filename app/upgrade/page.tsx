@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { isPremium, unlockPremiumWithToken, PREMIUM_PRICE, PREMIUM_TAGLINE, PREMIUM_SUBTEXT, STRIPE_PAYMENT_URL } from "@/lib/premium";
+import { isNativeAndroid } from "@/lib/platform";
+import { purchasePremium, restorePurchases } from "@/lib/playBilling";
 import { apiUrl } from "@/lib/apiBase";
 import { track } from "@/lib/analytics";
 import { Search, TrendingUp, Cpu, Sparkles, ChevronRight, Check, Target, Zap, Bookmark, Flame } from "lucide-react";
@@ -31,17 +33,24 @@ const UPGRADE_OUTCOMES = [
 export default function UpgradePage() {
   const router = useRouter();
   const [premium, setPremium] = useState(false);
+  const [onAndroid, setOnAndroid] = useState(false);
+
+  // Web-only restore (Stripe email lookup)
   const [restoreEmail, setRestoreEmail] = useState("");
   const [restoreStatus, setRestoreStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [restoreMessage, setRestoreMessage] = useState("");
   const [showRestore, setShowRestore] = useState(false);
 
+  // Android-only purchase / restore state
+  const [playStatus, setPlayStatus] = useState<"idle" | "purchasing" | "restoring">("idle");
+  const [playMessage, setPlayMessage] = useState<{ kind: "success" | "error"; text: string } | null>(null);
+
   useEffect(() => {
     setPremium(isPremium());
+    setOnAndroid(isNativeAndroid());
     track("upgrade_screen_viewed");
 
-    // When Stripe completes in another tab, localStorage updates there.
-    // The storage event fires in THIS tab so we can reflect the unlock immediately.
+    // When Stripe completes in another tab (web only), localStorage updates there.
     function onStorage(e: StorageEvent) {
       if (e.key === "scamgym_premium_token") {
         setPremium(isPremium());
@@ -75,6 +84,35 @@ export default function UpgradePage() {
       setRestoreStatus("error");
       setRestoreMessage("Could not connect. Check your internet and try again.");
     }
+  }
+
+  async function handlePlayPurchase() {
+    setPlayStatus("purchasing");
+    setPlayMessage(null);
+    track("purchase_started", { platform: "android" });
+    const result = await purchasePremium();
+    if (result.ok) {
+      unlockPremiumWithToken(result.token);
+      setPremium(true);
+      setPlayMessage({ kind: "success", text: "Pro unlocked. Thanks for supporting Scam Gym!" });
+    } else if (result.reason !== "cancelled") {
+      setPlayMessage({ kind: "error", text: result.message || "Could not complete purchase. Please try again." });
+    }
+    setPlayStatus("idle");
+  }
+
+  async function handlePlayRestore() {
+    setPlayStatus("restoring");
+    setPlayMessage(null);
+    const result = await restorePurchases();
+    if (result.found) {
+      unlockPremiumWithToken(result.token);
+      setPremium(true);
+      setPlayMessage({ kind: "success", text: "Pro restored. All features are now unlocked." });
+    } else {
+      setPlayMessage({ kind: "error", text: result.reason || "No previous purchase found on this account." });
+    }
+    setPlayStatus("idle");
   }
 
   return (
@@ -178,80 +216,128 @@ export default function UpgradePage() {
               ))}
             </div>
 
-            <div className="space-y-3">
-              <a
-                href={STRIPE_PAYMENT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Unlock Pro for $9.99 — opens Stripe checkout in a new tab"
-                onClick={() => track("purchase_started")}
-                className="block w-full text-center py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
-                style={{ background: "var(--accent)", color: "#fff" }}
-              >
-                Unlock Pro — {PREMIUM_PRICE}
-              </a>
-              <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                {PREMIUM_SUBTEXT}
-              </p>
-            </div>
-
-            {/* Restore purchase */}
-            <div
-              className="rounded-2xl border px-4 py-4"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              {!showRestore ? (
+            {/* Purchase CTA — branches on platform */}
+            {onAndroid ? (
+              <div className="space-y-3">
                 <button
-                  onClick={() => setShowRestore(true)}
-                  className="text-sm w-full text-center"
-                  style={{ color: "var(--text-muted)" }}
+                  onClick={handlePlayPurchase}
+                  disabled={playStatus !== "idle"}
+                  aria-label={`Unlock Pro for ${PREMIUM_PRICE}`}
+                  className="block w-full text-center py-4 rounded-2xl font-bold text-base transition-all active:scale-95 disabled:opacity-60"
+                  style={{ background: "var(--accent)", color: "#fff" }}
                 >
-                  Already purchased? Restore here
+                  {playStatus === "purchasing" ? "Opening Google Play…" : `Unlock Pro — ${PREMIUM_PRICE}`}
                 </button>
-              ) : (
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold" style={{ color: "var(--text)" }}>
-                    Restore your purchase
-                  </p>
-                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                    Enter the email you used when you paid. We&apos;ll verify your purchase with Stripe and re-activate Pro on this device.
-                  </p>
-                  <input
-                    type="email"
-                    placeholder="your@email.com…"
-                    autoComplete="email"
-                    spellCheck={false}
-                    value={restoreEmail}
-                    onChange={(e) => setRestoreEmail(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl text-sm border"
-                    style={{
-                      background: "var(--surface-2)",
-                      borderColor: "var(--border)",
-                      color: "var(--text)",
-                    }}
-                  />
-                  <button
-                    onClick={handleRestore}
-                    disabled={restoreStatus === "loading" || !restoreEmail.trim()}
-                    className="px-4 py-2 rounded-xl text-sm font-semibold transition-all active:scale-95"
-                    style={{
-                      background: restoreEmail.trim() ? "var(--accent)" : "var(--surface-2)",
-                      color: restoreEmail.trim() ? "#fff" : "var(--text-muted)",
-                    }}
+                <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
+                  {PREMIUM_SUBTEXT}
+                </p>
+                {playMessage && (
+                  <p
+                    className="text-xs text-center"
+                    style={{ color: playMessage.kind === "success" ? "var(--success)" : "var(--danger)" }}
                   >
-                    {restoreStatus === "loading" ? "Checking..." : "Restore"}
+                    {playMessage.text}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <a
+                  href={STRIPE_PAYMENT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Unlock Pro for ${PREMIUM_PRICE} — opens checkout in a new tab`}
+                  onClick={() => track("purchase_started", { platform: "web" })}
+                  className="block w-full text-center py-4 rounded-2xl font-bold text-base transition-all active:scale-95"
+                  style={{ background: "var(--accent)", color: "#fff" }}
+                >
+                  Unlock Pro — {PREMIUM_PRICE}
+                </a>
+                <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
+                  {PREMIUM_SUBTEXT}
+                </p>
+              </div>
+            )}
+
+            {/* Restore section — branches on platform */}
+            {onAndroid ? (
+              <div
+                className="rounded-2xl border px-4 py-4 space-y-2"
+                style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              >
+                <p className="text-sm font-semibold" style={{ color: "var(--text)" }}>
+                  Already purchased?
+                </p>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                  If you bought Pro on this Google account before, tap restore and we&apos;ll re-activate it on this device.
+                </p>
+                <button
+                  onClick={handlePlayRestore}
+                  disabled={playStatus !== "idle"}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold transition-all active:scale-95 disabled:opacity-60"
+                  style={{ background: "var(--surface-2)", color: "var(--text)", border: "1px solid var(--border)" }}
+                >
+                  {playStatus === "restoring" ? "Checking…" : "Restore purchases"}
+                </button>
+              </div>
+            ) : (
+              <div
+                className="rounded-2xl border px-4 py-4"
+                style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              >
+                {!showRestore ? (
+                  <button
+                    onClick={() => setShowRestore(true)}
+                    className="text-sm w-full text-center"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Already purchased? Restore here
                   </button>
-                  {restoreMessage && (
-                    <p
-                      className="text-xs"
-                      style={{ color: restoreStatus === "success" ? "var(--success)" : "var(--danger)" }}
-                    >
-                      {restoreMessage}
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold" style={{ color: "var(--text)" }}>
+                      Restore your purchase
                     </p>
-                  )}
-                </div>
-              )}
-            </div>
+                    <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                      Enter the email you used when you paid. We&apos;ll verify your purchase and re-activate Pro on this device.
+                    </p>
+                    <input
+                      type="email"
+                      placeholder="your@email.com…"
+                      autoComplete="email"
+                      spellCheck={false}
+                      value={restoreEmail}
+                      onChange={(e) => setRestoreEmail(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl text-sm border"
+                      style={{
+                        background: "var(--surface-2)",
+                        borderColor: "var(--border)",
+                        color: "var(--text)",
+                      }}
+                    />
+                    <button
+                      onClick={handleRestore}
+                      disabled={restoreStatus === "loading" || !restoreEmail.trim()}
+                      className="px-4 py-2 rounded-xl text-sm font-semibold transition-all active:scale-95"
+                      style={{
+                        background: restoreEmail.trim() ? "var(--accent)" : "var(--surface-2)",
+                        color: restoreEmail.trim() ? "#fff" : "var(--text-muted)",
+                      }}
+                    >
+                      {restoreStatus === "loading" ? "Checking..." : "Restore"}
+                    </button>
+                    {restoreMessage && (
+                      <p
+                        className="text-xs"
+                        style={{ color: restoreStatus === "success" ? "var(--success)" : "var(--danger)" }}
+                      >
+                        {restoreMessage}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

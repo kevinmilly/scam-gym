@@ -9,16 +9,17 @@ export const STRIPE_PAYMENT_URL = "https://buy.stripe.com/eVqcMZ0dyfhd5BkdLJe7m0
 
 /**
  * Check if premium is active.
- * Requires a server-issued signed token — bare "1" values are no longer accepted.
+ * Requires a signed token — bare "1" values are no longer accepted.
+ * Accepts Stripe-issued tokens (`premium:cs_...`) on web and
+ * Play Billing tokens (`premium:gp_...`) on Android.
  */
 export function isPremium(): boolean {
   if (typeof window === "undefined") return false;
   const token = localStorage.getItem(PREMIUM_TOKEN_KEY);
-  // Token format: base64(payload).signature — must be present and non-trivial
   if (!token || !token.includes(".")) return false;
   try {
     const payload = atob(token.split(".")[0]);
-    return payload.startsWith("premium:cs_");
+    return payload.startsWith("premium:cs_") || payload.startsWith("premium:gp_");
   } catch {
     return false;
   }

@@ -136,15 +136,15 @@ export default function ResultPage() {
     reason: "answer_wrong" | "question_unclear" | "red_flags_wrong" | "other";
   };
 
-  // Intercept browser back gesture — going back would land on a stale drill
+  // Intercept browser back gesture — re-push state so back does nothing
   useEffect(() => {
     window.history.pushState(null, "", window.location.href);
     const handlePopState = () => {
-      router.push("/drill");
+      window.history.pushState(null, "", window.location.href);
     };
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     const a = sessionStorage.getItem("lastAttempt");
@@ -760,9 +760,9 @@ export default function ResultPage() {
                     { label: "Well-calibrated", color: "var(--success)", desc: "Confidence matches" },
                     { label: "Underconfident", color: "var(--info)", desc: "Right but unsure" },
                   ].map((v) => (
-                    <div key={v.label} className="rounded-xl p-2.5" style={{ background: "var(--surface-2)" }}>
-                      <div className="text-xs font-bold mb-0.5" style={{ color: v.color }}>{v.label}</div>
-                      <div className="text-xs" style={{ color: "var(--text-muted)" }}>{v.desc}</div>
+                    <div key={v.label} className="rounded-xl p-2.5 flex flex-col items-center" style={{ background: "var(--surface-2)" }}>
+                      <div className="text-xs font-bold mb-0.5 text-center leading-tight" style={{ color: v.color }}>{v.label}</div>
+                      <div className="text-xs text-center leading-tight" style={{ color: "var(--text-muted)" }}>{v.desc}</div>
                     </div>
                   ))}
                 </div>
@@ -781,13 +781,13 @@ export default function ResultPage() {
                 <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
                   After a few more drills, Scam Gym can show you exactly which scam types are most likely to fool you — and let you train those weak spots specifically.
                 </p>
-                <a
+                <Link
                   href="/upgrade"
                   className="text-xs font-bold"
                   style={{ color: "var(--accent)" }}
                 >
                   See what Pro unlocks →
-                </a>
+                </Link>
               </div>
             )}
 
@@ -1108,13 +1108,13 @@ export default function ResultPage() {
                 <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
                   Pro unlocks unlimited breakdowns — see exactly which red flags appeared, which you caught, and which you missed. Plus your full vulnerability profile across all scam types.
                 </p>
-                <a
+                <Link
                   href="/upgrade"
                   className="inline-block px-5 py-2 rounded-full font-bold text-sm"
                   style={{ background: "var(--accent)", color: "#fff" }}
                 >
                   Unlock Full Breakdowns
-                </a>
+                </Link>
               </div>
               <button
                 onClick={() => { tap(); router.push("/drill"); }}

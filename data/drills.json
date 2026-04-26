@@ -1294,7 +1294,7 @@
         "label": "Directs to account page without embedding a login link"
       }
     ],
-    "framing": "A coworker sent this to your team chat asking if anyone else got this."
+    "framing": "You got this on your personal phone."
   },
   {
     "id": "dm_job_scam_001",
@@ -2882,7 +2882,7 @@
       "corporate",
       "legitimate"
     ],
-    "context": "personal",
+    "context": "work",
     "ai_amplified": false,
     "green_flags": [
       {
@@ -2902,7 +2902,7 @@
         "label": "Contact info is an internal phone extension"
       }
     ],
-    "framing": "Your parent just called you panicking about this."
+    "framing": "This just landed in your work inbox."
   },
   {
     "id": "email_tech_support_scam_004",
@@ -3027,7 +3027,7 @@
         "label": "No login or personal info requested"
       }
     ],
-    "framing": "A coworker sent this to your team chat asking if anyone else got this."
+    "framing": "This just popped up on your phone."
   },
   {
     "id": "email_tech_support_scam_005",
@@ -6202,7 +6202,7 @@
       "impersonation",
       "ai_amplified"
     ],
-    "framing": "A coworker recommended this app integration."
+    "framing": "This landed in your personal inbox out of nowhere."
   },
   {
     "id": "dm_oauth_scam_002",
@@ -6633,7 +6633,7 @@
       "impersonation",
       "urgency"
     ],
-    "framing": "A coworker recommended this app integration."
+    "framing": "You got this DM out of nowhere."
   },
   {
     "id": "email_oauth_scam_006",
@@ -9696,7 +9696,7 @@
       "elderly-target",
       "remote-access"
     ],
-    "framing": "A coworker sent this to your team chat asking if anyone else got this."
+    "framing": "Your parent got this and asked you to check if it is safe."
   },
   {
     "id": "email_job_seeker_job_seeker_001",
